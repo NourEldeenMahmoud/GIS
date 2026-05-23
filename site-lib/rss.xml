@@ -1,4 +1,601 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Prolog]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>Prolog</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Sat, 23 May 2026 12:38:18 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Sat, 23 May 2026 12:38:08 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[Lists and Arithmetic (Lecture 5 Part 2)]]></title><description><![CDATA[مقدمة المحاضرة بتتكلم عن الـ List وهي محاضره دسمه جدا ومهمه جدا مينفعش تتكروت.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Prolog]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>Prolog</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Sat, 23 May 2026 16:17:14 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Sat, 23 May 2026 16:17:02 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[Chapter 7 - Practice]]></title><description><![CDATA[
+ايه ناتج كل استعلام من دول (لو في خطأ Syntax Error اشرح ليه): ?- write(c), write(8), write(r).
+?- write([a, b, c, d]).
+?- write(Hello World).
+?- write('Hello World').
+?- X = 5, write('Value = '), write(X).
+Solution (write)
+1) c8r 2) [a,b,c,d] 3) ERROR: syntax error % الـ Prolog فسر Hello و World كـ Terms منفصلة مش كـ String واحد. % لازم Single Quotes: write('Hello World'). 4) Hello World 5) Value = 5 هات ناتج الاستعلام ده:
+?- write(a), tab(3), write(b), nl, tab(1), write(c).
+Solution (nl and tab)
+a b c الشرح: ا write(a) -&gt; تطبع a
+ا tab(3) -&gt; تلات مسافات
+ا write(b) -&gt; تطبع b
+ا nl -&gt; سطر جديد
+ا tab(1) -&gt; مسافة واحدة
+ا write(c) -&gt; تطبع c استخدم read &amp; write عشان تعمل برنامج بياخد الاسم من اليوزر ويقوله Greeting : username
+Solution (read)
+?- write('What is your name?'), nl, read(X), write('Greetings '), write(X).
+What is your name?
+|: tamer.
+Greetings tamer
+X = tamer. اكتب دالة cube بتطلب من المستخدم إدخال رقم، وبعدين تحسب الـ Cube بتاعه (n³) وتطبعه وجربها.
+Solution (Basic Cube)
+cube :- write('enter number'), nl, read(N), C is N * N * N, write(C). ?- cube.
+enter number
+|: 2.
+8
+true. عدل دالة الـ Cube عشان تفضل تقرا أرقام وتطبع Cubes لغاية ما المستخدم يكتب stop.
+وجربها:?- cube.
+|: 2.
+|: 5.
+|: 12.
+|: stop.
+Solution (Cube Loop)
+cube :- write('Next item, please: '), read(X), process(X). process(stop) :- !. process(N) :- C is N * N * N, write('Cube of '), write(N), write(' is '), write(C), nl, cube. ?- cube.
+Next item, please: 2.
+Cube of 2 is 8
+Next item, please: 5.
+Cube of 5 is 125
+Next item, please: 12.
+Cube of 12 is 1728
+Next item, please: stop.
+true. اكتب دالة sum تقرا رقمين من المستخدم وتطبع مجموعهم.
+وجرب:?- sum.
+|: 10.
+|: 15.
+Solution (Sum)
+sum :- read(X), read(Y), Z is X + Y, write(Z). ?- sum.
+|: 10.
+|: 15.
+25
+true. اكتب برنامج function يقرا قيمة X من المستخدم ويحسب: لو X ≤ 3 يبقى Y = 2X
+لو X &gt; 3 يبقى Y = 4X + 5 استخدم Cut .
+وجرب:?- function.
+|: 2. ?- function.
+|: 5.
+Solution (Function with Cut)
+function :- read(X), process(X). process(X) :- X =&lt; 3, !, Y is 2 * X, write(Y).
+process(X) :- Y is 4 * X + 5, write(Y). ?- function.
+|: 2.
+4
+true. ?- function.
+|: 5.
+25
+true. اكتب دالة sqr تقرا رقم X وتطبع الجذر التربيعي بتاعه (X^0.5).
+لو الرقم سالب، اطبع ايرور من غير ما تحسب حاجة.
+وجرب:?- sqr.
+enter number: 9. ?- sqr.
+enter number: -4.
+Solution (Square Root)
+sqr :- write('enter number: '), read(X), process(X). process(X) :- X &lt; 0, !, write('number is negative').
+process(X) :- Y is X ^ 0.5, write(Y). ?- sqr.
+enter number: 9.
+3
+true. ?- sqr.
+enter number: -4.
+number is negative
+true. أ) اكتب دالة test1 تقرا درجة الطالب وتطبع succeed لو ≥ 50 و fail لو أقل من 50 (بدون Cut).
+ب) اكتبها تاني باستخدام Cut .وجرب:?- test1.
+enter score: 75. ?- test1.
+enter score: 30.
+Solution (Succeed / Fail)
+أ) بدون Cut:
+test1 :- write('enter score: '), read(X), process1(X). process1(X) :- X &gt;= 50, write('succeed').
+process1(X) :- X &lt; 50, write('fail'). ب) باستخدام Cut:
+test1 :- write('enter score: '), read(X), process1(X). process1(X) :- X &gt;= 50, !, write('succeed').
+process1(X) :- write('fail'). ?- test1.
+enter score: 75.
+succeed
+true. ?- test1.
+enter score: 30.
+fail
+true. اكتب دالة test تطلب من المستخدم إدخال الاسم ثم الدرجة، وبعدين تطبع اسم الطالب مع نتيجته (succeed/fail).وجرب:?- test.
+enter your name: ahmed.
+enter score: 85.
+Solution (Name + Score)
+test :- write('enter your name: '), read(S), nl, write('enter score: '), read(D), p(D, S). p(D, S) :- D &lt; 50, !, write('fail: '), write(S).
+p(D, S) :- D &gt;= 50, write('succeed: '), write(S). ?- test.
+enter your name: ahmed.
+enter score: 85.
+succeed: ahmed
+true. اكتب دالة divide تقرا رقمين A و B وتطبع ناتج A / B. لو B = 0، اطبع رسالة خطأ.وجرب:?- divide.
+Enter A: 10.
+Enter B: 2. ?- divide.
+Enter A: 10.
+Enter B: 0.
+Solution (Division)
+divide :- write('Enter A: '), read(A), write('Enter B: '), read(B), process(A, B). process(_, 0) :- !, write('Error: B is not valid (zero not allowed).').
+process(A, B) :- Q is A / B, write('Quotient = '), write(Q). ?- divide.
+Enter A: 10.
+Enter B: 2.
+Quotient = 5
+true. ?- divide.
+Enter A: 10.
+Enter B: 0.
+Error: B is not valid (zero not allowed).
+true. لو وصلت لهنا فعاش اوي باذن الله تقفل الماده ومتنساش تدعيلي]]></description><link>practice-examples/chapter-7-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Chapter 7 - Practice.md</guid><pubDate>Sat, 23 May 2026 16:15:44 GMT</pubDate></item><item><title><![CDATA[Input and Output (Chapter 7)]]></title><description><![CDATA[مقدمة دي اخر محاضرة معانا في المنهج واسهل واحده ,هناخد فيها إزاي نعمل read , write في الـ Prolog. الـ write هي Predicate جاهز في الـ Prolog بيطبع أي Term على الشاشة.
+?- write(c), write(8), write(r).
+c8r
+?- write([a, b, c, d]).
+[a,b,c,d] زي بقيت لغات البرمجع لو عايز تطبع نص (String)، لازم تحطه بين Single Quotes ('...').
+?- write(Hello World).
+ERROR: syntax error % ?- write('Hello World').
+Hello World الـ Prolog فيه دوال جاهزة لتنسيق المخرجات: ا nl : تطبع سطر جديد (New line)
+ا tab(N) : تطبع عدد N من المسافات (White spaces) مثال:?- write(a), tab(3), write(b), nl, tab(1), write(c). % النتيجة على الشاشة:
+% a b
+% c
+شرح الـ Output write(a) → تطبع a
+tab(3) → تطبع 3 مسافات
+write(b) → تطبع b
+nl → تنزل لسطر جديد
+tab(1) → تطبع مسافة واحدة
+write(c) → تطبع c الـ read بيقرا الـ Term من المستخدم. بيستنى المستخدم يكتب حاجة وينهيها بـ Full-stop (.)
+?- write('What is your name?'), nl, read(X), write('Greetings '), write(X).
+What is your name?
+|: tamer.
+Greetings tamer
+X = tamer.
+لازم بعد ما تكتب الـ input تحط نقطه ' . ' في الاخر عشان البرنامج يعرف انك خلصت
+دالة بتاخد رقم وتطبع الـ Cube بتاعه:
+cube :- write('enter number'), nl, read(N), C is N * N * N, write(C).
+?- cube.
+enter number
+|: 2.
+8
+true.
+د- الة بتقرا أرقام لغاية ما المستخدم يقول stop:cube :- write('Next item, please: '), read(X), process(X). process(stop) :- !. % لو المستخدم كتب stop بتوقف process(N) :- C is N * N * N, write('Cube of '), write(N), write(' is '), write(C), nl, cube. % ارجع تاني واقرا رقم جديد
+?- cube.
+Next item, please: 2.
+Cube of 2 is 8
+Next item, please: 3.
+Cube of 3 is 27
+Next item, please: stop.
+true.
+الفكرة
+الـ Recursion هي اللي بتخلّي البرنامج يفضل شغال، والـ process(stop) :- !. هي اللي بتوقف التكرار لما المستخدم يدخل stop.
+نفس الدالة بتاعة الشابتر الي فات لما كنا بنستخدم الـ Cut لكن دلوقتي بتقرا X من المستخدم بدل ما نبعتها كـ Argument.function :- read(X), process(X). process(X) :- X =&lt; 3, Y is 2 * X, write(Y).
+process(X) :- X &gt; 3, Y is 4 * X + 5, write(Y).
+function :- read(X), process(X). process(X) :- X =&lt; 3, !, Y is 2 * X, write(Y).
+process(X) :- Y is 4 * X + 5, write(Y).
+?- function.
+|: 2.
+4
+true. ?- function.
+|: 5.
+25
+true. هنا بنعمل Validation عشان نتاكد ان X مش سالب،لو سالب هنديله ايرور. لو موجب، هنحسب الجذر التربيعي.
+sr(X, Y) :- X &lt; 0, !, write('x is negative').
+sr(X, Y) :- Y is X ^ 0.5.
+sqr :- write('enter number: '), read(X), process(X). process(X) :- X &lt; 0, !, write('number is negative').
+process(X) :- Y is X ^ 0.5, write(Y).
+?- sqr.
+enter number: 9.
+3
+true. ?- sqr.
+enter number: -4.
+number is negative
+true. حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Chapter 7 - Practice" href="practice-examples/chapter-7-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Chapter 7 - Practice</a>]]></description><link>summaries/chapter-7-input-and-output.html</link><guid isPermaLink="false">College/prolog/Summaries/Chapter 7 - Input and Output.md</guid><pubDate>Sat, 23 May 2026 16:14:31 GMT</pubDate></item><item><title><![CDATA[Controlling Backtracking (Chapter 6)]]></title><description><![CDATA[مقدمة في المحاضرة دي هنتكلم عن الـ Backtracking، اللي هي خاصية أصيلة في الـ Prolog، وإزاي نتحكم فيها.
+هنعرف إيه هي مشكلة الـ Backtracking الزيادة (Uncontrolled backtracking) اللي بتسبب عدم كفاءة.
+هنستخدم الـ Cut (!) عشان نتحكم في الـ Backtracking ونسرّع البرنامج.
+هنفرق بين الـ Green Cut والـ Red Cut.
+هنشوف أمثلة كتير زي الـ max، تصنيف الأعداد (موجب/صفر/سالب)، تقسيم الـ Lists، وتصنيف لاعيبة التنس. الـ Backtracking هو خاصية في الـ Prolog. معناه إن الـ Prolog بيرجع ورا خطوه وبيحاول يحقق الـ Goal بطريقة تانية.مثال:likes(mary, food).
+likes(mary, tea).
+likes(john, tea).
+likes(john, mary).
+لما نسأل السؤال ده:?- likes(mary, X), likes(john, X).
+% عايزين حاجة ماري وجون الاتنين بيحبوها الـ Prolog بيشتغل كالتالي:
+الـخطوه الأول likes(mary, X) ينجح و X = food, يعني ماري بتحب food.
+الـخطوه التانية, هنشوف هل جون كمان بيحب food ولا لا : likes(john, food) الاجابه لا.
+هنا هنرجع خطوه لورا ونجرب حاجة تانية غير food.
+رجعنا للخطوه الاولي وهنجرب الحاجه الي بعدها الي هيا X = tea , لقينا ان ماري بتحب الـ tea فعلا.
+الخطوه التانية نشوف هل جون كمان بيحب tea ولا لا, likes(john, tea) هتبقي true يعني هو كمان بيحب tea فعلا.
+كده وصلنا خلاص للي عايزينه.
+مش لازم تفهم الحته دي عشان تعرف تحل الـ Prolog بيستخدم الـ Backtracking تلقائياً عشان يحقق الـ Goals ، لكن في بعض الأحيان الـ Backtracking ده بيسبب مشاكل ف الاداء (Inefficiency) في البرنامج.
+المشكلة
+أحياناً بنحاول ندور علي اجابات ونجرب حاجات ملهاش لازمة لأننا عارفين إنها مش هتنجح، لكن الـ Prolog مش عارف كده فبيضيع وقت في الـ Backtracking.
+الحل: نستخدم الـ Cut عشان نتحكم في الـ Backtracking ونمنعه في الأماكن المناسبة.
+الـ Cut هو Built-in predicate في الـ Prolog وبيتكتب كعلامة !. عندنا العلاقة بين X و Y مكونة من تلات قواعد: ا Rule 1: إذا X &lt; 3 يبقى Y = 0
+ا Rule 2: إذا 3 =&lt; X &lt; 6 يبقى Y = 2
+ا Rule 3: إذا X &gt;= 6 يبقى Y = 4 f(X, 0) :- X &lt; 3. % Rule 1
+f(X, 2) :- 3 =&lt; X, X &lt; 6. % Rule 2
+f(X, 4) :- 6 =&lt; X. % Rule 3
+المشكلة: لو X = 1، اول rule هتنجح، بس الـ Prolog بيكمل ويجرب بقيت الـ rules يعني هيكمل ويجرب Rule 2 , 3 رغم اننا عرفنا النتيجه خلاص.f(X, 0) :- X &lt; 3, !. % Rule 1
+f(X, 2) :- 3 =&lt; X, X &lt; 6, !. % Rule 2
+f(X, 4) :- 6 =&lt; X. % Rule 3 هنا احنا مشيلناش او عدلنا اي حاجة في الكود , حطينا بس ! في اخر الكلام , بحيث نقول للبرنامج : لو الـ rule اتحققت يبقي الباقيين اكيد غلط ومتكملش علي الي بعدها.
+والـ Green cut لو شلته الكود هيشتغل زي ماهو ومفيش أي حاجة هتبوظ، بس البرنامج هيبقى أبطأ شوية لأنه هينزل علي السطور التانية على الفاضي.
+f(X, 0) :- X &lt; 3, !.
+f(X, 2) :- X &lt; 6, !.
+f(X, 4). اما هنا لو لاحظت احنا غيرنا في الكود نفسه يعني : في السطر التاني : انته مكتبتش إن 3 =&lt; X ، إنت اعتمدت إن البرنامج طالما وصل للسطر التاني ومعداش من السطر الأول، يعني أكيد الـ مش أصغر من 3.
+وفي السطر التالت : انته مكتبتش أي شروط, انته قلتله لو وصلت هنا يبقى الـ على طول، لأنك واثق إن الـ ! اللي في السطور اللي فوق منعت أي رقم أصغر من 6 إنه يوصل هنا. طبعا النوع ده مش آمن , لانك لو شلت الـ cuts الكود مش هيشتغل او هيطلع نتايج غلط.
+max(X, Y, Max) :- X &gt;= Y, Max = X.
+max(X, Y, Max) :- X &lt; Y, Max = Y. القاعدتين Mutually Exclusive (واحدة بس هي اللي هتشتغل).
+max(X, Y, Max) :- X &gt;= Y, !, Max = X.
+max(X, Y, Max) :- Max = Y. هنا شيلنا الشرط X &lt; Y من القاعدة التانية، واعتمدنا على الـ Cut إنه يمنع الوصول للقاعدة التانية لو X &gt;= Y كانت صحيحة.
+بدون Cut:f(X, Y) :- X =&lt; 5, Y is 3 * X.
+f(X, Y) :- X &gt; 5, Y is X ** 2 + 5.
+باستخدام Cut:f(X, Y) :- X =&lt; 5, !, Y is 3 * X.
+f(X, Y) :- Y is X ** 2 + 5.
+% لو الرقم اكبر من صفر يبقي موجب ومتكملش
+class(Number, positive) :- Number &gt; 0, !. % لو الرقم صفر يبقي الناتج زيرو مفيش حاجة تعملها
+class(0, zero) :- !. % لو وصلت لهنا يبقي مش موجب ومش صفر يبقي اكيد الرقم سالب
+class(Number, negative).
+ملاحظة
+القاعدة التالتة مالهاش شرط (No condition) لأنها الـ Default. لو الرقم مش أكبر من 0 ومش 0، يبقى هو سالب أكيد.
+الدالة split(Numbers, Positives, Negatives) بتقسم List الأرقام لـ List اللي فيها الموجبين (فيها الصفر) و List اللي فيها السالبين.split([], [], []).
+split([X|L], [X|L1], L2) :- X &gt;= 0, !, split(L, L1, L2).
+split([X|L], L1, [X|L2]) :- split(L, L1, L2).
+تجربة:?- split([3, -1, 0, 5, -2], Pos, Neg).
+Pos = [3, 0, 5],
+Neg = [-1, -2].
+عندنا Database لماتشات تنس:beat(tom, jim).
+beat(ann, tom).
+beat(pat, jim).
+وعايزين نصنف كل لاعب لواحدة من تلات فئات:
+Winner: كسب كل الماتشات اللي لعبها
+Fighter: كسب وكمان خسر ماتشات
+Sportsman: خسر كل الماتشات اللي لعبها
+class(X, fighter) :- beat(X, _), beat(_, X), !.
+class(X, winner) :- beat(X, _), !.
+class(X, sportsman) :- beat(_, X).
+تجارب:?- class(tom, C). % Tom beat(jim) and beat(ann,tom) ➔ C = fighter
+?- class(ann, C). % Ann beat(tom) no one beat(ann) ➔ C = winner
+?- class(jim, C). % Jim no one beat(jim) و beat(pat,jim) و beat(tom,jim) ➔ C = sportsman
+member(X, [X|L]).
+member(X, [Y|L]) :- member(X, L).
+?- member(X, [a, b, c]).
+X = a ;
+X = b ;
+X = c.
+member1(X, [X|L]) :- !.
+member1(X, [Y|L]) :- member(X, L).
+?- member1(X, [a, b, c]).
+X = a ;
+no
+الفرق
+الـ member1 بتستخدم Cut عشان توقف البحث بعد أول حل. مفيدة لو عايزين بس نعرف إن العنصر موجود (Binary result)، مش محتاجين كل الأماكن اللي هو موجود فيها.
+عايزين دالة add(X, L, L1) تضيف العنصر X للـ List L. لو X موجود أصلاً، متضفش ومترجعش نفس الـ List.add(X, L, L) :- member(X, L), !.
+add(X, L, [X|L]).
+تجارب:?- add(a, [b, c], L). % a مش موجود ➔ L = [a, b, c]
+?- add(X, [b, c], L). % X = b, L = [b, c]
+?- add(a, [b, c, X], L). % X = a, L = [b, c, a]
+?- add(a, [a, b, c], L). % a موجود ➔ L = [a, b, c]
+?- add(a, [a, b, c], L).
+L = [a, b, c] ; % الأول: ممنوعش التكرار
+L = [a, a, b, c]. % التاني: أضاف العنصر عادي قبل ما تدخل علي الامتحان حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Chapter 6 - Practice" href="practice-examples/chapter-6-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Chapter 6 - Practice</a>]]></description><link>summaries/chapter-6-controlling-backtracking.html</link><guid isPermaLink="false">College/prolog/Summaries/Chapter 6 - Controlling Backtracking.md</guid><pubDate>Sat, 23 May 2026 16:12:18 GMT</pubDate></item><item><title><![CDATA[Prolog Index]]></title><description><![CDATA[مهم جدا قبل ما تبدا الشرح مش مفوت اي جزئية في المنهج فلو اول مره تقرا المنهج ذاكره من الشرح وبعدين روح علي الحل وحل بايدك
+الاساله عبارة عن امثلة المحاضرة والسكاشن فقط (مفيش اي اسالة من ai او مش بتاعة الدكتور )
+الحل في المادة دي اهم من الشرح لو قدرت تحل اسالة المحاضرة يبقي انته فاهمها كويس وباذن الله مش هتغلط فيها سواء اختياري او مقالي
+نزل SWI Prolog وحل بنفسك ده هيفرق جدا معاك وهتفهم المادة بسهوله لو فيه اي اخطاء سواء في الاساله او في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a>]]></description><link>prolog-index.html</link><guid isPermaLink="false">College/prolog/Prolog Index.md</guid><pubDate>Sat, 23 May 2026 16:09:20 GMT</pubDate></item><item><title><![CDATA[Chapter 6 - Practice]]></title><description><![CDATA[
+لو عندنا الـ Rules دي:
+f(X, 0) :- X &lt; 3. % Rule 1
+f(X, 2) :- 3 =&lt; X, X &lt; 6. % Rule 2
+f(X, 4) :- 6 =&lt; X. % Rule 3 اكتب الـ Program تاني باستخدام Green Cut.
+اكتب الـ Program تالت باستخدام Red Cut.
+Solution (f(X,Y) with 3 Rules)
+أ) Green Cut:
+f(X, 0) :- X &lt; 3, !.
+f(X, 2) :- 3 =&lt; X, X &lt; 6, !.
+f(X, 4) :- 6 =&lt; X. ب) Red Cut:
+f(X, 0) :- X &lt; 3, !.
+f(X, 2) :- X &lt; 6, !.
+f(X, 4). اكتب دالة max من غير Cut.
+اكتب دالة max باستخدام Red Cut.
+Solution (max with and without Cut)
+أ) من غير Cut:
+max(X, Y, Max) :- X &gt;= Y, Max = X.
+max(X, Y, Max) :- X &lt; Y, Max = Y. ب) بـ Red Cut:
+max(X, Y, Max) :- X &gt;= Y, !, Max = X.
+max(X, Y, Max) :- Max = Y. اكتب دالة f(X, Y) تحقق العلاقة دي باستخدام Cut: ا Rule 1: لو X =&lt; 5 يبقى Y = 3X
+ا Rule 2: لو X &gt; 5 يبقى Y = X² + 5
+Solution (Conditional Function)
+بدون Cut:
+f(X, Y) :- X =&lt; 5, Y is 3 * X.
+f(X, Y) :- X &gt; 5, Y is X ** 2 + 5. باستخدام Cut:
+f(X, Y) :- X =&lt; 5, !, Y is 3 * X.
+f(X, Y) :- Y is X ** 2 + 5. اكتب دالة class(Number, Category) تصنف الأعداد لـ positive, zero, أو negative باستخدام Cut.
+Solution (Classify Number)
+class(Number, positive) :- Number &gt; 0, !.
+class(0, zero) :- !.
+class(Number, negative). اكتب دالة function(X, Y) تشوف: y = 3x + 2
+اكتب دالة fun(X, Y) تشوف: لو X ≤ 3 يبقى Y = 2X، ولو X &gt; 3 يبقى Y = 4X + 5
+Solution (Simple Functions)
+أ) y = 3x + 2:
+function(X, Y) :- Y is 3 * X + 2. ?- function(2, Y).
+Y = 8. ب) Two-rule function:
+fun(X, Y) :- X =&lt; 3, Y is 2 * X.
+fun(X, Y) :- X &gt; 3, Y is 4 * X + 5. ?- fun(2, Y).
+Y = 4. ?- fun(5, Y).
+Y = 25. اكتب دالة split(Numbers, Positives, Negatives) اللي بتقسم List الأرقام لـ List فيها الأرقام الموجبة (ومعاها الصفر) و List فيها الأرقام السالبة. وجربها على: ?- split([3, -1, 0, 5, -2], P, N). Solution (split/3)
+split([], [], []).
+split([X|L], [X|L1], L2) :- X &gt;= 0, !, split(L, L1, L2).
+split([X|L], L1, [X|L2]) :- split(L, L1, L2). تجربة:
+?- split([3, -1, 0, 5, -2], Pos, Neg).
+Pos = [3, 0, 5],
+Neg = [-1, -2]. لو عندنا Database:
+beat(tom, jim).
+beat(ann, tom).
+beat(pat, jim). وصنفنا اللاعيبة لـ: Winner: كسب كل الماتشات Fighter: كسب وخسر ماتشات Sportsman: خسر كل الماتشات اكتب دالة class(Player, Category) باستخدام Cut. طلع ناتج الاستعلامات دي: ?- class(tom, C).
+?- class(ann, C).
+?- class(jim, C). Solution (Tennis Classification)
+أ) الـ Rules:
+class(X, fighter) :- beat(X, _), beat(_, X), !.
+class(X, winner) :- beat(X, _), !.
+class(X, sportsman) :- beat(_, X). ب) النواتج:
+1) ?- class(tom, C). C = fighter. % Tom beat(jim) و beat(ann,tom) 2) ?- class(ann, C). C = winner. % Ann beat(tom) ومحدش beat(ann) 3) ?- class(jim, C). C = sportsman. % محدش beat(jim) و beat(tom,jim) و beat(pat,jim) اكتب ناتج الاستعلام ده باستخدام member:
+?- member(X, [a, b, c]). اكتب ناتج الاستعلام ده باستخدام member1 (اللي فيها Cut):
+?- member1(X, [a, b, c]). اشرح ليه النتائج مختلفة.
+Solution (member vs member1)
+أ) member (من غير Cut - بتطلع كل الحلول):
+X = a ;
+X = b ;
+X = c. ب) member1 (بـ Cut - بتطلع أول حل بس):
+X = a ;
+no جـ) الفرق:
+ا member1 فيها ! بعد أول Base Case، فلما أول حل ينجح (X = a)، الـ Cut بيمنع أي محاولة Backtracking للقاعدة التانية وخلاص. لو عندنا الدالة:
+add(X, L, L) :- member(X, L), !.
+add(X, L, [X|L]). طلع ناتج الاستعلامات دي: ?- add(a, [b, c], L).
+?- add(X, [b, c], L).
+?- add(a, [b, c, X], L).
+?- add(a, [a, b, c], L). ايه اللي هيحصل لو شيلنا الـ Cut من الدالة فوق، وجربنا الاستعلام الرابع تاني؟ Solution (add with Cut)
+أ) النواتج:
+1) ?- add(a, [b, c], L). L = [a, b, c]. % a مش موجود، فاتضاف 2) ?- add(X, [b, c], L). L = [b, c], X = b. % X اتحطت مع member 3) ?- add(a, [b, c, X], L). L = [b, c, a], X = a. % member نجح مع X = a 4) ?- add(a, [a, b, c], L). L = [a, b, c]. % a موجود فعلاً، مترجعش نفسها من غير إضافة ب) من غير Cut:
+?- add(a, [a, b, c], L).
+L = [a, b, c] ; % member نجح
+L = [a, a, b, c]. % Backtracking شغل القاعدة التانية وضافت duplicate ]]></description><link>practice-examples/chapter-6-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Chapter 6 - Practice.md</guid><pubDate>Sat, 23 May 2026 16:08:09 GMT</pubDate></item><item><title><![CDATA[Chapter 3 - Practice]]></title><description><![CDATA[اعمل قاعدة بيانات للعيلة دي:
+Aly is the father of Hany.
+Saly is the mother of Hany.
+Samy is the father of Aly.
+وبعدين اعمل الـ rules دي. X is a parent of Y if X is the father of Y or X is the mother of Y.
+X is a grandparent of Y if X is a parent of Z and Z is a parent of Y.
+واكتب الاستعلامات:
+Who is Hany's parent?
+Who is Aly's father?
+Who is hany's grandparent?
+Solution (Parent &amp; Grandparent Rules)
+% Facts
+father(aly, hany).
+mother(saly, hany).
+father(samy, aly). % Rules
+parent(X, Y) :- father(X, Y).
+parent(X, Y) :- mother(X, Y).
+grandparent(X, Y) :- parent(X, Z), parent(Z, Y). Queries:
+?- parent(X, hany). % X = aly ; X = saly
+?- father(Y, aly). % Y = samy
+?- grandparent(X, hany). % X = samy اعمل قاعدة بيانات لشجرة العيلة دي :
+Hany is a parent of Samy.
+Saly is a parent of Samy.
+Saly is a parent of Lila.
+Samy is a parent of Aly.
+Samy is a parent of Dena.
+Dena is a parent of Tamer.
+Hany, Samy, Aly, Tamer are male.
+Saly, Dena, Lila are female.
+Solution (Family Tree Facts)
+parent(hany, samy).
+parent(saly, samy).
+parent(saly, lila).
+parent(samy, aly).
+parent(samy, dena).
+parent(dena, tamer).
+male(hany).
+male(samy).
+male(aly).
+male(tamer).
+female(saly).
+female(dena).
+female(lila). من قاعدة البيانات بتاعة شجرة العيلة (سؤال 2)، اعمل الـ rules دي:
+X is the father of Y if X is a parent of Y and X is male.
+X is the mother of Y if X is a parent of Y and X is female.
+X is a sibling of Y if they both have the same parent Z.
+Y is an offspring of X if X is a parent of Y.
+X is a sister of Y if X is a sibling of Y and X is female.
+Solution (Family Tree Rules)
+father(X, Y) :- parent(X, Y), male(X).
+mother(X, Y) :- parent(X, Y), female(X).
+sibling(X, Y) :- parent(Z, X), parent(Z, Y).
+offspring(Y, X) :- parent(X, Y).
+sister(X, Y) :- sibling(X, Y), female(X). من قاعدة البيانات بتاعة شجرة العيلة (سؤال 2)، اكتب الاستعلامات دي:
+Is Samy a parent of Dena?
+Is Aly a parent of Dena?
+Who is Lila's parent?
+Who is a parent of Aly and a parent of Dena?
+List all parent relationships.
+Who is Tamer's parent?
+Who is Dena's child?
+Who are the male offspring of Hany?
+Who has a sister?
+Who is Dena's grandparent?
+Solution (Family Tree Queries)
+?- parent(samy, dena). % true
+?- parent(aly, dena). % false
+?- parent(X, lila). % X = saly
+?- parent(X, aly), parent(X, dena). % X = samy
+?- parent(X, Y). % lists all
+?- parent(X, tamer). % X = dena
+?- parent(dena, X). % X = tamer
+?- parent(hany, X), male(X). % X = samy
+?- parent(Z, X), parent(Z, Y), female(X). % sister queries
+?- parent(X, Y), parent(Y, dena). % X = hany, Y = samy ; X = saly, Y = samy ; اعمل قاعدة بيانات للطلاب دي using the predicate اstudent(Name, Sex, Age):وبعدين اعمل rule:
+X is older than Y if age of X is greater than age of Y.
+واكتب الاستعلامات:
+What is Hany's age?
+Who is male?
+List names with age &lt; 30 and they are female.
+Find students older than Mona.
+Find students with age less than Ahmed.
+Find students younger than Ahmed and older than Mona.
+Solution (Student Age Database)
+% Facts
+student(ahmed, male, 30).
+student(hany, male, 25).
+student(rwan, female, 20).
+student(mona, female, 18). % Rule
+older(X, Y) :- student(X, _, AgeX), student(Y, _, AgeY), AgeX &gt; AgeY. Queries:
+?- student(hany, _, Age). % Age = 25
+?- student(Name, male, _). % Name = ahmed ; Name = hany
+?- student(Name, female, Age), Age &lt; 30. % Name = rwan ; Name = mona
+?- older(X, mona). % X = ahmed ; X = hany ; X = rwan
+?- student(X, _, AgeX), student(ahmed, _, AgeA), AgeX &lt; AgeA.
+% X = hany ; X = rwan ; X = mona
+?- student(X, _, Age), student(ahmed, _, AgeA), student(mona, _, AgeM), Age &lt; AgeA, Age &gt; AgeM.
+% X = hany ; X = rwan اعمل قاعدة بيانات:
+Samy is male.
+Hany is male.
+Samy is a child of Hany.
+وبعدين اعمل rule:
+X is a son of Y if X is male and X is a child of Y.
+واكتب الاستعلامات:
+Who is Samy the son of?
+Who is male? (اعرض كل الإجابات)
+Is Samy the son of someone? (استخدم anonymous variable _)
+Solution (son/child Rule)
+% Facts
+male(samy).
+male(hany).
+child(samy, hany). % Rule
+son(X, Y) :- male(X), child(X, Y). Queries:
+?- son(samy, X). % X = hany
+?- male(X). % X = samy ; X = hany
+?- son(samy, _). % true اعمل قاعدة بيانات لـ 4 blocks فوق بعضها:
+1.1. Block a is on block b.
+1.2. Block b is on block c.
+1.3. Block c is on block d.وبعدين اعمل recursive rule:
+X is above Y if X is directly on Y.
+X is above Y if X is on Z and Z is above Y.
+واكتب الاستعلامات:
+Is block b on block c?
+Is block a on block d? Is block a above block d?
+What blocks are above block c?
+Solution (Recursive above)
+% Facts
+on(a, b).
+on(b, c).
+on(c, d). % Recursive Rules
+above(X, Y) :- on(X, Y).
+above(X, Y) :- on(X, Z), above(Z, Y). Queries:
+?- on(b, c). % true
+?- on(a, d). % false
+?- above(a, d). % true
+?- above(X, c). % X = b ; X = a اعمل قاعدة بيانات:
+a is a parent of b.
+b is a parent of c.
+c is a parent of d.
+d is a parent of e.
+وبعدين اعمل recursive rule:
+X is a predecessor of Z if X is a parent of Z.
+X is a predecessor of Z if X is a parent of Y and Y is a predecessor of Z.
+واكتب الاستعلامات:
+Is a a parent of b?
+Is a a predecessor of b?
+Is a a predecessor of e?
+Who are the predecessors of d?
+Who are the descendants of a?
+Solution (Recursive predecessor)
+% Facts
+parent(a, b).
+parent(b, c).
+parent(c, d).
+parent(d, e). % Recursive Rules
+predecessor(X, Z) :- parent(X, Z).
+predecessor(X, Z) :- parent(X, Y), predecessor(Y, Z). Queries:
+?- parent(a, b). % true
+?- predecessor(a, b). % true
+?- predecessor(a, e). % true
+?- predecessor(X, d). % X = c ; X = b ; X = a
+?- predecessor(a, X). % X = b ; X = c ; X = d ; X = e اعمل قاعدة بيانات بالحقائق دي:
+An elephant is bigger than a horse.
+A horse is bigger than a donkey.
+A donkey is bigger than a dog.
+A donkey is bigger than a monkey.
+وبعدين اعمل recursive rule:
+X is bigger than Y if X is directly bigger than Y.
+X is bigger than Y if X is bigger than Z and Z is bigger than Y.
+واكتب الاستعلامات:
+Is an elephant bigger than a monkey?
+What is bigger than a donkey?
+What is a horse bigger than?
+What is bigger than a dog and that thing is also bigger than a monkey?
+Solution (Recursive is_bigger)
+% Facts
+bigger(elephant, horse).
+bigger(horse, donkey).
+bigger(donkey, dog).
+bigger(donkey, monkey). % Recursive Rules
+is_bigger(X, Y) :- bigger(X, Y).
+is_bigger(X, Y) :- bigger(X, Z), is_bigger(Z, Y). Queries:
+?- is_bigger(elephant, monkey). % true
+?- is_bigger(X, donkey). % X = horse ; X = elephant
+?- is_bigger(horse, X). % X = donkey ; X = dog ; X = monkey
+?- is_bigger(elephant, X), is_bigger(X, donkey).
+% X = horse اعمل قاعدة بيانات للـ graph دي using the predicate link(Node1, Node2, Distance):
+Node a is connected to b with distance 2.
+Node a is connected to c with distance 3.
+Node b is connected to d with distance 4.
+Node b is connected to e with distance 5.
+Node c is connected to f with distance 6.
+Node c is connected to g with distance 7.
+وبعدين اعمل recursive rule:
+X can reach Y with distance D if there is a direct link between them.
+X can reach Y with distance D if X can reach Z with distance D1 and Z can reach Y with distance D2 and D = D1 + D2.
+واكتب الاستعلامات:
+What nodes are directly connected to node b and their distance?
+Which nodes connect to node c and their distance?
+Which other nodes can you reach when starting at node a and their distances?
+Which nodes can be found between node a and node e, and their distances from a and to e?
+Solution (Graph Route)
+% Facts
+link(a, b, 2).
+link(a, c, 3).
+link(b, d, 4).
+link(b, e, 5).
+link(c, f, 6).
+link(c, g, 7). % Recursive Rules
+route(X, Y, D) :- link(X, Y, D).
+route(X, Y, D) :- link(X, Z, D1), route(Z, Y, D2), D is D1 + D2. Queries:
+?- link(b, X, D). % X = d, D = 4 ; X = e, D = 5
+?- link(X, c, D). % X = a, D = 3
+?- route(a, X, D). % X = b, D = 2 ; X = c, D = 3 ; % X = d, D = 6 ; X = e, D = 7 ; % X = f, D = 9 ; X = g, D = 10
+?- route(a, X, D1), route(X, e, D2). % X = b, D1 = 2, D2 = 5 اعمل قاعدة بيانات للرحلات الجوية دي:وبعدين اعمل rules:
+Flight N is faster than flight M if duration of N &lt; duration of M.
+You can travel from X to Y with total duration D if there is a direct flight from X to Y with duration D.
+You can travel from X to Y with total duration D if there is a flight from X to Z with duration D1 and you can travel from Z to Y with duration D2 and D = D1 + D2.
+واكتب الاستعلامات:
+Which cities can be reached by a single flight from Cairo?
+How long does flight AL2 take?
+From which cities can you fly to London (by a single flight)?
+Which flight numbers are faster than BA1?
+Which flight numbers are slower than AL2?
+Which cities can be reached by some sequence of flights from Cairo?
+From which cities can one travel to Paris by some sequence of flights?
+Solution (Flights)
+% Facts
+flight(ba1, cairo, rome, 3.5).
+flight(al2, rome, paris, 2.5).
+flight(ba6, cairo, london, 6.2).
+flight(af1, paris, brussels, 0.6). % Rules
+faster(N, M) :- flight(N, _, _, D1), flight(M, _, _, D2), D1 &lt; D2. travel(X, Y, D) :- flight(_, X, Y, D).
+travel(X, Y, D) :- flight(_, X, Z, D1), travel(Z, Y, D2), D is D1 + D2. Queries:
+?- flight(_, cairo, City, _). % City = rome ; City = london
+?- flight(al2, _, _, Duration). % Duration = 2.5
+?- flight(_, From, london, _). % From = cairo
+?- faster(F, ba1). % F = al2 ; F = af1
+?- flight(F, _, _, D), flight(al2, _, _, D2), D &gt; D2.
+% F = ba1, D = 3.5 ; F = ba6, D = 6.2
+?- travel(cairo, City, _). % City = rome ; City = london ; % City = paris ; City = brussels
+?- travel(City, paris, _). % City = rome ; City = cairo اعمل قاعدة بيانات لفترات حكم الأمراء دي:وبعدين اعمل rule: X was a prince during year Y if X reigned between years A and B, and Y is between A and B inclusive.واكتب الاستعلامات:
+Was Samy a prince in year 225?
+Was Aly a prince in year 1979?
+Which prince(s) were on the throne in year 240?
+Solution (Reigns Database)
+% Facts
+reigns(aly, 200, 220).
+reigns(samy, 221, 230).
+reigns(hany, 231, 245).
+reigns(lotfy, 246, 260). % Rule
+prince(X, Y) :- reigns(X, A, B), Y &gt;= A, Y =&lt; B. Queries:
+?- prince(samy, 225). % true
+?- prince(aly, 1979). % false
+?- prince(X, 240). % X = hany ]]></description><link>practice-examples/chapter-3-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Chapter 3 - Practice.md</guid><pubDate>Sat, 23 May 2026 16:05:24 GMT</pubDate></item><item><title><![CDATA[Lists and Arithmetic (Lecture 5 Part 2)]]></title><description><![CDATA[مقدمة المحاضرة بتتكلم عن الـ List وهي محاضره دسمه جدا ومهمه جدا مينفعش تتكروت.
 هنفهم المحاضرة دي إزاي الـ List بتتكون من Head و Tail، وإزاي بنعمل Unification بين الـ Lists.
 هنتعلم العمليات الأساسية على الـ Lists زي الـ Membership، الـ Append، الإضافة، الحذف، التقسيم (Decomposing)، والتباديل (Permutations). الـ List هي مجموعة من البيانات المرتبة (Ordered Data). ممكن تحتوي على صفر أو أكتر من العناصر.
 العناصر بتكون محطوطة بين أقواس مربعة [ ] وبتتصل ببعضها بفاصلة ,. أمثلة:
@@ -199,10 +796,7 @@ above(X, Y) :- on(X, Z), above(Z, Y). لاحظ هنا اننا دايما بنك
 بنفتح الـ SWI-Prolog ونعمل Consult للملف عشان يحمله: بنكتب: [family]. أو consult(family). (متنساش النقطة في الآخر). بعد كده نقدر نسأل الأسئلة (Queries).
 ممكن نستخدم المقارنات زي أصغر من &lt; في الأسئلة:
 مثال: ?- age(Name, Age), Age &lt; 40.
-السؤال ده معناه: "هات لي كل الأسماء اللي سنها أصغر من 40". قبل ما تدخل علي المحاضره الي بعدها حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Chapter 1 &amp; 2 - Practice" href="practice-examples/chapter-1-&amp;-2-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Chapter 1 &amp; 2 - Practice</a>]]></description><link>summaries/chapter-1-&amp;-2-introduction-to-prolog.html</link><guid isPermaLink="false">College/prolog/Summaries/Chapter 1 &amp; 2 - Introduction to Prolog.md</guid><pubDate>Sat, 23 May 2026 12:34:07 GMT</pubDate></item><item><title><![CDATA[Prolog Index]]></title><description><![CDATA[مهم جدا قبل ما تبدا الشرح مش مفوت اي جزئية في المنهج فلو اول مره تقرا المنهج ذاكره من الشرح وبعدين روح علي الحل وحل بايدك
-الاساله عبارة عن امثلة المحاضرة والسكاشن فقط (مفيش اي اسالة من ai او مش بتاعة الدكتور )
-الحل في المادة دي اهم من الشرح لو قدرت تحل اسالة المحاضرة يبقي انته فاهمها كويس وباذن الله مش هتغلط فيها سواء اختياري او مقالي
-نزل SWI Prolog وحل بنفسك ده هيفرق جدا معاك وهتفهم المادة بسهوله فاضل شابتر 6-7 لسه متعملوش لو فيه اي اخطاء سواء في الاساله او في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a>]]></description><link>prolog-index.html</link><guid isPermaLink="false">College/prolog/Prolog Index.md</guid><pubDate>Sat, 23 May 2026 12:33:53 GMT</pubDate></item><item><title><![CDATA[Chapter 5 (Part 2) - Practice]]></title><description><![CDATA[اكتب ناتج (Output) كل استعلام من الاستعلامات دي عشان تفصل الـ Head عن الـ Tail:
+السؤال ده معناه: "هات لي كل الأسماء اللي سنها أصغر من 40". قبل ما تدخل علي المحاضره الي بعدها حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Chapter 1 &amp; 2 - Practice" href="practice-examples/chapter-1-&amp;-2-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Chapter 1 &amp; 2 - Practice</a>]]></description><link>summaries/chapter-1-&amp;-2-introduction-to-prolog.html</link><guid isPermaLink="false">College/prolog/Summaries/Chapter 1 &amp; 2 - Introduction to Prolog.md</guid><pubDate>Sat, 23 May 2026 12:34:07 GMT</pubDate></item><item><title><![CDATA[Chapter 5 (Part 2) - Practice]]></title><description><![CDATA[اكتب ناتج (Output) كل استعلام من الاستعلامات دي عشان تفصل الـ Head عن الـ Tail:
 ?- [H|T] = [a, b, c, d].
 ?- [H|T] = [a].
 ?- [H1, H2|T] = [a, b, c, d].
@@ -601,261 +1195,7 @@ real_salary(Person, Salary) :- employee(Person, _, _, Years, Basic), (Years &gt;
 ?- real_salary(hany, Salary). % Salary = 15000
 ?- employee(Person, _, _, Years, _), Years &gt; 5.
 % Person = ahmed ; Person = hany
-?- employee(Name, sales, _, _, _). % Name = saly ]]></description><link>practice-examples/chapter-4-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Chapter 4 - Practice.md</guid><pubDate>Fri, 22 May 2026 19:35:52 GMT</pubDate></item><item><title><![CDATA[Chapter 3 - Practice]]></title><description><![CDATA[اعمل قاعدة بيانات للعيلة دي:
-Aly is the father of Hany.
-Saly is the mother of Hany.
-Samy is the father of Aly.
-وبعدين اعمل الـ rules دي. X is a parent of Y if X is the father of Y or X is the mother of Y.
-X is a grandparent of Y if X is a parent of Z and Z is a parent of Y.
-واكتب الاستعلامات:
-Who is Hany's parent?
-Who is Aly's father?
-Who is Aly's grandparent?
-Solution (Parent &amp; Grandparent Rules)
-% Facts
-father(aly, hany).
-mother(saly, hany).
-father(samy, aly). % Rules
-parent(X, Y) :- father(X, Y).
-parent(X, Y) :- mother(X, Y).
-grandparent(X, Y) :- parent(X, Z), parent(Z, Y). Queries:
-?- parent(X, hany). % X = aly ; X = saly
-?- father(Y, aly). % Y = samy
-?- grandparent(X, hany). % X = samy اعمل قاعدة بيانات لشجرة العيلة دي :
-Hany is a parent of Samy.
-Saly is a parent of Samy.
-Saly is a parent of Lila.
-Samy is a parent of Aly.
-Samy is a parent of Dena.
-Dena is a parent of Tamer.
-Hany, Samy, Aly, Tamer are male.
-Saly, Dena, Lila are female.
-Solution (Family Tree Facts)
-parent(hany, samy).
-parent(saly, samy).
-parent(saly, lila).
-parent(samy, aly).
-parent(samy, dena).
-parent(dena, tamer).
-male(hany).
-male(samy).
-male(aly).
-male(tamer).
-female(saly).
-female(dena).
-female(lila). من قاعدة البيانات بتاعة شجرة العيلة (سؤال 2)، اعمل الـ rules دي:
-X is the father of Y if X is a parent of Y and X is male.
-X is the mother of Y if X is a parent of Y and X is female.
-X is a sibling of Y if they both have the same parent Z.
-Y is an offspring of X if X is a parent of Y.
-X is a sister of Y if X is a sibling of Y and X is female.
-Solution (Family Tree Rules)
-father(X, Y) :- parent(X, Y), male(X).
-mother(X, Y) :- parent(X, Y), female(X).
-sibling(X, Y) :- parent(Z, X), parent(Z, Y).
-offspring(Y, X) :- parent(X, Y).
-sister(X, Y) :- sibling(X, Y), female(X). من قاعدة البيانات بتاعة شجرة العيلة (سؤال 2)، اكتب الاستعلامات دي:
-Is Samy a parent of Dena?
-Is Aly a parent of Dena?
-Who is Lila's parent?
-Who is a parent of Aly and a parent of Dena?
-List all parent relationships.
-Who is Tamer's parent?
-Who is Dena's child?
-Who are the male offspring of Hany?
-Who has a sister?
-Who is Dena's grandparent?
-Solution (Family Tree Queries)
-?- parent(samy, dena). % true
-?- parent(aly, dena). % false
-?- parent(X, lila). % X = saly
-?- parent(X, aly), parent(X, dena). % X = samy
-?- parent(X, Y). % lists all
-?- parent(X, tamer). % X = dena
-?- parent(dena, X). % X = tamer
-?- parent(hany, X), male(X). % X = samy
-?- parent(Z, X), parent(Z, Y), female(X). % sister queries
-?- parent(X, Y), parent(Y, dena). % X = hany, Y = samy ; X = saly, Y = samy ; اعمل قاعدة بيانات للطلاب دي using the predicate اstudent(Name, Sex, Age):وبعدين اعمل rule:
-X is older than Y if age of X is greater than age of Y.
-واكتب الاستعلامات:
-What is Hany's age?
-Who is male?
-List names with age &lt; 30 and they are female.
-Find students older than Mona.
-Find students with age less than Ahmed.
-Find students younger than Ahmed and older than Mona.
-Solution (Student Age Database)
-% Facts
-student(ahmed, male, 30).
-student(hany, male, 25).
-student(rwan, female, 20).
-student(mona, female, 18). % Rule
-older(X, Y) :- student(X, _, AgeX), student(Y, _, AgeY), AgeX &gt; AgeY. Queries:
-?- student(hany, _, Age). % Age = 25
-?- student(Name, male, _). % Name = ahmed ; Name = hany
-?- student(Name, female, Age), Age &lt; 30. % Name = rwan ; Name = mona
-?- older(X, mona). % X = ahmed ; X = hany ; X = rwan
-?- student(X, _, AgeX), student(ahmed, _, AgeA), AgeX &lt; AgeA.
-% X = hany ; X = rwan ; X = mona
-?- student(X, _, Age), student(ahmed, _, AgeA), student(mona, _, AgeM), Age &lt; AgeA, Age &gt; AgeM.
-% X = hany ; X = rwan اعمل قاعدة بيانات:
-Samy is male.
-Hany is male.
-Samy is a child of Hany.
-وبعدين اعمل rule:
-X is a son of Y if X is male and X is a child of Y.
-واكتب الاستعلامات:
-Who is Samy the son of?
-Who is male? (اعرض كل الإجابات)
-Is Samy the son of someone? (استخدم anonymous variable _)
-Solution (son/child Rule)
-% Facts
-male(samy).
-male(hany).
-child(samy, hany). % Rule
-son(X, Y) :- male(X), child(X, Y). Queries:
-?- son(samy, X). % X = hany
-?- male(X). % X = samy ; X = hany
-?- son(samy, _). % true اعمل قاعدة بيانات لـ 4 blocks فوق بعضها:
-1.1. Block a is on block b.
-1.2. Block b is on block c.
-1.3. Block c is on block d.وبعدين اعمل recursive rule:
-X is above Y if X is directly on Y.
-X is above Y if X is on Z and Z is above Y.
-واكتب الاستعلامات:
-Is block b on block c?
-Is block a on block d? Is block a above block d?
-What blocks are above block c?
-Solution (Recursive above)
-% Facts
-on(a, b).
-on(b, c).
-on(c, d). % Recursive Rules
-above(X, Y) :- on(X, Y).
-above(X, Y) :- on(X, Z), above(Z, Y). Queries:
-?- on(b, c). % true
-?- on(a, d). % false
-?- above(a, d). % true
-?- above(X, c). % X = b ; X = a اعمل قاعدة بيانات:
-a is a parent of b.
-b is a parent of c.
-c is a parent of d.
-d is a parent of e.
-وبعدين اعمل recursive rule:
-X is a predecessor of Z if X is a parent of Z.
-X is a predecessor of Z if X is a parent of Y and Y is a predecessor of Z.
-واكتب الاستعلامات:
-Is a a parent of b?
-Is a a predecessor of b?
-Is a a predecessor of e?
-Who are the predecessors of d?
-Who are the descendants of a?
-Solution (Recursive predecessor)
-% Facts
-parent(a, b).
-parent(b, c).
-parent(c, d).
-parent(d, e). % Recursive Rules
-predecessor(X, Z) :- parent(X, Z).
-predecessor(X, Z) :- parent(X, Y), predecessor(Y, Z). Queries:
-?- parent(a, b). % true
-?- predecessor(a, b). % true
-?- predecessor(a, e). % true
-?- predecessor(X, d). % X = c ; X = b ; X = a
-?- predecessor(a, X). % X = b ; X = c ; X = d ; X = e اعمل قاعدة بيانات بالحقائق دي:
-An elephant is bigger than a horse.
-A horse is bigger than a donkey.
-A donkey is bigger than a dog.
-A donkey is bigger than a monkey.
-وبعدين اعمل recursive rule:
-X is bigger than Y if X is directly bigger than Y.
-X is bigger than Y if X is bigger than Z and Z is bigger than Y.
-واكتب الاستعلامات:
-Is an elephant bigger than a monkey?
-What is bigger than a donkey?
-What is a horse bigger than?
-What is bigger than a dog and that thing is also bigger than a monkey?
-Solution (Recursive is_bigger)
-% Facts
-bigger(elephant, horse).
-bigger(horse, donkey).
-bigger(donkey, dog).
-bigger(donkey, monkey). % Recursive Rules
-is_bigger(X, Y) :- bigger(X, Y).
-is_bigger(X, Y) :- bigger(X, Z), is_bigger(Z, Y). Queries:
-?- is_bigger(elephant, monkey). % true
-?- is_bigger(X, donkey). % X = horse ; X = elephant
-?- is_bigger(horse, X). % X = donkey ; X = dog ; X = monkey
-?- is_bigger(elephant, X), is_bigger(X, donkey).
-% X = horse اعمل قاعدة بيانات للـ graph دي using the predicate link(Node1, Node2, Distance):
-Node a is connected to b with distance 2.
-Node a is connected to c with distance 3.
-Node b is connected to d with distance 4.
-Node b is connected to e with distance 5.
-Node c is connected to f with distance 6.
-Node c is connected to g with distance 7.
-وبعدين اعمل recursive rule:
-X can reach Y with distance D if there is a direct link between them.
-X can reach Y with distance D if X can reach Z with distance D1 and Z can reach Y with distance D2 and D = D1 + D2.
-واكتب الاستعلامات:
-What nodes are directly connected to node b and their distance?
-Which nodes connect to node c and their distance?
-Which other nodes can you reach when starting at node a and their distances?
-Which nodes can be found between node a and node e, and their distances from a and to e?
-Solution (Graph Route)
-% Facts
-link(a, b, 2).
-link(a, c, 3).
-link(b, d, 4).
-link(b, e, 5).
-link(c, f, 6).
-link(c, g, 7). % Recursive Rules
-route(X, Y, D) :- link(X, Y, D).
-route(X, Y, D) :- link(X, Z, D1), route(Z, Y, D2), D is D1 + D2. Queries:
-?- link(b, X, D). % X = d, D = 4 ; X = e, D = 5
-?- link(X, c, D). % X = a, D = 3
-?- route(a, X, D). % X = b, D = 2 ; X = c, D = 3 ; % X = d, D = 6 ; X = e, D = 7 ; % X = f, D = 9 ; X = g, D = 10
-?- route(a, X, D1), route(X, e, D2). % X = b, D1 = 2, D2 = 5 اعمل قاعدة بيانات للرحلات الجوية دي:وبعدين اعمل rules:
-Flight N is faster than flight M if duration of N &lt; duration of M.
-You can travel from X to Y with total duration D if there is a direct flight from X to Y with duration D.
-You can travel from X to Y with total duration D if there is a flight from X to Z with duration D1 and you can travel from Z to Y with duration D2 and D = D1 + D2.
-واكتب الاستعلامات:
-Which cities can be reached by a single flight from Cairo?
-How long does flight AL2 take?
-From which cities can you fly to London (by a single flight)?
-Which flight numbers are faster than BA1?
-Which flight numbers are slower than AL2?
-Which cities can be reached by some sequence of flights from Cairo?
-From which cities can one travel to Paris by some sequence of flights?
-Solution (Flights)
-% Facts
-flight(ba1, cairo, rome, 3.5).
-flight(al2, rome, paris, 2.5).
-flight(ba6, cairo, london, 6.2).
-flight(af1, paris, brussels, 0.6). % Rules
-faster(N, M) :- flight(N, _, _, D1), flight(M, _, _, D2), D1 &lt; D2. travel(X, Y, D) :- flight(_, X, Y, D).
-travel(X, Y, D) :- flight(_, X, Z, D1), travel(Z, Y, D2), D is D1 + D2. Queries:
-?- flight(_, cairo, City, _). % City = rome ; City = london
-?- flight(al2, _, _, Duration). % Duration = 2.5
-?- flight(_, From, london, _). % From = cairo
-?- faster(F, ba1). % F = al2 ; F = af1
-?- flight(F, _, _, D), flight(al2, _, _, D2), D &gt; D2.
-% F = ba1, D = 3.5 ; F = ba6, D = 6.2
-?- travel(cairo, City, _). % City = rome ; City = london ; % City = paris ; City = brussels
-?- travel(City, paris, _). % City = rome ; City = cairo اعمل قاعدة بيانات لفترات حكم الأمراء دي:وبعدين اعمل rule: X was a prince during year Y if X reigned between years A and B, and Y is between A and B inclusive.واكتب الاستعلامات:
-Was Samy a prince in year 225?
-Was Aly a prince in year 1979?
-Which prince(s) were on the throne in year 240?
-Solution (Reigns Database)
-% Facts
-reigns(aly, 200, 220).
-reigns(samy, 221, 230).
-reigns(hany, 231, 245).
-reigns(lotfy, 246, 260). % Rule
-prince(X, Y) :- reigns(X, A, B), Y &gt;= A, Y =&lt; B. Queries:
-?- prince(samy, 225). % true
-?- prince(aly, 1979). % false
-?- prince(X, 240). % X = hany ]]></description><link>practice-examples/chapter-3-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Chapter 3 - Practice.md</guid><pubDate>Fri, 22 May 2026 19:13:46 GMT</pubDate></item><item><title><![CDATA[Chapter 1 & 2 - Practice]]></title><description><![CDATA[اعمل Facts للجمل الانجليزي دي:
+?- employee(Name, sales, _, _, _). % Name = saly ]]></description><link>practice-examples/chapter-4-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Chapter 4 - Practice.md</guid><pubDate>Fri, 22 May 2026 19:35:52 GMT</pubDate></item><item><title><![CDATA[Chapter 1 & 2 - Practice]]></title><description><![CDATA[اعمل Facts للجمل الانجليزي دي:
 Gold is valuable.
 Saly is a female.
 Aly owns some gold.
