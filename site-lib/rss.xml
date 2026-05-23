@@ -1,4 +1,4 @@
-<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Prolog]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>Prolog</title><link/></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Sat, 23 May 2026 12:29:00 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Sat, 23 May 2026 12:28:50 GMT</pubDate><ttl>60</ttl><dc:creator/><item><title><![CDATA[Lists and Arithmetic (Lecture 5 Part 2)]]></title><description><![CDATA[مقدمة المحاضرة بتتكلم عن الـ List وهي محاضره دسمه جدا ومهمه جدا مينفعش تتكروت.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Prolog]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>Prolog</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Sat, 23 May 2026 12:38:18 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Sat, 23 May 2026 12:38:08 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[Lists and Arithmetic (Lecture 5 Part 2)]]></title><description><![CDATA[مقدمة المحاضرة بتتكلم عن الـ List وهي محاضره دسمه جدا ومهمه جدا مينفعش تتكروت.
 هنفهم المحاضرة دي إزاي الـ List بتتكون من Head و Tail، وإزاي بنعمل Unification بين الـ Lists.
 هنتعلم العمليات الأساسية على الـ Lists زي الـ Membership، الـ Append، الإضافة، الحذف، التقسيم (Decomposing)، والتباديل (Permutations). الـ List هي مجموعة من البيانات المرتبة (Ordered Data). ممكن تحتوي على صفر أو أكتر من العناصر.
 العناصر بتكون محطوطة بين أقواس مربعة [ ] وبتتصل ببعضها بفاصلة ,. أمثلة:
@@ -69,7 +69,36 @@ sumlist([], 0).
 sumlist([H | T], N) :- sumlist(T, N1), N is N1 + H. اختبار إن طول الـ List زوجي (Even):
 بنسحب كل مرة عنصرين، لحد ما نوصل لقايمة فيها عنصرين أو قايمة فاضية.
 even([_,_]).
-even([_,_ | T]) :- even(T). قبل ما تدخل علي المحاضره الي بعدها حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Lecture 5 (Part 2) - Practice" href="practice-examples/lecture-5-(part-2)-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Lecture 5 (Part 2) - Practice</a>]]></description><link>summaries/lecture-5-part-2-lists-and-arithmetic.html</link><guid isPermaLink="false">College/prolog/Summaries/Lecture 5 Part 2 - Lists and Arithmetic.md</guid><pubDate>Sat, 23 May 2026 12:26:24 GMT</pubDate></item><item><title><![CDATA[Lists and Arithmetic (Lecture 5 - Part 1)]]></title><description><![CDATA[مقدمة في المحاضرة دي هنتعلم إزاي نتعامل مع العمليات الحسابية (Arithmetic Operations) في الـ Prolog.
+even([_,_ | T]) :- even(T). قبل ما تدخل علي المحاضره الي بعدها حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Chapter 5 (Part 2) - Practice" href="practice-examples/chapter-5-(part-2)-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Chapter 5 (Part 2) - Practice</a>]]></description><link>summaries/chapter-5-part-2-lists-and-arithmetic.html</link><guid isPermaLink="false">College/prolog/Summaries/Chapter 5 Part 2 - Lists and Arithmetic.md</guid><pubDate>Sat, 23 May 2026 12:34:56 GMT</pubDate></item><item><title><![CDATA[Prolog Syntax & Structures (Lecture 4)]]></title><description><![CDATA[مقدمة في المحاضرة دي هنفهم أكتر عن الـ Syntax (طريقة كتابة الكود) في الـ Prolog.
+هنتعمق في أنواع البيانات (Data Objects) والـ Structures (البيانات المركبة) وإزاي بنمثلها.
+هنعرف إزاي الـ Prolog بيعمل Matching (مطابقة أو Unification) بين البيانات المختلفة.
+وهنراجع على أدوات الربط المنطقية (Conjunction &amp; Disjunction) وأولوياتها. كل البيانات في Prolog بنسميها Terms. بتنقسم لنوعين أساسيين زي ما بدأنا نفهم قبل كده:بتشمل الـ Constants (الثوابت) والـ Variables (المتغيرات).
+دي ثوابت نصية ممكن تتكتب بـ 3 طرق: حروف وأرقام و Underscore: لازم تبدأ بحرف صغير (Lower-case). أمثلة صحيحة: anna, x25, x_y. رموز خاصة (Special Characters): أمثلة صحيحة: &lt;----&gt;, ==&gt;, ::. أي نصوص بين Single Quotes (' '): دي بتسمحلك تحط مسافات أو تبدأ بحرف كابيتال. أمثلة صحيحة: ' Tom ', 'South America', 'Sarah Jones'. أمثلة على Atoms غلط (Non-Valid): ا 2340ieh (بتبدأ برقم).
+ا george-smith (فيها Dash -).
+ا Void (بتبدأ بحرف Capital -&gt; دي كده Variable).
+ا _alpha (بتبدأ بـ Underscore -&gt; دي كده Variable). أرقام صحيحة (Integers): زي 1, 1313, -97.
+أرقام عشرية (Real Numbers): زي 3.14, -0.0035. لازم تبدأ بحرف كبير (Upper-case) أو Underscore (_). أمثلة: X, Result, _x23. الـ Anonymous Variable (المتغير المجهول _): بنستخدمه لو محتاجين نسأل عن حاجة بس مش مهتمين بقيمتها (مش عايزين نطبعها). مثال: ?- parent(X, _). (مين اللي عنده أي أبناء وخلاص؟ مش مهم أسامي الأبناء). الـ Structure هو كائن واحد بيتكون من مجموعة كائنات تانية جواه (Components).
+شكلها: functor(component1, component2, ...)
+الـ Functor: هو اسم الـ Structure (ولازم يكون Atom يعني بيبدأ بحرف صغير).
+الـ Components: هي العناصر اللي جوه، وممكن تكون ثوابت، متغيرات، أو حتى Structures تانية (Nested).
+ملحوظة
+نقدر نستخدم متغيرات جوة الـ Structure عادي، زي: date(Day, may, 2001).
+أي Structure نقدر نتخيله على شكل شجرة. الـ Functor هو الـ Root (الجذر)، والـ Components هم الفروع.المعادلات الحسابية في الـ Prolog بتتعامل كـ Structures، حيث العمليات (زي + و *) هي الـ Functors.
+مثال للمعادلة: (a + b) * (c - 5)
+تتكتب كـ Structure كده: *( +(a, b), -(c, 5) ) حاجة شبه الـ prefix , postfix الي اخدناها في الداتا ستراكتشر قبل كدهمن أهم العمليات في الـ Prolog هي الـ Matching. بنقول إن قيمتين (Terms) بيطابقوا بعض لو كانوا:
+متطابقين تماماً (Identical).
+أو نقدر نعوض في المتغيرات اللي فيهم عشان يبقوا متطابقين. لو Constants : بيطابقوا بعض لو هما نفس الحاجة بالظبط (مثلاً may = may).
+لو Variable مع أي حاجة: بيطابقها فوراً والمتغير بياخد القيمة دي .
+لو Structures (أشياء مركبة): بيطابقوا بعض فقط لو: ليهم نفس الـ Functor (نفس الاسم).
+ليهم نفس الـ Arity (نفس عدد الـ Components/Arguments).
+وكل Component بيطابق الـ Component اللي في نفس مكانه الناحية التانية. مثال 1:
+?- date(4, M, 2001) = date(D1, may, Y1). النتيجة: D = 4, M = may, Y1 = 2001 (المطابقة نجحت). مثال 2 (Nested Structures): ?- addr(flat(4), street('Home Str.'), postcode(eh8_9lw)) = addr(flat(Z), Yy, postcode(Xxx)). النتيجة: Z = 4, Yy = street('Home Str.'), Xxx = eh8_9lw (المطابقة بتشتغل بشكل تكراري Recursively على العناصر الداخلية).
+مثال على الأولويات:
+لو كتبنا:
+P :- Q, R; S, T, U. عشان الـ , (AND) أقوى، الـ Prolog بيفهمها كأنها متقسمة بقوسين كده:
+P :- (Q, R) ; (S, T, U). يعني كأننا كتبنا قاعدتين منفصلين:
+P :- Q, R.
+P :- S, T, U. قبل ما تدخل علي المحاضره الي بعدها حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Chapter 4 - Practice" href="practice-examples/chapter-4-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Chapter 4 - Practice</a>]]></description><link>summaries/chapter-4-prolog-syntax-&amp;-structures.html</link><guid isPermaLink="false">College/prolog/Summaries/Chapter 4 - Prolog Syntax &amp; Structures.md</guid><pubDate>Sat, 23 May 2026 12:34:55 GMT</pubDate></item><item><title><![CDATA[Lists and Arithmetic (Lecture 5 - Part 1)]]></title><description><![CDATA[مقدمة في المحاضرة دي هنتعلم إزاي نتعامل مع العمليات الحسابية (Arithmetic Operations) في الـ Prolog.
 هنفهم الفرق بين علامة = (الـ Unification) وبين معامل الحساب is وعلامات المقارنة.
 هنتدرب على كتابة الـ Functions الحسابية وكمان العلاقات اللي بتحتاج تفكير رياضي زي حساب الكثافة السكانية، أو الـ Factorial والـ GCD (القاسم المشترك الأكبر).
 هنشوف إزاي نمثل البوابات المنطقية (Logic Gates) في الـ Prolog ونبني بيها دايرة بسيطة زي الـ Half Adder. الـ Prolog بيدعم العمليات الحسابية الأساسية وكلها مبنية جاهزة (Built-in)، وهي:
@@ -112,7 +141,7 @@ Sum = A XOR B
 تجربة السؤال:?- halfadder(0, 1, C, S).
 % النتيجة:
 % C = 0
-% S = 1 قبل ما تدخل علي المحاضره الي بعدها حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Lecture 5 (Part 1) - Practice" href="practice-examples/lecture-5-(part-1)-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Lecture 5 (Part 1) - Practice</a>]]></description><link>summaries/lecture-5-part-1-lists-and-arithmetic.html</link><guid isPermaLink="false">College/prolog/Summaries/Lecture 5 Part 1 - Lists and Arithmetic.md</guid><pubDate>Sat, 23 May 2026 12:24:54 GMT</pubDate></item><item><title><![CDATA[Prolog Rules & Recursion (Lecture 3)]]></title><description><![CDATA[مقدمة في المحاضرة دي هنكمل على اللي بدأناه في الـ Prolog وهنركز أكتر على إزاي بنبني الـ (Rules).
+% S = 1 قبل ما تدخل علي المحاضره الي بعدها حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Chapter 5 (Part 1) - Practice" href="practice-examples/chapter-5-(part-1)-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Chapter 5 (Part 1) - Practice</a>]]></description><link>summaries/chapter-5-part-1-lists-and-arithmetic.html</link><guid isPermaLink="false">College/prolog/Summaries/Chapter 5 Part 1 - Lists and Arithmetic.md</guid><pubDate>Sat, 23 May 2026 12:34:45 GMT</pubDate></item><item><title><![CDATA[Prolog Rules & Recursion (Lecture 3)]]></title><description><![CDATA[مقدمة في المحاضرة دي هنكمل على اللي بدأناه في الـ Prolog وهنركز أكتر على إزاي بنبني الـ (Rules).
 هنعرف إزاي الـ Prolog بيجاوب على الأسئلة بتاعتنا.
 هنعرف أنواع البيانات (Data Objects) اللي موجودة في اللغة.
 ,واهم حاجة، الـ Recursion (التكرار) في الـ Prolog وازاي بنستخدمه لبناء. زي ما عرفنا قبل كده، الـ Rule بتستخدم عشان نستنتج حاجة بناءً على شروط معينة. الـ Fact: بتقول إن في حاجة دايماً صح (Unconditionally true). مثال: male(aly).
@@ -141,10 +170,39 @@ predecessor(X, Z) :- parent(X, Y), predecessor(Y, Z).
 route(X, Y, D) :- link(X, Z, D1), route(Z, Y, D2), D is D1 + D2.
 تعالى نشوف إزاي Prolog بيفكر خطوة بخطوة لو سألناه ?- predecessor(tom, pat). (عايزين نعرف هل tom هو جد pat؟) بصمجيات لو مش فاهم الـtracing بتاع الـ Recursive rule عادي مش لازم تفهمه عشان تحل هتلاقيهم كلهم بييجوا بنفس الطريقه: above(X, Y) :- on(X, Y).
 above(X, Y) :- on(X, Z), above(Z, Y). لاحظ هنا اننا دايما بنكتب اسم الـ recursive rule الي اتطلبت مننها ( -:above(X, Y)) , بعدها بنكتب الfact المباشره الي اداهالنا في السؤال .on(X, Y) , تاني سطر بنكتب نفس الي كتبناه فوق above(X, Y) :- on(X, Z) بس في الاخر بننادي علي اسم الـ recursive rule بتاعتنا تاني (above(Z, Y)) .
-وبالنسبه للمتغيرات ف احنا بنمشي بنفس النمط برده , بنحط X في الاول و Y في الاخير وبينهم Z ك وسيط (on(X, Z), above(Z, Y)) لو حاسس انك مش فاهم بص علي الامثله هتلاقيهم كلهم ماشيين بنفس الطريقه وهتفهم لوحدك قبل ما تدخل علي المحاضره الي بعدها حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Lecture 3 - Practice" href="practice-examples/lecture-3-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Lecture 3 - Practice</a>]]></description><link>summaries/lecture-3-prolog-rules-&amp;-recursion.html</link><guid isPermaLink="false">College/prolog/Summaries/Lecture 3 - Prolog Rules &amp; Recursion.md</guid><pubDate>Sat, 23 May 2026 12:24:06 GMT</pubDate></item><item><title><![CDATA[Prolog Index]]></title><description><![CDATA[مهم جدا قبل ما تبدا الشرح مش مفوت اي جزئية في المنهج فلو اول مره تقرا المنهج ذاكره من الشرح وبعدين روح علي الحل وحل بايدك
+وبالنسبه للمتغيرات ف احنا بنمشي بنفس النمط برده , بنحط X في الاول و Y في الاخير وبينهم Z ك وسيط (on(X, Z), above(Z, Y)) لو حاسس انك مش فاهم بص علي الامثله هتلاقيهم كلهم ماشيين بنفس الطريقه وهتفهم لوحدك قبل ما تدخل علي المحاضره الي بعدها حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Chapter 3 - Practice" href="practice-examples/chapter-3-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Chapter 3 - Practice</a>]]></description><link>summaries/chapter-3-prolog-rules-&amp;-recursion.html</link><guid isPermaLink="false">College/prolog/Summaries/Chapter 3 - Prolog Rules &amp; Recursion.md</guid><pubDate>Sat, 23 May 2026 12:34:41 GMT</pubDate></item><item><title><![CDATA[Introduction to Prolog (Chapters 1 & 2)]]></title><description><![CDATA[مقدمة الـ Prolog هي لغة برمجة منطقية (Logic Programming).
+بتعتمد على الـ Declarative Programming (البرمجة الوصفية) بدلاً من الـ Procedural (الإجرائية).
+بتستخدم بشكل أساسي في تطبيقات الذكاء الاصطناعي (AI) والأنظمة الخبيرة (Expert Systems). ا PROLOG اختصار لـ: PROgramming in LOGic.
+البرنامج في Prolog عبارة عن Knowledgebase (قاعدة معرفة) بتتكون من: ا Facts (حقائق): حاجات دايمًا صح.
+ا Rules (قواعد): بتعتمد على شروط تانية عشان تكون صح. بتعبر عن علاقة بين الـ Objects أو خاصية لشيء معين، وبتكون دايمًا صح (Always True).
+مثال علي علاقة: .likes(aly, hany) -&gt; علي بيحب هاني (حب اخوي).
+مثال علي خاصية: .green(rose) -&gt; الوردة لونها اخضر.
+الـ Relation: هي likes.
+الـ Objects: هي aly و hany.
+قواعد كتابة الـ Facts اسم العلاقة والـ objects لازم يبدأوا بـ lower-case.
+اسم العلاقة بيتكتب الأول وبعده الـ objects بين قوسين.
+لازم تنتهي بـ Full stop (نقطة .).
+الترتيب مهم: likes(aly, hany) معناها علي بيحب هاني، مش العكس. بتستخدم الرمز :- اللي معناه IF. مثال: parent(X, Y) :- father(X, Y).
+معناها ان X هو والد Y لو كان X هو أبو Y. ملحوظه ملهاش لازمه ا parent يعني والد يعني ممكن يبقي اب او ام , اما father يعني اب الي هو parent وفي نفس الوقت male بتبدأ بالرمز ?- في الـ interpreter.
+الـ Prolog بيدور في قاعدة البيانات من أول سطر لسطر، وبيقارن (Matching) كل Fact مع السؤال.
+لو لقى تطابق تام (نفس الـ Predicate ونفس الـ Arguments) -&gt; yes، لو ملقهاش -&gt; no.
+في Prolog، الـ Predicate هو الاسم اللي بنطلقه على الكلمة اللي بتيجي قبل القوسين في أي حقيقة (Fact) أو قاعدة (Rule).
+الـ Facts والـ Rules الاتنين بيُعتبروا تعريفات للـ Predicate.
+الـ Head في الـ Predicate بيتكون من: اسم الـ Predicate (الـ Name).
+الـ Arguments (المعاملات/المُدخلات) اللي ممكن تكون ثوابت (Constants) أو متغيرات (Variables). ا Variables لازم تبدأ بـ Capital letter (ا Upper Case) أو _ ( underscore) هنعرف معناها قدام.
+بنستخدمها لما نكون عايزين نسأل "مين اللي بيحب هاني؟" بدل "هل علي بيحب هاني؟".
+مثال: ?- likes(X, hany).
+ا Prolog هيرجع قيمة X. لو فيه أكتر من حل، بنضغط ; عشان نشوف الباقي، وآخر حاجة يرجع no.
+ممكن نربط أكتر من حاجة باستخدام الفاصلة , (AND).
+مثال: ?- likes(mary, X), likes(john, X).
+السؤال ده معناه: "هل فيه حاجة Mary و John الاتنين بيحبوها؟". بنكتب الـ knowledgebase في ملف ونحفظه بامتداد .pl (مثلاً family.pl).
+بنفتح الـ SWI-Prolog ونعمل Consult للملف عشان يحمله: بنكتب: [family]. أو consult(family). (متنساش النقطة في الآخر). بعد كده نقدر نسأل الأسئلة (Queries).
+ممكن نستخدم المقارنات زي أصغر من &lt; في الأسئلة:
+مثال: ?- age(Name, Age), Age &lt; 40.
+السؤال ده معناه: "هات لي كل الأسماء اللي سنها أصغر من 40". قبل ما تدخل علي المحاضره الي بعدها حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Chapter 1 &amp; 2 - Practice" href="practice-examples/chapter-1-&amp;-2-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Chapter 1 &amp; 2 - Practice</a>]]></description><link>summaries/chapter-1-&amp;-2-introduction-to-prolog.html</link><guid isPermaLink="false">College/prolog/Summaries/Chapter 1 &amp; 2 - Introduction to Prolog.md</guid><pubDate>Sat, 23 May 2026 12:34:07 GMT</pubDate></item><item><title><![CDATA[Prolog Index]]></title><description><![CDATA[مهم جدا قبل ما تبدا الشرح مش مفوت اي جزئية في المنهج فلو اول مره تقرا المنهج ذاكره من الشرح وبعدين روح علي الحل وحل بايدك
 الاساله عبارة عن امثلة المحاضرة والسكاشن فقط (مفيش اي اسالة من ai او مش بتاعة الدكتور )
 الحل في المادة دي اهم من الشرح لو قدرت تحل اسالة المحاضرة يبقي انته فاهمها كويس وباذن الله مش هتغلط فيها سواء اختياري او مقالي
-نزل SWI Prolog وحل بنفسك ده هيفرق جدا معاك وهتفهم المادة بسهوله فاضل المحاضرة 6-7 لسه متعملوش لو فيه اي اخطاء سواء في الاساله او في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a>]]></description><link>prolog-index.html</link><guid isPermaLink="false">College/prolog/Prolog Index.md</guid><pubDate>Sat, 23 May 2026 12:01:11 GMT</pubDate></item><item><title><![CDATA[Lecture 5 (Part 2) - Practice]]></title><description><![CDATA[اكتب ناتج (Output) كل استعلام من الاستعلامات دي عشان تفصل الـ Head عن الـ Tail:
+نزل SWI Prolog وحل بنفسك ده هيفرق جدا معاك وهتفهم المادة بسهوله فاضل شابتر 6-7 لسه متعملوش لو فيه اي اخطاء سواء في الاساله او في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a>]]></description><link>prolog-index.html</link><guid isPermaLink="false">College/prolog/Prolog Index.md</guid><pubDate>Sat, 23 May 2026 12:33:53 GMT</pubDate></item><item><title><![CDATA[Chapter 5 (Part 2) - Practice]]></title><description><![CDATA[اكتب ناتج (Output) كل استعلام من الاستعلامات دي عشان تفصل الـ Head عن الـ Tail:
 ?- [H|T] = [a, b, c, d].
 ?- [H|T] = [a].
 ?- [H1, H2|T] = [a, b, c, d].
@@ -318,7 +376,7 @@ Solution (Operations)
 2) N = 10. % (مجموع 1+2+3+4).
 3) true. % (عدد العناصر 4، وده عدد زوجي).
 4) L = [3, 2, 1]. % (عكس الترتيب).
-5) A = [a, b, c, d]. % (ترتيب أبجدي عادي). ]]></description><link>practice-examples/lecture-5-(part-2)-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Lecture 5 (Part 2) - Practice.md</guid><pubDate>Sat, 23 May 2026 11:52:27 GMT</pubDate></item><item><title><![CDATA[Lecture 5 (Part 1) - Practice]]></title><description><![CDATA[اعمل قاعدة بيانات للسكان والمساحة للدول دي:وبعدين اعمل rule: ا density is population divided by area.واكتب الاستعلامات:
+5) A = [a, b, c, d]. % (ترتيب أبجدي عادي). ]]></description><link>practice-examples/chapter-5-(part-2)-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Chapter 5 (Part 2) - Practice.md</guid><pubDate>Sat, 23 May 2026 11:52:27 GMT</pubDate></item><item><title><![CDATA[Chapter 5 (Part 1) - Practice]]></title><description><![CDATA[اعمل قاعدة بيانات للسكان والمساحة للدول دي:وبعدين اعمل rule: ا density is population divided by area.واكتب الاستعلامات:
 Find the population of India.
 Find the area of Brazil.
 Find the population density of China.
@@ -413,7 +471,7 @@ sum_odd(1, 1).
 sum_odd(M, S) :- M &gt; 1, M1 is M - 1, sum_odd(M1, S1), (M mod 2 =:= 1 -&gt; S is S1 + M ; S is S1). Queries:
 ?- sum_odd(5, S). % S = 9 (1+3+5)
 ?- sum_odd(7, S). % S = 16 (1+3+5+7)
-?- sum_odd(10, S). % S = 25 (1+3+5+7+9) ]]></description><link>practice-examples/lecture-5-(part-1)-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Lecture 5 (Part 1) - Practice.md</guid><pubDate>Fri, 22 May 2026 19:45:24 GMT</pubDate></item><item><title><![CDATA[Lecture 4 - Practice]]></title><description><![CDATA[حدد إذا كان كل كود من دول يعتبر Atom صحيح ولا لأ:
+?- sum_odd(10, S). % S = 25 (1+3+5+7+9) ]]></description><link>practice-examples/chapter-5-(part-1)-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Chapter 5 (Part 1) - Practice.md</guid><pubDate>Fri, 22 May 2026 19:45:24 GMT</pubDate></item><item><title><![CDATA[Chapter 4 - Practice]]></title><description><![CDATA[حدد إذا كان كل كود من دول يعتبر Atom صحيح ولا لأ:
 2340ieh
 george-smith
 Void
@@ -543,36 +601,7 @@ real_salary(Person, Salary) :- employee(Person, _, _, Years, Basic), (Years &gt;
 ?- real_salary(hany, Salary). % Salary = 15000
 ?- employee(Person, _, _, Years, _), Years &gt; 5.
 % Person = ahmed ; Person = hany
-?- employee(Name, sales, _, _, _). % Name = saly ]]></description><link>practice-examples/lecture-4-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Lecture 4 - Practice.md</guid><pubDate>Fri, 22 May 2026 19:35:52 GMT</pubDate></item><item><title><![CDATA[Prolog Syntax & Structures (Lecture 4)]]></title><description><![CDATA[مقدمة في المحاضرة دي هنفهم أكتر عن الـ Syntax (طريقة كتابة الكود) في الـ Prolog.
-هنتعمق في أنواع البيانات (Data Objects) والـ Structures (البيانات المركبة) وإزاي بنمثلها.
-هنعرف إزاي الـ Prolog بيعمل Matching (مطابقة أو Unification) بين البيانات المختلفة.
-وهنراجع على أدوات الربط المنطقية (Conjunction &amp; Disjunction) وأولوياتها. كل البيانات في Prolog بنسميها Terms. بتنقسم لنوعين أساسيين زي ما بدأنا نفهم قبل كده:بتشمل الـ Constants (الثوابت) والـ Variables (المتغيرات).
-دي ثوابت نصية ممكن تتكتب بـ 3 طرق: حروف وأرقام و Underscore: لازم تبدأ بحرف صغير (Lower-case). أمثلة صحيحة: anna, x25, x_y. رموز خاصة (Special Characters): أمثلة صحيحة: &lt;----&gt;, ==&gt;, ::. أي نصوص بين Single Quotes (' '): دي بتسمحلك تحط مسافات أو تبدأ بحرف كابيتال. أمثلة صحيحة: ' Tom ', 'South America', 'Sarah Jones'. أمثلة على Atoms غلط (Non-Valid): ا 2340ieh (بتبدأ برقم).
-ا george-smith (فيها Dash -).
-ا Void (بتبدأ بحرف Capital -&gt; دي كده Variable).
-ا _alpha (بتبدأ بـ Underscore -&gt; دي كده Variable). أرقام صحيحة (Integers): زي 1, 1313, -97.
-أرقام عشرية (Real Numbers): زي 3.14, -0.0035. لازم تبدأ بحرف كبير (Upper-case) أو Underscore (_). أمثلة: X, Result, _x23. الـ Anonymous Variable (المتغير المجهول _): بنستخدمه لو محتاجين نسأل عن حاجة بس مش مهتمين بقيمتها (مش عايزين نطبعها). مثال: ?- parent(X, _). (مين اللي عنده أي أبناء وخلاص؟ مش مهم أسامي الأبناء). الـ Structure هو كائن واحد بيتكون من مجموعة كائنات تانية جواه (Components).
-شكلها: functor(component1, component2, ...)
-الـ Functor: هو اسم الـ Structure (ولازم يكون Atom يعني بيبدأ بحرف صغير).
-الـ Components: هي العناصر اللي جوه، وممكن تكون ثوابت، متغيرات، أو حتى Structures تانية (Nested).
-ملحوظة
-نقدر نستخدم متغيرات جوة الـ Structure عادي، زي: date(Day, may, 2001).
-أي Structure نقدر نتخيله على شكل شجرة. الـ Functor هو الـ Root (الجذر)، والـ Components هم الفروع.المعادلات الحسابية في الـ Prolog بتتعامل كـ Structures، حيث العمليات (زي + و *) هي الـ Functors.
-مثال للمعادلة: (a + b) * (c - 5)
-تتكتب كـ Structure كده: *( +(a, b), -(c, 5) ) حاجة شبه الـ prefix , postfix الي اخدناها في الداتا ستراكتشر قبل كدهمن أهم العمليات في الـ Prolog هي الـ Matching. بنقول إن قيمتين (Terms) بيطابقوا بعض لو كانوا:
-متطابقين تماماً (Identical).
-أو نقدر نعوض في المتغيرات اللي فيهم عشان يبقوا متطابقين. لو Constants : بيطابقوا بعض لو هما نفس الحاجة بالظبط (مثلاً may = may).
-لو Variable مع أي حاجة: بيطابقها فوراً والمتغير بياخد القيمة دي .
-لو Structures (أشياء مركبة): بيطابقوا بعض فقط لو: ليهم نفس الـ Functor (نفس الاسم).
-ليهم نفس الـ Arity (نفس عدد الـ Components/Arguments).
-وكل Component بيطابق الـ Component اللي في نفس مكانه الناحية التانية. مثال 1:
-?- date(4, M, 2001) = date(D1, may, Y1). النتيجة: D = 4, M = may, Y1 = 2001 (المطابقة نجحت). مثال 2 (Nested Structures): ?- addr(flat(4), street('Home Str.'), postcode(eh8_9lw)) = addr(flat(Z), Yy, postcode(Xxx)). النتيجة: Z = 4, Yy = street('Home Str.'), Xxx = eh8_9lw (المطابقة بتشتغل بشكل تكراري Recursively على العناصر الداخلية).
-مثال على الأولويات:
-لو كتبنا:
-P :- Q, R; S, T, U. عشان الـ , (AND) أقوى، الـ Prolog بيفهمها كأنها متقسمة بقوسين كده:
-P :- (Q, R) ; (S, T, U). يعني كأننا كتبنا قاعدتين منفصلين:
-P :- Q, R.
-P :- S, T, U. قبل ما تدخل علي المحاضره الي بعدها حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Lecture 4 - Practice" href="practice-examples/lecture-4-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Lecture 4 - Practice</a>]]></description><link>summaries/lecture-4-prolog-syntax-&amp;-structures.html</link><guid isPermaLink="false">College/prolog/Summaries/Lecture 4 - Prolog Syntax &amp; Structures.md</guid><pubDate>Fri, 22 May 2026 19:29:46 GMT</pubDate></item><item><title><![CDATA[Lecture 3 - Practice]]></title><description><![CDATA[اعمل قاعدة بيانات للعيلة دي:
+?- employee(Name, sales, _, _, _). % Name = saly ]]></description><link>practice-examples/chapter-4-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Chapter 4 - Practice.md</guid><pubDate>Fri, 22 May 2026 19:35:52 GMT</pubDate></item><item><title><![CDATA[Chapter 3 - Practice]]></title><description><![CDATA[اعمل قاعدة بيانات للعيلة دي:
 Aly is the father of Hany.
 Saly is the mother of Hany.
 Samy is the father of Aly.
@@ -826,7 +855,7 @@ reigns(lotfy, 246, 260). % Rule
 prince(X, Y) :- reigns(X, A, B), Y &gt;= A, Y =&lt; B. Queries:
 ?- prince(samy, 225). % true
 ?- prince(aly, 1979). % false
-?- prince(X, 240). % X = hany ]]></description><link>practice-examples/lecture-3-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Lecture 3 - Practice.md</guid><pubDate>Fri, 22 May 2026 19:13:46 GMT</pubDate></item><item><title><![CDATA[Lecture 1 & 2 - Practice]]></title><description><![CDATA[اعمل Facts للجمل الانجليزي دي:
+?- prince(X, 240). % X = hany ]]></description><link>practice-examples/chapter-3-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Chapter 3 - Practice.md</guid><pubDate>Fri, 22 May 2026 19:13:46 GMT</pubDate></item><item><title><![CDATA[Chapter 1 & 2 - Practice]]></title><description><![CDATA[اعمل Facts للجمل الانجليزي دي:
 Gold is valuable.
 Saly is a female.
 Aly owns some gold.
@@ -956,33 +985,4 @@ Queries:
 ?- parent(bob, X).
 ?- parent(X, Y).
 ?- parent(X, Y), parent(Y, jim).
-?- parent(X, ann), parent(X, pat). ]]></description><link>practice-examples/lecture-1-&amp;-2-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Lecture 1 &amp; 2 - Practice.md</guid><pubDate>Fri, 22 May 2026 18:23:25 GMT</pubDate></item><item><title><![CDATA[Introduction to Prolog (Lectures 1 & 2)]]></title><description><![CDATA[مقدمة الـ Prolog هي لغة برمجة منطقية (Logic Programming).
-بتعتمد على الـ Declarative Programming (البرمجة الوصفية) بدلاً من الـ Procedural (الإجرائية).
-بتستخدم بشكل أساسي في تطبيقات الذكاء الاصطناعي (AI) والأنظمة الخبيرة (Expert Systems). ا PROLOG اختصار لـ: PROgramming in LOGic.
-البرنامج في Prolog عبارة عن Knowledgebase (قاعدة معرفة) بتتكون من: ا Facts (حقائق): حاجات دايمًا صح.
-ا Rules (قواعد): بتعتمد على شروط تانية عشان تكون صح. بتعبر عن علاقة بين الـ Objects أو خاصية لشيء معين، وبتكون دايمًا صح (Always True).
-مثال علي علاقة: .likes(aly, hany) -&gt; علي بيحب هاني (حب اخوي).
-مثال علي خاصية: .green(rose) -&gt; الوردة لونها اخضر.
-الـ Relation: هي likes.
-الـ Objects: هي aly و hany.
-قواعد كتابة الـ Facts اسم العلاقة والـ objects لازم يبدأوا بـ lower-case.
-اسم العلاقة بيتكتب الأول وبعده الـ objects بين قوسين.
-لازم تنتهي بـ Full stop (نقطة .).
-الترتيب مهم: likes(aly, hany) معناها علي بيحب هاني، مش العكس. بتستخدم الرمز :- اللي معناه IF. مثال: parent(X, Y) :- father(X, Y).
-معناها ان X هو والد Y لو كان X هو أبو Y. ملحوظه ملهاش لازمه ا parent يعني والد يعني ممكن يبقي اب او ام , اما father يعني اب الي هو parent وفي نفس الوقت male بتبدأ بالرمز ?- في الـ interpreter.
-الـ Prolog بيدور في قاعدة البيانات من أول سطر لسطر، وبيقارن (Matching) كل Fact مع السؤال.
-لو لقى تطابق تام (نفس الـ Predicate ونفس الـ Arguments) -&gt; yes، لو ملقهاش -&gt; no.
-في Prolog، الـ Predicate هو الاسم اللي بنطلقه على الكلمة اللي بتيجي قبل القوسين في أي حقيقة (Fact) أو قاعدة (Rule).
-الـ Facts والـ Rules الاتنين بيُعتبروا تعريفات للـ Predicate.
-الـ Head في الـ Predicate بيتكون من: اسم الـ Predicate (الـ Name).
-الـ Arguments (المعاملات/المُدخلات) اللي ممكن تكون ثوابت (Constants) أو متغيرات (Variables). ا Variables لازم تبدأ بـ Capital letter (ا Upper Case) أو _ ( underscore) هنعرف معناها قدام.
-بنستخدمها لما نكون عايزين نسأل "مين اللي بيحب هاني؟" بدل "هل علي بيحب هاني؟".
-مثال: ?- likes(X, hany).
-ا Prolog هيرجع قيمة X. لو فيه أكتر من حل، بنضغط ; عشان نشوف الباقي، وآخر حاجة يرجع no.
-ممكن نربط أكتر من حاجة باستخدام الفاصلة , (AND).
-مثال: ?- likes(mary, X), likes(john, X).
-السؤال ده معناه: "هل فيه حاجة Mary و John الاتنين بيحبوها؟". بنكتب الـ knowledgebase في ملف ونحفظه بامتداد .pl (مثلاً family.pl).
-بنفتح الـ SWI-Prolog ونعمل Consult للملف عشان يحمله: بنكتب: [family]. أو consult(family). (متنساش النقطة في الآخر). بعد كده نقدر نسأل الأسئلة (Queries).
-ممكن نستخدم المقارنات زي أصغر من &lt; في الأسئلة:
-مثال: ?- age(Name, Age), Age &lt; 40.
-السؤال ده معناه: "هات لي كل الأسماء اللي سنها أصغر من 40". قبل ما تدخل علي المحاضره الي بعدها حل امثلة المحاضرة والسكاشن من هنا : <a data-href="Lecture 1 &amp; 2 - Practice" href="practice-examples/lecture-1-&amp;-2-practice.html" class="internal-link" target="_self" rel="noopener nofollow">Lecture 1 &amp; 2 - Practice</a>]]></description><link>summaries/lecture-1-&amp;-2-introduction-to-prolog.html</link><guid isPermaLink="false">College/prolog/Summaries/Lecture 1 &amp; 2 - Introduction to Prolog.md</guid><pubDate>Fri, 22 May 2026 18:03:42 GMT</pubDate></item><item><title><![CDATA[fact-structure]]></title><link>fact-structure.excalidraw.html</link><guid isPermaLink="false">College/prolog/fact-structure.excalidraw.json</guid><pubDate>Thu, 21 May 2026 09:47:22 GMT</pubDate></item><item><title><![CDATA[declarative-vs-procedural]]></title><link>declarative-vs-procedural.excalidraw.html</link><guid isPermaLink="false">College/prolog/declarative-vs-procedural.excalidraw.json</guid><pubDate>Thu, 21 May 2026 09:46:59 GMT</pubDate></item><item><title><![CDATA[conjunction-flow]]></title><link>conjunction-flow.excalidraw.html</link><guid isPermaLink="false">College/prolog/conjunction-flow.excalidraw.json</guid><pubDate>Thu, 21 May 2026 09:46:06 GMT</pubDate></item><item><title><![CDATA[matching-process]]></title><link>matching-process.excalidraw.html</link><guid isPermaLink="false">College/prolog/matching-process.excalidraw.json</guid><pubDate>Thu, 21 May 2026 09:45:27 GMT</pubDate></item></channel></rss>
+?- parent(X, ann), parent(X, pat). ]]></description><link>practice-examples/chapter-1-&amp;-2-practice.html</link><guid isPermaLink="false">College/prolog/Practice Examples/Chapter 1 &amp; 2 - Practice.md</guid><pubDate>Fri, 22 May 2026 18:23:25 GMT</pubDate></item></channel></rss>
