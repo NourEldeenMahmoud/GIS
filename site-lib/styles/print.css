@@ -1,13 +1,13 @@
 /* Print/PDF Styles */
 @media print {
   @page {
-    size: A4;
+    size: 11in 17in;
     margin: 0;
   }
 
   html, body {
-    font-size: 12pt !important;
-    line-height: 1.6 !important;
+    font-size: 12.5pt !important;
+    line-height: 1.55 !important;
     font-family: 'Rubik', 'Segoe UI', Roboto, Arial, sans-serif !important;
     --line-width: 100% !important;
     --file-line-width: 100% !important;
@@ -47,7 +47,7 @@
   .markdown-preview-sizer {
     max-width: 100% !important;
     width: 100% !important;
-    padding: 2cm 2.5cm !important;
+    padding: 1.4cm 2cm !important;
     margin: 0 !important;
     box-sizing: border-box !important;
   }
@@ -60,21 +60,22 @@
   .page-title {
     font-size: 22pt !important;
     text-align: center !important;
-    margin-bottom: 0.5em !important;
+    margin-bottom: 0.4em !important;
   }
 
-  h1 { font-size: 20pt !important; margin-top: 1.5em !important; }
-  h2 { font-size: 16pt !important; margin-top: 1.2em !important; }
-  h3 { font-size: 14pt !important; margin-top: 1em !important; }
+  h1 { font-size: 20pt !important; margin-top: 1.2em !important; }
+  h2 { font-size: 16pt !important; margin-top: 1em !important; }
+  h3 { font-size: 13.5pt !important; margin-top: 0.9em !important; }
 
-  p, li { font-size: 12pt !important; }
+
+  p, li { font-size: 12.5pt !important; }
 
   pre, code {
     background: var(--code-background, #0d0b12) !important;
     border: 1px solid var(--table-border-color, rgba(14, 210, 247, 0.15)) !important;
     border-radius: 4px !important;
     page-break-inside: avoid !important;
-    font-size: 10pt !important;
+    font-size: 10.5pt !important;
   }
 
   pre {
@@ -117,12 +118,7 @@
   hr { border-color: var(--table-border-color, rgba(14, 210, 247, 0.2)) !important; }
 
   .pdf-page {
-    page-break-before: always !important;
     padding-top: 1em !important;
-  }
-
-  .pdf-page:first-child {
-    page-break-before: avoid !important;
   }
 }
 

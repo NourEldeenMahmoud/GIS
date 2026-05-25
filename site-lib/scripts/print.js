@@ -115,4 +115,5 @@
     win.document.write('</body></html>');
     win.document.close();
   };
+
 })();
