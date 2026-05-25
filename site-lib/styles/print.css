@@ -2,12 +2,10 @@
 @media print {
   @page {
     size: A4;
-    margin: 1.5cm 2cm;
+    margin: 0;
   }
 
   html, body {
-    background: #100e17 !important;
-    color: #bebebe !important;
     font-size: 12pt !important;
     line-height: 1.6 !important;
     font-family: 'Rubik', 'Segoe UI', Roboto, Arial, sans-serif !important;
@@ -15,6 +13,14 @@
     --file-line-width: 100% !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+
+  .markdown-preview-sizer {
+    padding: 1.5cm 2cm !important;
+  }
+
+  .obsidian-document {
+    padding: 0 !important;
   }
 
   #left-sidebar, #right-sidebar,
@@ -67,8 +73,8 @@
   p, li { font-size: 12pt !important; }
 
   pre, code {
-    background: #0d0b12 !important;
-    border: 1px solid rgba(14, 210, 247, 0.15) !important;
+    background: var(--code-background, #0d0b12) !important;
+    border: 1px solid var(--table-border-color, rgba(14, 210, 247, 0.15)) !important;
     border-radius: 4px !important;
     page-break-inside: avoid !important;
     font-size: 10pt !important;
@@ -87,7 +93,7 @@
   }
 
   th, td {
-    border: 1px solid rgba(14, 210, 247, 0.2) !important;
+    border: 1px solid var(--table-border-color, rgba(14, 210, 247, 0.2)) !important;
     padding: 6px 10px !important;
   }
 
@@ -95,7 +101,7 @@
 
   .callout {
     page-break-inside: avoid !important;
-    background: rgba(14, 210, 247, 0.05) !important;
+    background: var(--tag-background, rgba(14, 210, 247, 0.05)) !important;
     border-left: 3px solid var(--blockquote-border, #4aa8fb) !important;
     padding: 0.5em 1em !important;
     margin: 0.8em 0 !important;
@@ -107,11 +113,11 @@
 
   .callout-fold { display: none !important; }
 
-  a { color: #6bcafb !important; text-decoration: underline !important; }
+  a { color: var(--text-a, #6bcafb) !important; text-decoration: underline !important; }
 
   .el-hr { page-break-after: avoid !important; }
 
-  hr { border-color: rgba(14, 210, 247, 0.2) !important; }
+  hr { border-color: var(--table-border-color, rgba(14, 210, 247, 0.2)) !important; }
 
   .pdf-page {
     page-break-before: always !important;
