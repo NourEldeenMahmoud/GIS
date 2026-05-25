@@ -10,6 +10,9 @@
     color: #bebebe !important;
     font-size: 12pt !important;
     line-height: 1.6 !important;
+    font-family: 'Rubik', 'Segoe UI', Roboto, Arial, sans-serif !important;
+    --line-width: 100% !important;
+    --file-line-width: 100% !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
