@@ -70,6 +70,38 @@
 
   p, li { font-size: 12.5pt !important; }
 
+  .markdown-rendered ul.has-list-bullet {
+    list-style: none !important;
+    padding-left: 0 !important;
+    padding-right: 1.6em !important;
+    direction: rtl !important;
+  }
+
+  .markdown-rendered ul.has-list-bullet > li {
+    direction: rtl !important;
+    text-align: right !important;
+    position: relative !important;
+    padding-right: 1.1em !important;
+  }
+
+  .markdown-rendered ul.has-list-bullet > li > .list-bullet {
+    display: none !important;
+  }
+
+  .markdown-rendered ul.has-list-bullet > li::before {
+    content: "•" !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+    color: #000 !important;
+    font-size: 1em !important;
+    line-height: inherit !important;
+  }
+
+  .theme-dark .markdown-rendered ul.has-list-bullet > li::before {
+    color: #bebebe !important;
+  }
+
   pre, code {
     background: var(--code-background, #0d0b12) !important;
     border: 1px solid var(--table-border-color, rgba(14, 210, 247, 0.15)) !important;
