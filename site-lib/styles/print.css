@@ -15,10 +15,6 @@
     print-color-adjust: exact !important;
   }
 
-  .markdown-preview-sizer {
-    padding: 1.5cm 2cm !important;
-  }
-
   .obsidian-document {
     padding: 0 !important;
   }
@@ -51,8 +47,9 @@
   .markdown-preview-sizer {
     max-width: 100% !important;
     width: 100% !important;
-    padding: 0 !important;
+    padding: 2cm 2.5cm !important;
     margin: 0 !important;
+    box-sizing: border-box !important;
   }
 
   .header {
