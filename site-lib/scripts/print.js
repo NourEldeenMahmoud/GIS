@@ -55,6 +55,14 @@
     return html;
   }
 
+  function getPageTitle(doc) {
+    var titleEl = doc.querySelector('.page-title');
+    if (titleEl && titleEl.textContent) return titleEl.textContent.trim();
+    var heading = doc.querySelector('.markdown-preview-section h1');
+    if (heading && heading.textContent) return heading.textContent.trim();
+    return (doc.title || '').trim();
+  }
+
   window.downloadSinglePDF = function () {
     window.print();
   };
@@ -78,6 +86,10 @@
         var doc = parser.parseFromString(html, 'text/html');
         expandAll(doc);
         var content = extractContent(doc);
+        var pageTitle = getPageTitle(doc);
+        if (pageTitle) {
+          content = '<div class="header"><h1 class="page-title">' + pageTitle + '</h1></div>' + content;
+        }
         if (content) {
           allContent += '<div class="pdf-page">' + content + '</div>';
         }
