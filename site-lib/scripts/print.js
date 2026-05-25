@@ -45,13 +45,10 @@
   function extractContent(doc) {
     var section = doc.querySelector('.markdown-preview-section');
     if (!section) return '';
-    var title = section.querySelector('.page-title');
-    var pusher = section.querySelector('.markdown-preview-pusher');
     var html = '';
-    var el = pusher ? pusher.nextElementSibling : section.firstElementChild;
+    var el = section.firstElementChild;
     while (el) {
       if (el.classList && el.classList.contains('footer')) break;
-      if (el.classList && el.classList.contains('pdf-download-btn')) { el = el.nextElementSibling; continue; }
       html += el.outerHTML;
       el = el.nextElementSibling;
     }
@@ -109,7 +106,7 @@
     win.document.write('<link rel="stylesheet" href="' + rootPrefix + '/styles/main-styles.css">');
     win.document.write('<link rel="stylesheet" href="' + rootPrefix + '/styles/print.css">');
     win.document.write('<style>.theme-dark{--background-primary:#100e17;--background-primary-alt:#0d0b12;--background-secondary:#191621;--background-secondary-alt:#0d0b12;--text-normal:#bebebe;--text-accent:#0fb6d6;--text-sub-accent:#f4569d;--text-dim:#45aaff;--text-faint:#7aa2f7;--text-title-h1:var(--text-accent);--text-title-h2:#cbdbe5;--text-title-h3:#cbdbe5;--text-title-h4:#cbdbe5;--text-title-h5:#cbdbe5;--text-link:#b4b4b4;--text-a:#6bcafb;--text-a-hover:#6bcafb;--text-mark:#263d92;--code-background:var(--background-secondary);--interactive-accent:rgba(14, 210, 247, 0.5);--interactive-accent-hover:rgba(14, 210, 247, 0.8);--interactive-before:#5e6565;--blockquote-border:#4aa8fb;--tag-background:rgba(14, 210, 247, 0.15);--interactive-accent-rgb:#3dd7fb;--font-family-editor:\'Rubik\';--font-family-preview:\'Rubik\'}.theme-light{--background-primary:#ffffff;--background-primary-alt:#f5f5f5;--background-secondary:#f0f0f0;--background-secondary-alt:#e8e8e8;--text-normal:#1a1a1a;--text-accent:#0fb6d6;--text-sub-accent:#f4569d;--text-dim:#45aaff;--text-faint:#7aa2f7;--text-title-h1:var(--text-accent);--text-title-h2:#2d3a4a;--text-title-h3:#2d3a4a;--text-title-h4:#2d3a4a;--text-title-h5:#2d3a4a;--text-link:#555555;--text-a:#0fb6d6;--text-a-hover:#0fb6d6;--text-mark:#263d92;--code-background:var(--background-secondary);--interactive-accent:rgba(14, 210, 247, 0.3);--interactive-accent-hover:rgba(14, 210, 247, 0.6);--interactive-before:#cccccc;--blockquote-border:#4aa8fb;--tag-background:rgba(14, 210, 247, 0.1);--interactive-accent-rgb:#3dd7fb;--font-family-editor:\'Rubik\';--font-family-preview:\'Rubik\'}:root{--default-font:\'Rubik\',-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,Helvetica,Arial,sans-serif;--default-font-size:18px;--line-width:100%;--file-line-width:100%}body{font-family:\'Rubik\',\'Segoe UI\',Roboto,Arial,sans-serif;line-height:1.6;background:' + bgColor + ';color:' + textColor + '}</style>');
-    win.document.write('</head><body class="' + themeClass + '">');
+    win.document.write('</head><body class="' + themeClass + '" dir="rtl">');
     win.document.write('<div class="obsidian-document markdown-preview-view markdown-rendered is-readable-line-width">');
     win.document.write('<div class="markdown-preview-sizer markdown-preview-section">');
     win.document.write(allContent);
