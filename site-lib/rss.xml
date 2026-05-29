@@ -1,4 +1,130 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Prolog]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>Prolog</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Fri, 29 May 2026 19:26:16 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Fri, 29 May 2026 19:26:03 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[Foundations of Computer Graphics - Lecture 1 [Part 3]]]></title><description><![CDATA[مقدمة هنكمل الشابتر الاول, الجزء ده من المحاضرة بيتكلم عن أنظمة الإحداثيات (Coordinate Systems) في الـ Computer Graphics.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Prolog]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>Prolog</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Fri, 29 May 2026 19:49:20 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Fri, 29 May 2026 19:49:06 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[Fundamental Drawing Algorithms in Computer Graphics - Chapter 4 - [Part 2]]]></title><description><![CDATA[مقدمة ده الجزء التاني من الشابتر، وهنركز فيه على Circle Drawing Algorithms.
+هنستعرض أكتر من طريقة لرسم الدواير: من المعادلة المباشرة (Circle Equation) اللي بسيطة بس فيها مشاكل، للخوارزميات الأذكى واللي مش محتاجة كسور أو جذور زي Midpoint و Bresenham.
+هنفهم كمان مفهوم Eight-Way Symmetry اللي بيخلينا نوفر 7 أضعاف الحسابات.
+في الآخر هيكون عندنا مقارنة كاملة بين كل الخوارزميات عشان تعرف تختار الأنسب. بما إن الشاشات بتاعتنا Raster displays (عباره عن Grid يعني)، فإحنا محتاجين خوارزميات تقرب الشكل الدائري المتصل ده لمجموعة بيكسلات منفصلة (Discrete pixels) بكفاءة عالية.
+عشان الدائرة شكل متماثل جدا، معظم الخوارزميات بتستغل حاجة اسمها الـ Eight-way symmetry (التماثل الثماني).
+يعني بدل ما نحسب محيط الدائرة كله، إحنا بنحسب تمن واحد بس (1/8 من الدائرة)، وبنعكس النقط دي على باقي الأثمان عشان نقلل الحسابات.
+definition
+A circle is specified by its center (xc, yc) and radius r. أبسط طريقة نرسم بيها الدائرة هي إننا نستخدم معادلتها الرياضية. الدائرة في مستوى الإحداثيات بتتعرف بحاجتين: نقطة المركز: (Xc, Yc)
+نصف القطر: r معادلة الدائرة القياسية: الدائرة هي كل النقط اللي بعدها عن المركز ثابت، والمسافة الثابتة دي اسمها Radius. الفكرة هنا إننا نمشي خطوة خطوة على محور السينات بداية من أقصى الشمال لحد أقصى اليمين، وفي كل خطوة نحسب قيمة الصادات اللي تقابلها. نقطة البداية على الـ هتبقى: نقطة النهاية على الـ هتبقى: بنمشي بـ Unit increments (يعني بنزود الـ بمقدار 1 في كل خطوة). إشارة الـ دي بتطلعلي قيمتين للـ لكل قيمة (قيمة موجبة ترسم الـ Upper semicircle وقيمة سالبة ترسم الـ Lower semicircle)، عشان كده الدائرة بتترسم كاملة فوق وتحت. السؤال هيديلك المركز (xc, yc) ونصف القطر r.
+بنعمل Loop لكل قيمة X من أول Xc - r لحد Xc + r.
+احسب: ارسم النقطتين الناتجين.
+ممكن تستخدم symmetry عشان تقلل الحسابات. حالة خاصة وبسيطة جداً، لو كان مركز الدائرة هو نقطة الأصل (0, 0). ساعتها مش محتاجين نطرح Xc ولا Yc، والمعادلة بتتبسط وتبقى شكلها كده: سهلة في الفهم والتنفيذ. بتستخدم Floating-point operations (عمليات الكسور العشرية)، ودي تقيلة جداً وبطيئة على البروسيسور.
+ا Not suitable for real-time rendering: مينفعش نستخدمها في ألعاب أو حاجات محتاجة فريمات سريعة لانها بطيئة. الحسابات بتاعتها مش Efficient خالص، لأنها بتعتمد على عمليات الضرب (عشان نجيب التربيع) وعملية الـ Square root (الجذر التربيعي) اللي بنحاول نتجنبها على قد ما نقدر في الجرافيكس لأنها بطيئة جداً.
+ا Large gaps: بتعمل فراغات كبيرة في الرسمة لما يكون ميل الخط قريب من الرأسي (ودي هنشرحها بالتفصيل في جزء الـ Output) عايزين نرسم دائرة مركزها (0,0) ونصف قطرها r = 5 باستخدام معادلة الدائرة الأساسية (Direct Equation). أول حاجة بنعملها إننا بنجهز المعادلة بتاعتنا بناء على المركز ونصف القطر اللي معانا، عشان نستنتج قيمة الـ y.
+المعادلة القياسية للدايرة: بما إن المركز بتاعنا هو نقطة الأصل (0,0) (Special Case)، المعادلة هتتبسط وتبقى: حساب الـ y: هنودي الـ y في طرف لوحدها عشان دي اللي هنحسبها لكل بيكسل: تحديد اتجاه اللوب (Condition): هنعمل Loop على الـ x بداية من أقصى الشمال () لحد أقصى اليمين (). بس عشان التبسيط في الجدول بتاعنا، خلينا نمشي على الربع الأول بس (من 0 لـ 5) ونشوف النقط الموجبة. هنا بقى هنمسك قيم الـ x من أول 0 لحد 5، وفي كل مرة نعوض في المعادلة بتاعتنا عشان نجيب قيمة الـ y. وطبعا عشان دالة الـ Square root بتطلع أرقام عشرية (Floating-point)، لازم نعمل Rounding (نقرب) في الخر عشان نجيب الـ Pixel الصح. Final Pixels (الربع اليمين اللي فوق):(0,5), (1,5), (2,5), (3,4), (4,3), (5,0)<img border="0" alt="Chat GPT Image May 29 2026 07 30 56 PM" src="https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+### Outputimplementation Code (عشان تجرب) import math
+import pygame
+import sys def draw_circle(screen, center_x, center_y, radius): for x in range(center_x - radius, center_x + radius + 1): dx = x - center_x square_term = radius**2 - dx**2 if square_term &lt; 0: continue dy = math.sqrt(square_term) y1 = round(center_y - dy) y2 = round(center_y + dy) screen.set_at((x, y1), (255, 255, 255)) screen.set_at((x, y2), (255, 255, 255)) pygame.init()
+screen = pygame.display.set_mode((500, 500))
+pygame.display.set_caption("Circle Demo")
+clock = pygame.time.Clock() running = True
+while running: for event in pygame.event.get(): if event.type == pygame.QUIT: running = False screen.fill((0, 0, 0)) draw_circle(screen, 250, 250, 150) pygame.display.flip() clock.tick(60) pygame.quit()
+sys.exit() <br> <img border="0" alt="image" src="https://i.ibb.co/JwxbrjkK/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> لما تعمل Run للكود ده وتشوف النتيجة (زي الصورة)، هتلاحظ حاجة غريبة : من فوق ومن تحت (Top and bottom edges): الدائرة طالعة ناعمة ومظبوطة (Smooth).
+من اليمين ومن الشمال (Left and right sides): الدائرة فيها فراغات واضحة جداً تحسها متقطعة (Noticeable gaps). **ليه ده بيحصل؟ الفكره في الـ Discrete nature of the pixel grid (طبيعة الشاشة المتقطعة).
+لما بنقرب من أقصى اليمين أو أقصى الشمال، ميل الدائرة (Slope) بيبقى رأسي جدا. ده معناه إن مع كل خطوة صغيرة بنمشيها على الـ X، قيمة الـ Y بتتغير برقم كبير جدا.
+ولأننا بنمشي بمقدار 1 بيكسل بس على الـ Xوبنعمل Rounding، الالجورزم بتفوت بيكسلات كتير بالطول ومبترسمهاش، فبيطلع الشكل متقطع ومفيش نقط كفاية تغطي المنطقة دي.
+عشان كده، الحل ده مش عملي وبنلجأ لحلول تانية زي الـ Midpoint Circle Algorithm اللي هتحل المشكلة دي تماماً. لو جاهز ندخل عليها، دوس! definition
+Eight-way symmetry means a circle can be divided into eight identical octants, and one computed point can generate seven other symmetric points. عشان نخلي الخوارزمية بتاعتنا Efficient (سريعة وفعالة)، أول حاجة لازم نلاحظها إن الدائرة اللي مركزها نقطة الأصل (0, 0) ليها تماثل ثماني الأبعاد. الـ Optimization ده بيوفر علينا عمليات حسابية متكررة ملهاش لازمة (Redundant calculations).
+امتى نقول على شكل إنه متماثل؟ لو قدرنا نعمله تحويلات (زي الدوران أو الانعكاس) وفضل شكله زي ما هو متغيرش. الدايرة بقى بالذات ليها Infinite rotational symmetry (تماثل دوراني لا نهائي)، يعني مهما لفيتها بأي زاوية، هتفضل شكلها دائرة.
+يعني إحنا نقدر نقسم الدائرة لـ 8 حتت متساوية (كانها بيتزا 🍕 ) بخطوط بتترسم كل 45 درجة (عند 0°، 45°، 90°، 135°، وهكذا).
+كل حتة من التمانية دول متطابقة تماما مع الباقيين. يعني لو حسبنا ورسمنا تمن واحد بس (1/8)، نقدر نعكسه ونلفه عشان نجيب الـ 7 أتمان الباقيين ببلاش من غير حسابات معقدة.
+<br> <img src="https://www.tutorialspoint.com/computer_graphics/images/bresenhams_circle_generation_algorithm.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> كل تمن من الـ 8 أتمان بنسميه Octant. لو إحنا حسبنا نقطة واحدة بس اسمها موجودة على محيط الدائرة في الـ Octant الأول، نقدر نستنتج الـ 7 نقط الباقيين بمجرد إننا نبدل الـ مكان الـ أو نغير الإشارات بتاعتهم (موجب وسالب).
+<br> <img src="https://i.ytimg.com/vi/K64iHenRpso/hqdefault.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 600px; max-width: 100%;"> افرض إن الالجورزم بتاعتنا (بعد ما عملت حساباتها المعقدة) طلعت نقطة واحدة بس في التمن الأول وهي (2, 7) ، يعني الـ X = 2 والـ Y = 7. بدل ما الالجورزم تحسب باقي الدائرة، هتاخد النقطة دي وتطبق عليها الجدول اللي فوق عشان ترسم 8 بيكسلات في نفس اللحظة: النقطة في Octant 1 هتبقى: النقطة في Octant 2 هتبقى: النقطة في Octant 3 هتبقى: النقطة في Octant 4 هتبقى: النقطة في Octant 5 هتبقى: النقطة في Octant 6 هتبقى: النقطة في Octant 7 هتبقى: النقطة في Octant 8 هتبقى: لو استخدمنا الجورزم وحسبنا اول نقطة في التمن الاول لدائرة مركزها (0,0)، والنقطة دي (4, 3). عايزين نجيب الـ 7 نقط المتماثلة معاها في باقي الدائرة من غير ما نحسب معادلة الدائرة من أول وجديد.
+أول حاجة بنعملها إننا بنجهز قواعد الانعكاس (Reflection rules) اللي الخوارزمية بتبرمجها. إحنا عارفين إن الدائرة متماثلة في الـ 8 أثمان.لو النقطة الأساسية هي x = 4 و y = 3:
+عشان نروح للتمن اللي جنبه، بنعكس الـ x مكان الـ y.
+عشان نروح للنص الشمال، بنخلي السينات بالسالب.
+عشان نروح للنص اللي تحت، بنخلي الصادات بالسالب.
+هنا بقى الخوارزمية بتمسك النقطة اليتيمة اللي حسبتها (4, 3)، وتطبق عليها الـ 8 قواعد في نفس اللفة عشان تنور 8 بيكسلات مرة واحدة:Final Pixels:(4,3), (3,4), (-3,4), (-4,3), (-4,-3), (-3,-4), (3,-4), (4,-3)<br><img border="0" alt="Chat GPT Image May 29 2026 07 50 37 PM" src="https://i.ibb.co/hJgd2sz7/Chat-GPT-Image-May-29-2026-07-50-37-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Eight-way Symmetry Example Code
+import pygame
+import math # Constants
+WIDTH, HEIGHT = 800, 600
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+BLUE = (0, 0, 255) # For octant labels # Center and radius of the circle
+CENTER_X, CENTER_Y = WIDTH // 2, HEIGHT // 2
+RADIUS = 250 # Initialize Pygame
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Eight-way Symmetry Example")
+screen.fill(WHITE) # Font for labeling
+font = pygame.font.SysFont("Arial", 20) # 1. Draw the circle using parametric form:
+# x = r * cos(theta), y = r * sin(theta)
+for theta in range(0, 360): rad = math.radians(theta) x = CENTER_X + round(RADIUS * math.cos(rad)) y = CENTER_Y - round(RADIUS * math.sin(rad)) pygame.draw.circle(screen, BLACK, (x, y), 1) # 2. Draw octant lines (every 45 degrees)
+for i in range(8): angle_deg = i * 45 rad = math.radians(angle_deg) end_x = CENTER_X + RADIUS * math.cos(rad) end_y = CENTER_Y - RADIUS * math.sin(rad) pygame.draw.line( screen, BLACK, (CENTER_X, CENTER_Y), (end_x, end_y), 1 ) # 3. Octant labels
+labels = [ "Oct1: (x, y)", "Oct2: (y, x)", "Oct3: (-y, x)", "Oct4: (-x, y)", "Oct5: (-x, -y)", "Oct6: (-y, -x)", "Oct7: (y, -x)", "Oct8: (x, -y)"
+] for i in range(8): angle_deg = i * 45 + 22.5 rad = math.radians(angle_deg) # Place text inside the circle label_x = CENTER_X + (RADIUS * 0.7) * math.cos(rad) label_y = CENTER_Y - (RADIUS * 0.7) * math.sin(rad) text = font.render(labels[i], True, BLUE) text_rect = text.get_rect(center=(label_x, label_y)) screen.blit(text, text_rect) # Update the display
+pygame.display.flip() # Main loop to keep window open
+running = True
+while running: for event in pygame.event.get(): if ( event.type == pygame.QUIT or ( event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE ) ): running = False pygame.quit() definition
+Midpoint Circle Algorithm is an efficient circle drawing algorithm that uses decision parameters to choose the next pixel. الالجورزم دي بتعتبر من أكفأ الطرق عشان نرسم بيها دوائر من غير الفراغات اللي شفناها قبل كده. فكرتها إنها بتيجي بين بيكسلين محتملين (واحد أفقي وواحد قطري (بالورب))، وتحسب نقطة الـ Midpoint (نقطة المنتصف) بينهم، وتشوف خط الدائرة الحقيقي أقرب لأنهي بيكسل فيهم عشان تنوره. ا Symmetry of Circles: بنستغل الـ 8-way symmetry الي اتكلمنا عنها قبل كده عشان نحسب تمن واحد بس (1/8) ونعكسه 7 مرات.
+ا Decision Parameter: بنستخدم معامل قرار عشان نحدد البيكسل الصح اللي عليه الدور.
+ا Integer Arithmetic: الميزة هنا إننا بنتجنب الـ Floating-point (الكسور) والـ Roots (الجذور) خالص، وكل حساباتنا بتبقى أرقام صحيحة، فبتبقى Computationally efficient (سريعة جداً للبروسيسور). بنبدأ بنقطة المركز (X0, Y0) ونصف القطر r.
+ا Initialize variables: بندي قيم ابتدائية للمتغيرات بتاعتنا للتمن الأول: x = 0
+y = r بنحسب الـDecision Parameter:
+decision parameter = 1 - r بنعمل Plot لأول نقطة وبنستخدم الـ Symmetry عشان نرسم الـ 8 نقط المتماثلين.
+في كل خطوة، بنحدث الـ Decision parameter وبناءً عليه بنقرر: هل نزود الـ بس؟ ولا نزود الـ وننقص الـ ؟ عايزين نرسم دائرة مركزها (0,0) ونصف قطرها r = 5 باستخدام معادلة الدائرة الأساسية (Direct Equation).
+عشان نقدر نعمل جدول trace صغير، خلينا ناخد مثال مصغر من النقط اللي في الكود:
+مركز الدائرة: (0, 0)
+نصف القطر (): 5
+تجهيز الخوارزمية:
+بنبدأ من أول نقطة خالص فوق خالص وهي نقطة البداية: x = 0 و y = r = 5.
+بنحسب قيمة الـ decision_param من القانون: الـ Loop بتاعنا هيفضل شغال طول ما قيمة x &lt; y.
+متتخضش هنا بقى الالجورزم بتشوف قيمة الـ Pkفي كل لفة عشان تاخد القرار.
+<br><img border="0" alt="Chat GPT Image May 29 2026 07 53 24 PM" src="https://i.ibb.co/v42DkXb5/Chat-GPT-Image-May-29-2026-07-53-24-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Midpoint Circle Algorithm Code
+import pygame
+import math # Function for midpoint circle algorithm to calculate circle points
+def midpoint_circle(center_x, center_y, radius): x = 0 y = radius decision_param = 1 - radius points = [] # Function to add 8 points for each symmetrical point in octants def add_symmetric_points(cx, cy, x, y): points.extend([ (cx + x, cy + y), (cx - x, cy + y), (cx + x, cy - y), (cx - x, cy - y), (cx + y, cy + x), (cx - y, cy + x), (cx + y, cy - x), (cx - y, cy - x) ]) # Add the initial points add_symmetric_points(center_x, center_y, x, y) # Begin algorithm loop to create circle points incrementally while x &lt; y: x += 1 if decision_param &lt; 0: decision_param += 2 * x + 1 else: y -= 1 decision_param += 2 * (x - y) + 1 # Add next set of symmetrical points add_symmetric_points(center_x, center_y, x, y) return points # ==========================================
+# Main Execution Block
+# ==========================================
+if __name__ == "__main__": # Initialize Pygame pygame.init() # Colors WHITE = (255, 255, 255) BLACK = (0, 0, 0) # Logical screen settings WIDTH, HEIGHT = 800, 600 PIXEL_SIZE = 1 # Circle parameters radius = 250 center = (WIDTH // 2, HEIGHT // 2) # Set up display screen = pygame.display.set_mode( (WIDTH * PIXEL_SIZE, HEIGHT * PIXEL_SIZE) ) pygame.display.set_caption( "Circle Drawing Using Midpoint Algorithm" ) # Fill background with white color screen.fill(WHITE) # Calculate all circle points using the algorithm points = midpoint_circle(*center, radius) # Draw each generated point for x, y in points: pygame.draw.rect( screen, BLACK, ( x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE ) ) # Update display pygame.display.flip() # Main loop running = True while running: for event in pygame.event.get(): if ( event.type == pygame.QUIT or ( event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE ) ): running = False # Quit Pygame pygame.quit() definition
+Bresenham's Circle Algorithm Similar to the Midpoint algorithm but uses integer arithmetic exclusively, making it faster and more efficient for hardware implementation. اBresenham عمل خوارزمية للدوائر زي ما عمل للخطوط بالظبط. شبه الـ Midpoint بس متظبطة أكتر بحيث إن كل عملياتها تكون جمع وطرح وضرب في أرقام صحيحة بس، وده بيخليها سريعه جدا. بتستخدم الـ Symmetry برده عشان تقلل الحسابات.
+بتحسب حاجة اسمها Error term (نفس فكرة الـ Decision parameter) عشان تقرر إحنا هنمشي أفقي (Increment x) ولا قطري (بالورب) (Decrement y). ا Initialize: x = 0
+y = r اDecision parameter بنرمزله بـ d وبنحسبه كده: d = 3 - 2r ا While loop: طول ما X &lt;= Y (يعني لسه مخلصناش التمن الأول بتاع الدائرة): بنعمل Plot (رسم) للـ 8 نقط المتماثلين حوالين المركز (Cx, Cy). ا If d &lt; 0: ده معناه إننا هنمشي أفقي (Move horizontally):
+x = x + 1 بنحدث معامل القرار: d = d + 4x + 6 ا Else: ده معناه إننا هنمشي قطري (Move diagonally):
+x = x + 1
+y = y - 1 بنحدث معامل القرار: d = d + 4(x - y) + 10 عايزين نرسم دايرة مركزها (0,0) ونصف قطرها r = 5 باستخدام معادلة الدائرة الأساسية (Direct Equation).
+أول حاجة بنجهز المتغيرات بتاعتنا قبل ما ندخل في الـ Loop: نقطة البداية: و . بنحسب قيمة الـ Decision Parameter (المعلم الأولي d) من قانون Bresenham d = 3 - 2r: الكود بيرسم أول 8 نقط متماثلة بناءً على النقطة (0, 5). شرط الدوران (Condition): الـ Loop بيفضل شغال طول ما x≤y. جوه الـ Loop، الخوارزمية بتزود الـ x بمقدار 1 الأول، وبعدين تبص على إشارة الـ d عشان تقرر هتقلل الـ y ولا لأ، وتحسب الـ d الجديدة بناءً على النقط الجديدة. النقط اللي طلعت من الكود ده للربع الأول هي: (0,5), (1,5), (2,4), (3,3), (4,2).
+<br><img border="0" alt="Chat GPT Image May 29 2026 08 10 00 PM" src="https://i.ibb.co/HL88Jxc2/Chat-GPT-Image-May-29-2026-08-10-00-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Bresenham Circle Algorithm Code
+import pygame # Function for Bresenham's circle algorithm to calculate circle points
+def bresenham_circle(center_x, center_y, radius): x = 0 y = radius d = 3 - 2 * radius points = [] # Function to add 8 points for each symmetrical point in octants def add_symmetric_points(cx, cy, x, y): points.extend([ (cx + x, cy + y), (cx - x, cy + y), (cx + x, cy - y), (cx - x, cy - y), (cx + y, cy + x), (cx - y, cy + x), (cx + y, cy - x), (cx - y, cy - x) ]) # Add the initial symmetric points for (0, radius) add_symmetric_points(center_x, center_y, x, y) # Begin algorithm loop while x &lt;= y: x += 1 if d &lt; 0: d = d + 4 * x + 6 else: y -= 1 d = d + 4 * (x - y) + 10 # Add next set of symmetrical points add_symmetric_points(center_x, center_y, x, y) return points # ==========================================
+# Main Execution Block
+# ==========================================
+if __name__ == "__main__": # Colors WHITE = (255, 255, 255) BLACK = (0, 0, 0) # Logical screen settings WIDTH, HEIGHT = 80, 60 PIXEL_SIZE = 10 # Circle parameters radius = 25 center = (WIDTH // 2, HEIGHT // 2) # Initialize Pygame pygame.init() screen = pygame.display.set_mode( (WIDTH * PIXEL_SIZE, HEIGHT * PIXEL_SIZE) ) pygame.display.set_caption( "Bresenham's Circle Algorithm" ) # Fill background screen.fill(WHITE) # Draw the circle points points = bresenham_circle(*center, radius) # Render the calculated points on screen for x, y in points: pygame.draw.rect( screen, BLACK, ( x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE ) ) # Update display pygame.display.flip() # Main loop running = True while running: for event in pygame.event.get(): if ( event.type == pygame.QUIT or ( event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE ) ): running = False pygame.quit() definition
+Parametric Circle Drawing Algorithm uses trigonometric functions ( and ) to calculate the coordinates of the circle. While simple, it is computationally expensive due to the use of floating-point operations. دي طريقة مختلفه بتعتمد على الدوال المثلثية اللي أخدناها في الرياضة.
+سهلة في الفهم، بس مكلفة حسابيا عشان بتستخدم floating-point operations. بنستخدم الـ Parametric equation بتاعت الدائرة، اللي بتجيب الإحداثيات عن طريق زاوية اسمها x = x0 + r cos(θ)
+y = y0 + r sin(θ) بنعمل Loop ونزود الزاوية من لحد (يعني لفة كاملة 360 درجة) عشان نولد كل النقط بتاعت الدائرة. خزن center (x0, y0) و radius r.
+خلي θ تتحرك من 0 لـ 2π.
+لكل قيمة θ، احسب x و y.
+ارسم النقطة الناتجة. استخدام sin, cos, و floating-point operations بيخليها أبطأ من integer-based algorithms. عايزين نرسم دايرة مركزها (0,0) ونصف قطرها r = 5 باستخدام معادلة الدائرة الأساسية (Direct Equation). المعادلة البارامترية (Parametric equation) للدائرة بتعتمد على زاوية الدوران (ثيتا). القوانين اللي هنعوض فيها هي:
+بما إن المركز (0,0)، القوانين هتبقى:الـ Loop بتاعنا بيلف على الزوايا من لحد .عشان منطولش الجدول بـ 360 خطوة، خلينا نمسك شوية زوايا مميزة في الربع الأول (من 0 لـ 90 درجة) ونشوف النقط بتتحسب إزاي:
+زي ما إنت شايف، الطريقة دي بتجيب النقط بشكل مباشر من غير ما تعتمد على النقطة اللي قبلها، وده اللي بيخليها مختلفة عن الـ Incremental Algorithms زي (DDA أو Bresenham).
+<br><img border="0" alt="Chat GPT Image May 29 2026 08 24 58 PM" src="https://i.ibb.co/99krP9Qs/Chat-GPT-Image-May-29-2026-08-24-58-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Parametric Circle Drawing Algorithm Code
+import pygame
+import math # ==========================================
+# Parametric Circle Drawing Algorithm
+# ========================================== # Initialize Pygame
+pygame.init() screen = pygame.display.set_mode((600, 500))
+pygame.display.set_caption( "Parametric Circle Drawing Algorithm"
+) # Colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0) # Fill background
+screen.fill(WHITE) # Circle parameters
+center_x, center_y = 300, 250
+radius = 200 # Draw circle using parametric equation
+for theta in range(0, 360): # Convert degrees to radians rad = math.radians(theta) # Calculate x and y coordinates x = center_x + radius * math.cos(rad) # Invert y because screen y increases downward y = center_y - radius * math.sin(rad) # Plot the pixel pygame.draw.circle( screen, BLACK, (round(x), round(y)), 1 ) # Update the display
+pygame.display.flip() # Main loop
+running = True
+while running: for event in pygame.event.get(): if ( event.type == pygame.QUIT or ( event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE ) ): running = False # Quit Pygame
+pygame.quit() كده خلصنا الجزء التاني
+اتكلمنا في الجزء ده عن Circle Drawing Algorithms - إزاي الكمبيوتر بيسوي Rasterization ويحول الدوائر الرياضية لـ Pixels على الشاشة.
+عرفنا 5 طرق لرسم الدواير: Circle Equation Method - سهل ومباشر بس فيه Square Root و Gaps كبيرة
+Eight-Way Symmetry - إن الدائرة ليها 8 Octants متماثلة، فبنحسب نقطة واحدة ونطلع 7 نقط تانية
+Midpoint Circle Algorithm - بيعتمد على Decision Parameter و Symmetry، بيحل مشكلة الـ Gaps
+Bresenham's Circle Algorithm - Integer-Based ومناسب للـ Hardware
+Parametric Circle - بيستخدم sin و cos، سهل فهمه بس أبطأ ]]></description><link>lectures/chapter-4-[part-2]-fundamental-drawing-algorithms-in-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 4 - [Part 2] Fundamental Drawing Algorithms in Computer Graphics.md</guid><pubDate>Fri, 29 May 2026 19:48:22 GMT</pubDate><enclosure url="https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Index]]></title><description><![CDATA[ 29\5\2026 قبل ما تبدأ الشرح كالعاده مغطي المنهج كله ومش مفوت حاجة, لو ذاكرت من هنا بس باذن الله تخرج فاهم المنهج كله
+حتي الان مشروع لحد الشابتر الرابع (صفحة 94 في الكتاب) والباقي هحاول انزله في اقرب وقت.
+طبعا الدكتور هيجيب في الامتحان اسالة من كراسة العملي فمتنساش تذاكرها (مش عارف لسه هشرحها ولا لا) لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/Index.md</guid><pubDate>Fri, 29 May 2026 19:46:09 GMT</pubDate></item><item><title><![CDATA[Foundations of Computer Graphics - Lecture 1 [Part 3]]]></title><description><![CDATA[مقدمة هنكمل الشابتر الاول, الجزء ده من المحاضرة بيتكلم عن أنظمة الإحداثيات (Coordinate Systems) في الـ Computer Graphics.
 هنعرف الفرق بين Cartesian System و Screen System و Pixel Coordinates، وإزاي بنحول بينهم، وهنتعرف على Aspect Ratio definition
 Coordinate System is a method of assigning numerical values to geometric points so they can be uniquely identified in space. أي graphics system محتاج طريقة يحدد بيها مكان objects, الطريقة دي هي الـ Coordinate System.
 من غير coordinates مش هنعرف نحدد نقطة أو خط أو شكل موجود فين. الـ Cartesian Coordinate System هو النظام الرياضي الي كلنا عارفينه.
@@ -162,132 +288,7 @@ p = p + 2Δy لاحظ إن كل الحسابات هنا جمع وطرح لأرق
 اتكلمنا في الجزء ده عن Drawing Algorithms - إزاي الكمبيوتر بيعمل Rasterization ويحول الأشكال الرياضية لـ Pixels على الشاشة.
 بالنسبة لـ Line Drawing عرفنا 3 طرق: ا Direct Line Equation (y = mx + c) - سهلة وبديهية بس فيها Floating-Point و Rounding Errors
 ا DDA - بيحسب Incrementally خطوة بخطوة، أسهل من Direct بس لسه فيه Floating-Point ومحتاج Rounding
-ا Bresenham's Line Algorithm - الأسرع عشان Integer-Based بالكامل وبيستخدم Decision Parameter، مش محتاج Rounding ولا كسور ]]></description><link>lectures/chapter-4-[part-1]-fundamental-drawing-algorithms-in-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 4 - [Part 1] Fundamental Drawing Algorithms in Computer Graphics.md</guid><pubDate>Fri, 29 May 2026 19:17:17 GMT</pubDate><enclosure url="https://i.ibb.co/84DdNVv4/Chat-GPT-Image-May-29-2026-07-06-07-PM.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/84DdNVv4/Chat-GPT-Image-May-29-2026-07-06-07-PM.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Index]]></title><description><![CDATA[ 28\5\2026 قبل ما تبدأ الشرح كالعاده مغطي المنهج كله ومش مفوت حاجة, لو ذاكرت من هنا بس باذن الله تخرج فاهم المنهج كله
-حتي الان مشروع لحد الشابتر التالت (صفحة 70 في الكتاب) والباقي هحاول انزله في اقرب وقت.
-طبعا الدكتور هيجيب في الامتحان اسالة من كراسة العملي فمتنساش تذاكرها (مش عارف لسه هشرحها ولا لا) لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/Index.md</guid><pubDate>Fri, 29 May 2026 19:12:22 GMT</pubDate></item><item><title><![CDATA[Fundamental Drawing Algorithms in Computer Graphics - Chapter 4 - [Part 2]]]></title><description><![CDATA[مقدمة ده الجزء التاني من الشابتر، وهنركز فيه على Circle Drawing Algorithms.
-هنستعرض أكتر من طريقة لرسم الدواير: من المعادلة المباشرة (Circle Equation) اللي بسيطة بس فيها مشاكل، للخوارزميات الأذكى واللي مش محتاجة كسور أو جذور زي Midpoint و Bresenham.
-هنفهم كمان مفهوم Eight-Way Symmetry اللي بيخلينا نوفر 7 أضعاف الحسابات.
-في الآخر هيكون عندنا مقارنة كاملة بين كل الخوارزميات عشان تعرف تختار الأنسب. بما إن الشاشات بتاعتنا Raster displays (عباره عن Grid يعني)، فإحنا محتاجين خوارزميات تقرب الشكل الدائري المتصل ده لمجموعة بيكسلات منفصلة (Discrete pixels) بكفاءة عالية.
-عشان الدائرة شكل متماثل جدا، معظم الخوارزميات بتستغل حاجة اسمها الـ Eight-way symmetry (التماثل الثماني).
-يعني بدل ما نحسب محيط الدائرة كله، إحنا بنحسب تمن واحد بس (1/8 من الدائرة)، وبنعكس النقط دي على باقي الأثمان عشان نقلل الحسابات.
-definition
-A circle is specified by its center (xc, yc) and radius r. أبسط طريقة نرسم بيها الدائرة هي إننا نستخدم معادلتها الرياضية. الدائرة في مستوى الإحداثيات بتتعرف بحاجتين: نقطة المركز: (Xc, Yc)
-نصف القطر: r معادلة الدائرة القياسية: الدائرة هي كل النقط اللي بعدها عن المركز ثابت، والمسافة الثابتة دي اسمها Radius. الفكرة هنا إننا نمشي خطوة خطوة على محور السينات بداية من أقصى الشمال لحد أقصى اليمين، وفي كل خطوة نحسب قيمة الصادات اللي تقابلها. نقطة البداية على الـ هتبقى: نقطة النهاية على الـ هتبقى: بنمشي بـ Unit increments (يعني بنزود الـ بمقدار 1 في كل خطوة). إشارة الـ دي بتطلعلي قيمتين للـ لكل قيمة (قيمة موجبة ترسم الـ Upper semicircle وقيمة سالبة ترسم الـ Lower semicircle)، عشان كده الدائرة بتترسم كاملة فوق وتحت. السؤال هيديلك المركز (xc, yc) ونصف القطر r.
-بنعمل Loop لكل قيمة X من أول Xc - r لحد Xc + r.
-احسب: ارسم النقطتين الناتجين.
-ممكن تستخدم symmetry عشان تقلل الحسابات. حالة خاصة وبسيطة جداً، لو كان مركز الدائرة هو نقطة الأصل (0, 0). ساعتها مش محتاجين نطرح Xc ولا Yc، والمعادلة بتتبسط وتبقى شكلها كده: سهلة في الفهم والتنفيذ. بتستخدم Floating-point operations (عمليات الكسور العشرية)، ودي تقيلة جداً وبطيئة على البروسيسور.
-ا Not suitable for real-time rendering: مينفعش نستخدمها في ألعاب أو حاجات محتاجة فريمات سريعة لانها بطيئة. الحسابات بتاعتها مش Efficient خالص، لأنها بتعتمد على عمليات الضرب (عشان نجيب التربيع) وعملية الـ Square root (الجذر التربيعي) اللي بنحاول نتجنبها على قد ما نقدر في الجرافيكس لأنها بطيئة جداً.
-ا Large gaps: بتعمل فراغات كبيرة في الرسمة لما يكون ميل الخط قريب من الرأسي (ودي هنشرحها بالتفصيل في جزء الـ Output) عايزين نرسم دائرة مركزها (0,0) ونصف قطرها r = 5 باستخدام معادلة الدائرة الأساسية (Direct Equation). أول حاجة بنعملها إننا بنجهز المعادلة بتاعتنا بناء على المركز ونصف القطر اللي معانا، عشان نستنتج قيمة الـ y.
-المعادلة القياسية للدايرة: بما إن المركز بتاعنا هو نقطة الأصل (0,0) (Special Case)، المعادلة هتتبسط وتبقى: حساب الـ y: هنودي الـ y في طرف لوحدها عشان دي اللي هنحسبها لكل بيكسل: تحديد اتجاه اللوب (Condition): هنعمل Loop على الـ x بداية من أقصى الشمال () لحد أقصى اليمين (). بس عشان التبسيط في الجدول بتاعنا، خلينا نمشي على الربع الأول بس (من 0 لـ 5) ونشوف النقط الموجبة. هنا بقى هنمسك قيم الـ x من أول 0 لحد 5، وفي كل مرة نعوض في المعادلة بتاعتنا عشان نجيب قيمة الـ y. وطبعا عشان دالة الـ Square root بتطلع أرقام عشرية (Floating-point)، لازم نعمل Rounding (نقرب) في الخر عشان نجيب الـ Pixel الصح. Final Pixels (الربع اليمين اللي فوق):(0,5), (1,5), (2,5), (3,4), (4,3), (5,0)<img border="0" alt="Chat GPT Image May 29 2026 07 30 56 PM" src="https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-### Outputimplementation Code (عشان تجرب) import math
-import pygame
-import sys def draw_circle(screen, center_x, center_y, radius): for x in range(center_x - radius, center_x + radius + 1): dx = x - center_x square_term = radius**2 - dx**2 if square_term &lt; 0: continue dy = math.sqrt(square_term) y1 = round(center_y - dy) y2 = round(center_y + dy) screen.set_at((x, y1), (255, 255, 255)) screen.set_at((x, y2), (255, 255, 255)) pygame.init()
-screen = pygame.display.set_mode((500, 500))
-pygame.display.set_caption("Circle Demo")
-clock = pygame.time.Clock() running = True
-while running: for event in pygame.event.get(): if event.type == pygame.QUIT: running = False screen.fill((0, 0, 0)) draw_circle(screen, 250, 250, 150) pygame.display.flip() clock.tick(60) pygame.quit()
-sys.exit() <br> <img border="0" alt="image" src="https://i.ibb.co/JwxbrjkK/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> لما تعمل Run للكود ده وتشوف النتيجة (زي الصورة)، هتلاحظ حاجة غريبة : من فوق ومن تحت (Top and bottom edges): الدائرة طالعة ناعمة ومظبوطة (Smooth).
-من اليمين ومن الشمال (Left and right sides): الدائرة فيها فراغات واضحة جداً تحسها متقطعة (Noticeable gaps). **ليه ده بيحصل؟ الفكره في الـ Discrete nature of the pixel grid (طبيعة الشاشة المتقطعة).
-لما بنقرب من أقصى اليمين أو أقصى الشمال، ميل الدائرة (Slope) بيبقى رأسي جدا. ده معناه إن مع كل خطوة صغيرة بنمشيها على الـ X، قيمة الـ Y بتتغير برقم كبير جدا.
-ولأننا بنمشي بمقدار 1 بيكسل بس على الـ Xوبنعمل Rounding، الالجورزم بتفوت بيكسلات كتير بالطول ومبترسمهاش، فبيطلع الشكل متقطع ومفيش نقط كفاية تغطي المنطقة دي.
-عشان كده، الحل ده مش عملي وبنلجأ لحلول تانية زي الـ Midpoint Circle Algorithm اللي هتحل المشكلة دي تماماً. لو جاهز ندخل عليها، دوس! definition
-Eight-way symmetry means a circle can be divided into eight identical octants, and one computed point can generate seven other symmetric points. عشان نخلي الخوارزمية بتاعتنا Efficient (سريعة وفعالة)، أول حاجة لازم نلاحظها إن الدائرة اللي مركزها نقطة الأصل (0, 0) ليها تماثل ثماني الأبعاد. الـ Optimization ده بيوفر علينا عمليات حسابية متكررة ملهاش لازمة (Redundant calculations).
-امتى نقول على شكل إنه متماثل؟ لو قدرنا نعمله تحويلات (زي الدوران أو الانعكاس) وفضل شكله زي ما هو متغيرش. الدايرة بقى بالذات ليها Infinite rotational symmetry (تماثل دوراني لا نهائي)، يعني مهما لفيتها بأي زاوية، هتفضل شكلها دائرة.
-يعني إحنا نقدر نقسم الدائرة لـ 8 حتت متساوية (كانها بيتزا 🍕 ) بخطوط بتترسم كل 45 درجة (عند 0°، 45°، 90°، 135°، وهكذا).
-كل حتة من التمانية دول متطابقة تماما مع الباقيين. يعني لو حسبنا ورسمنا تمن واحد بس (1/8)، نقدر نعكسه ونلفه عشان نجيب الـ 7 أتمان الباقيين ببلاش من غير حسابات معقدة.
-<br> <img src="https://www.tutorialspoint.com/computer_graphics/images/bresenhams_circle_generation_algorithm.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> كل تمن من الـ 8 أتمان بنسميه Octant. لو إحنا حسبنا نقطة واحدة بس اسمها موجودة على محيط الدائرة في الـ Octant الأول، نقدر نستنتج الـ 7 نقط الباقيين بمجرد إننا نبدل الـ مكان الـ أو نغير الإشارات بتاعتهم (موجب وسالب).
-<br> <img src="https://i.ytimg.com/vi/K64iHenRpso/hqdefault.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 600px; max-width: 100%;"> افرض إن الالجورزم بتاعتنا (بعد ما عملت حساباتها المعقدة) طلعت نقطة واحدة بس في التمن الأول وهي (2, 7) ، يعني الـ X = 2 والـ Y = 7. بدل ما الالجورزم تحسب باقي الدائرة، هتاخد النقطة دي وتطبق عليها الجدول اللي فوق عشان ترسم 8 بيكسلات في نفس اللحظة: النقطة في Octant 1 هتبقى: النقطة في Octant 2 هتبقى: النقطة في Octant 3 هتبقى: النقطة في Octant 4 هتبقى: النقطة في Octant 5 هتبقى: النقطة في Octant 6 هتبقى: النقطة في Octant 7 هتبقى: النقطة في Octant 8 هتبقى: لو استخدمنا الجورزم وحسبنا اول نقطة في التمن الاول لدائرة مركزها (0,0)، والنقطة دي (4, 3). عايزين نجيب الـ 7 نقط المتماثلة معاها في باقي الدائرة من غير ما نحسب معادلة الدائرة من أول وجديد.
-أول حاجة بنعملها إننا بنجهز قواعد الانعكاس (Reflection rules) اللي الخوارزمية بتبرمجها. إحنا عارفين إن الدائرة متماثلة في الـ 8 أثمان.لو النقطة الأساسية هي x = 4 و y = 3:
-عشان نروح للتمن اللي جنبه، بنعكس الـ x مكان الـ y.
-عشان نروح للنص الشمال، بنخلي السينات بالسالب.
-عشان نروح للنص اللي تحت، بنخلي الصادات بالسالب.
-هنا بقى الخوارزمية بتمسك النقطة اليتيمة اللي حسبتها (4, 3)، وتطبق عليها الـ 8 قواعد في نفس اللفة عشان تنور 8 بيكسلات مرة واحدة:Final Pixels:(4,3), (3,4), (-3,4), (-4,3), (-4,-3), (-3,-4), (3,-4), (4,-3)<br><img border="0" alt="Chat GPT Image May 29 2026 07 50 37 PM" src="https://i.ibb.co/hJgd2sz7/Chat-GPT-Image-May-29-2026-07-50-37-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Eight-way Symmetry Example Code
-import pygame
-import math # Constants
-WIDTH, HEIGHT = 800, 600
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-BLUE = (0, 0, 255) # For octant labels # Center and radius of the circle
-CENTER_X, CENTER_Y = WIDTH // 2, HEIGHT // 2
-RADIUS = 250 # Initialize Pygame
-pygame.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Eight-way Symmetry Example")
-screen.fill(WHITE) # Font for labeling
-font = pygame.font.SysFont("Arial", 20) # 1. Draw the circle using parametric form:
-# x = r * cos(theta), y = r * sin(theta)
-for theta in range(0, 360): rad = math.radians(theta) x = CENTER_X + round(RADIUS * math.cos(rad)) y = CENTER_Y - round(RADIUS * math.sin(rad)) pygame.draw.circle(screen, BLACK, (x, y), 1) # 2. Draw octant lines (every 45 degrees)
-for i in range(8): angle_deg = i * 45 rad = math.radians(angle_deg) end_x = CENTER_X + RADIUS * math.cos(rad) end_y = CENTER_Y - RADIUS * math.sin(rad) pygame.draw.line( screen, BLACK, (CENTER_X, CENTER_Y), (end_x, end_y), 1 ) # 3. Octant labels
-labels = [ "Oct1: (x, y)", "Oct2: (y, x)", "Oct3: (-y, x)", "Oct4: (-x, y)", "Oct5: (-x, -y)", "Oct6: (-y, -x)", "Oct7: (y, -x)", "Oct8: (x, -y)"
-] for i in range(8): angle_deg = i * 45 + 22.5 rad = math.radians(angle_deg) # Place text inside the circle label_x = CENTER_X + (RADIUS * 0.7) * math.cos(rad) label_y = CENTER_Y - (RADIUS * 0.7) * math.sin(rad) text = font.render(labels[i], True, BLUE) text_rect = text.get_rect(center=(label_x, label_y)) screen.blit(text, text_rect) # Update the display
-pygame.display.flip() # Main loop to keep window open
-running = True
-while running: for event in pygame.event.get(): if ( event.type == pygame.QUIT or ( event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE ) ): running = False pygame.quit() definition
-Midpoint Circle Algorithm is an efficient circle drawing algorithm that uses decision parameters to choose the next pixel. الالجورزم دي بتعتبر من أكفأ الطرق عشان نرسم بيها دوائر من غير الفراغات اللي شفناها قبل كده. فكرتها إنها بتيجي بين بيكسلين محتملين (واحد أفقي وواحد قطري (بالورب))، وتحسب نقطة الـ Midpoint (نقطة المنتصف) بينهم، وتشوف خط الدائرة الحقيقي أقرب لأنهي بيكسل فيهم عشان تنوره. ا Symmetry of Circles: بنستغل الـ 8-way symmetry الي اتكلمنا عنها قبل كده عشان نحسب تمن واحد بس (1/8) ونعكسه 7 مرات.
-ا Decision Parameter: بنستخدم معامل قرار عشان نحدد البيكسل الصح اللي عليه الدور.
-ا Integer Arithmetic: الميزة هنا إننا بنتجنب الـ Floating-point (الكسور) والـ Roots (الجذور) خالص، وكل حساباتنا بتبقى أرقام صحيحة، فبتبقى Computationally efficient (سريعة جداً للبروسيسور). بنبدأ بنقطة المركز (X0, Y0) ونصف القطر r.
-ا Initialize variables: بندي قيم ابتدائية للمتغيرات بتاعتنا للتمن الأول: x = 0
-y = r بنحسب الـDecision Parameter:
-decision parameter = 1 - r بنعمل Plot لأول نقطة وبنستخدم الـ Symmetry عشان نرسم الـ 8 نقط المتماثلين.
-في كل خطوة، بنحدث الـ Decision parameter وبناءً عليه بنقرر: هل نزود الـ بس؟ ولا نزود الـ وننقص الـ ؟ عايزين نرسم دائرة مركزها (0,0) ونصف قطرها r = 5 باستخدام معادلة الدائرة الأساسية (Direct Equation).
-عشان نقدر نعمل جدول trace صغير، خلينا ناخد مثال مصغر من النقط اللي في الكود:
-مركز الدائرة: (0, 0)
-نصف القطر (): 5
-تجهيز الخوارزمية:
-بنبدأ من أول نقطة خالص فوق خالص وهي نقطة البداية: x = 0 و y = r = 5.
-بنحسب قيمة الـ decision_param من القانون: الـ Loop بتاعنا هيفضل شغال طول ما قيمة x &lt; y. هنا بقى الالجورزم بتشوف قيمة الـ Pkفي كل لفة عشان تاخد القرار.
-لو رسمنا البيكسلات اللي ولدتها الـ add_symmetric_points كلها من الربع الأول بس (اللي فوق يمين)، هتلاقيها متقستمة بالظبط على الـ Octants ومنورة الدائرة كاملة بشكل متصل:<br><img border="0" alt="Chat GPT Image May 29 2026 07 53 24 PM" src="https://i.ibb.co/v42DkXb5/Chat-GPT-Image-May-29-2026-07-53-24-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Midpoint Circle Algorithm Code
-import pygame
-import math # Function for midpoint circle algorithm to calculate circle points
-def midpoint_circle(center_x, center_y, radius): x = 0 y = radius decision_param = 1 - radius points = [] # Function to add 8 points for each symmetrical point in octants def add_symmetric_points(cx, cy, x, y): points.extend([ (cx + x, cy + y), (cx - x, cy + y), (cx + x, cy - y), (cx - x, cy - y), (cx + y, cy + x), (cx - y, cy + x), (cx + y, cy - x), (cx - y, cy - x) ]) # Add the initial points add_symmetric_points(center_x, center_y, x, y) # Begin algorithm loop to create circle points incrementally while x &lt; y: x += 1 if decision_param &lt; 0: decision_param += 2 * x + 1 else: y -= 1 decision_param += 2 * (x - y) + 1 # Add next set of symmetrical points add_symmetric_points(center_x, center_y, x, y) return points # ==========================================
-# Main Execution Block
-# ==========================================
-if __name__ == "__main__": # Initialize Pygame pygame.init() # Colors WHITE = (255, 255, 255) BLACK = (0, 0, 0) # Logical screen settings WIDTH, HEIGHT = 800, 600 PIXEL_SIZE = 1 # Circle parameters radius = 250 center = (WIDTH // 2, HEIGHT // 2) # Set up display screen = pygame.display.set_mode( (WIDTH * PIXEL_SIZE, HEIGHT * PIXEL_SIZE) ) pygame.display.set_caption( "Circle Drawing Using Midpoint Algorithm" ) # Fill background with white color screen.fill(WHITE) # Calculate all circle points using the algorithm points = midpoint_circle(*center, radius) # Draw each generated point for x, y in points: pygame.draw.rect( screen, BLACK, ( x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE ) ) # Update display pygame.display.flip() # Main loop running = True while running: for event in pygame.event.get(): if ( event.type == pygame.QUIT or ( event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE ) ): running = False # Quit Pygame pygame.quit() definition
-Bresenham's Circle Algorithm Similar to the Midpoint algorithm but uses integer arithmetic exclusively, making it faster and more efficient for hardware implementation. اBresenham عمل خوارزمية للدوائر زي ما عمل للخطوط بالظبط. شبه الـ Midpoint بس متظبطة أكتر بحيث إن كل عملياتها تكون جمع وطرح وضرب في أرقام صحيحة بس، وده بيخليها سريعه جدا. بتستخدم الـ Symmetry برده عشان تقلل الحسابات.
-بتحسب حاجة اسمها Error term (نفس فكرة الـ Decision parameter) عشان تقرر إحنا هنمشي أفقي (Increment x) ولا قطري (بالورب) (Decrement y). ا Initialize: x = 0
-y = r اDecision parameter بنرمزله بـ d وبنحسبه كده: d = 3 - 2r ا While loop: طول ما X &lt;= Y (يعني لسه مخلصناش التمن الأول بتاع الدائرة): بنعمل Plot (رسم) للـ 8 نقط المتماثلين حوالين المركز (Cx, Cy). ا If d &lt; 0: ده معناه إننا هنمشي أفقي (Move horizontally):
-x = x + 1 بنحدث معامل القرار: d = d + 4x + 6 ا Else: ده معناه إننا هنمشي قطري (Move diagonally):
-x = x + 1
-y = y - 1 بنحدث معامل القرار: d = d + 4(x - y) + 10 عايزين نرسم دايرة مركزها (0,0) ونصف قطرها r = 5 باستخدام معادلة الدائرة الأساسية (Direct Equation).
-أول حاجة بنجهز المتغيرات بتاعتنا قبل ما ندخل في الـ Loop: نقطة البداية: و . بنحسب قيمة الـ Decision Parameter (المعلم الأولي d) من قانون Bresenham d = 3 - 2r: الكود بيرسم أول 8 نقط متماثلة بناءً على النقطة (0, 5). شرط الدوران (Condition): الـ Loop بيفضل شغال طول ما x≤y. جوه الـ Loop، الخوارزمية بتزود الـ x بمقدار 1 الأول، وبعدين تبص على إشارة الـ d عشان تقرر هتقلل الـ y ولا لأ، وتحسب الـ d الجديدة بناءً على النقط الجديدة. النقط اللي طلعت من الكود ده للربع الأول هي: (0,5), (1,5), (2,4), (3,3), (4,2).
-<br><img border="0" alt="Chat GPT Image May 29 2026 08 10 00 PM" src="https://i.ibb.co/HL88Jxc2/Chat-GPT-Image-May-29-2026-08-10-00-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Bresenham Circle Algorithm Code
-import pygame # Function for Bresenham's circle algorithm to calculate circle points
-def bresenham_circle(center_x, center_y, radius): x = 0 y = radius d = 3 - 2 * radius points = [] # Function to add 8 points for each symmetrical point in octants def add_symmetric_points(cx, cy, x, y): points.extend([ (cx + x, cy + y), (cx - x, cy + y), (cx + x, cy - y), (cx - x, cy - y), (cx + y, cy + x), (cx - y, cy + x), (cx + y, cy - x), (cx - y, cy - x) ]) # Add the initial symmetric points for (0, radius) add_symmetric_points(center_x, center_y, x, y) # Begin algorithm loop while x &lt;= y: x += 1 if d &lt; 0: d = d + 4 * x + 6 else: y -= 1 d = d + 4 * (x - y) + 10 # Add next set of symmetrical points add_symmetric_points(center_x, center_y, x, y) return points # ==========================================
-# Main Execution Block
-# ==========================================
-if __name__ == "__main__": # Colors WHITE = (255, 255, 255) BLACK = (0, 0, 0) # Logical screen settings WIDTH, HEIGHT = 80, 60 PIXEL_SIZE = 10 # Circle parameters radius = 25 center = (WIDTH // 2, HEIGHT // 2) # Initialize Pygame pygame.init() screen = pygame.display.set_mode( (WIDTH * PIXEL_SIZE, HEIGHT * PIXEL_SIZE) ) pygame.display.set_caption( "Bresenham's Circle Algorithm" ) # Fill background screen.fill(WHITE) # Draw the circle points points = bresenham_circle(*center, radius) # Render the calculated points on screen for x, y in points: pygame.draw.rect( screen, BLACK, ( x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE ) ) # Update display pygame.display.flip() # Main loop running = True while running: for event in pygame.event.get(): if ( event.type == pygame.QUIT or ( event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE ) ): running = False pygame.quit() definition
-Parametric Circle Drawing Algorithm uses trigonometric functions ( and ) to calculate the coordinates of the circle. While simple, it is computationally expensive due to the use of floating-point operations. دي طريقة مختلفه بتعتمد على الدوال المثلثية اللي أخدناها في الرياضة.
-سهلة في الفهم، بس مكلفة حسابيا عشان بتستخدم floating-point operations. بنستخدم الـ Parametric equation بتاعت الدائرة، اللي بتجيب الإحداثيات عن طريق زاوية اسمها x = x0 + r cos(θ)
-y = y0 + r sin(θ) بنعمل Loop ونزود الزاوية من لحد (يعني لفة كاملة 360 درجة) عشان نولد كل النقط بتاعت الدائرة. خزن center (x0, y0) و radius r.
-خلي θ تتحرك من 0 لـ 2π.
-لكل قيمة θ، احسب x و y.
-ارسم النقطة الناتجة. استخدام sin, cos, و floating-point operations بيخليها أبطأ من integer-based algorithms. عايزين نرسم دايرة مركزها (0,0) ونصف قطرها r = 5 باستخدام معادلة الدائرة الأساسية (Direct Equation). المعادلة البارامترية (Parametric equation) للدائرة بتعتمد على زاوية الدوران (ثيتا). القوانين اللي هنعوض فيها هي:
-بما إن المركز (0,0)، القوانين هتبقى:الـ Loop بتاعنا بيلف على الزوايا من لحد .عشان منطولش الجدول بـ 360 خطوة، خلينا نمسك شوية زوايا مميزة في الربع الأول (من 0 لـ 90 درجة) ونشوف النقط بتتحسب إزاي:
-زي ما إنت شايف، الطريقة دي بتجيب النقط بشكل مباشر من غير ما تعتمد على النقطة اللي قبلها، وده اللي بيخليها مختلفة عن الـ Incremental Algorithms زي (DDA أو Bresenham).
-<br><img border="0" alt="Chat GPT Image May 29 2026 08 24 58 PM" src="https://i.ibb.co/99krP9Qs/Chat-GPT-Image-May-29-2026-08-24-58-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Parametric Circle Drawing Algorithm Code
-import pygame
-import math # ==========================================
-# Parametric Circle Drawing Algorithm
-# ========================================== # Initialize Pygame
-pygame.init() screen = pygame.display.set_mode((600, 500))
-pygame.display.set_caption( "Parametric Circle Drawing Algorithm"
-) # Colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0) # Fill background
-screen.fill(WHITE) # Circle parameters
-center_x, center_y = 300, 250
-radius = 200 # Draw circle using parametric equation
-for theta in range(0, 360): # Convert degrees to radians rad = math.radians(theta) # Calculate x and y coordinates x = center_x + radius * math.cos(rad) # Invert y because screen y increases downward y = center_y - radius * math.sin(rad) # Plot the pixel pygame.draw.circle( screen, BLACK, (round(x), round(y)), 1 ) # Update the display
-pygame.display.flip() # Main loop
-running = True
-while running: for event in pygame.event.get(): if ( event.type == pygame.QUIT or ( event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE ) ): running = False # Quit Pygame
-pygame.quit() كده خلصنا الجزء التاني
-اتكلمنا في الجزء ده عن Circle Drawing Algorithms - إزاي الكمبيوتر بيسوي Rasterization ويحول الدوائر الرياضية لـ Pixels على الشاشة.
-عرفنا 5 طرق لرسم الدواير: Circle Equation Method - سهل ومباشر بس فيه Square Root و Gaps كبيرة
-Eight-Way Symmetry - إن الدائرة ليها 8 Octants متماثلة، فبنحسب نقطة واحدة ونطلع 7 نقط تانية
-Midpoint Circle Algorithm - بيعتمد على Decision Parameter و Symmetry، بيحل مشكلة الـ Gaps
-Bresenham's Circle Algorithm - Integer-Based ومناسب للـ Hardware
-Parametric Circle - بيستخدم sin و cos، سهل فهمه بس أبطأ ]]></description><link>lectures/chapter-4-[part-2]-fundamental-drawing-algorithms-in-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 4 - [Part 2] Fundamental Drawing Algorithms in Computer Graphics.md</guid><pubDate>Fri, 29 May 2026 19:09:31 GMT</pubDate><enclosure url="https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Mathematical Foundations of Computer Graphics - Lecture 2]]></title><description><![CDATA[مقدمة المحاضرة دي بتتكلم عن الأساس الرياضي في Computer Graphics، خصوصا الـ Vectors.
+ا Bresenham's Line Algorithm - الأسرع عشان Integer-Based بالكامل وبيستخدم Decision Parameter، مش محتاج Rounding ولا كسور ]]></description><link>lectures/chapter-4-[part-1]-fundamental-drawing-algorithms-in-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 4 - [Part 1] Fundamental Drawing Algorithms in Computer Graphics.md</guid><pubDate>Fri, 29 May 2026 19:17:17 GMT</pubDate><enclosure url="https://i.ibb.co/84DdNVv4/Chat-GPT-Image-May-29-2026-07-06-07-PM.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/84DdNVv4/Chat-GPT-Image-May-29-2026-07-06-07-PM.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Mathematical Foundations of Computer Graphics - Lecture 2]]></title><description><![CDATA[مقدمة المحاضرة دي بتتكلم عن الأساس الرياضي في Computer Graphics، خصوصا الـ Vectors.
 هنفرق بين Vector, Scalar, و Point، وهنشوف vector notation، components، magnitude، unit vectors، normalization، وازاي نجيب الزاوية بين two vectors باستخدام Dot Product. الـ Vectors من أهم الأدوات الرياضية في Computer Graphics.
 بتستخدم عشان تمثل حاجات كتير في 2D و 3D زي: ا Positions
 ا Directions
