@@ -1,4 +1,126 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Prolog]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>Prolog</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Fri, 29 May 2026 19:49:20 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Fri, 29 May 2026 19:49:06 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[Fundamental Drawing Algorithms in Computer Graphics - Chapter 4 - [Part 2]]]></title><description><![CDATA[مقدمة ده الجزء التاني من الشابتر، وهنركز فيه على Circle Drawing Algorithms.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Prolog]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>Prolog</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Sat, 30 May 2026 12:21:52 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Sat, 30 May 2026 12:21:38 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[Index]]></title><description><![CDATA[ 29\5\2026 قبل ما تبدأ الشرح كالعاده مغطي المنهج كله ومش مفوت حاجة, لو ذاكرت من هنا بس باذن الله تخرج فاهم المنهج كله
+حتي الان مشروع لحد الشابتر الرابع (صفحة 94 في الكتاب) والباقي هحاول انزله في اقرب وقت.
+طبعا الدكتور هيجيب في الامتحان اسالة من كراسة العملي فمتنساش تذاكرها (مش عارف لسه هشرحها ولا لا) لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/Index.md</guid><pubDate>Sat, 30 May 2026 12:20:47 GMT</pubDate></item><item><title><![CDATA[Color Representation in Computer Graphics - Lecture 5]]></title><description><![CDATA[مقدمة الشابتر ده بيتكلم عن تمثيل الألوان في Computer Graphics.
+هنفهم يعني إيه color، إزاي العين بتشوف الألوان، الفرق بين RGB و CMY/CMYK، وبعدها هندخل على Frame Buffers وإزاي pixels بتتخزن في الذاكرة. اللون بيلعب دور أساسي في الـ Computer Graphics.
+بيزود الواقعية، بينقل المعلومات، وبياثر على مشاعرنا.
+استخدامات الـ Color في مجالات مختلفة: Graphical User Interfaces (GUIs)
+Digital Art
+Scientific Visualization
+Virtual Reality definition
+Color is not an intrinsic physical property of objects. It is a perceptual phenomenon caused by the interaction between light, objects, and the human visual system. الـ Color ده مش حاجة فيزيائية في الجسم نفسه زي وزنه أو حجمه مثلا. دي ظاهرة إدراكية بتحصل جوة دماغنا نتيجة تفاعل تلات حاجات مع بعض: الضوء، الجسم اللي بيعكس الضوء ده، وعينك (أو نظام الرؤية بتاعك). يعني من غير ضوء، مفيش حاجة اسمها لون أصلاً، ملهاش وجود.
+اللون بيظهر عشان فيه: Light
+Object
+Human visual system من غير ضوء، مفيش color perception. عشان تفهم اللون، لازم تفهم الضوء الأول. الضوء ده عبارة عن طاقة كهرومغناطيسية بتمشي في موجات ليها أطوال مختلفة بنسميها Wavelengths. الضوء الأبيض بتاع الشمس الي انته بتشوفه، هو خليط من Wavelengths كتير مع بعض.
+عين الإنسان مش بتشوف كل الطيف الكهرومغناطيسي، إحنا بنشوف حتة صغيرة بس اسمها الـ Visible Light Spectrum.
+ودي بتبدأ من 400 نانومتر (اللون البنفسجي) لحد 700 نانومتر (اللون الأحمر). طبعا الأطوال الموجية دي نفسها "مش متلونة"، لكن لما بتدخل عينك، نظام الرؤية بتاعك بينتج إحساس اللون.
+400 nm (Violet) → 700 nm (Red)
+Summary
+اللون هو إحساس بينتج لما العين تستقبل جزء من الضوء المرئي (مش بنشوف كله) (400–700 nm)، والضوء الأبيض عبارة عن خليط من أطوال موجية مختلفة. The human eye perceives light by focusing it through an elastic lens onto the **retina العين بتشتغل ازاي ؟ الضوء بيدخل العين وبيتجمع عن طريق عدسة مرنة بينزل على الـ Retina (الشبكية) اللي في آخر العين. الشبكية دي بقى فيها خلايا حساسة للضوء بنسميها Photoreceptor Cells، ودول نوعين أساسيين: <img src="https://pic2.zhimg.com/v2-7d7bdb13bae0106215d511a9e2199e05_1440w.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> ### Cone Cells
+عندنا 3 أنواع من الـ Cones، كل نوع حساس لمدى معين من الـ Wavelengths بيمثل الألوان دي: الأحمر، الأخضر، والأزرق. استجابة الخلايا دي بتتداخل مع بعضها في حاجة اسمها Response Curves (منحنيات الاستجابة). في الأغلب، حساسية الخلية بتقل كل ما الطول الموجي يبعد عن القمة (Peak) بتاعتها، بس خد بالك ان: الـ Red cone عنده استجابة تانية خفيفة عند الأطوال الموجية القصيرة (ناحية الأزرق).
+<br> <img src="https://www.pngitem.com/pimgs/m/672-6724374_human-eye-color-sensitivity-hd-png-download.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;"> بما إن العين بتتعامل مع استجابات قريبة من Red و Green و Blue، نقدر نعيد إنتاج ألوان كتير عن طريق خلط RGB light بكثافات مختلفة.
+المبدأ ده هو أساس معظم تقنيات العرض الحديثة، زي: CRTs
+LCDs
+TFTs
+Plasma displays
+Digital projectors في أنظمة الـ graphics، لون كل pixel بيتمثل رقميا باستخدام RGB Triplet.
+(R, G, B) كل بيكسل (Pixel) على الشاشة بيتمثل بأرقام بنسميها RGB Triplet. الهاردوير بياخد الأرقام دي ويحولها لقوة إضاءة للألوان التلاتة، وعينك هي اللي بتدمجهم عشان تشوف اللون النهائي. ا RGB معناها: ا Red
+ا Green
+ا Blue دول اسمهم Additive Primary Colors.
+اتسموا additive عشان اللون بيتكون بإضافة light بكثافات مختلفة.
+لو مفيش ضوء، النتيجة Black.
+كل ما نزود الضوء، brightness تزيد.
+لو جمعنا Red و Green و Blue بأقصى intensity، النتيجة هتبقي الـ White Light.
+Key Idea
+الـ RGB ده موديل لخلط "الضوء"، مش خلط ألوان دهانات أو حبر (Not paint or ink). الموديل ده بيستخدم في أي نظام بيطلع ضوء من نفسه (Emissive Display Systems) زي: Computer monitors
+Televisions
+Projectors لما نخلط لونين من RGB، بنطلع secondary additive colors. لو غيرنا relative intensities بين R و G و B، نقدر نطلع ألوان كتير جدا. ا Red أكتر من Green ممكن يطلع Orange.
+ا Green أكتر من Red ممكن يطلع Lime.
+خلطات غير متساوية من التلاتة ممكن تطلع Brown أو complex colors.
+التحكم المستمر في intensity هو اللي بيخلي الأنظمة الرقمية تمثل ملايين الألوان.
+<br> <img src="https://cdn.prod.website-files.com/61f9082050036c6c4b4899f8/69a0485fb777604233e1f35c_a-1693558643138-2x.jpeg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;">
+بصمجيات
+ا Additive Mixing زي الـ RGB ,بيضيف light , كل ما بنضيف الوان الاضاءه بتزيد لحد ما تبقي ابيض , لو مضفناش حاجة بتبقي اسود, بيشتغل مع الشاشات والحاجات الديجيتال لما نتعامل مع الاصباغ (Pigments)، خلط الألوان بيشتغل بطريقة تانية.
+الموديل ده اسمه Subtractive (طرحي) عشان إحنا بنطرح أو بنمتص (absorb) الضوء مش بنطلعه, هنا إحنا مش بنضيف light، إحنا بنمتص أو نشيل wavelengths معينة ونسيب غيرها ينعكس.
+ده اسمه Subtractive Color Mixing. Cyan
+Magenta
+Yellow الجسم الأصفر بيبان أصفر عشان بيعكس wavelengths الخاصة بالأصفر ويمتص غيرها.
+ا Cyan بيعكس green-blue wavelengths.
+ا Magenta بيعكس red-blue wavelengths.
+لو عايز تفهم اكتر
+احنا عرفنا ان اللون الابيض هو لون فيه كل الاطوال الموجية متضافة علي بعضها , الفكره هنا اننا لما بنيجي نطبع علي ورق بنطبع علي ورق ابيض , فهنا مينفعش نضيف الوان احنا المفروض نشيل الوان ,، وده هو مبدأ Subtractive Color Models.
+Yellow + Cyan → Green نظريا، خلط Cyan + Magenta + Yellow يمتص كل الضوء المرئي ويطلع black.
+<br> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/SubtractiveColor.svg/500px-SubtractiveColor.svg.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 300px; max-width: 100%;">
+بصمجيات
+ا Subtractive Mixing زي الـ CMY (أو CMYK)، بيمتص الـ light، كل ما بنضيف حبر الإضاءة بتقل لحد ما تبقى أسود، لو مضفناش حاجة بتبقى أبيض (اللي هو لون الورقة الفاضية)، بيشتغل مع الطباعة والحبر والورق. نظريا، خلط Cyan, Magenta, و Yellow المفروض يطلع black.
+عمليا، النتيجة غالبا بتبقى dark brown بسبب عدم نقاء في الحبر.
+كمان اللون الأسود بيتستخدم كتير جدا في المستندات المطبوعة.
+عشان كده الطابعات بتضيف ink أسود منفصل اسمه K.
+C = Cyan
+M = Magenta
+Y = Yellow
+K = Black / Key بيحسن print quality.
+بيقلل استهلاك الحبر.
+بيخلي النصوص والظلال sharp أكتر.
+definition
+Color space defines how colors are represented numerically. الـ Color Space (مساحة اللون) دي طريقة رياضية عشان نمثل بيها الألوان بأرقام. خلينا نبص على مساحة الـ RGB بالتفصيل.
+دي بتتمثل كأنها نقطة في مساحة ثلاثية الأبعاد (3D space)، وبنتخيلها في شكل مكعب اسمه RGB Color Cube. المحاور بتاعت المكعب ده هي الـ Red والـ Green والـ Blue.
+قيم grayscale موجوده على diagonal جوه RGB Color Cube.
+<br> <img src="https://lh4.googleusercontent.com/proxy/cUNIQDMN8MpzyR8iB21SnekYDN3FZwAMJMRbYtCw4lJWU3elGORvo1RlZL2s9pbPW3eGbMBOMHp82zDNBG0nVAYXUhf5u-nXdirk74msNbauEzje3255AyuzyrTgDzSCy6MyHvo" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> ### Important RGB Valuesdefinition
+Frame buffer is a dedicated memory region used to store pixel data for the image currently displayed on the screen. أي صورة بتتعرض على الشاشة عبارة عن مجموعة من البيكسلات.
+عشان الكمبيوتر يدير الكلام ده بكفاءة بيحجز حتت ميموري ورا بعضها (Contiguous block) مخصصة بس إنها تخزن بيانات الألوان بتاعت البيكسلات دي. الحتة دي من الميموري هي اللي بنسميها الـ Frame Buffer.
+الـ graphics system يقدر يتحكم في لون كل pixel عن طريق read/write لمكانه في frame buffer. تاريخيا، Frame Buffer كان معناه memory اللي بتمثل frame المعروض حاليا على الشاشة مباشرة.
+في الأنظمة الحديثة، المصطلح بقى أوسع.
+دلوقتي، الكلمة دي بقت بتستخدم عشان توصف أي هيكل ميموري بيخزن بيانات صورة، حتى لو الصورة دي مش بتتعرض بشكل مباشر على الشاشة (زي الـ off-screen buffers والـ textures).
+<br> <img src="https://www.cs.uic.edu/~jbell/CourseNotes/ComputerGraphics/diagrams/framedef2.gif" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+Tip
+مش فاهم الصوره معناها ايه بس الدكتور حاططها في الكتاب الـ hardware systems بتدعم أكتر من نوع frame buffer.
+كل نوع بيحدد إزاي قيم الـ pixels بتتخزن في memory.
+الأنظمة المختلفة بتدعم فورماتس كتير للـ Frame Buffer عشان التوافق مع القديم (backward compatibility) وعشان توازن بين استهلاك الميموري، الأداء، ودقة الألوان. Grayscale
+Pseudo-color / Indexed color
+True-color ده أبسط نوع عندنا، والناس بتغلط وتسميه "أبيض وأسود"، بس هو في الحقيقة تدرجات الرمادي.
+في grayscale، كل pixel بيخزن intensity value يمثل درجة رمادي. أشهر طريقة لتطبيقه هي إن كل بيكسل ياخد 8 bits، وده بيدينا مستوى مختلف من الإضاءة. القيمة 0 بتمثل اللون الأسود (Black).
+القيمة 255 بتمثل اللون الأبيض (White).
+الأرقام اللي في النص دي درجات الرمادي (مثلاً 128 ده رمادي متوسط). البيكسلات بتتخزن في الميموري بنظام Row-major order، يعني بنمشي من الشمال لليمين في الصف، ولما يخلص ننزل للصف اللي تحته وهكذا.
+الصف الواحد الكامل من البيكسلات بنسميه Scan-line.
+<br> <img src="https://gtms03.alicdn.com/tfs/TB1k.AdQFXXXXasXVXXXXXXXXXX-2022-680.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> ### Memory Size بما إن الـ 8 بت بيساووا 1 بايت (1 Byte)، يبقى كل بيكسل في الصورة بياخد مساحة 1 بايت بالظبط في الميموري, عشان كده الحسبة سهله: لو عندك صورة عرضها بيكسل، وطولها بيكسل، يبقى إجمالي عدد البيكسلات هو حاصل ضربهم : Memory Size = W * H (in bytes) دلوقتي لو أنا عايز ألون بيكسل معين في الإحداثيات ، الكمبيوتر هيعرف مكانه إزاي؟
+هنا بنحسب حاجة اسمها الـ Offset (اللي هو رمزه )، وده معناه البيكسل ده ترتيبه رقم كام من أول بايت في الميموري.
+Memory Offset (A) of pixel (x, y) = x + W * y الإحداثي بيعبر عن رقم الصف (بنبدا من 0). عشان تنزل للصف رقم ، لازم تتخطى عدد من الصفوف الكاملة اللي فوقيك, بما إن كل صف حجمه بيكسل، يبقى إنت هتتخطى مسافة .
+بعد ما نزلت للصف بتاعك، هتمشي جواه من الشمال لليمين مسافة عشان توصل للبيكسل بتاعك.
+تجمع الاتنين على بعض يديك المكان بالظبط!
+مثال لزياده الفهم (مش من الكتاب)
+لو عندنا شاشة شغالة بنظام الـ Grayscale Frame Buffer، أبعادها: Width بيكسل
+Height بيكسل وعايزين نحسب مساحة الصورة كلها، ومكان Pixel معين عند الإحداثيات :
+1. الحجم الكلي (Memory Size):
+بما إن كل بيكسل بياخد 1 Byte، يبقى هنضرب العرض في الطول: 2. مكان البيكسل في الميموري (Memory Offset):
+عشان نعرف البيكسل ده قاعد في البايت رقم كام من بداية الميموري، بنطبق المعادلة دي: يعني البيكسل بتاعنا متخزن في البايت رقم 40,100.
+interleaved scan-line storage زمان في الأنظمة القديمة، سرعة الميموري كانت بطيئة جدا مقارنة بسرعة تحديث الشاشة (Screen refresh rate)، وده كان بيعمل مشاكل مستفزة للعين زي الرعشة (Visible flickering) وإن الفريم يترسم نصه بس (Partially drawn frames).
+الحل: بدل ما نرسم الصورة صف ورا صف بالترتيب، استخدموا نظام الـ Interleaved؛ يعني الشاشة ترسم الصفوف الفردية الأول (1، 3، 5) وبعدين ترجع ترسم الصفوف الزوجية (2، 4، 6).
+التكنيك ده نجح إنه يداري عيوب الهاردوير الضعيف (Limited hardware)، بس في المقابل عقد الـ Graphics programming جدا على المبرمجين (كلهم بييجوا علي الغلبان). definition
+Pseudo-color frame buffer stores an index per pixel instead of storing the full RGB color directly. اسمه كمان Indexed Color Frame Buffer.
+الفكرة هنا إن البيكسل مش بيخزن اللون نفسه، لا ده بيخزن "رقم الإندكس" (من 0 لـ 255).
+أكبر عيب هنا إنك مقدرش تعرض غير 256 لون بس في نفس الوقت على الشاشة، بالرغم من إن الـ RGB مساحته بتشيل أكتر من 16.7 مليون لون ( ).
+الـ index ده بيشاور على لون في Color Lookup Table (CLUT) أو Palette.
+Index → (R, G, B) بيستخدم لحد دلوقتي في: ا اLegacy systems (الأنظمة القديمة)
+ا Backward compatibility modes (أوضاع التوافق)
+ا Resource-constrained devices (الأجهزة اللي الميموري بتاعتها ضعيفة جداً) definition
+True-color frame buffer stores the full RGB color value directly for each pixel. هنا إحنا مش محتاجين جدول ولا وجع دماغ، إحنا بنخزن اللون RGB على طول جوه البيكسل نفسه. التوزيعة الأشهر هي إننا ندي لكل لون 8 بت: Red: 8 bits
+Green: 8 bits
+Blue: 8 bits المجموع هيبقى 24 bits (يعني 3 بايت) لكل بيكسل، وعشان كده بنسميه 24-bit color. الميزة هنا إنك تقدر تعرض الـ 16.7 مليون لون في نفس الوقت، بس العيب إنه بيسحب ميموري قد الـ Pseudo-color تلات مرات، وبيحتاج Bandwidth أعلى. بسبب ان كل بيكسل بياخد 3 Bytes البيكسلات بتتخزن ورا بعضها في الميموري (Sequentially) بالشكل ده: البيكسل الأولاني (0, 0) هياخد اول تلاته بايتس من 0 لـ 2.
+البيكسل التاني اللي جنبه (1, 0) هياخد البايتس من 3 لـ 5.
+البيكسل التالت (2, 0) هياخد البايتس من 6 لـ 8.. وهكذا. بما إن البيكسل مبقاش بايت واحد زي زمان، القوانين بتاعتنا لازم تتعدل شوية عشان تضرب في 3. فظهر عندنا مصطلح جديد اسمه الـ Stride.
+الـ Stride (S): ده بيمثل حجم الصف الواحد الكامل (Scan-line) بالبايت. يعني لو الصورة عرضها بيكسل، يبقى الصف ده هياخد مساحة قد إيه في الميموري؟ هنضرب العرض في 3 (لان البيسل بياخد 3 بايتس).
+Stride (S) = 3 * W دلوقتي، لو عايزين نحسب مكان بيكسل معين في الميموري (Offset أو رمزه ) عند الإحداثيات ، هنستخدم المعادلة دي:
+Memory Offset (A) of pixel (x, y) = 3x + S * y زي المره الي فاتت عشان تنزل للصف رقم ، لازم تتخطى كل الصفوف اللي فوقيك. بما إن الصف الواحد حجمه بايت، يبقى هتتخطى مسافة .
+بعد ما وصلت للصف بتاعك، إنت عايز تمشي بيكسل ناحية اليمين. وبما إن كل بيكسل بياخد 3 بايت، يبقى هتمشي مسافة .
+تجمع الاتنين على بعض، يديك رقم البايت بالظبط اللي بيبدأ عنده البيكسل ده. لو مش فاهم احفظ القانونين وخلاص الموضوع مش مستاهل مش كل الأنظمة بتشتغل بـ 24-bit RGB (ساعات بيتقال عليه RGB888) بس. في فورماتس تانية ظهرت لأسباب تقنية أو معمارية في الهاردوير. ا BGR Order (BGR888): بعض صيغ الصور زي الويندوز بيت ماب (BMP) بتخزن الألوان بالعكس (أزرق، أخضر، أحمر). ده حصل عشان معالجات الـ PC زمان كانت بتستخدم معمارية الـ Little-endian. الأنظمة الحديثة بتستخدم فورماتس تانية زي: ا RGB565 (16-bit): بيوفر ميموري، بيدي للأحمر 5 بت، والأخضر 6، والأزرق 5.
+ا RGBA8888 (32-bit): ده بيضيف قناة رابعة اسمها Alpha channel (المسؤولة عن الشفافية)، وكل قناة بتاخد 8 بت (4 بايت للبيكسل). بصمجيات RGB565 = جودة أقل + ميموري أقل. RGB888 = لون كامل. BGR888 = RGB بالعكس. RGBA8888 = RGB + شفافية. بصمجيات مسائل المساحه : كده خلصنا المحاضره
+اتكلمنا في المحاضره دي عن Color Representation في الـ Computer Graphics.
+بدأنا بمفهوم اللون نفسه وإنه مش خاصية فيزيائية، ده ظاهرة إدراكية ناتجة عن تفاعل الضوء، الجسم، ونظرك.
+بعد كده عرفنا Color Models: ا RGB (Additive): خلط ضوء — بيستخدم في الشاشات والبروجيكتور. مفيش ضوء = Black, كل الألوان كاملة = White.
+ا CMY/CMYK (Subtractive): خلط حبر — بيستخدم في الطباعة. بيمتص wavelengths ويسيب غيرها ينعكس. وفي الآخر عرفنا Frame Buffer Formats: ا Grayscale: pixel واحد بايت (256 درجة رمادي)
+ا Pseudo-color: pixel بيخزن index يشاور على لون في CLUT (أقصى 256 لون)
+ا True-color (RGB888): pixel بيخزن RGB مباشرة — 3 بايت — 16.7 مليون لون
+ا RGB565 / RGBA8888: فورماتس بديلة للتوفير أو إضافةAlpha channel ]]></description><link>lectures/chapter-5-color-representation-in-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 5 - Color Representation in Computer Graphics.md</guid><pubDate>Sat, 30 May 2026 12:16:49 GMT</pubDate><enclosure url="https://pic2.zhimg.com/v2-7d7bdb13bae0106215d511a9e2199e05_1440w.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://pic2.zhimg.com/v2-7d7bdb13bae0106215d511a9e2199e05_1440w.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Fundamental Drawing Algorithms in Computer Graphics - Chapter 4 - [Part 2]]]></title><description><![CDATA[مقدمة ده الجزء التاني من الشابتر، وهنركز فيه على Circle Drawing Algorithms.
 هنستعرض أكتر من طريقة لرسم الدواير: من المعادلة المباشرة (Circle Equation) اللي بسيطة بس فيها مشاكل، للخوارزميات الأذكى واللي مش محتاجة كسور أو جذور زي Midpoint و Bresenham.
 هنفهم كمان مفهوم Eight-Way Symmetry اللي بيخلينا نوفر 7 أضعاف الحسابات.
 في الآخر هيكون عندنا مقارنة كاملة بين كل الخوارزميات عشان تعرف تختار الأنسب. بما إن الشاشات بتاعتنا Raster displays (عباره عن Grid يعني)، فإحنا محتاجين خوارزميات تقرب الشكل الدائري المتصل ده لمجموعة بيكسلات منفصلة (Discrete pixels) بكفاءة عالية.
@@ -122,9 +244,7 @@ pygame.quit() كده خلصنا الجزء التاني
 Eight-Way Symmetry - إن الدائرة ليها 8 Octants متماثلة، فبنحسب نقطة واحدة ونطلع 7 نقط تانية
 Midpoint Circle Algorithm - بيعتمد على Decision Parameter و Symmetry، بيحل مشكلة الـ Gaps
 Bresenham's Circle Algorithm - Integer-Based ومناسب للـ Hardware
-Parametric Circle - بيستخدم sin و cos، سهل فهمه بس أبطأ ]]></description><link>lectures/chapter-4-[part-2]-fundamental-drawing-algorithms-in-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 4 - [Part 2] Fundamental Drawing Algorithms in Computer Graphics.md</guid><pubDate>Fri, 29 May 2026 19:48:22 GMT</pubDate><enclosure url="https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Index]]></title><description><![CDATA[ 29\5\2026 قبل ما تبدأ الشرح كالعاده مغطي المنهج كله ومش مفوت حاجة, لو ذاكرت من هنا بس باذن الله تخرج فاهم المنهج كله
-حتي الان مشروع لحد الشابتر الرابع (صفحة 94 في الكتاب) والباقي هحاول انزله في اقرب وقت.
-طبعا الدكتور هيجيب في الامتحان اسالة من كراسة العملي فمتنساش تذاكرها (مش عارف لسه هشرحها ولا لا) لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/Index.md</guid><pubDate>Fri, 29 May 2026 19:46:09 GMT</pubDate></item><item><title><![CDATA[Foundations of Computer Graphics - Lecture 1 [Part 3]]]></title><description><![CDATA[مقدمة هنكمل الشابتر الاول, الجزء ده من المحاضرة بيتكلم عن أنظمة الإحداثيات (Coordinate Systems) في الـ Computer Graphics.
+Parametric Circle - بيستخدم sin و cos، سهل فهمه بس أبطأ ]]></description><link>lectures/chapter-4-[part-2]-fundamental-drawing-algorithms-in-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 4 - [Part 2] Fundamental Drawing Algorithms in Computer Graphics.md</guid><pubDate>Fri, 29 May 2026 19:48:22 GMT</pubDate><enclosure url="https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Foundations of Computer Graphics - Lecture 1 [Part 3]]]></title><description><![CDATA[مقدمة هنكمل الشابتر الاول, الجزء ده من المحاضرة بيتكلم عن أنظمة الإحداثيات (Coordinate Systems) في الـ Computer Graphics.
 هنعرف الفرق بين Cartesian System و Screen System و Pixel Coordinates، وإزاي بنحول بينهم، وهنتعرف على Aspect Ratio definition
 Coordinate System is a method of assigning numerical values to geometric points so they can be uniquely identified in space. أي graphics system محتاج طريقة يحدد بيها مكان objects, الطريقة دي هي الـ Coordinate System.
 من غير coordinates مش هنعرف نحدد نقطة أو خط أو شكل موجود فين. الـ Cartesian Coordinate System هو النظام الرياضي الي كلنا عارفينه.
