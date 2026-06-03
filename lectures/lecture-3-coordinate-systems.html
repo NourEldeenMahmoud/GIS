@@ -1,0 +1,994 @@
+<!DOCTYPE html> <html lang="en"><head>
+<title>GIS Fundamentals 3</title>
+<base href="..">
+<meta name="pathname" content="lectures/lecture-3-coordinate-systems.html">
+<meta name="description" content="Prolog - GIS Fundamentals 3">
+<meta property="og:title" content="GIS Fundamentals 3">
+<meta property="og:description" content="Prolog - GIS Fundamentals 3">
+<meta property="og:type" content="website">
+<meta property="og:url" content="lectures/lecture-3-coordinate-systems.html">
+<meta property="og:image" content="undefined">
+<meta charset="UTF-8"><meta property="og:site_name" content="Prolog"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0"><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="site-lib/rss.xml"><script async="" id="webpage-script" src="site-lib/scripts/webpage.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-wasm-script" src="site-lib/scripts/graph-wasm.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-render-worker-script" src="site-lib/scripts/graph-render-worker.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><link rel="icon" href="site-lib/media/favicon.png"><link rel="stylesheet" href="site-lib/styles/obsidian.css"><link rel="stylesheet" href="site-lib/styles/theme.css"><link rel="preload" href="site-lib/styles/global-variable-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/global-variable-styles.css"></noscript><link rel="preload" href="site-lib/styles/main-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/main-styles.css"></noscript><style>body{--line-width:40em;--line-width-adaptive:40em;--file-line-width:40em;--sidebar-width:min(20em, 80vw);--collapse-arrow-size:11px;--tree-vertical-spacing:1.3em;--sidebar-margin:12px}:root{background-color:#202124}.sidebar{height:100%;font-size:14px;z-index:10;min-width:calc(var(--sidebar-width) + var(--divider-width-hover));max-width:calc(var(--sidebar-width) + var(--divider-width-hover));position:relative;overflow:hidden;overflow:clip;transition:min-width ease-in-out,max-width ease-in-out;transition-duration:.2s;contain:size}#left-sidebar{left:0}#right-sidebar{right:0}.sidebar.is-collapsed{min-width:0;max-width:0}.sidebar.floating{position:absolute}.sidebar .leaf-content{height:100%;min-width:calc(var(--sidebar-width) - var(--divider-width-hover));top:0;padding:var(--sidebar-margin);padding-top:4em;line-height:var(--line-height-tight);background-color:var(--background-secondary);transition:background-color,border-right,border-left,box-shadow;transition-duration:var(--color-fade-speed);transition-timing-function:ease-in-out;position:absolute;display:flex;flex-direction:column}.sidebar:not(.is-collapsed) .leaf-content{min-width:calc(max(100%,var(--sidebar-width)) - 3px);max-width:calc(max(100%,var(--sidebar-width)) - 3px)}#left-sidebar-content{left:0;border-top-right-radius:var(--radius-l);border-bottom-right-radius:var(--radius-l)}#right-sidebar-content{right:0;border-top-left-radius:var(--radius-l);border-bottom-left-radius:var(--radius-l)}.sidebar #left-sidebar-content,.sidebar #right-sidebar-content{contain:none!important;container-type:normal!important;animation:none!important}.sidebar:has(.leaf-content:empty):has(.topbar-content:empty){display:none}.sidebar-topbar{height:calc(2.3em + 2 * var(--sidebar-margin));width:var(--sidebar-width);padding:var(--sidebar-margin);z-index:1;position:fixed;display:flex;align-items:center;transition:width ease-in-out;transition-duration:inherit}.sidebar.is-collapsed .sidebar-topbar{width:calc(2.3em + var(--sidebar-margin) * 2)}.sidebar .sidebar-topbar.is-collapsed{width:0}#left-sidebar .sidebar-topbar{left:0;flex-direction:row;border-top-right-radius:var(--radius-l)}#right-sidebar .sidebar-topbar{right:0;flex-direction:row-reverse;border-top-left-radius:var(--radius-l)}#left-sidebar .topbar-content{margin-right:calc(2.3em + var(--sidebar-margin));flex-direction:row}#right-sidebar .topbar-content{margin-left:calc(2.3em + var(--sidebar-margin));flex-direction:row-reverse}.topbar-content{overflow:hidden visible;overflow:clip visible;width:100%;height:100%;display:flex;align-items:center;transition:inherit}.sidebar.is-collapsed .topbar-content{width:0;transition:inherit}.clickable-icon.sidebar-collapse-icon{background-color:transparent;color:var(--icon-color-focused);padding:2px!important;margin:0!important;height:100%!important;width:2.3em!important;margin-inline:0.14em!important;position:absolute}#left-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);right:var(--sidebar-margin)}#right-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);left:var(--sidebar-margin)}.clickable-icon.sidebar-collapse-icon svg.svg-icon{width:100%;height:100%}.feature-title{margin-left:1px;text-transform:uppercase;letter-spacing:.06em;margin-top:.75em;margin-bottom:.75em}.feature-header{display:flex;align-items:center;padding-top:0;font-size:1em;padding-left:0}body.floating-sidebars .sidebar{position:absolute}body{transition:background-color var(--color-fade-speed) ease-in-out}#navbar:not(:empty){display:flex;align-items:center;justify-content:space-between;padding:.5em 1em;width:100%}#main{display:flex;flex-direction:column;height:100%;width:100%;align-items:stretch;justify-content:center}#main-horizontal{display:flex;flex-direction:row;flex-grow:1;width:100%;align-items:stretch;justify-content:center}#center-content{flex-basis:100%;max-width:100%;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;transition:opacity .2s ease-in-out;contain:inline-size}.hide{opacity:0!important;transition:opacity .2s ease-in-out;pointer-events:none}#center-content>.obsidian-document{padding-left:2em;padding-right:1em;margin-bottom:0;width:100%;width:-webkit-fill-available;width:-moz-available;width:fill-available;transition:background-color var(--color-fade-speed) ease-in-out;border-top-right-radius:var(--window-radius,var(--radius-m));border-top-left-radius:var(--window-radius,var(--radius-m));overflow-x:hidden!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;contain:inline-size}body #center-content>.obsidian-document>.markdown-preview-sizer{padding-bottom:80vh;width:100%;max-width:var(--line-width);flex-basis:var(--line-width);transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document>div{width:100%!important;transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document:not([data-type=markdown]).embed{display:flex;padding:1em;height:100%;width:100%;align-items:center;justify-content:center}#center-content>.obsidian-document:not([data-type=markdown]).embed>*{max-width:100%;max-height:100%;object-fit:contain}:not(h1,h2,h3,h4,h5,h6,li):has(> :is(.math,table)){overflow-x:auto!important}#center-content>.obsidian-document:not([data-type=markdown]){overflow-x:auto;contain:content;padding:0;margin:0;height:100%}.obsidian-document[data-type=attachment]{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;width:100%}.obsidian-document[data-type=attachment]>*{outline:0;border:none;box-shadow:none}.obsidian-document[data-type=attachment] :is(img){max-width:90%;max-height:90%;object-fit:contain}.obsidian-document[data-type=attachment]>:is(audio){width:100%;max-width:min(90%,var(--line-width))}.obsidian-document[data-type=attachment]>:is(embed,iframe,video){width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}.canvas-wrapper>:is(.header,.footer){z-index:100;position:absolute;display:flex;justify-content:center;flex-direction:column;width:100%;align-items:center}.scroll-highlight{position:absolute;width:100%;height:100%;pointer-events:none;z-index:1000;background-color:hsla(var(--color-accent-hsl),.25);opacity:0;padding:1em;inset:50%;translate:-50% -50%;border-radius:var(--radius-s)}</style><script defer="">async function loadIncludes(){let e=document.querySelectorAll("link[itemprop='include']");for(const t of e){let e=t.getAttribute("href");try{let o="";if(e.startsWith("https:")||e.startsWith("http:")||"file:"!=window.location.protocol){const n=await fetch(e);if(!n.ok){console.log("Could not include file: "+e),t?.remove();continue}o=await n.text()}else{const t=document.getElementById(btoa(encodeURI(e)));if(t){const e=JSON.parse(decodeURI(atob(t.getAttribute("value")??"")));o=e?.data??""}}let n=document.createRange().createContextualFragment(o);t.before(n),t.remove(),console.log("Included text: "+o),console.log("Included file: "+e)}catch(o){t?.remove(),console.log("Could not include file: "+e,o);continue}}}document.addEventListener("DOMContentLoaded",(()=>{loadIncludes()}));let isFileProtocol="file:"==location.protocol;function waitLoadScripts(e,t){let o=e.map((e=>document.getElementById(e+"-script")));!function e(n){let l=o[n],c=n+1;l?(l&&"true"!=l.getAttribute("loaded")||n<o.length&&e(c),n<o.length&&l.addEventListener("load",(()=>e(c)))):n<o.length?e(c):t()}(0)}</script></head><body class="publish css-settings-manager styled-scrollbars show-inline-title show-ribbon is-focused"><script defer="">let theme=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");"dark"==theme?(document.body.classList.add("theme-dark"),document.body.classList.remove("theme-light")):(document.body.classList.add("theme-light"),document.body.classList.remove("theme-dark")),window.innerWidth<480?document.body.classList.add("is-phone"):window.innerWidth<768?document.body.classList.add("is-tablet"):window.innerWidth<1024?document.body.classList.add("is-small-screen"):document.body.classList.add("is-large-screen")</script><div class="parsed-feature-container" style="display: contents;"><link itemprop="include" href="site-lib/html/custom-head-content-content.html"></div><div id="main"><div id="navbar"></div><div id="main-horizontal"><div id="left-content" class="leaf" style="--sidebar-width: var(--sidebar-width-left);"><div id="left-sidebar" class="sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><div id="search-container"><div id="search-wrapper"><input enterkeyhint="search" type="search" spellcheck="false" placeholder="Search..."><div aria-label="Clear search" id="search-clear-button"></div></div></div></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content-wrapper"><div id="left-sidebar-content" class="leaf-content"><link itemprop="include" href="site-lib/html/file-tree-content.html"></div></div><script defer="">let ls = document.querySelector("#left-sidebar"); ls.classList.toggle("is-collapsed", window.innerWidth < 768); ls.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-left-width"));</script></div></div><div id="center-content" class="leaf"><div class="obsidian-document markdown-preview-view markdown-rendered node-insert-event is-readable-line-width allow-fold-headings allow-fold-lists show-indentation-guide show-properties" data-type="markdown"><style id="MJX-CHTML-styles">mjx-c.mjx-c1D459.TEX-I::before{padding:.694em .298em .011em 0;content:"l"}mjx-c.mjx-c1D44B.TEX-I::before{padding:.683em .852em 0 0;content:"X"}mjx-c.mjx-c1D44C.TEX-I::before{padding:.683em .763em 0 0;content:"Y"}mjx-c.mjx-c1D464.TEX-I::before{padding:.443em .716em .011em 0;content:"w"}mjx-c.mjx-c1D43F.TEX-I::before{padding:.683em .681em 0 0;content:"L"}mjx-c.mjx-c1D453.TEX-I::before{padding:.705em .55em .205em 0;content:"f"}mjx-c.mjx-c1D445.TEX-I::before{padding:.683em .759em .021em 0;content:"R"}mjx-c.mjx-c1D454.TEX-I::before{padding:.442em .477em .205em 0;content:"g"}mjx-c.mjx-c210E.TEX-I::before{padding:.694em .576em .011em 0;content:"h"}mjx-c.mjx-c1D447.TEX-I::before{padding:.677em .704em 0 0;content:"T"}mjx-c.mjx-c1D462.TEX-I::before{padding:.442em .572em .011em 0;content:"u"}mjx-c.mjx-c41::before{padding:.716em .75em 0 0;content:"A"}mjx-c.mjx-c20::before{padding:0 .25em 0 0;content:" "}mjx-c.mjx-c52::before{padding:.683em .736em .022em 0;content:"R"}mjx-c.mjx-c394::before{padding:.716em .833em 0 0;content:"Δ"}mjx-c.mjx-c74::before{padding:.615em .389em .01em 0;content:"t"}mjx-c.mjx-c65::before{padding:.448em .444em .011em 0;content:"e"}mjx-c.mjx-c70::before{padding:.442em .556em .194em 0;content:"p"}mjx-c.mjx-c6D::before{padding:.442em .833em 0 0;content:"m"}mjx-c.mjx-c61::before{padding:.448em .5em .011em 0;content:"a"}mjx-c.mjx-c78::before{padding:.431em .528em 0 0;content:"x"}mjx-c.mjx-c1D45D.TEX-I::before{padding:.442em .503em .194em 0;content:"p"}mjx-c.mjx-cB1::before{padding:.666em .778em 0 0;content:"±"}mjx-c.mjx-c221A.TEX-S2::before{padding:1.15em 1.02em .65em 0;content:"√"}mjx-c.mjx-c37::before{padding:.676em .5em .022em 0;content:"7"}mjx-c.mjx-c3C::before{padding:.54em .778em .04em 0;content:"<"}mjx-c.mjx-c2265::before{padding:.636em .778em .138em 0;content:"≥"}mjx-c.mjx-c1D451.TEX-I::before{padding:.694em .52em .01em 0;content:"d"}mjx-c.mjx-c1D70B.TEX-I::before{padding:.431em .57em .011em 0;content:"π"}mjx-c.mjx-c2218::before{padding:.444em .5em 0 0;content:"∘"}mjx-c.mjx-c1D443.TEX-I::before{padding:.683em .751em 0 0;content:"P"}mjx-c.mjx-c2E::before{padding:.12em .278em 0 0;content:"."}mjx-c.mjx-c1D450.TEX-I::before{padding:.442em .433em .011em 0;content:"c"}mjx-c.mjx-c2211.TEX-S1::before{padding:.75em 1.056em .25em 0;content:"∑"}mjx-texatom{display:inline-block;text-align:left}mjx-mover{display:inline-block;text-align:left}mjx-mover:not([limits=false]){padding-top:.1em}mjx-mover:not([limits=false])>*{display:block;text-align:left}mjx-munder{display:inline-block;text-align:left}mjx-over{text-align:left}mjx-munder:not([limits=false]){display:inline-table}mjx-munder>mjx-row{text-align:left}mjx-under{padding-bottom:.1em}mjx-msub{display:inline-block;text-align:left}mjx-msqrt{display:inline-block;text-align:left}mjx-root{display:inline-block;white-space:nowrap}mjx-surd{display:inline-block;vertical-align:top}mjx-sqrt{display:inline-block;padding-top:.07em}mjx-sqrt>mjx-box{border-top:.07em solid}mjx-sqrt.mjx-tall>mjx-box{padding-left:.3em;margin-left:-.3em}mjx-munderover{display:inline-block;text-align:left}mjx-munderover:not([limits=false]){padding-top:.1em}mjx-munderover:not([limits=false])>*{display:block}mjx-msubsup{display:inline-block;text-align:left}mjx-script{display:inline-block;padding-right:.05em;padding-left:.033em}mjx-script>mjx-spacer{display:block}mjx-mtable{display:inline-block;text-align:center;vertical-align:.25em;position:relative;box-sizing:border-box;border-spacing:0px;border-collapse:collapse}mjx-mstyle[size="s"] mjx-mtable{vertical-align:.354em}mjx-labels{position:absolute;left:0;top:0}mjx-table{display:inline-block;vertical-align:-.5ex;box-sizing:border-box}mjx-table>mjx-itable{vertical-align:middle;text-align:left;box-sizing:border-box}mjx-labels>mjx-itable{position:absolute;top:0}mjx-mtable[justify=left]{text-align:left}mjx-mtable[justify=right]{text-align:right}mjx-mtable[justify=left][side=left]{padding-right:0!important}mjx-mtable[justify=left][side=right]{padding-left:0!important}mjx-mtable[justify=right][side=left]{padding-right:0!important}mjx-mtable[justify=right][side=right]{padding-left:0!important}mjx-mtable[align]{vertical-align:baseline}mjx-mtable[align=top]>mjx-table{vertical-align:top}mjx-mtable[align=bottom]>mjx-table{vertical-align:bottom}mjx-mtable[side=right] mjx-labels{min-width:100%}mjx-mtr{display:table-row;text-align:left}mjx-mtr[rowalign=top]>mjx-mtd{vertical-align:top}mjx-mtr[rowalign=center]>mjx-mtd{vertical-align:middle}mjx-mtr[rowalign=bottom]>mjx-mtd{vertical-align:bottom}mjx-mtr[rowalign=baseline]>mjx-mtd{vertical-align:baseline}mjx-mtr[rowalign=axis]>mjx-mtd{vertical-align:.25em}mjx-mtd{display:table-cell;text-align:center;padding:.215em .4em}mjx-mtd:first-child{padding-left:0}mjx-mtd:last-child{padding-right:0}mjx-mtable>*>mjx-itable>:first-child>mjx-mtd{padding-top:0}mjx-mtable>*>mjx-itable>:last-child>mjx-mtd{padding-bottom:0}mjx-tstrut{display:inline-block;height:1em;vertical-align:-.25em}mjx-labels[align=left]>mjx-mtr>mjx-mtd{text-align:left}mjx-labels[align=right]>mjx-mtr>mjx-mtd{text-align:right}mjx-mtd[extra]{padding:0}mjx-mtd[rowalign=top]{vertical-align:top}mjx-mtd[rowalign=center]{vertical-align:middle}mjx-mtd[rowalign=bottom]{vertical-align:bottom}mjx-mtd[rowalign=baseline]{vertical-align:baseline}mjx-mtd[rowalign=axis]{vertical-align:.25em}mjx-mrow{display:inline-block;text-align:left}mjx-mfrac{display:inline-block;text-align:left}mjx-frac{display:inline-block;vertical-align:.17em;padding:0 .22em}mjx-frac[type="d"]{vertical-align:.04em}mjx-frac[delims]{padding:0 .1em}mjx-frac[atop]{padding:0 .12em}mjx-frac[atop][delims]{padding:0}mjx-dtable{display:inline-table;width:100%}mjx-dtable>*{font-size:2000%}mjx-dbox{display:block;font-size:5%}mjx-num{display:block;text-align:center}mjx-den{display:block;text-align:center}mjx-mfrac[bevelled]>mjx-num{display:inline-block}mjx-mfrac[bevelled]>mjx-den{display:inline-block}mjx-den[align=right],mjx-num[align=right]{text-align:right}mjx-den[align=left],mjx-num[align=left]{text-align:left}mjx-nstrut{display:inline-block;height:.054em;width:0;vertical-align:-.054em}mjx-nstrut[type="d"]{height:.217em;vertical-align:-.217em}mjx-dstrut{display:inline-block;height:.505em;width:0}mjx-dstrut[type="d"]{height:.726em}mjx-line{display:block;box-sizing:border-box;min-height:1px;height:.06em;border-top:.06em solid;margin:.06em -.1em;overflow:hidden}mjx-line[type="d"]{margin:.18em -.1em}mjx-stretchy-v.mjx-c221A mjx-beg mjx-c::before{content:"";padding:.605em 1.056em .014em 0}mjx-stretchy-v.mjx-c221A mjx-ext mjx-c::before{content:"";width:1.056em}mjx-stretchy-v.mjx-c221A mjx-end mjx-c::before{content:"⎷";padding:.935em 1.056em .885em 0}mjx-stretchy-v.mjx-c221A>mjx-end{margin-top:-1.82em}mjx-stretchy-v.mjx-c221A>mjx-ext{border-top-width:.589em;border-bottom-width:1.79em}mjx-c.mjx-c1D42F.TEX-B::before{padding:.444em .607em 0 0;content:"v"}mjx-c.mjx-c20D7.TEX-V::before{padding:.714em .5em 0 0;content:"→"}mjx-c.mjx-c1D463.TEX-I::before{padding:.443em .485em .011em 0;content:"v"}mjx-c.mjx-c2013::before{padding:.285em .5em 0 0;content:"–"}mjx-c.mjx-c1D458.TEX-I::before{padding:.694em .521em .011em 0;content:"k"}mjx-c.mjx-c1D449.TEX-I::before{padding:.683em .769em .022em 0;content:"V"}mjx-c.mjx-c7C::before{padding:.75em .278em .249em 0;content:"|"}mjx-c.mjx-c1D703.TEX-I::before{padding:.705em .469em .01em 0;content:"θ"}mjx-c.mjx-c63::before{padding:.448em .444em .011em 0;content:"c"}mjx-c.mjx-c6F::before{padding:.448em .5em .01em 0;content:"o"}mjx-c.mjx-c73::before{padding:.448em .394em .011em 0;content:"s"}mjx-c.mjx-c2061::before{padding:0;content:""}mjx-c.mjx-c69::before{padding:.669em .278em 0 0;content:"i"}mjx-c.mjx-c6E::before{padding:.442em .556em 0 0;content:"n"}mjx-c.mjx-c2225::before{padding:.75em .5em .25em 0;content:"∥"}mjx-c.mjx-c221A.TEX-S1::before{padding:.85em 1.02em .35em 0;content:"√"}mjx-c.mjx-c1D45B.TEX-I::before{padding:.442em .6em .011em 0;content:"n"}mjx-c.mjx-c2211.TEX-S2::before{padding:.95em 1.444em .45em 0;content:"∑"}mjx-c.mjx-c221A::before{padding:.8em .853em .2em 0;content:"√"}mjx-c.mjx-c39::before{padding:.666em .5em .022em 0;content:"9"}mjx-c.mjx-c2212::before{padding:.583em .778em .082em 0;content:"−"}mjx-c.mjx-c1D6FC.TEX-I::before{padding:.442em .64em .011em 0;content:"α"}mjx-c.mjx-c1D6FD.TEX-I::before{padding:.705em .566em .194em 0;content:"β"}mjx-c.mjx-c1D6FE.TEX-I::before{padding:.441em .543em .216em 0;content:"γ"}mjx-c.mjx-c5E::before{padding:.694em .5em 0 0;content:"^"}mjx-c.mjx-c1D44E.TEX-I::before{padding:.441em .529em .01em 0;content:"a"}mjx-c.mjx-c22C5::before{padding:.31em .278em 0 0;content:"⋅"}mjx-c.mjx-c1D44F.TEX-I::before{padding:.694em .429em .011em 0;content:"b"}mjx-c.mjx-c28.TEX-S4::before{padding:1.75em .792em 1.249em 0;content:"("}mjx-c.mjx-c29.TEX-S4::before{padding:1.75em .792em 1.249em 0;content:")"}mjx-container[jax=CHTML]{line-height:0}mjx-container [space="1"]{margin-left:.111em}mjx-container [space="2"]{margin-left:.167em}mjx-container [space="3"]{margin-left:.222em}mjx-container [space="4"]{margin-left:.278em}mjx-container [space="5"]{margin-left:.333em}mjx-container [rspace="1"]{margin-right:.111em}mjx-container [rspace="2"]{margin-right:.167em}mjx-container [rspace="3"]{margin-right:.222em}mjx-container [rspace="4"]{margin-right:.278em}mjx-container [rspace="5"]{margin-right:.333em}mjx-container [size="s"]{font-size:70.7%}mjx-container [size=ss]{font-size:50%}mjx-container [size=Tn]{font-size:60%}mjx-container [size=sm]{font-size:85%}mjx-container [size=lg]{font-size:120%}mjx-container [size=Lg]{font-size:144%}mjx-container [size=LG]{font-size:173%}mjx-container [size=hg]{font-size:207%}mjx-container [size=HG]{font-size:249%}mjx-container [width=full]{width:100%}mjx-box{display:inline-block}mjx-block{display:block}mjx-itable{display:inline-table}mjx-row{display:table-row}mjx-row>*{display:table-cell}mjx-mtext{display:inline-block;text-align:left}mjx-mstyle{display:inline-block}mjx-merror{display:inline-block;color:red;background-color:#ff0}mjx-mphantom{visibility:hidden}mjx-assistive-mml{top:0;left:0;clip:rect(1px,1px,1px,1px);user-select:none;position:absolute!important;padding:1px 0 0!important;border:0!important;display:block!important;width:auto!important;overflow:hidden!important}mjx-assistive-mml[display=block]{width:100%!important}mjx-math{display:inline-block;text-align:left;line-height:0;text-indent:0;font-style:normal;font-weight:400;font-size:100%;font-size-adjust:none;letter-spacing:normal;border-collapse:collapse;overflow-wrap:normal;word-spacing:normal;white-space:nowrap;direction:ltr;padding:1px 0}mjx-container[jax=CHTML][display=true]{display:block;text-align:center;margin:1em 0}mjx-container[jax=CHTML][display=true][width=full]{display:flex}mjx-container[jax=CHTML][display=true] mjx-math{padding:0}mjx-container[jax=CHTML][justify=left]{text-align:left}mjx-container[jax=CHTML][justify=right]{text-align:right}mjx-msup{display:inline-block;text-align:left}mjx-mn{display:inline-block;text-align:left}mjx-c{display:inline-block}mjx-utext{display:inline-block;padding:.75em 0 .2em}mjx-mo{display:inline-block;text-align:left}mjx-stretchy-h{display:inline-table;width:100%}mjx-stretchy-h>*{display:table-cell;width:0}mjx-stretchy-h>*>mjx-c{display:inline-block;transform:scaleX(1)}mjx-stretchy-h>*>mjx-c::before{display:inline-block;width:initial}mjx-stretchy-h>mjx-ext{overflow:clip visible;width:100%}mjx-stretchy-h>mjx-ext>mjx-c::before{transform:scaleX(500)}mjx-stretchy-h>mjx-ext>mjx-c{width:0}mjx-stretchy-h>mjx-beg>mjx-c{margin-right:-.1em}mjx-stretchy-h>mjx-end>mjx-c{margin-left:-.1em}mjx-stretchy-v{display:inline-block}mjx-stretchy-v>*{display:block}mjx-stretchy-v>mjx-beg{height:0}mjx-stretchy-v>mjx-end>mjx-c{display:block}mjx-stretchy-v>*>mjx-c{transform:scaleY(1);transform-origin:left center;overflow:hidden}mjx-stretchy-v>mjx-ext{display:block;height:100%;box-sizing:border-box;border:0 solid transparent;overflow:visible clip}mjx-stretchy-v>mjx-ext>mjx-c::before{width:initial;box-sizing:border-box}mjx-stretchy-v>mjx-ext>mjx-c{transform:scaleY(500) translateY(.075em);overflow:visible}mjx-mark{display:inline-block;height:0}mjx-mi{display:inline-block;text-align:left}mjx-mspace{display:inline-block;text-align:left}mjx-c::before{display:block;width:0}.MJX-TEX{font-family:MJXZERO,MJXTEX}.TEX-B{font-family:MJXZERO,MJXTEX-B}.TEX-I{font-family:MJXZERO,MJXTEX-I}.TEX-MI{font-family:MJXZERO,MJXTEX-MI}.TEX-BI{font-family:MJXZERO,MJXTEX-BI}.TEX-S1{font-family:MJXZERO,MJXTEX-S1}.TEX-S2{font-family:MJXZERO,MJXTEX-S2}.TEX-S3{font-family:MJXZERO,MJXTEX-S3}.TEX-S4{font-family:MJXZERO,MJXTEX-S4}.TEX-A{font-family:MJXZERO,MJXTEX-A}.TEX-C{font-family:MJXZERO,MJXTEX-C}.TEX-CB{font-family:MJXZERO,MJXTEX-CB}.TEX-FR{font-family:MJXZERO,MJXTEX-FR}.TEX-FRB{font-family:MJXZERO,MJXTEX-FRB}.TEX-SS{font-family:MJXZERO,MJXTEX-SS}.TEX-SSB{font-family:MJXZERO,MJXTEX-SSB}.TEX-SSI{font-family:MJXZERO,MJXTEX-SSI}.TEX-SC{font-family:MJXZERO,MJXTEX-SC}.TEX-T{font-family:MJXZERO,MJXTEX-T}.TEX-V{font-family:MJXZERO,MJXTEX-V}.TEX-VB{font-family:MJXZERO,MJXTEX-VB}mjx-stretchy-h mjx-c,mjx-stretchy-v mjx-c{font-family:MJXZERO,MJXTEX-S1,MJXTEX-S4,MJXTEX,MJXTEX-A!important}@font-face{font-family:MJXZERO;src:url("site-lib/fonts/mathjax_zero.woff") format("woff")}@font-face{font-family:MJXTEX;src:url("site-lib/fonts/mathjax_main-regular.woff") format("woff")}@font-face{font-family:MJXTEX-B;src:url("site-lib/fonts/mathjax_main-bold.woff") format("woff")}@font-face{font-family:MJXTEX-I;src:url("site-lib/fonts/mathjax_math-italic.woff") format("woff")}@font-face{font-family:MJXTEX-MI;src:url("site-lib/fonts/mathjax_main-italic.woff") format("woff")}@font-face{font-family:MJXTEX-BI;src:url("site-lib/fonts/mathjax_math-bolditalic.woff") format("woff")}@font-face{font-family:MJXTEX-S1;src:url("site-lib/fonts/mathjax_size1-regular.woff") format("woff")}@font-face{font-family:MJXTEX-S2;src:url("site-lib/fonts/mathjax_size2-regular.woff") format("woff")}@font-face{font-family:MJXTEX-S3;src:url("site-lib/fonts/mathjax_size3-regular.woff") format("woff")}@font-face{font-family:MJXTEX-S4;src:url("site-lib/fonts/mathjax_size4-regular.woff") format("woff")}@font-face{font-family:MJXTEX-A;src:url("site-lib/fonts/mathjax_ams-regular.woff") format("woff")}@font-face{font-family:MJXTEX-C;src:url("site-lib/fonts/mathjax_calligraphic-regular.woff") format("woff")}@font-face{font-family:MJXTEX-CB;src:url("site-lib/fonts/mathjax_calligraphic-bold.woff") format("woff")}@font-face{font-family:MJXTEX-FR;src:url("site-lib/fonts/mathjax_fraktur-regular.woff") format("woff")}@font-face{font-family:MJXTEX-FRB;src:url("site-lib/fonts/mathjax_fraktur-bold.woff") format("woff")}@font-face{font-family:MJXTEX-SS;src:url("site-lib/fonts/mathjax_sansserif-regular.woff") format("woff")}@font-face{font-family:MJXTEX-SSB;src:url("site-lib/fonts/mathjax_sansserif-bold.woff") format("woff")}@font-face{font-family:MJXTEX-SSI;src:url("site-lib/fonts/mathjax_sansserif-italic.woff") format("woff")}@font-face{font-family:MJXTEX-SC;src:url("site-lib/fonts/mathjax_script-regular.woff") format("woff")}@font-face{font-family:MJXTEX-T;src:url("site-lib/fonts/mathjax_typewriter-regular.woff") format("woff")}@font-face{font-family:MJXTEX-V;src:url("site-lib/fonts/mathjax_vector-regular.woff") format("woff")}@font-face{font-family:MJXTEX-VB;src:url("site-lib/fonts/mathjax_vector-bold.woff") format("woff")}mjx-c.mjx-c32::before{padding:.666em .5em 0 0;content:"2"}mjx-c.mjx-c38::before{padding:.666em .5em .022em 0;content:"8"}mjx-c.mjx-c3D::before{padding:.583em .778em .082em 0;content:"="}mjx-c.mjx-c35::before{padding:.666em .5em .022em 0;content:"5"}mjx-c.mjx-c36::before{padding:.666em .5em .022em 0;content:"6"}mjx-c.mjx-c1D44A.TEX-I::before{padding:.683em 1.048em .022em 0;content:"W"}mjx-c.mjx-c1D43B.TEX-I::before{padding:.683em .888em 0 0;content:"H"}mjx-c.mjx-c28::before{padding:.75em .389em .25em 0;content:"("}mjx-c.mjx-c1D465.TEX-I::before{padding:.442em .572em .011em 0;content:"x"}mjx-c.mjx-c2C::before{padding:.121em .278em .194em 0;content:","}mjx-c.mjx-c1D466.TEX-I::before{padding:.442em .49em .205em 0;content:"y"}mjx-c.mjx-c29::before{padding:.75em .389em .25em 0;content:")"}mjx-c.mjx-c1D434.TEX-I::before{padding:.716em .75em 0 0;content:"A"}mjx-c.mjx-cD7::before{padding:.491em .778em 0 0;content:"×"}mjx-c.mjx-c30::before{padding:.666em .5em .022em 0;content:"0"}mjx-c.mjx-c31::before{padding:.666em .5em 0 0;content:"1"}mjx-c.mjx-c1D440.TEX-I::before{padding:.683em 1.051em 0 0;content:"M"}mjx-c.mjx-c1D452.TEX-I::before{padding:.442em .466em .011em 0;content:"e"}mjx-c.mjx-c1D45A.TEX-I::before{padding:.442em .878em .011em 0;content:"m"}mjx-c.mjx-c1D45C.TEX-I::before{padding:.441em .485em .011em 0;content:"o"}mjx-c.mjx-c1D45F.TEX-I::before{padding:.442em .451em .011em 0;content:"r"}mjx-c.mjx-cA0::before{padding:0 .25em 0 0;content:" "}mjx-c.mjx-c1D446.TEX-I::before{padding:.705em .645em .022em 0;content:"S"}mjx-c.mjx-c1D456.TEX-I::before{padding:.661em .345em .011em 0;content:"i"}mjx-c.mjx-c1D467.TEX-I::before{padding:.442em .465em .011em 0;content:"z"}mjx-c.mjx-c34::before{padding:.677em .5em 0 0;content:"4"}mjx-c.mjx-c1D435.TEX-I::before{padding:.683em .759em 0 0;content:"B"}mjx-c.mjx-c1D461.TEX-I::before{padding:.626em .361em .011em 0;content:"t"}mjx-c.mjx-c1D460.TEX-I::before{padding:.442em .469em .01em 0;content:"s"}mjx-c.mjx-c2B::before{padding:.583em .778em .082em 0;content:"+"}mjx-c.mjx-c33::before{padding:.665em .5em .022em 0;content:"3"}</style><pre class="frontmatter language-yaml" style="display: none;"><code class="language-yaml is-loaded"><span class="token key atrule">title</span><span class="token punctuation">:</span> GIS Fundamentals 3
+<span class="token key atrule">tags</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> GIS
+  <span class="token punctuation">-</span> College
+  <span class="token punctuation">-</span> Geography
+<span class="token key atrule">aliases</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> GIS Fundamentals 3
+  <span class="token punctuation">-</span> Coordinate Systems
+  <span class="token punctuation">-</span> GIS Coordinate Systems</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre><div class="markdown-preview-sizer markdown-preview-section"><div class="header"><h1 class="page-title heading inline-title" id="GIS_Fundamentals_3_0">GIS Fundamentals 3</h1><div class="data-bar"></div></div><div class="markdown-preview-pusher" style="width: 1px; height: 0.1px; margin-bottom: 0px;"></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="abstract" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-clipboard-list"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="M12 11h4"></path><path d="M12 16h4"></path><path d="M8 11h.01"></path><path d="M8 16h.01"></path></svg></div><div class="callout-title-inner">مقدمة</div></div><div class="callout-content">
+<ul class="has-list-bullet">
+<li data-line="1" dir="auto"><span class="list-bullet"></span>الجزء ده بيغطي <code>Coordinate Systems</code> في الـ <code>GIS</code>.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>أهم المحاور: الفرق بين <code>GCS</code> و <code>PCS</code>, شكل الأرض, <code>Datum</code>, <code>Map Projections</code>, أنواع التشوهات, <code>UTM</code>, واستخدامات أنظمة الإحداثيات في <code>ArcGIS</code>.</li>
+</ul>
+</div></div></div><div class="el-hr"><hr></div><div class="el-h2"><h2 data-heading="1) ليه الـ Coordinate Systems مهمة؟" dir="auto" class="heading" id="1)_ليه_الـ_Coordinate_Systems_مهمة؟_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1) ليه الـ Coordinate Systems مهمة؟</h2></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>A basic principle in GIS is that map layers used together must align spatially. Mistakes can occur if they do not.</strong></p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>في الـ <code>GIS</code>، لو عندك أكتر من layer وعايز تستخدمهم مع بعض، لازم يكونوا الـ<code>Coordinate System</code> بتاعهم مظبوط.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>يعني الطريق، الحدود، المباني، والأنهار لازم ييجوا فوق بعض في أماكنهم الصح.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>لو كل layer معمولة على <code>Coordinate System</code> مختلف أو <code>Datum</code> مختلف (هنعرف معناهم كمان شوية) ، ممكن تلاقي العناصر مش راكبة على بعض، وساعتها التحليل يطلع غلط حتى لو كل layer لوحدها شكلها صح.</li>
+</ul></div><div class="el-h3"><h3 data-heading="2D vs 3D" dir="auto" class="heading" id="2D_vs_3D_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>2D vs 3D</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الخريطة على الشاشة <code>2D</code> (<code>X,Y</code>)، لكن الأرض الحقيقية <code>3D</code> وفيها ارتفاعات وانخفاضات.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>عشان نعرض الأرض على خريطة، لازم نحول من الواقع ثلاثي الأبعاد لتمثيل ثنائي الأبعاد.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>ده جزء من فكرة <code>Geodesy</code> — علم رياضيات الأرض وقياسها.</li>
+</ul></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="example" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-list"><path d="M3 5h.01"></path><path d="M3 12h.01"></path><path d="M3 19h.01"></path><path d="M8 5h13"></path><path d="M8 12h13"></path><path d="M8 19h13"></path></svg></div><div class="callout-title-inner">مثال المسافة</div></div><div class="callout-content">
+<p dir="auto">المسافة على الخريطة ممكن تبان أقصر من المسار الحقيقي على الأرض. لو فيه جبال أو طرق ملتفة، المسافة الفعلية اللي هتمشيها ممكن تبقى أكبر من المسافة الهندسية بين نقطتين. عشان كده تمثيل الأرض مش مجرد <code>X,Y</code> بسيط.</p>
+</div></div></div><div class="el-hr"><hr></div><div class="el-h2"><h2 data-heading="2) Geographic Concepts" dir="auto" class="heading" id="2)_Geographic_Concepts_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>2) Geographic Concepts</h2></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>فيه 3 مفاهيم أساسية لازم تتفهم مع بعض:
+<ul class="has-list-bullet">
+<li data-line="1" dir="auto"><span class="list-bullet"></span><strong>نظام الإحداثيات (Coordinate System):</strong> النظام اللي بيدي لكل نقطة على الخريطة عنوان بالأرقام (زي شبكة الـ X والـ Y) عشان نقدر نحدد مكان النقط والخطوط والمضلعات بالظبط.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>الـ <strong>Datum:</strong>  بيحدد شكل الأرض الأقرب للواقع  وبنحدد منه نقطة الصفر أو المركز اللي هنبدأ نقيس من عنده.</li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span><strong>الـ Projection (نظام الإسقاط):</strong>  العملية أو المعادلة اللي بناخد بيها مجسم الأرض الـ 3D ونفرده على خريطة مسطحة 2D عشان الطبقات تنزل فوق بعضها مظبوط.</li>
+</ul>
+</li>
+</ul></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>CRS - Coordinate Reference System defines how the two-dimensional projected map in your GIS is related to a real place on the Earth.</strong></p>
+</div></div></div><div class="el-hr"><hr></div><div class="el-h2"><h2 data-heading="3) GCS vs PCS" dir="auto" class="heading" id="3)_GCS_vs_PCS_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>3) GCS vs PCS</h2></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>الـ <strong>GCS</strong> والـ <strong>PCS</strong> هما  النوعين الأساسيين لـ "أنظمة الإحداثيات" (Coordinate Systems).
+<ul class="has-list-bullet">
+<li data-line="1" dir="auto"><span class="list-bullet"></span><strong>نظام الإحداثيات الجغرافي (GCS):</strong> ده نظام <strong>ثلاثي الأبعاد (3D)</strong> بيتعامل مع الأرض بشكلها الكروي. بيحدد مكان النقط على سطح الكوكب باستخدام الزوايا (خطوط الطول Longitude ودوائر العرض Latitude)، ووحدة قياسه هي "الدرجات".</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span><strong>2. نظام الإحداثيات المسقط (PCS):</strong> ده نظام <strong>ثنائي الأبعاد (2D) مستوي</strong>، بيتعامل مع الأرض بعد ما تم "فردها" أو تسطيحها. بيحدد الأماكن باستخدام شبكة (X, Y) ووحدات قياس خطية زي "المتر"، وهو متقسم لمناطق (Zones).</li>
+</ul>
+</li>
+</ul></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>Projection is the conversion of data sets from geographic coordinates to projected coordinates.</strong></p>
+</div></div></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>Reprojection converts from one type of projected coordinates to another type.</strong></p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>يعني:
+<ul class="has-list-bullet">
+<li data-line="1" dir="auto"><span class="list-bullet"></span>تحويل من <code>GCS</code> لـ <code>PCS</code> اسمه <code>Projection</code>.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>تحويل من نوع <code>PCS</code> لنوع <code>PCS</code> تاني = <code>Reprojection</code>.</li>
+</ul>
+</li>
+</ul></div><div class="el-h3"><h3 data-heading="Geographic Coordinate System - GCS" dir="auto" class="heading" id="Geographic_Coordinate_System_-_GCS_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Geographic Coordinate System - GCS</h3></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>GCS is a three-dimensional reference system that locates points on the Earth's surface.</strong></p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ <code>GCS</code> بيحدد أماكن الـ spatial features على سطح الأرض و كل point بيبقى ليها قيمتين: <code>Latitude</code> و <code>Longitude</code>.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span><strong>دوائر العرض (Latitude):</strong> 
+<ul class="has-list-bullet">
+<li data-line="2" dir="auto"><span class="list-bullet"></span>دي حلقات بالعرض بتقطع الأرض. أهم حلقة فيهم هو الـ <code>Equator</code> او  <strong>خط الاستواء (0°)</strong> ، وبيقسم الأرض لنصين قد بعض شمال (<code>Northern Hemisphere</code>) وجنوب (<code>Southern Hemisphere</code>).</li>
+</ul>
+</li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span><strong>خطوط الطول (Longitude):</strong>
+<ul class="has-list-bullet">
+<li data-line="4" dir="auto"><span class="list-bullet"></span>دي أقواس (أنصاف دوائر) بتنزل بالطول من القطب الشمالي لحد القطب الجنوبي. نقطة البداية بتاعتهم هي الـ (<code>Prime Meridian</code>) او <strong>خط جرينتش (0°)</strong>.</li>
+</ul>
+</li>
+</ul></div><div class="el-h3"><h3 data-heading="Coordinate Formats and Notation" dir="auto" class="heading" id="Coordinate_Formats_and_Notation_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Coordinate Formats and Notation</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ <code>Latitude</code> و <code>Longitude</code> بيتم التعبير عنهم بوحدات: <code>Degrees, Minutes, Seconds (DMS)</code>.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>فيه أكتر من format لكتابة الإحداثيات:</li>
+</ul></div><div class="el-table" dir="rtl" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="rtl"><strong>الـ Format</strong></th>
+<th align="left" dir="rtl"><strong>المثال</strong></th>
+<th align="left" dir="rtl"><strong>الشرح</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Decimal Degrees (DD)</code></td>
+<td align="left" dir="auto"><code>43.92741°</code></td>
+<td align="left" dir="rtl">رقم كامل قبل العلامة العشرية و5 أرقام بعدها</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Degree Decimal-Minutes (DDM)</code></td>
+<td align="left" dir="auto"><code>64° 68.445'</code></td>
+<td align="left" dir="rtl">رقم بدرجة ورقم تاني بعشري</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Degrees, Minutes, Seconds (DMS)</code></td>
+<td align="left" dir="auto"><code>44° 40' 16.75"</code></td>
+<td align="left" dir="rtl">الدرجة ثم الدقيقة ثم الثانية</td>
+</tr>
+</tbody>
+</table></div><div class="el-h3"><h3 data-heading="Projected Coordinate System - PCS" dir="auto" class="heading" id="Projected_Coordinate_System_-_PCS_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Projected Coordinate System - PCS</h3></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>A Projected Coordinate System is also called a plane coordinate system.</strong></p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>بيستخدم شبكة هندسية <strong>(X, Y)</strong> بدل الدرجات والزوايا.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>معمول عشان <code>Detailed calculations</code>, <code>Positioning</code>, و <code>Large-scale mapping</code>:
+<ul class="has-list-bullet">
+<li data-line="2" dir="auto"><span class="list-bullet"></span><strong>الحسابات الدقيقة (Detailed calculations):</strong> بيقيس بوحدات مسافة حقيقية وثابتة (زي المتر)، عشان كده بنقدر نحسب بيه المساحات والمسافات بدقة.</li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span><strong>تحديد المواقع (Positioning):</strong> بيقدر يحدد أماكن المعالم (زي أركان المباني أو أعمدة النور) بدقة عالية جداً.</li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span><strong>الخرائط التفصيلية (Large-scale mapping):</strong> هو النظام الأساسي لتخطيط المدن والأحياء اللي بتحتاج تفاصيل قريبة ومقاسات مترية.</li>
+</ul>
+</li>
+<li data-line="5" dir="auto"><span class="list-bullet"></span>ا <code>PCS</code> بيتقسم zones، وكل zone بتبقى متعرفة بـ projection center مختلف.<br>
+<strong>معالجة التشوه بالـ (Zones):</strong> عشان فرد الكورة على خريطة مسطحة بيعمل تشوهات، بيتم تقسيم الأرض لشرائح طولية اسمها <strong>Zones</strong>.</li>
+<li data-line="7" dir="auto"><span class="list-bullet"></span><strong>مركز الإسقاط (Projection Center):</strong> كل Zone بيكون ليها مركز إسقاط خاص بيها، ونسبة التشوه عند المركز ده بتكون تقريباً صفر.</li>
+</ul></div><div class="el-table" dir="rtl" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="rtl"><strong>ا Point</strong></th>
+<th align="left" dir="ltr"><strong>GCS - Geographic Coordinate System</strong></th>
+<th align="left" dir="ltr"><strong>PCS - Projected Coordinate System</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="rtl"><strong>المكان بيتحدد بناءً على</strong></td>
+<td align="left" dir="ltr"><code>Longitude</code> و <code>Latitude</code></td>
+<td align="left" dir="ltr"><code>X</code> و <code>Y</code> على سطح مستوي</td>
+</tr>
+<tr>
+<td align="left" dir="rtl"><strong>طبيعة النظام</strong></td>
+<td align="left" dir="rtl">ثلاثي الأبعاد مرتبط بسطح الأرض</td>
+<td align="left" dir="rtl">نظام مستوي أو plane coordinate system</td>
+</tr>
+<tr>
+<td align="left" dir="rtl"><strong>الوحدة</strong></td>
+<td align="left" dir="ltr"><code>Decimal degrees</code></td>
+<td align="left" dir="rtl">وحدات خطية زي meter أو feet</td>
+</tr>
+<tr>
+<td align="left" dir="rtl"><strong>مناسب لإيه؟</strong></td>
+<td align="left" dir="rtl">تحديد مواقع على سطح الأرض</td>
+<td align="left" dir="rtl">الحسابات الدقيقة والخرائط كبيرة المقياس</td>
+</tr>
+<tr>
+<td align="left" dir="rtl"><strong>ملاحظة مهمة</strong></td>
+<td align="left" dir="ltr"><code>Lat/Long</code> مش Cartesian coordinates</td>
+<td align="left" dir="rtl">ناتج من projection</td>
+</tr>
+</tbody>
+</table></div><div class="el-hr"><hr></div><div class="el-h2"><h2 data-heading="4) شكل الأرض في GIS" dir="auto" class="heading" id="4)_شكل_الأرض_في_GIS_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>4) شكل الأرض في GIS</h2></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>إحنا غالبًا بنتخيل الأرض <code>Sphere</code>.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>بس الحقيقة إنها أقرب لـ <code>Spheroid</code> أو <code>Ellipsoid</code> — نصف قطر الأرض عند خط الاستواء أكبر شوية من نصف القطر عند القطبين.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>ا <code>Eratosthenes (276-194 BC)</code> كان من أوائل اللي قاسوا محيط الأرض — استخدم فرق الزاوية بين مكانين في مصر عشان يحسب المحيط بناءً على الفكرة إن الأرض كورة.</li>
+</ul></div><div class="el-h3"><h3 data-heading="مستويات تقريب شكل الأرض" dir="auto" class="heading" id="مستويات_تقريب_شكل_الأرض_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>مستويات تقريب شكل الأرض</h3></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Approximation</th>
+<th align="left" dir="rtl">الفكرة</th>
+<th align="left" dir="rtl">الاستخدام</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Sphere</code></td>
+<td align="left" dir="rtl">مبنية على circle</td>
+<td align="left" dir="rtl">بسيطة ومناسبة للـ small scale work</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Ellipsoid</code></td>
+<td align="left" dir="rtl">تعديل أحسن لشكل الأرض الحقيقي</td>
+<td align="left" dir="rtl">أدق من sphere</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Geoid</code></td>
+<td align="left" dir="rtl">أقرب للشكل الحقيقي فيزيائيًا</td>
+<td align="left" dir="rtl">بيعتمد على gravity و mean sea level</td>
+</tr>
+</tbody>
+</table></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="tip" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-flame"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"></path></svg></div><div class="callout-title-inner">بصمجيات</div></div><div class="callout-content">
+<p dir="auto"><code>Sphere</code> أبسط تقريب، <code>Ellipsoid</code> أدق هندسيًا، و <code>Geoid</code> أقرب للشكل الحقيقي عشان الأرض غير منتظمة.</p>
+</div></div></div><div class="el-h3"><h3 data-heading="Ellipse and Ellipsoid" dir="auto" class="heading" id="Ellipse_and_Ellipsoid_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Ellipse and Ellipsoid</h3></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>An ellipse is defined by a constant distance from F1 to P to F2 for all points on the ellipse.</strong></p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>الـ <code>Ellipse</code> بيتحدد باستخدام:
+<ul class="has-list-bullet">
+<li data-line="1" dir="auto"><span class="list-bullet"></span><code>Focal length = ε</code></li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span><code>Major axis = a</code></li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span><code>Minor axis = b</code></li>
+</ul>
+</li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span>لو <code>ε = 0</code>، الـ ellipse يبقى circle.</li>
+</ul></div><div class="el-h3"><h3 data-heading="Flattening and Eccentricity" dir="auto" class="heading" id="Flattening_and_Eccentricity_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Flattening and Eccentricity</h3></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>Flattening (f)</strong> = <code>(a - b) / a</code> — بيوصف الفرق بين المحورين كنسبة.<br>
+<strong>Inverse Flattening</strong> = <code>1/f</code> — القيمة المستخدمة غالبًا في الجداول.</p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>الـ <code>flattening</code> بيتراوح بين <code>0</code> و <code>1</code>:
+<ul class="has-list-bullet">
+<li data-line="1" dir="auto"><span class="list-bullet"></span><code>f = 0</code> → المحورين متساويين → <code>Sphere</code></li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>أرضنا: <code>f ≈ 0.003353</code> يعني <code>1/f ≈ 298.257</code></li>
+</ul>
+</li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span>كمان فيه <code>eccentricity squared</code> <code>(e²)</code>:</li>
+</ul></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>e² = (a² - b²) / a²</strong> — كمان بيوصف شكل الـ spheroid.</p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>مثال: <code>a = 6,378,137.0 m</code> و <code>1/f = 298.257223563</code> (WGS84)</li>
+</ul></div><div class="el-h3"><h3 data-heading="Earth Ellipse Values" dir="auto" class="heading" id="Earth_Ellipse_Values_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Earth Ellipse Values</h3></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Value</th>
+<th align="left" dir="ltr">Meaning</th>
+<th align="left" dir="ltr">Approx. value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>a</code></td>
+<td align="left" dir="ltr">Major axis</td>
+<td align="left" dir="ltr"><code>6378 km</code></td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>b</code></td>
+<td align="left" dir="ltr">Minor axis</td>
+<td align="left" dir="ltr"><code>6357 km</code></td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>f</code></td>
+<td align="left" dir="ltr">Flattening ratio</td>
+<td align="left" dir="ltr"><code>(a-b)/a ≈ 1/300</code></td>
+</tr>
+</tbody>
+</table></div><div class="el-h3"><h3 data-heading="Standard Ellipsoids" dir="auto" class="heading" id="Standard_Ellipsoids_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Standard Ellipsoids</h3></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Ellipsoid</th>
+<th align="left" dir="ltr">Major axis <code>a</code></th>
+<th align="left" dir="ltr">Minor axis <code>b</code></th>
+<th align="left" dir="ltr">Flattening ratio <code>f</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Clarke 1866</code></td>
+<td align="left" dir="ltr"><code>6,378,206 m</code></td>
+<td align="left" dir="ltr"><code>6,356,584 m</code></td>
+<td align="left" dir="auto"><code>1/294.98</code></td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>GRS80</code></td>
+<td align="left" dir="ltr"><code>6,378,137 m</code></td>
+<td align="left" dir="ltr"><code>6,356,752 m</code></td>
+<td align="left" dir="auto"><code>1/298.57</code></td>
+</tr>
+</tbody>
+</table></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>GRS80 - Geodetic Reference System 1980 is a geodetic reference system consisting of a global reference ellipsoid and a gravity field model.</strong></p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>ا <code>GRS80</code> من أشهر الـ standard ellipsoids — وهو الـ reference coordinate system المستخدم في الـ <code>GPS</code>.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>ا <code>WGS84</code> قريب جدًا من <code>GRS80</code> وبيستخدم عالميًا ومرتبط باستخدامات <code>GPS</code>.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>الاتنين (<code>GRS80</code> و <code>WGS84</code>) من أمثلة الـ <code>best fit ellipsoids</code> — يعني أدق ellipsoids اللي بتمثل شكل الأرض ككل.</li>
+</ul></div><div class="el-h3"><h3 data-heading="جدول Ellipsoids الكامل" dir="auto" class="heading" id="جدول_Ellipsoids_الكامل_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>جدول Ellipsoids الكامل</h3></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Ellipsoid</th>
+<th align="left" dir="ltr">Semi-major axis <code>a</code> (m)</th>
+<th align="left" dir="ltr">Semi-minor axis <code>b</code> (m)</th>
+<th align="left" dir="rtl">الاستخدام</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Airy 1830</code></td>
+<td align="left" dir="auto"><code>6,377,563</code></td>
+<td align="left" dir="auto"><code>6,356,257</code></td>
+<td align="left" dir="ltr">Great Britain</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Australian National</code></td>
+<td align="left" dir="auto"><code>6,378,160</code></td>
+<td align="left" dir="auto"><code>6,356,775</code></td>
+<td align="left" dir="ltr">Australia</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Bessel 1841</code></td>
+<td align="left" dir="auto"><code>6,377,397</code></td>
+<td align="left" dir="auto"><code>6,356,079</code></td>
+<td align="left" dir="ltr">Chile, Central Europe, Indonesia</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Clarke 1866</code></td>
+<td align="left" dir="auto"><code>6,378,206</code></td>
+<td align="left" dir="auto"><code>6,356,584</code></td>
+<td align="left" dir="ltr">North America, Philippines</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Clarke 1880</code></td>
+<td align="left" dir="auto"><code>6,378,249</code></td>
+<td align="left" dir="auto"><code>6,356,515</code></td>
+<td align="left" dir="ltr">France, most of Africa</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Everest 1830</code></td>
+<td align="left" dir="auto"><code>6,377,276</code></td>
+<td align="left" dir="auto"><code>6,356,075</code></td>
+<td align="left" dir="ltr">India, Burma, Ceylon, Malaysia</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Everest 1956</code></td>
+<td align="left" dir="auto"><code>6,377,301</code></td>
+<td align="left" dir="auto"><code>6,356,100</code></td>
+<td align="left" dir="ltr">India, Nepal</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Everest 1969</code></td>
+<td align="left" dir="auto"><code>6,377,296</code></td>
+<td align="left" dir="auto"><code>6,356,095</code></td>
+<td align="left" dir="ltr">Sabah, Sarawak</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Fischer 1960</code></td>
+<td align="left" dir="auto"><code>6,378,166</code></td>
+<td align="left" dir="auto"><code>6,356,784</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Fischer 1968</code></td>
+<td align="left" dir="auto"><code>6,378,150</code></td>
+<td align="left" dir="auto"><code>6,356,768</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>GRS80</code></td>
+<td align="left" dir="auto"><code>6,378,137</code></td>
+<td align="left" dir="auto"><code>6,356,752</code></td>
+<td align="left" dir="ltr">North America</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Hayford 1909</code></td>
+<td align="left" dir="auto"><code>6,378,388</code></td>
+<td align="left" dir="auto"><code>6,356,912</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Helmert 1906</code></td>
+<td align="left" dir="auto"><code>6,378,200</code></td>
+<td align="left" dir="auto"><code>6,356,818</code></td>
+<td align="left" dir="ltr">Egypt</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Hough</code></td>
+<td align="left" dir="auto"><code>6,378,270</code></td>
+<td align="left" dir="auto"><code>6,356,794</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>International 1909</code></td>
+<td align="left" dir="auto"><code>6,378,388</code></td>
+<td align="left" dir="auto"><code>6,356,912</code></td>
+<td align="left" dir="ltr">= International 1924</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Krasovsky 1940</code></td>
+<td align="left" dir="auto"><code>6,378,245</code></td>
+<td align="left" dir="auto"><code>6,356,863</code></td>
+<td align="left" dir="ltr">USSR, East European countries</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Modified Airy</code></td>
+<td align="left" dir="auto"><code>6,377,340</code></td>
+<td align="left" dir="auto"><code>6,356,034</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Modified Everest 1948</code></td>
+<td align="left" dir="auto"><code>6,377,304</code></td>
+<td align="left" dir="auto"><code>6,356,103</code></td>
+<td align="left" dir="ltr">West Malaysia, Singapore</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Modified Fischer 1960</code></td>
+<td align="left" dir="auto"><code>6,378,155</code></td>
+<td align="left" dir="auto"><code>6,356,773</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Mercury 1960</code></td>
+<td align="left" dir="auto"><code>6,378,166</code></td>
+<td align="left" dir="auto"><code>6,356,784</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>New International 1967</code></td>
+<td align="left" dir="auto"><code>6,378,158</code></td>
+<td align="left" dir="auto"><code>6,356,772</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>South American 1969</code></td>
+<td align="left" dir="auto"><code>6,378,160</code></td>
+<td align="left" dir="auto"><code>6,356,775</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Southeast Asia</code></td>
+<td align="left" dir="auto"><code>6,378,155</code></td>
+<td align="left" dir="auto"><code>6,356,773</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Sphere</code></td>
+<td align="left" dir="auto"><code>6,370,997</code></td>
+<td align="left" dir="auto"><code>6,370,997</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Walbeck</code></td>
+<td align="left" dir="auto"><code>6,376,896</code></td>
+<td align="left" dir="auto"><code>6,355,835</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>WGS66</code></td>
+<td align="left" dir="auto"><code>6,378,145</code></td>
+<td align="left" dir="auto"><code>6,356,760</code></td>
+<td align="left" dir="auto">—</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>WGS72</code></td>
+<td align="left" dir="auto"><code>6,378,135</code></td>
+<td align="left" dir="auto"><code>6,356,751</code></td>
+<td align="left" dir="ltr">Worldwide</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>WGS84</code></td>
+<td align="left" dir="auto"><code>6,378,137</code></td>
+<td align="left" dir="auto"><code>6,356,752</code></td>
+<td align="left" dir="ltr">Worldwide</td>
+</tr>
+</tbody>
+</table></div><div class="el-h3"><h3 data-heading="Geoid" dir="auto" class="heading" id="Geoid_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Geoid</h3></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>The geoid is a model of global mean sea level.</strong></p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ <code>Geoid</code> بيستخدم عشان قياس elevations بدقة.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>ا <code>Geodesists</code> بيقيسوا الارتفاعات بناءً على sea level.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>الـ <code>Geoid</code> مش جسم هندسي (geometrically) — لكنه جسم متعرف فيزيائيًا (physically) بالـ gravity، عشان الأرض نفسها bumpy وغير منتظمة.</li>
+</ul></div><div class="el-hr"><hr></div><div class="el-h2"><h2 data-heading="5) Datum" dir="auto" class="heading" id="5)_Datum_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>5) Datum</h2></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>A Datum is a mathematical model of the Earth, which serves as the reference or base for calculating the geographic coordinates of a location.</strong></p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ <code>Datum</code> هو الأساس اللي بنحسب عليه <code>Latitude</code> و <code>Longitude</code>.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span><code>Earth datum</code> بيتعرف باستخدام <code>ellipse</code> و <code>axis of rotation</code> — يعني المحور اللي الأرض بتدور حوله والـ ellipse اللي بيحدد شكلها.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>لو غيرت الـ datum، نفس المكان ممكن ياخد إحداثيات مختلفة شوية.</li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span>عشان كده الـ datum مهم جدًا في alignment بين layers.</li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span>ا <code>Earth datum</code> بيتعرف باستخدام ellipse ومحور دوران.</li>
+<li data-line="5" dir="auto"><span class="list-bullet"></span>فيه <code>Geocentric Datum</code> بيعمل best fit للأرض كلها، وفيه <code>Local Datum</code> بيعمل best fit لمنطقة معينة.</li>
+</ul></div><div class="el-h3"><h3 data-heading="Local vs Global Datum" dir="auto" class="heading" id="Local_vs_Global_Datum_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Local vs Global Datum</h3></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Type</th>
+<th align="left" dir="rtl">المعنى</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Local Referencing Datum - LRD</code></td>
+<td align="left" dir="rtl">معمول عشان يناسب منطقة محلية معينة</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Global Referencing Datum - GRD</code></td>
+<td align="left" dir="rtl">معمول عشان يناسب الأرض ككل</td>
+</tr>
+</tbody>
+</table></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ <code>Local Datum</code> بيعمل align للـ spheroid عشان يناسب area معينة — فيه <code>origin point</code> محفوظ والإحداثيات كلها مبنية عليه. مش مناسب لمنطقة تانية.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>الـ <code>Global Datum</code> بيعمل best fit للأرض كلها باستخدام <code>mass center of the earth</code> كـ absolute origin — وده اللي بيساعد في <code>GPS</code> و <code>satellite measurements</code>.</li>
+</ul></div><div class="el-h3"><h3 data-heading="Datum Accuracy" dir="auto" class="heading" id="Datum_Accuracy_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Datum Accuracy</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>لو غيرت الـ <code>datum</code>، نفس النقطة هياخد إحداثيات مختلفة.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>مثال: نقطة في <code>Redlands, California</code>:
+<ul class="has-list-bullet">
+<li data-line="2" dir="auto"><span class="list-bullet"></span>على <code>NAD83</code>: <code>34°01'43.77884" N, 117°12'57.75961" W</code></li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span>على <code>NAD27</code>: <code>34°01'43.72995" N, 117°12'54.61539" W</code></li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span>الـ longitude بيتغير بـ <code>~3 ثانية</code> والـ latitude بـ <code>~0.05 ثانية</code>.</li>
+</ul>
+</li>
+</ul></div><div class="el-h3"><h3 data-heading="Egypt Datum" dir="auto" class="heading" id="Egypt_Datum_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Egypt Datum</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>في مصر فيه أمثلة datums زي: <code>Helmert</code>, <code>Hayford</code>, <code>Suez 1974</code>.</li>
+</ul></div><div class="el-h3"><h3 data-heading="Horizontal Earth Datums" dir="auto" class="heading" id="Horizontal_Earth_Datums_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Horizontal Earth Datums</h3></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Datum</th>
+<th align="left" dir="ltr">Full name</th>
+<th align="left" dir="ltr">Ellipsoid / Axis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>NAD27</code></td>
+<td align="left" dir="ltr">North American Datum of 1927</td>
+<td align="left" dir="ltr">uses <code>Clarke 1866</code> on non-geocentric axis</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>NAD83</code></td>
+<td align="left" dir="ltr">North American Datum of 1983</td>
+<td align="left" dir="ltr">uses <code>GRS80</code> on geocentric axis</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>WGS84</code></td>
+<td align="left" dir="ltr">World Geodetic System of 1984</td>
+<td align="left" dir="ltr">uses <code>GRS80</code>, almost same as NAD83</td>
+</tr>
+</tbody>
+</table></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="note" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg></div><div class="callout-title-inner">Note</div></div><div class="callout-content">
+<p dir="auto">التحويل من <code>NAD27</code> لـ <code>NAD83</code> بيعمل horizontal shift، والـ shift ده بيتقاس بالمتر وبيختلف من مكان لمكان. الخرائط اللي بتبين الـ isolines بتاعة الـ shift بتتراوح قيمها حسب المنطقة.</p>
+</div></div></div><div class="el-hr"><hr></div><div class="el-h2"><h2 data-heading="6) Map Projections and Distortion" dir="auto" class="heading" id="6)_Map_Projections_and_Distortion_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>6) Map Projections and Distortion</h2></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>A map projection is a mathematical formula for representing the curved surface of the earth on a flat map.</strong></p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>ا <code>Map Projection</code> هو ناتج تحويل سطح الأرض الكروي أو المنحني لسطح مستوي.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>هو systematic arrangement للـ <code>parallels</code> و <code>meridians</code> على plane surface.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>الفكرة كأن فيه imaginary light بيتعمله projection على <code>developable surface</code>.</li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span>فيه projections كتير، وكل projection بيعمل نوع مختلف من distortion عشان الأرض منحنية والخريطة flat.</li>
+</ul></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>Distortions are inherent in maps because the Earth is round and a map is flat.</strong></p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>مفيش projection يحافظ على كل الخصائص مرة واحدة.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>عشان كده بنختار projection حسب الهدف.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>تخيل كأنك بتحاول تصور وجهك في 2D: شكله ممكن يبقى صح بس الحجم يبقى غلط، أو الحجم يبقى صح بس الشكل يتغير.</li>
+</ul></div><div class="el-h3"><h3 data-heading="أنواع التشوهات" dir="auto" class="heading" id="أنواع_التشوهات_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>أنواع التشوهات</h3></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Distortion Type</th>
+<th align="left" dir="rtl">المعنى</th>
+<th align="left" dir="rtl">النوع اللي يقلله</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Area</code></td>
+<td align="left" dir="rtl">المساحات تتغير</td>
+<td align="left" dir="ltr"><code>Equal Area (Homolographic)</code></td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Shape</code></td>
+<td align="left" dir="rtl">الأشكال تتغير</td>
+<td align="left" dir="ltr"><code>Conformal (Orthomorphic)</code></td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Scale / Distance</code></td>
+<td align="left" dir="rtl">المسافات أو المقياس يتغير</td>
+<td align="left" dir="ltr"><code>Equidistant (True Scale)</code></td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Direction</code></td>
+<td align="left" dir="rtl">الاتجاهات تتغير</td>
+<td align="left" dir="ltr"><code>True Direction (Azimuthal)</code></td>
+</tr>
+</tbody>
+</table></div><div class="el-h3"><h3 data-heading="Global Properties Classification" dir="auto" class="heading" id="Global_Properties_Classification_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Global Properties Classification</h3></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>Equal Area (Homolographic)</strong>: بيحافظ على نسب المساحات — مساحة النرويج على الخريطة = مساحتها الحقيقية نسبيًا.<br>
+<strong>Orthomorphic (True-Shape)</strong>: بيحافظ على الأشكال — حدود الدول بتبان زيها زي على الأرض.<br>
+<strong>Azimuthal (True-Bearing)</strong>: بيحافظ على الاتجاهات من نقطة معينة.<br>
+<strong>Equidistant (True Scale)</strong>: بيحافظ على المسافات — لكن مفيش projection بيحافظ على المقياس في كل مكان، فقط على خطوط معينة.</p>
+</div></div></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="tip" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-flame"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"></path></svg></div><div class="callout-title-inner">بصمجيات</div></div><div class="callout-content">
+<p dir="auto">اختار projection حسب اللي محتاج تحافظ عليه: شكل، مساحة، مسافة، أو اتجاه. مفيش projection مثالي — كل واحد بيضحّي حاجة عشان يحافظ على حاجة تانية.</p>
+</div></div></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>The principal scale is a common measure of projection distortion.</strong></p>
+</div></div></div><div class="el-hr"><hr></div><div class="el-h2"><h2 data-heading="7) Types of Map Projections" dir="auto" class="heading" id="7)_Types_of_Map_Projections_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>7) Types of Map Projections</h2></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Projection Type</th>
+<th align="left" dir="rtl">الفكرة</th>
+<th align="left" dir="ltr">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Conic Projection</code></td>
+<td align="left" dir="rtl">الإسقاط على cone</td>
+<td align="left" dir="rtl">مفيد للـ mid-latitude zones الشرق-غرب</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Cylindrical Projection</code></td>
+<td align="left" dir="rtl">الإسقاط على cylinder</td>
+<td align="left" dir="rtl">الـ Equator أو meridian ممكن يبقى خط التماس</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Planar Projection</code></td>
+<td align="left" dir="rtl">الإسقاط على plane</td>
+<td align="left" dir="rtl">اسمها <code>Azimuthal</code> أو <code>Zenithal</code>، مفيد للـ polar regions</td>
+</tr>
+</tbody>
+</table></div><div class="el-h3"><h3 data-heading="Tangent and Secant" dir="auto" class="heading" id="Tangent_and_Secant_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Tangent and Secant</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>ا <code>Standard line</code> هو خط التماس بين projection surface والـ reference globe.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>الحالة البسيطة فيها <code>one standard line</code> (tangent)، و ا <code>Secant case</code> فيها <code>two standard lines</code> وغالبًا بتغطي مساحة أكبر وبتقلل الـ distortion.</li>
+</ul></div><div class="el-h3"><h3 data-heading="Conic Projections — التفاصيل" dir="auto" class="heading" id="Conic_Projections_—_التفاصيل_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Conic Projections — التفاصيل</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ cone بيلمس الأرض على <code>standard parallel</code> (خط عرض).</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>الـ <code>meridians</code> بتتقاطع عند <code>apex</code> (رأس الـ cone).</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>الـ parallels بتتحلل كـ <code>concentric arcs</code>.</li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span>بعد الـ projection، الـ cone بيتفتح عشان يبقى flat.</li>
+</ul></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Type</th>
+<th align="left" dir="rtl">الخصائص</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Tangent Conic</code></td>
+<td align="left" dir="ltr"><code>standard parallel</code> واحدة — distortion بتزيد بعيد عنها</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Secant Conic</code></td>
+<td align="left" dir="ltr"><code>standard parallels</code> اتنين — distortion أقل بشكل عام</td>
+</tr>
+</tbody>
+</table></div><div class="el-p"><p dir="auto"><strong>Equidistant Conic</strong>: الـ parallels مت.equal spacing — مش conformal ومش equal area بس مناسب لـ small areas.<br>
+<strong>Lambert Conformal Conic</strong>: الـ central parallels متقاربة أكتر — بيحافظ على الـ shapes.<br>
+<strong>Albers Equal Area Conic</strong>: الـ parallels في الـ edges متقاربة — بيحافظ على الـ areas.</p></div><div class="el-h3"><h3 data-heading="Cylindrical Projections — التفاصيل" dir="auto" class="heading" id="Cylindrical_Projections_—_التفاصيل_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Cylindrical Projections — التفاصيل</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ <code>meridians</code> بتتقاطع على الـ cylinder surface بـ <code>90°</code>.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>بعد القص، الـ meridians بتبقى <code>equally spaced</code> بس الـ parallels بتتبعد كل ما تقرب للـ poles.</li>
+</ul></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Orientation</th>
+<th align="left" dir="rtl">الفكرة</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Normal</code></td>
+<td align="left" dir="rtl">الـ cylinder حول الأرض بشكل أفقي — Equator هو خط التماس</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Transverse</code></td>
+<td align="left" dir="rtl">الـ cylinder حول meridian معينة — زي <code>Transverse Mercator</code></td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Oblique</code></td>
+<td align="left" dir="rtl">الـ cylinder مائل — بين equator و meridians</td>
+</tr>
+</tbody>
+</table></div><div class="el-p"><p dir="auto"><strong>Mercator</strong>: من أشهر الـ cylindrical projections — <code>conformal</code> وبيحافظ على الـ directions (rhumb lines بتبقى straight). المسافات صحيحة بس على equator. الـ areas بتتبسط كل ما تقرب للـ poles (مثل: <code>Greenland</code> بتبان أكبر من <code>Africa</code> لكنها أصغر 14 مرة).</p></div><div class="el-h3"><h3 data-heading="Planar Projections — التفاصيل" dir="auto" class="heading" id="Planar_Projections_—_التفاصيل_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Planar Projections — التفاصيل</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ plane بتلمس الأرض عند <code>point of contact</code>.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>الـ focus بيتحدد بـ <code>central longitude</code> و <code>central latitude</code>.</li>
+</ul></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Aspect</th>
+<th align="left" dir="rtl">نقطة التماس</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Polar</code></td>
+<td align="left" dir="rtl">عند <code>North Pole</code> أو <code>South Pole</code> — parallels دوائر متحدة المركز</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Equatorial</code></td>
+<td align="left" dir="rtl">عند نقطة على <code>Equator</code></td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Oblique</code></td>
+<td align="left" dir="rtl">عند نقطة بين الـ pole و الـ equator</td>
+</tr>
+</tbody>
+</table></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="tip" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-flame"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"></path></svg></div><div class="callout-title-inner">مهم</div></div><div class="callout-content">
+<p dir="auto">في <code>Planar projections</code>، الـ directions من الـ focus بتبقى accurate.</p>
+</div></div></div><div class="el-h3"><h3 data-heading="Famous Projections" dir="auto" class="heading" id="Famous_Projections_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Famous Projections</h3></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Projection</th>
+<th align="left" dir="ltr">Type</th>
+<th align="left" dir="rtl">الخصائص</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Mercator (1569)</code></td>
+<td align="left" dir="ltr">Cylindrical</td>
+<td align="left" dir="ltr"><code>Conformal</code> — بيحافظ على الـ directions (rhumb lines straight). Distortion بيزيد بعيد عن الـ equator — <code>Greenland</code> بتبان أكبر من <code>Africa</code> وهي أصغر 14 مرة. Parallels بتتبعد نحو الـ poles.</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Transverse Mercator</code></td>
+<td align="left" dir="ltr">Cylindrical (Transverse)</td>
+<td align="left" dir="rtl">بيستخدم meridian واحدة كـ standard line — ده أساس <code>UTM</code>.</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Lambert Conformal Conic</code></td>
+<td align="left" dir="ltr">Conic</td>
+<td align="left" dir="ltr"><code>Conformal</code> — بيحافظ على الـ shapes. مناسب للـ large-scale maps.</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Albers Equal Area Conic</code></td>
+<td align="left" dir="ltr">Conic</td>
+<td align="left" dir="ltr"><code>Equal Area</code> — بيحافظ على نسب المساحات.</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Hammer (1892)</code></td>
+<td align="left" dir="ltr">Equal-area</td>
+<td align="left" dir="rtl">بيحافظ على الـ area. Distortion في الـ shape moderate. Center point بس devoid of distortion.</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Goode (1923)</code></td>
+<td align="left" dir="ltr">Interrupted Equal-area</td>
+<td align="left" dir="ltr"><code>Orange-peel map</code> — 12 region مقطوعة. بيعرض الـ area relationships أحسن من Mercator.</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Robinson (1963)</code></td>
+<td align="left" dir="ltr">Compromise</td>
+<td align="left" dir="rtl">مش equal area — بيوازن بين size و shape. استخدم في <code>National Geographic</code> من 1988. Distortion أقل قرب الـ equator ويزيد نحو الـ poles.</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Mollweide</code></td>
+<td align="left" dir="ltr">Equal-area</td>
+<td align="left" dir="rtl">بيحافظ على الـ area.</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Orthographic</code></td>
+<td align="left" dir="ltr">Direction</td>
+<td align="left" dir="rtl">بيحافظ على الـ direction — زي ما الأرض بتتشاف من الفضاء.</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Azimuthal Equidistant</code></td>
+<td align="left" dir="ltr">Distance + Direction</td>
+<td align="left" dir="rtl">بيحافظ على المسافة والاتجاه من نقطة المركز.</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Winkel Tripel</code></td>
+<td align="left" dir="ltr">Compromise</td>
+<td align="left" dir="rtl">بيوازن بين الـ distortions — من أكتر الـ projections استخدامًا.</td>
+</tr>
+</tbody>
+</table></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="tip" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-flame"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"></path></svg></div><div class="callout-title-inner">بصمجيات</div></div><div class="callout-content">
+<p dir="auto"><code>Mercator</code> للملاحة، <code>Robinson</code> و <code>Winkel Tripel</code> للخرائط العامة، <code>Albers</code> للمساحات، <code>Lambert</code> للأشكال.</p>
+</div></div></div><div class="el-hr"><hr></div><div class="el-h2"><h2 data-heading="8) Commonly Used Projections and UTM" dir="auto" class="heading" id="8)_Commonly_Used_Projections_and_UTM_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>8) Commonly Used Projections and UTM</h2></div><div class="el-h3"><h3 data-heading="Commonly Used Map Projections" dir="auto" class="heading" id="Commonly_Used_Map_Projections_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Commonly Used Map Projections</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>أمثلة شائعة:
+<ul class="has-list-bullet">
+<li data-line="1" dir="auto"><span class="list-bullet"></span>ا <code>Universal Transverse Mercator - UTM</code></li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>ا <code>Lambert Conformal Conic</code></li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span>ا <code>Albers Equal Area Conic</code></li>
+</ul>
+</li>
+</ul></div><div class="el-h3"><h3 data-heading="State Plane Coordinate System for California" dir="auto" class="heading" id="State_Plane_Coordinate_System_for_California_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>State Plane Coordinate System for California</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>مثال على <code>State Plane Coordinate System for California</code>:
+<ul class="has-list-bullet">
+<li data-line="1" dir="auto"><span class="list-bullet"></span>AKA: <code>Lambert Conformal Conic</code></li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>Projection surface: <code>Conical</code></li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span>Spatial properties: <code>Shape</code> and <code>Distance</code></li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span><code>False Easting = 6561666</code></li>
+<li data-line="5" dir="auto"><span class="list-bullet"></span><code>False Northing = 1640416</code></li>
+<li data-line="6" dir="auto"><span class="list-bullet"></span><code>Central Meridian = -119°</code></li>
+<li data-line="7" dir="auto"><span class="list-bullet"></span><code>Standard Parallel 1 = 36.00°</code></li>
+<li data-line="8" dir="auto"><span class="list-bullet"></span><code>Standard Parallel 2 = 37.25°</code></li>
+<li data-line="9" dir="auto"><span class="list-bullet"></span><code>Latitude of Origin = 35.33°</code></li>
+<li data-line="10" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Example coordinate in Monterey:
+<ul class="has-list-bullet">
+<li data-line="11" dir="auto"><span class="list-bullet"></span><code>X = 5,798,378 feet</code></li>
+<li data-line="12" dir="auto"><span class="list-bullet"></span><code>Y = 2,135,524 feet</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div><div class="el-h3"><h3 data-heading="UTM Grid System" dir="auto" class="heading" id="UTM_Grid_System_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>UTM Grid System</h3></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>Universal Transverse Mercator - UTM is based on a cylindrical projection.</strong></p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>كل مكان على الأرض بيقع في zone معينة من <code>UTM</code>.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>ا <code>UTM</code> مبني على <code>transverse cylinder</code> بيتحرك كل <code>6°</code>.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>فيه <code>60 zones</code>، كل zone عرضها <code>6° longitude</code>.</li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span>الـ zones مرقمة من <code>1</code> لـ <code>60</code>.</li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span>كل zone متقسمة horizontal bands عرض كل واحدة <code>8° latitude</code>.</li>
+<li data-line="5" dir="auto"><span class="list-bullet"></span>الـ bands متسمية بحروف من <code>C</code> لـ <code>X</code> من الجنوب للشمال.</li>
+<li data-line="6" dir="auto"><span class="list-bullet"></span>الحروف <code>A</code>, <code>B</code>, <code>Y</code>, <code>Z</code> مخصصة للـ polar regions.</li>
+<li data-line="7" dir="auto"><span class="list-bullet"></span>الحروف <code>I</code> و <code>O</code> مش بتستخدم عشان متتلخبطش مع <code>1</code> و <code>0</code>.</li>
+</ul></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="tip" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-flame"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"></path></svg></div><div class="callout-title-inner">مهم</div></div><div class="callout-content">
+<p dir="auto">مصر في <code>UTM zones</code>: <code>35</code>, <code>36</code>, و <code>R</code> band.</p>
+</div></div></div><div class="el-h3"><h3 data-heading="UTM Scale Factor and Distortion" dir="auto" class="heading" id="UTM_Scale_Factor_and_Distortion_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>UTM Scale Factor and Distortion</h3></div><div class="el-ul node-insert-event"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ <code>central meridian</code> لكل zone ليها <code>scale factor = 0.9996</code> — يعني الأرقام بتبقى أصغر شوية من الواقع.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>الـ <code>standard meridians</code> (الاتنين على جنبين الـ central) بيقطعوا الـ cylinder على بعد <code>180 km</code> من الـ central — الـ scale factor عليهم <span class="dataview dataview-inline-query"><span>1</span></span>.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>بين الـ standard lines، الـ features بتظهر أصغر من الواقع (scale factor &lt; 1).</li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span>بره الـ standard lines، الـ features بتظهر أكبر (scale factor &gt; 1).</li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span>الـ error الداخلي لكل zone مش بيتجاوز <code>0.1%</code> — يعني distortion أقل من <code>1 part in 1000</code>.</li>
+</ul></div><div class="el-h3"><h3 data-heading="UTM Zone Exceptions" dir="auto" class="heading" id="UTM_Zone_Exceptions_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>UTM Zone Exceptions</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ zones العادية: <code>6° longitude × 8° latitude</code>.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>فيه استثناءات:
+<ul class="has-list-bullet">
+<li data-line="2" dir="auto"><span class="list-bullet"></span>الـ band <code>X</code> اعرض — <code>12° latitude</code> بدل <code>8°</code> (من <code>72°N</code> لـ <code>84°N</code>).</li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span><code>Zone 32V</code> اتتوسعت لـ <code>9°</code> عشان غرب النرويج.</li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span><code>Zones 33X, 35X</code> اتتوسعت لـ <code>12°</code> عشان <code>Svalbard</code>.</li>
+<li data-line="5" dir="auto"><span class="list-bullet"></span><code>Zones 31X, 37X</code> اتتوسعت لـ <code>9°</code>.</li>
+<li data-line="6" dir="auto"><span class="list-bullet"></span><code>Zones 32X, 34X, 36X</code> اتشالوا عشان الـ widenings دي.</li>
+</ul>
+</li>
+<li data-line="7" dir="auto"><span class="list-bullet"></span>الـ <code>Polar Regions</code> (فوق <code>84°N</code> وتحت <code>80°S</code>) بتستخدم <code>UPS - Universal Polar Stereographic</code>.</li>
+</ul></div><div class="el-hr"><hr></div><div class="el-h2"><h2 data-heading="9) Working with Coordinate Systems in ArcGIS" dir="auto" class="heading" id="9)_Working_with_Coordinate_Systems_in_ArcGIS_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>9) Working with Coordinate Systems in ArcGIS</h2></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>في <code>ArcGIS</code> فيه شوية نقاط مهمة مع coordinate systems:
+<ul class="has-list-bullet">
+<li data-line="1" dir="auto"><span class="list-bullet"></span>ا <code>On-the-fly projection</code></li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>الفرق بين <code>Define Projection</code> و <code>Project</code></li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span>ا <code>Predefined Projections</code></li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span>ا <code>Projection File - .prj</code></li>
+<li data-line="5" dir="auto"><span class="list-bullet"></span>ا <code>Data Frame</code> بياخد coordinate system بتاع أول data layer بتتضاف للمشروع.</li>
+</ul>
+</li>
+</ul></div><div class="el-h3"><h3 data-heading="Define Projection vs Project" dir="auto" class="heading" id="Define_Projection_vs_Project_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Define Projection vs Project</h3></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Tool</th>
+<th align="left" dir="rtl">بيعمل إيه؟</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Define Projection</code></td>
+<td align="left" dir="rtl">بتقول للبرنامج البيانات أصلًا معمولة على أي coordinate system</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Project</code></td>
+<td align="left" dir="rtl">بتحول البيانات فعليًا من coordinate system لنظام تاني</td>
+</tr>
+</tbody>
+</table></div><div class="el-h3"><h3 data-heading="Projection File" dir="auto" class="heading" id="Projection_File_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Projection File</h3></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>A <code>.prj</code> file is a text file that stores projection information.</strong></p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ <code>.prj</code> file بيتقسم to 3 أجزاء:</li>
+</ul></div><div class="el-table" dir="rtl" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="rtl">الجزء</th>
+<th align="left" dir="rtl">بيحتوي على</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Geographic Coordinate System</code></td>
+<td align="left" dir="ltr">Datum + Spheroid + Prime Meridian + Units (degrees)</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Map Projection Parameters</code></td>
+<td align="left" dir="ltr">Projection name + False Easting/Northing + Central Meridian + Scale Factor + Latitude of Origin</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Linear Unit</code></td>
+<td align="left" dir="rtl">الـ unit المستخدم في الـ projected coordinates (meters, feet, etc.)</td>
+</tr>
+</tbody>
+</table></div><div class="el-p"><p dir="auto"><strong>مثال — <code>.prj</code> file لـ NAD 1983 UTM Zone 11N:</strong></p></div><div class="el-pre"><pre><code data-line="0">PROJCS["NAD_1983_UTM_Zone_11N",
+GEOGCS["GCS_North_American_1983",
+  DATUM["D_North_American_1983",
+    SPHEROID["GRS_1980",6378137.0,298.257222101]],
+  PRIMEM["Greenwich",0.0],
+  UNIT["Degree",0.0174532925199433]],
+PROJECTION["Transverse_Mercator"],
+PARAMETER["False_Easting",500000.0],
+PARAMETER["False_Northing",0.0],
+PARAMETER["Central_Meridian",-117.0],
+PARAMETER["Scale_Factor",0.9996],
+PARAMETER["Latitude_Of_Origin",0.0],
+UNIT["Meter",1.0]]
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ <code>0.0174532925199433</code> = معامل التحويل من degree لـ radian.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>الـ <code>SPHEROID</code> بيحتوي على <code>semi-major axis</code> و <code>inverse flattening</code>.</li>
+</ul></div><div class="el-h3"><h3 data-heading="بتظهر فين في البرامج؟" dir="auto" class="heading" id="بتظهر_فين_في_البرامج؟_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>بتظهر فين في البرامج؟</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span><code>ArcGIS Catalog</code> → <code>Define Projection</code></li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span><code>ArcGIS</code> → <code>Data Frame Properties</code> → <code>Coordinate System Tab</code></li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span><code>PFO Map View</code> → <code>Coordinate system</code></li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span><code>Terrasync</code> → <code>Coordinate System</code></li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span><code>Export Utility</code> → <code>Shape Export Coordinate System</code></li>
+</ul></div><div class="el-h3"><h3 data-heading="On-the-fly Projection" dir="auto" class="heading" id="On-the-fly_Projection_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>On-the-fly Projection</h3></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>On-the-fly projection</strong> هو feature بيخلي الـ GIS software تعرض data بأكتر من coordinate system بدون ما تغير الـ data فعليًا.</p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ <code>Data Frame</code> بياخد coordinate system بتاع أول data layer بتتضاف — وبعدين كل الـ layers التانية بتتحول تلقائيًا عشان تتوافق.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>لو الـ data معندش coordinate system معروف، ArcGIS بيستخدم <code>NAD27</code> كـ assumed datum.</li>
+</ul></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="warning" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></div><div class="callout-title-inner">مهم</div></div><div class="callout-content">
+<p dir="auto">الـ on-the-fly projection بس بـ display — مش بيغير الـ data فعليًا. لو هتستخدم الـ data في spatial analysis، لازم تعمل <code>Project</code> عشان تتأكد إن الـ data فعليًا في الـ coordinate system الصح.</p>
+</div></div></div><div class="el-hr"><hr></div><div class="el-h2"><h2 data-heading="10) GIS Data Types and Data Models" dir="auto" class="heading" id="10)_GIS_Data_Types_and_Data_Models_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>10) GIS Data Types and Data Models</h2></div><div class="el-h3"><h3 data-heading="GIS Components" dir="auto" class="heading" id="GIS_Components_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>GIS Components</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>مكونات الـ <code>GIS</code> الأساسية:
+<ul class="has-list-bullet">
+<li data-line="1" dir="auto"><span class="list-bullet"></span><code>Hardware</code></li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span><code>Software</code></li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span><code>Data</code></li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span><code>People</code></li>
+<li data-line="5" dir="auto"><span class="list-bullet"></span><code>Procedures</code></li>
+<li data-line="6" dir="auto"><span class="list-bullet"></span><code>Network</code></li>
+</ul>
+</li>
+<li data-line="7" dir="auto"><span class="list-bullet"></span>أهم وأغلى component في الـ <code>GIS</code> غالبًا هو <code>Data</code>.</li>
+</ul></div><div class="el-h3"><h3 data-heading="Three Types of GIS Data" dir="auto" class="heading" id="Three_Types_of_GIS_Data_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Three Types of GIS Data</h3></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Type</th>
+<th align="left" dir="rtl">المعنى</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Geometrical Data</code></td>
+<td align="left" dir="rtl">الأشكال الهندسية: <code>Point</code>, <code>Line</code>, <code>Polygon</code></td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Attribute Data</code></td>
+<td align="left" dir="rtl">خصائص البيانات، زي الاسم والعدد والمالك والسعر</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Topological Data</code></td>
+<td align="left" dir="rtl">العلاقات بين البيانات، زي الجوار والاتصال والحدود المشتركة</td>
+</tr>
+</tbody>
+</table></div><div class="el-h3"><h3 data-heading="Vector and Raster Recap" dir="auto" class="heading" id="Vector_and_Raster_Recap_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Vector and Raster Recap</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>ا <code>Vector Data Model</code> بيمثل البيانات باستخدام <code>Point</code>, <code>Line</code>, <code>Polygon</code>.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>ا <code>Raster Data Model</code> بيمثل البيانات كصورة أو matrix من pixels / cells.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>الصورة عبارة عن rows و columns، وكل cell ليها value أو color.</li>
+</ul></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="info" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-info"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div><div class="callout-title-inner">definition</div></div><div class="callout-content">
+<p dir="auto"><strong>Vector data structure</strong>: عبارة عن list of coordinates (X,Y) — كل point ليها إحداثيات محفوظة.<br>
+<strong>Raster data structure</strong>: عبارة عن 2D array (matrix) — صفوف واعمده وكل cell ليها رقم أو لون.</p>
+</div></div></div><div class="el-h3"><h3 data-heading="Point, Line, Polygon Storage" dir="auto" class="heading" id="Point,_Line,_Polygon_Storage_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Point, Line, Polygon Storage</h3></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th align="left" dir="ltr">Geometry</th>
+<th align="left" dir="rtl">التخزين</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" dir="ltr"><code>Point</code></td>
+<td align="left" dir="rtl">زوج إحداثيات <code>X,Y</code>، ولو 3D يبقى <code>X,Y,Z</code> — يعني <code>zero dimension</code></td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Line</code></td>
+<td align="left" dir="rtl">مجموعة points متوصلة؛ في GIS غالبًا <code>curve</code> مش <code>straight line</code> عشان الأرض مش مستوية</td>
+</tr>
+<tr>
+<td align="left" dir="ltr"><code>Polygon</code></td>
+<td align="left" dir="rtl">مجموعة points/lines مقفولة؛ آخر point بتتقفل مع أول point عشان يمثل area</td>
+</tr>
+</tbody>
+</table></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="tip" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-flame"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"></path></svg></div><div class="callout-title-inner">بصمجيات</div></div><div class="callout-content">
+<p dir="auto">الـ <code>Point</code> ممكن يتسمّى بenames مختلفة حسب الـ organization: <code>Point</code>, <code>Vertex</code>, <code>Node</code>, <code>Notch</code> — كلها بتمثل نفس الفكرة.</p>
+</div></div></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>
+<p>الـ <code>Line</code> في <code>GIS</code> مش <code>straight line</code> زي ما احنا متخيلين — هو <code>curve</code> لأن الشوارع والطرق بتتبع طبيعة الأرض (جبال، منعطفات).</p>
+</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>
+<p>الـ <code>Line</code> بيتمثّل كـ series of points: <code>Point 1 (X,Y)</code> → <code>Point 2 (X,Y)</code> → ... → <code>Point N (X,Y)</code>.</p>
+</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>
+<p>الـ <code>Polygon</code> بيتمثّل بنفس الطريقة بس آخر point بيقفل مع أول point.</p>
+</li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span>
+<p>في التخزين، الـ <code>Line</code> والـ <code>Polygon</code> ممكن يبقوا متشابهين كقائمة إحداثيات.</p>
+</li>
+<li data-line="5" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>
+<p>الفرق في visualization:</p>
+<ul class="has-list-bullet">
+<li data-line="6" dir="auto"><span class="list-bullet"></span>الـ <code>Line</code> مش بيقفل آخر point مع أول point.</li>
+<li data-line="7" dir="auto"><span class="list-bullet"></span>الـ <code>Polygon</code> بيقفل الشكل عشان يمثل area.</li>
+</ul>
+</li>
+</ul></div><div class="el-h3"><h3 data-heading="Arcs and Areas" dir="auto" class="heading" id="Arcs_and_Areas_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Arcs and Areas</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>الـ <code>Line</code> ممكن يتكون من أكتر من <code>Arc</code>.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>الـ <code>Polygon / Area</code> ممكن يتكون من أكتر من <code>Arc</code> مقفولين حوالين مساحة.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>مثال المحافظات: حدود محافظة مع محافظة تانية تعتبر relationship، ومن العلاقات دي نعرف مين جار مين.</li>
+</ul></div><div class="el-h3"><h3 data-heading="Vector vs Raster Storage" dir="auto" class="heading" id="Vector_vs_Raster_Storage_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>Vector vs Raster Storage</h3></div><div class="el-ul"><ul class="has-list-bullet">
+<li data-line="0" dir="auto"><span class="list-bullet"></span>ا <code>Vector</code> غالبًا compact أكتر في التخزين مع الأشكال الهندسية الواضحة.</li>
+<li data-line="1" dir="auto"><span class="list-bullet"></span>ا <code>Raster</code> ممكن يحتاج storage كبير، خصوصًا مع الصور عالية الدقة.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span><span class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>مثال على فرق التخزين:
+<ul class="has-list-bullet">
+<li data-line="3" dir="auto"><span class="list-bullet"></span>أرض <code>10m x 10m</code> ممكن تتمثل في vector بأربع vertices، ولو raster cell size = <code>10m x 10m</code> ممكن تتمثل بخلية واحدة.</li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span>أرض <code>100m x 100m</code> في vector لسه ممكن تبقى أربع vertices، لكن في raster بنفس cell size هتبقى <code>10 x 10 = 100 cells</code>.</li>
+</ul>
+</li>
+<li data-line="5" dir="auto"><span class="list-bullet"></span>الاختيار بين <code>Vector</code> و <code>Raster</code> بي depend على طبيعة البيانات والتحليل المطلوب.</li>
+</ul></div><div class="el-hr"><hr></div><div class="el-h2"><h2 data-heading="11) Final Quick Revision" dir="auto" class="heading" id="11)_Final_Quick_Revision_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>11) Final Quick Revision</h2></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="tip" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-flame"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"></path></svg></div><div class="callout-title-inner">بصمجيات</div></div><div class="callout-content">
+<ul class="has-list-bullet">
+<li data-line="1" dir="auto"><span class="list-bullet"></span><code>Coordinate Systems</code> هدفها تخلي الـ layers تركب فوق بعض صح. لو الـ reference مختلف، الطريق أو الحدود ممكن يظهروا في مكان غلط والتحليل كله يطلع غلط.</li>
+<li data-line="2" dir="auto"><span class="list-bullet"></span>ا <code>GCS</code> بيحدد المكان على سطح الأرض بـ <code>Latitude</code> و <code>Longitude</code>. القيم دي angles، مش <code>X,Y</code>، عشان كده نفس الدرجة مش دايمًا بتساوي نفس المسافة.</li>
+<li data-line="3" dir="auto"><span class="list-bullet"></span>ا <code>PCS</code> بيحول الأرض لخريطة مسطحة بـ <code>X,Y</code>، وده أنسب للحسابات الدقيقة والـ large-scale mapping.</li>
+<li data-line="4" dir="auto"><span class="list-bullet"></span>ا <code>Datum</code> هو المرجع اللي الإحداثيات مبنية عليه. اختلافه ممكن يعمل shift بين layers حتى لو البيانات نفسها صح.</li>
+<li data-line="5" dir="auto"><span class="list-bullet"></span>شكل الأرض بيتقرب بثلاث مستويات: <code>Sphere</code> أبسط حاجة، <code>Ellipsoid</code> أدق هندسيًا، و <code>Geoid</code> أقرب للواقع عشان مرتبط بالـ gravity و <code>mean sea level</code>.</li>
+<li data-line="6" dir="auto"><span class="list-bullet"></span>ا <code>Projection</code> = تحويل من <code>GCS</code> لـ <code>PCS</code>. ا <code>Reprojection</code> = تحويل من <code>PCS</code> لنوع <code>PCS</code> تاني.</li>
+<li data-line="7" dir="auto"><span class="list-bullet"></span>أي projection لازم يعمل distortion في <code>Area</code>, <code>Shape</code>, <code>Distance/Scale</code>, أو <code>Direction</code>. الاختيار بيكون حسب الخاصية الأهم في الخريطة.</li>
+<li data-line="8" dir="auto"><span class="list-bullet"></span>الأنواع الأساسية للـ projections: <code>Planar</code>, <code>Conical</code>, و <code>Cylindrical</code>. ومن أهم الأنظمة <code>UTM</code>، ومصر في zones <code>35</code>, <code>36</code> و band <code>R</code>.</li>
+<li data-line="9" dir="auto"><span class="list-bullet"></span>في <code>ArcGIS</code>: ا <code>Define Projection</code> بيعرف النظام بس، أما <code>Project</code> بيحول البيانات فعليًا. وملف <code>.prj</code> بيخزن معلومات الـ projection.</li>
+</ul>
+</div></div></div><div class="footer"><div class="data-bar"></div></div></div></div></div><div id="right-content" class="leaf" style="--sidebar-width: var(--sidebar-width-right);"><div id="right-sidebar" class="sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><label class="theme-toggle-container" for="theme-toggle-input" id=""><input class="theme-toggle-input" type="checkbox" id="theme-toggle-input"><div class="toggle-background"></div></label></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content-wrapper"><div id="right-sidebar-content" class="leaf-content"><div class="graph-view-wrapper"><div class="feature-header"><div class="feature-title">Interactive Graph</div></div><div class="graph-view-placeholder">
+		<div class="graph-view-container">
+			<div class="graph-icon graph-expand" role="button" aria-label="Expand" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+			<div class="graph-icon graph-global" role="button" aria-label="Global Graph" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-git-fork"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"></path><path d="M12 12v3"></path></svg></div>
+			<canvas id="graph-canvas" class="hide" width="512px" height="512px"></canvas>
+		</div>
+		</div></div><div id="outline" class=" tree-container"><div class="feature-header"><div class="feature-title">Table Of Contents</div><button class="clickable-icon nav-action-button tree-collapse-all" aria-label="Collapse All"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button></div><div class="tree-item mod-collapsible" data-depth="1"><a class="tree-item-self is-clickable mod-collapsible" href="lectures/lecture-3-coordinate-systems.html#GIS_Fundamentals_3_0" data-path="#GIS_Fundamentals_3_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="GIS Fundamentals 3">GIS Fundamentals 3</div></a><div class="tree-item-children"><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="lectures/lecture-3-coordinate-systems.html#1)_ليه_الـ_Coordinate_Systems_مهمة؟_0" data-path="#1)_ليه_الـ_Coordinate_Systems_مهمة؟_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="1) ليه الـ Coordinate Systems مهمة؟">1. ليه الـ Coordinate Systems مهمة؟</div></a><div class="tree-item-children"><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#2D_vs_3D_0" data-path="#2D_vs_3D_0"><div class="tree-item-inner heading-link" heading-name="2D vs 3D">2D vs 3D</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item" data-depth="2"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#2)_Geographic_Concepts_0" data-path="#2)_Geographic_Concepts_0"><div class="tree-item-inner heading-link" heading-name="2) Geographic Concepts">2. Geographic Concepts</div></a><div class="tree-item-children"></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="lectures/lecture-3-coordinate-systems.html#3)_GCS_vs_PCS_0" data-path="#3)_GCS_vs_PCS_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="3) GCS vs PCS">3. GCS vs PCS</div></a><div class="tree-item-children"><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Geographic_Coordinate_System_-_GCS_0" data-path="#Geographic_Coordinate_System_-_GCS_0"><div class="tree-item-inner heading-link" heading-name="Geographic Coordinate System - GCS">Geographic Coordinate System - GCS</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Coordinate_Formats_and_Notation_0" data-path="#Coordinate_Formats_and_Notation_0"><div class="tree-item-inner heading-link" heading-name="Coordinate Formats and Notation">Coordinate Formats and Notation</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Projected_Coordinate_System_-_PCS_0" data-path="#Projected_Coordinate_System_-_PCS_0"><div class="tree-item-inner heading-link" heading-name="Projected Coordinate System - PCS">Projected Coordinate System - PCS</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="lectures/lecture-3-coordinate-systems.html#4)_شكل_الأرض_في_GIS_0" data-path="#4)_شكل_الأرض_في_GIS_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="4) شكل الأرض في GIS">4. شكل الأرض في GIS</div></a><div class="tree-item-children"><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#مستويات_تقريب_شكل_الأرض_0" data-path="#مستويات_تقريب_شكل_الأرض_0"><div class="tree-item-inner heading-link" heading-name="مستويات تقريب شكل الأرض">مستويات تقريب شكل الأرض</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Ellipse_and_Ellipsoid_0" data-path="#Ellipse_and_Ellipsoid_0"><div class="tree-item-inner heading-link" heading-name="Ellipse and Ellipsoid">Ellipse and Ellipsoid</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Flattening_and_Eccentricity_0" data-path="#Flattening_and_Eccentricity_0"><div class="tree-item-inner heading-link" heading-name="Flattening and Eccentricity">Flattening and Eccentricity</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Earth_Ellipse_Values_0" data-path="#Earth_Ellipse_Values_0"><div class="tree-item-inner heading-link" heading-name="Earth Ellipse Values">Earth Ellipse Values</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Standard_Ellipsoids_0" data-path="#Standard_Ellipsoids_0"><div class="tree-item-inner heading-link" heading-name="Standard Ellipsoids">Standard Ellipsoids</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#جدول_Ellipsoids_الكامل_0" data-path="#جدول_Ellipsoids_الكامل_0"><div class="tree-item-inner heading-link" heading-name="جدول Ellipsoids الكامل">جدول Ellipsoids الكامل</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Geoid_0" data-path="#Geoid_0"><div class="tree-item-inner heading-link" heading-name="Geoid">Geoid</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="lectures/lecture-3-coordinate-systems.html#5)_Datum_0" data-path="#5)_Datum_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="5) Datum">5. Datum</div></a><div class="tree-item-children"><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Local_vs_Global_Datum_0" data-path="#Local_vs_Global_Datum_0"><div class="tree-item-inner heading-link" heading-name="Local vs Global Datum">Local vs Global Datum</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Datum_Accuracy_0" data-path="#Datum_Accuracy_0"><div class="tree-item-inner heading-link" heading-name="Datum Accuracy">Datum Accuracy</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Egypt_Datum_0" data-path="#Egypt_Datum_0"><div class="tree-item-inner heading-link" heading-name="Egypt Datum">Egypt Datum</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Horizontal_Earth_Datums_0" data-path="#Horizontal_Earth_Datums_0"><div class="tree-item-inner heading-link" heading-name="Horizontal Earth Datums">Horizontal Earth Datums</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="lectures/lecture-3-coordinate-systems.html#6)_Map_Projections_and_Distortion_0" data-path="#6)_Map_Projections_and_Distortion_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="6) Map Projections and Distortion">6. Map Projections and Distortion</div></a><div class="tree-item-children"><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#أنواع_التشوهات_0" data-path="#أنواع_التشوهات_0"><div class="tree-item-inner heading-link" heading-name="أنواع التشوهات">أنواع التشوهات</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Global_Properties_Classification_0" data-path="#Global_Properties_Classification_0"><div class="tree-item-inner heading-link" heading-name="Global Properties Classification">Global Properties Classification</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="lectures/lecture-3-coordinate-systems.html#7)_Types_of_Map_Projections_0" data-path="#7)_Types_of_Map_Projections_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="7) Types of Map Projections">7. Types of Map Projections</div></a><div class="tree-item-children"><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Tangent_and_Secant_0" data-path="#Tangent_and_Secant_0"><div class="tree-item-inner heading-link" heading-name="Tangent and Secant">Tangent and Secant</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Conic_Projections_—_التفاصيل_0" data-path="#Conic_Projections_—_التفاصيل_0"><div class="tree-item-inner heading-link" heading-name="Conic Projections — التفاصيل">Conic Projections — التفاصيل</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Cylindrical_Projections_—_التفاصيل_0" data-path="#Cylindrical_Projections_—_التفاصيل_0"><div class="tree-item-inner heading-link" heading-name="Cylindrical Projections — التفاصيل">Cylindrical Projections — التفاصيل</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Planar_Projections_—_التفاصيل_0" data-path="#Planar_Projections_—_التفاصيل_0"><div class="tree-item-inner heading-link" heading-name="Planar Projections — التفاصيل">Planar Projections — التفاصيل</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Famous_Projections_0" data-path="#Famous_Projections_0"><div class="tree-item-inner heading-link" heading-name="Famous Projections">Famous Projections</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="lectures/lecture-3-coordinate-systems.html#8)_Commonly_Used_Projections_and_UTM_0" data-path="#8)_Commonly_Used_Projections_and_UTM_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="8) Commonly Used Projections and UTM">8. Commonly Used Projections and UTM</div></a><div class="tree-item-children"><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Commonly_Used_Map_Projections_0" data-path="#Commonly_Used_Map_Projections_0"><div class="tree-item-inner heading-link" heading-name="Commonly Used Map Projections">Commonly Used Map Projections</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#State_Plane_Coordinate_System_for_California_0" data-path="#State_Plane_Coordinate_System_for_California_0"><div class="tree-item-inner heading-link" heading-name="State Plane Coordinate System for California">State Plane Coordinate System for California</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#UTM_Grid_System_0" data-path="#UTM_Grid_System_0"><div class="tree-item-inner heading-link" heading-name="UTM Grid System">UTM Grid System</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#UTM_Scale_Factor_and_Distortion_0" data-path="#UTM_Scale_Factor_and_Distortion_0"><div class="tree-item-inner heading-link" heading-name="UTM Scale Factor and Distortion">UTM Scale Factor and Distortion</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#UTM_Zone_Exceptions_0" data-path="#UTM_Zone_Exceptions_0"><div class="tree-item-inner heading-link" heading-name="UTM Zone Exceptions">UTM Zone Exceptions</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="lectures/lecture-3-coordinate-systems.html#9)_Working_with_Coordinate_Systems_in_ArcGIS_0" data-path="#9)_Working_with_Coordinate_Systems_in_ArcGIS_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="9) Working with Coordinate Systems in ArcGIS">9. Working with Coordinate Systems in ArcGIS</div></a><div class="tree-item-children"><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Define_Projection_vs_Project_0" data-path="#Define_Projection_vs_Project_0"><div class="tree-item-inner heading-link" heading-name="Define Projection vs Project">Define Projection vs Project</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Projection_File_0" data-path="#Projection_File_0"><div class="tree-item-inner heading-link" heading-name="Projection File">Projection File</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#بتظهر_فين_في_البرامج؟_0" data-path="#بتظهر_فين_في_البرامج؟_0"><div class="tree-item-inner heading-link" heading-name="بتظهر فين في البرامج؟">بتظهر فين في البرامج؟</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#On-the-fly_Projection_0" data-path="#On-the-fly_Projection_0"><div class="tree-item-inner heading-link" heading-name="On-the-fly Projection">On-the-fly Projection</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="lectures/lecture-3-coordinate-systems.html#10)_GIS_Data_Types_and_Data_Models_0" data-path="#10)_GIS_Data_Types_and_Data_Models_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="10) GIS Data Types and Data Models">10. GIS Data Types and Data Models</div></a><div class="tree-item-children"><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#GIS_Components_0" data-path="#GIS_Components_0"><div class="tree-item-inner heading-link" heading-name="GIS Components">GIS Components</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Three_Types_of_GIS_Data_0" data-path="#Three_Types_of_GIS_Data_0"><div class="tree-item-inner heading-link" heading-name="Three Types of GIS Data">Three Types of GIS Data</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Vector_and_Raster_Recap_0" data-path="#Vector_and_Raster_Recap_0"><div class="tree-item-inner heading-link" heading-name="Vector and Raster Recap">Vector and Raster Recap</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Point,_Line,_Polygon_Storage_0" data-path="#Point,_Line,_Polygon_Storage_0"><div class="tree-item-inner heading-link" heading-name="Point, Line, Polygon Storage">Point, Line, Polygon Storage</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Arcs_and_Areas_0" data-path="#Arcs_and_Areas_0"><div class="tree-item-inner heading-link" heading-name="Arcs and Areas">Arcs and Areas</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#Vector_vs_Raster_Storage_0" data-path="#Vector_vs_Raster_Storage_0"><div class="tree-item-inner heading-link" heading-name="Vector vs Raster Storage">Vector vs Raster Storage</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item" data-depth="2"><a class="tree-item-self is-clickable" href="lectures/lecture-3-coordinate-systems.html#11)_Final_Quick_Revision_0" data-path="#11)_Final_Quick_Revision_0"><div class="tree-item-inner heading-link" heading-name="11) Final Quick Revision">11. Final Quick Revision</div></a><div class="tree-item-children"></div></div></div></div></div></div></div><script defer="">let rs = document.querySelector("#right-sidebar"); rs.classList.toggle("is-collapsed", window.innerWidth < 768); rs.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-right-width"));</script></div></div></div></div></body></html>

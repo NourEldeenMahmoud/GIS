@@ -1,949 +1,539 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Prolog]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>Prolog</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Wed, 03 Jun 2026 13:56:56 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 03 Jun 2026 13:56:33 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[Color Representation in Computer Graphics - Lecture 5]]></title><description><![CDATA[مقدمة الشابتر ده بيتكلم عن تمثيل الألوان في Computer Graphics.
-هنفهم يعني إيه color، إزاي العين بتشوف الألوان، الفرق بين RGB و CMY/CMYK، وبعدها هندخل على Frame Buffers وإزاي pixels بتتخزن في الذاكرة. اللون بيلعب دور أساسي في الـ Computer Graphics.
-بيزود الواقعية، بينقل المعلومات، وبياثر على مشاعرنا.
-استخدامات الـ Color في مجالات مختلفة: Graphical User Interfaces (GUIs)
-Digital Art
-Scientific Visualization
-Virtual Reality definition
-Color is not an intrinsic physical property of objects. It is a perceptual phenomenon caused by the interaction between light, objects, and the human visual system. الـ Color ده مش حاجة فيزيائية في الجسم نفسه زي وزنه أو حجمه مثلا. دي ظاهرة إدراكية بتحصل جوة دماغنا نتيجة تفاعل تلات حاجات مع بعض: الضوء، الجسم اللي بيعكس الضوء ده، وعينك (أو نظام الرؤية بتاعك). يعني من غير ضوء، مفيش حاجة اسمها لون أصلا.
-اللون بيظهر عشان فيه: Light
-Object
-Human visual system من غير ضوء، مفيش color perception. عشان تفهم اللون، لازم تفهم الضوء الأول. الضوء ده عبارة عن طاقة كهرومغناطيسية بتمشي في موجات ليها أطوال مختلفة بنسميها Wavelengths. الضوء الأبيض بتاع الشمس الي انته بتشوفه، هو خليط من Wavelengths كتير مع بعض.
-عين الإنسان مش بتشوف كل الطيف الكهرومغناطيسي، إحنا بنشوف حتة صغيرة بس اسمها الـ Visible Light Spectrum.
-ودي بتبدأ من 400 نانومتر (اللون البنفسجي) لحد 700 نانومتر (اللون الأحمر). طبعا الأطوال الموجية دي نفسها "مش متلونة"، لكن لما بتدخل عينك، نظام الرؤية بتاعك بينتج إحساس اللون.
-400 nm (Violet) → 700 nm (Red)
-Summary
-اللون هو إحساس بينتج لما العين تستقبل جزء من الضوء المرئي (مش بنشوف كله) (400–700 nm)، والضوء الأبيض عبارة عن خليط من أطوال موجية مختلفة. The human eye perceives light by focusing it through an elastic lens onto the retina العين بتشتغل ازاي ؟ الضوء بيدخل العين وبيتجمع عن طريق عدسة مرنة بينزل على الـ Retina (الشبكية) اللي في آخر العين. الشبكية دي بقى فيها خلايا حساسة للضوء بنسميها Photoreceptor Cells، ودول نوعين أساسيين: <img src="https://pic2.zhimg.com/v2-7d7bdb13bae0106215d511a9e2199e05_1440w.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> عندنا 3 أنواع من الـ Cones، كل نوع حساس لمدى معين من الـ Wavelengths بيمثل الألوان دي: الأحمر، الأخضر، والأزرق. استجابة الخلايا دي بتتداخل مع بعضها في حاجة اسمها Response Curves (منحنيات الاستجابة). في الأغلب، حساسية الخلية بتقل كل ما الطول الموجي يبعد عن القمة (Peak) بتاعتها، بس خد بالك ان: الـ Red cone عنده استجابة تانية خفيفة عند الأطوال الموجية القصيرة (ناحية الأزرق).
-<br> <img src="https://www.pngitem.com/pimgs/m/672-6724374_human-eye-color-sensitivity-hd-png-download.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;"> بما إن العين بتتعامل مع استجابات قريبة من Red و Green و Blue، نقدر نعيد إنتاج ألوان كتير عن طريق خلط RGB light بكثافات مختلفة.
-المبدأ ده هو أساس معظم تقنيات العرض الحديثة، زي: CRTs
-LCDs
-TFTs
-Plasma displays
-Digital projectors في أنظمة الـ graphics، لون كل pixel بيتمثل رقميا باستخدام RGB Triplet.
-(R, G, B) كل بيكسل (Pixel) على الشاشة بيتمثل بأرقام بنسميها RGB Triplet. الهاردوير بياخد الأرقام دي ويحولها لقوة إضاءة للألوان التلاتة، وعينك هي اللي بتدمجهم عشان تشوف اللون النهائي. ا RGB معناها: ا Red
-ا Green
-ا Blue دول اسمهم Additive Primary Colors.
-اتسموا additive عشان اللون بيتكون بإضافة light بكثافات مختلفة.
-لو مفيش ضوء، النتيجة Black.
-كل ما نزود الضوء، brightness تزيد.
-لو جمعنا Red و Green و Blue بأقصى intensity، النتيجة هتبقي الـ White Light.
-Key Idea
-الـ RGB ده موديل لخلط "الضوء"، مش خلط ألوان دهانات أو حبر (Not paint or ink). الموديل ده بيستخدم في أي نظام بيطلع ضوء من نفسه (Emissive Display Systems) زي: Computer monitors
-Televisions
-Projectors لما نخلط لونين من RGB، بنطلع secondary additive colors. لو غيرنا relative intensities بين R و G و B، نقدر نطلع ألوان كتير جدا. ا Red أكتر من Green ممكن يطلع Orange.
-ا Green أكتر من Red ممكن يطلع Lime.
-خلطات غير متساوية من التلاتة ممكن تطلع Brown أو complex colors.
-التحكم المستمر في intensity هو اللي بيخلي الأنظمة الرقمية تمثل ملايين الألوان.
-<br> <img src="https://cdn.prod.website-files.com/61f9082050036c6c4b4899f8/69a0485fb777604233e1f35c_a-1693558643138-2x.jpeg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;">
-بصمجيات
-ا Additive Mixing زي الـ RGB ,بيضيف light , كل ما بنضيف الوان الاضاءه بتزيد لحد ما تبقي ابيض , لو مضفناش حاجة بتبقي اسود, بيشتغل مع الشاشات والحاجات الديجيتال لما نتعامل مع الاصباغ (Pigments)، خلط الألوان بيشتغل بطريقة تانية.
-الموديل ده اسمه Subtractive (طرحي) عشان إحنا بنطرح أو بنمتص (absorb) الضوء مش بنطلعه, هنا إحنا مش بنضيف light، إحنا بنمتص أو نشيل wavelengths معينة ونسيب غيرها ينعكس.
-ده اسمه Subtractive Color Mixing. Cyan
-Magenta
-Yellow الجسم الأصفر بيبان أصفر عشان بيعكس wavelengths الخاصة بالأصفر ويمتص غيرها.
-ا Cyan بيعكس green-blue wavelengths.
-ا Magenta بيعكس red-blue wavelengths.
-لو عايز تفهم اكتر
-احنا عرفنا ان اللون الابيض هو لون فيه كل الاطوال الموجية متضافة علي بعضها , الفكره هنا اننا لما بنيجي نطبع علي ورق بنطبع علي ورق ابيض , فهنا مينفعش نضيف الوان احنا المفروض نشيل الوان ,، وده هو مبدأ Subtractive Color Models.
-Yellow + Cyan → Green نظريا، خلط Cyan + Magenta + Yellow يمتص كل الضوء المرئي ويطلع black.
-<br> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/SubtractiveColor.svg/500px-SubtractiveColor.svg.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 300px; max-width: 100%;">
-بصمجيات
-ا Subtractive Mixing زي الـ CMY (أو CMYK)، بيمتص الـ light، كل ما بنضيف حبر الإضاءة بتقل لحد ما تبقى أسود، لو مضفناش حاجة بتبقى أبيض (اللي هو لون الورقة الفاضية)، بيشتغل مع الطباعة والحبر والورق. نظريا، خلط Cyan, Magenta, و Yellow المفروض يطلع black.
-عمليا، النتيجة غالبا بتبقى dark brown بسبب عدم نقاء في الحبر.
-كمان اللون الأسود بيتستخدم كتير جدا في المستندات المطبوعة.
-عشان كده الطابعات بتضيف ink أسود منفصل اسمه K.
-C = Cyan
-M = Magenta
-Y = Yellow
-K = Black / Key بيحسن print quality.
-بيقلل استهلاك الحبر.
-بيخلي النصوص والظلال sharp أكتر.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Prolog]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>Prolog</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Wed, 03 Jun 2026 15:46:02 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Wed, 03 Jun 2026 15:45:56 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[GIS Fundamentals 3]]></title><description><![CDATA[مقدمة الجزء ده بيغطي Coordinate Systems في الـ GIS.
+أهم المحاور: الفرق بين GCS و PCS, شكل الأرض, Datum, Map Projections, أنواع التشوهات, UTM, واستخدامات أنظمة الإحداثيات في ArcGIS. definition
+A basic principle in GIS is that map layers used together must align spatially. Mistakes can occur if they do not. في الـ GIS، لو عندك أكتر من layer وعايز تستخدمهم مع بعض، لازم يكونوا الـCoordinate System بتاعهم مظبوط.
+يعني الطريق، الحدود، المباني، والأنهار لازم ييجوا فوق بعض في أماكنهم الصح.
+لو كل layer معمولة على Coordinate System مختلف أو Datum مختلف (هنعرف معناهم كمان شوية) ، ممكن تلاقي العناصر مش راكبة على بعض، وساعتها التحليل يطلع غلط حتى لو كل layer لوحدها شكلها صح. الخريطة على الشاشة 2D (X,Y)، لكن الأرض الحقيقية 3D وفيها ارتفاعات وانخفاضات.
+عشان نعرض الأرض على خريطة، لازم نحول من الواقع ثلاثي الأبعاد لتمثيل ثنائي الأبعاد.
+ده جزء من فكرة Geodesy — علم رياضيات الأرض وقياسها.
+مثال المسافة
+المسافة على الخريطة ممكن تبان أقصر من المسار الحقيقي على الأرض. لو فيه جبال أو طرق ملتفة، المسافة الفعلية اللي هتمشيها ممكن تبقى أكبر من المسافة الهندسية بين نقطتين. عشان كده تمثيل الأرض مش مجرد X,Y بسيط. فيه 3 مفاهيم أساسية لازم تتفهم مع بعض: نظام الإحداثيات (Coordinate System): النظام اللي بيدي لكل نقطة على الخريطة عنوان بالأرقام (زي شبكة الـ X والـ Y) عشان نقدر نحدد مكان النقط والخطوط والمضلعات بالظبط.
+الـ Datum: بيحدد شكل الأرض الأقرب للواقع وبنحدد منه نقطة الصفر أو المركز اللي هنبدأ نقيس من عنده.
+الـ Projection (نظام الإسقاط): العملية أو المعادلة اللي بناخد بيها مجسم الأرض الـ 3D ونفرده على خريطة مسطحة 2D عشان الطبقات تنزل فوق بعضها مظبوط. definition
+CRS - Coordinate Reference System defines how the two-dimensional projected map in your GIS is related to a real place on the Earth. الـ GCS والـ PCS هما النوعين الأساسيين لـ "أنظمة الإحداثيات" (Coordinate Systems). نظام الإحداثيات الجغرافي (GCS): ده نظام ثلاثي الأبعاد (3D) بيتعامل مع الأرض بشكلها الكروي. بيحدد مكان النقط على سطح الكوكب باستخدام الزوايا (خطوط الطول Longitude ودوائر العرض Latitude)، ووحدة قياسه هي "الدرجات".
+2. نظام الإحداثيات المسقط (PCS): ده نظام ثنائي الأبعاد (2D) مستوي، بيتعامل مع الأرض بعد ما تم "فردها" أو تسطيحها. بيحدد الأماكن باستخدام شبكة (X, Y) ووحدات قياس خطية زي "المتر"، وهو متقسم لمناطق (Zones). definition
+Projection is the conversion of data sets from geographic coordinates to projected coordinates.
 definition
-Color space defines how colors are represented numerically. الـ Color Space (مساحة اللون) دي طريقة رياضية عشان نمثل بيها الألوان بأرقام. خلينا نبص على مساحة الـ RGB بالتفصيل.
-دي بتتمثل كأنها نقطة في مساحة ثلاثية الأبعاد (3D space)، وبنتخيلها في شكل مكعب اسمه RGB Color Cube. المحاور بتاعت المكعب ده هي الـ Red والـ Green والـ Blue.
-قيم grayscale موجوده على diagonal جوه RGB Color Cube.
-<br> <img src="https://lh4.googleusercontent.com/proxy/cUNIQDMN8MpzyR8iB21SnekYDN3FZwAMJMRbYtCw4lJWU3elGORvo1RlZL2s9pbPW3eGbMBOMHp82zDNBG0nVAYXUhf5u-nXdirk74msNbauEzje3255AyuzyrTgDzSCy6MyHvo" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> ### Important RGB Valuesdefinition
-Frame buffer is a dedicated memory region used to store pixel data for the image currently displayed on the screen. أي صورة بتتعرض على الشاشة عبارة عن مجموعة من البيكسلات.
-عشان الكمبيوتر يدير الكلام ده بكفاءة بيحجز حتت ميموري ورا بعضها (Contiguous block) مخصصة بس إنها تخزن بيانات الألوان بتاعت البيكسلات دي. الحتة دي من الميموري هي اللي بنسميها الـ Frame Buffer.
-الـ graphics system يقدر يتحكم في لون كل pixel عن طريق read/write لمكانه في frame buffer. تاريخيا، Frame Buffer كان معناه memory اللي بتمثل frame المعروض حاليا على الشاشة مباشرة.
-في الأنظمة الحديثة، المصطلح بقى أوسع.
-دلوقتي، الكلمة دي بقت بتستخدم عشان توصف أي هيكل ميموري بيخزن بيانات صورة، حتى لو الصورة دي مش بتتعرض بشكل مباشر على الشاشة (زي الـ off-screen buffers والـ textures).
-<br> <img src="https://www.cs.uic.edu/~jbell/CourseNotes/ComputerGraphics/diagrams/framedef2.gif" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+Reprojection converts from one type of projected coordinates to another type. يعني: تحويل من GCS لـ PCS اسمه Projection.
+تحويل من نوع PCS لنوع PCS تاني = Reprojection. definition
+GCS is a three-dimensional reference system that locates points on the Earth's surface. الـ GCS بيحدد أماكن الـ spatial features على سطح الأرض و كل point بيبقى ليها قيمتين: Latitude و Longitude.
+دوائر العرض (Latitude): دي حلقات بالعرض بتقطع الأرض. أهم حلقة فيهم هو الـ Equator او خط الاستواء (0°) ، وبيقسم الأرض لنصين قد بعض شمال (Northern Hemisphere) وجنوب (Southern Hemisphere). خطوط الطول (Longitude): دي أقواس (أنصاف دوائر) بتنزل بالطول من القطب الشمالي لحد القطب الجنوبي. نقطة البداية بتاعتهم هي الـ (Prime Meridian) او خط جرينتش (0°). الـ Latitude و Longitude بيتم التعبير عنهم بوحدات: Degrees, Minutes, Seconds (DMS).
+فيه أكتر من format لكتابة الإحداثيات:
+definition
+A Projected Coordinate System is also called a plane coordinate system. بيستخدم شبكة هندسية (X, Y) بدل الدرجات والزوايا.
+معمول عشان Detailed calculations, Positioning, و Large-scale mapping: الحسابات الدقيقة (Detailed calculations): بيقيس بوحدات مسافة حقيقية وثابتة (زي المتر)، عشان كده بنقدر نحسب بيه المساحات والمسافات بدقة.
+تحديد المواقع (Positioning): بيقدر يحدد أماكن المعالم (زي أركان المباني أو أعمدة النور) بدقة عالية جداً.
+الخرائط التفصيلية (Large-scale mapping): هو النظام الأساسي لتخطيط المدن والأحياء اللي بتحتاج تفاصيل قريبة ومقاسات مترية. ا PCS بيتقسم zones، وكل zone بتبقى متعرفة بـ projection center مختلف.
+معالجة التشوه بالـ (Zones): عشان فرد الكورة على خريطة مسطحة بيعمل تشوهات، بيتم تقسيم الأرض لشرائح طولية اسمها Zones.
+مركز الإسقاط (Projection Center): كل Zone بيكون ليها مركز إسقاط خاص بيها، ونسبة التشوه عند المركز ده بتكون تقريباً صفر. إحنا غالبًا بنتخيل الأرض Sphere.
+بس الحقيقة إنها أقرب لـ Spheroid أو Ellipsoid — نصف قطر الأرض عند خط الاستواء أكبر شوية من نصف القطر عند القطبين.
+ا Eratosthenes (276-194 BC) كان من أوائل اللي قاسوا محيط الأرض — استخدم فرق الزاوية بين مكانين في مصر عشان يحسب المحيط بناءً على الفكرة إن الأرض كورة.
+بصمجيات
+Sphere أبسط تقريب، Ellipsoid أدق هندسيًا، و Geoid أقرب للشكل الحقيقي عشان الأرض غير منتظمة.
+definition
+An ellipse is defined by a constant distance from F1 to P to F2 for all points on the ellipse. الـ Ellipse بيتحدد باستخدام: Focal length = ε
+Major axis = a
+Minor axis = b لو ε = 0، الـ ellipse يبقى circle.
+definition
+Flattening (f) = (a - b) / a — بيوصف الفرق بين المحورين كنسبة.
+Inverse Flattening = 1/f — القيمة المستخدمة غالبًا في الجداول. الـ flattening بيتراوح بين 0 و 1: f = 0 → المحورين متساويين → Sphere
+أرضنا: f ≈ 0.003353 يعني 1/f ≈ 298.257 كمان فيه eccentricity squared (e²):
+definition
+e² = (a² - b²) / a² — كمان بيوصف شكل الـ spheroid. مثال: a = 6,378,137.0 m و 1/f = 298.257223563 (WGS84)
+definition
+GRS80 - Geodetic Reference System 1980 is a geodetic reference system consisting of a global reference ellipsoid and a gravity field model. ا GRS80 من أشهر الـ standard ellipsoids — وهو الـ reference coordinate system المستخدم في الـ GPS.
+ا WGS84 قريب جدًا من GRS80 وبيستخدم عالميًا ومرتبط باستخدامات GPS.
+الاتنين (GRS80 و WGS84) من أمثلة الـ best fit ellipsoids — يعني أدق ellipsoids اللي بتمثل شكل الأرض ككل.
+definition
+The geoid is a model of global mean sea level. الـ Geoid بيستخدم عشان قياس elevations بدقة.
+ا Geodesists بيقيسوا الارتفاعات بناءً على sea level.
+الـ Geoid مش جسم هندسي (geometrically) — لكنه جسم متعرف فيزيائيًا (physically) بالـ gravity، عشان الأرض نفسها bumpy وغير منتظمة.
+definition
+A Datum is a mathematical model of the Earth, which serves as the reference or base for calculating the geographic coordinates of a location. الـ Datum هو الأساس اللي بنحسب عليه Latitude و Longitude.
+Earth datum بيتعرف باستخدام ellipse و axis of rotation — يعني المحور اللي الأرض بتدور حوله والـ ellipse اللي بيحدد شكلها.
+لو غيرت الـ datum، نفس المكان ممكن ياخد إحداثيات مختلفة شوية.
+عشان كده الـ datum مهم جدًا في alignment بين layers.
+ا Earth datum بيتعرف باستخدام ellipse ومحور دوران.
+فيه Geocentric Datum بيعمل best fit للأرض كلها، وفيه Local Datum بيعمل best fit لمنطقة معينة. الـ Local Datum بيعمل align للـ spheroid عشان يناسب area معينة — فيه origin point محفوظ والإحداثيات كلها مبنية عليه. مش مناسب لمنطقة تانية.
+الـ Global Datum بيعمل best fit للأرض كلها باستخدام mass center of the earth كـ absolute origin — وده اللي بيساعد في GPS و satellite measurements. لو غيرت الـ datum، نفس النقطة هياخد إحداثيات مختلفة.
+مثال: نقطة في Redlands, California: على NAD83: 34°01'43.77884" N, 117°12'57.75961" W
+على NAD27: 34°01'43.72995" N, 117°12'54.61539" W
+الـ longitude بيتغير بـ ~3 ثانية والـ latitude بـ ~0.05 ثانية. في مصر فيه أمثلة datums زي: Helmert, Hayford, Suez 1974.
+Note
+التحويل من NAD27 لـ NAD83 بيعمل horizontal shift، والـ shift ده بيتقاس بالمتر وبيختلف من مكان لمكان. الخرائط اللي بتبين الـ isolines بتاعة الـ shift بتتراوح قيمها حسب المنطقة.
+definition
+A map projection is a mathematical formula for representing the curved surface of the earth on a flat map. ا Map Projection هو ناتج تحويل سطح الأرض الكروي أو المنحني لسطح مستوي.
+هو systematic arrangement للـ parallels و meridians على plane surface.
+الفكرة كأن فيه imaginary light بيتعمله projection على developable surface.
+فيه projections كتير، وكل projection بيعمل نوع مختلف من distortion عشان الأرض منحنية والخريطة flat.
+definition
+Distortions are inherent in maps because the Earth is round and a map is flat. مفيش projection يحافظ على كل الخصائص مرة واحدة.
+عشان كده بنختار projection حسب الهدف.
+تخيل كأنك بتحاول تصور وجهك في 2D: شكله ممكن يبقى صح بس الحجم يبقى غلط، أو الحجم يبقى صح بس الشكل يتغير.
+definition
+Equal Area (Homolographic): بيحافظ على نسب المساحات — مساحة النرويج على الخريطة = مساحتها الحقيقية نسبيًا.
+Orthomorphic (True-Shape): بيحافظ على الأشكال — حدود الدول بتبان زيها زي على الأرض.
+Azimuthal (True-Bearing): بيحافظ على الاتجاهات من نقطة معينة.
+Equidistant (True Scale): بيحافظ على المسافات — لكن مفيش projection بيحافظ على المقياس في كل مكان، فقط على خطوط معينة.
+بصمجيات
+اختار projection حسب اللي محتاج تحافظ عليه: شكل، مساحة، مسافة، أو اتجاه. مفيش projection مثالي — كل واحد بيضحّي حاجة عشان يحافظ على حاجة تانية.
+definition
+The principal scale is a common measure of projection distortion. ا Standard line هو خط التماس بين projection surface والـ reference globe.
+الحالة البسيطة فيها one standard line (tangent)، و ا Secant case فيها two standard lines وغالبًا بتغطي مساحة أكبر وبتقلل الـ distortion. الـ cone بيلمس الأرض على standard parallel (خط عرض).
+الـ meridians بتتقاطع عند apex (رأس الـ cone).
+الـ parallels بتتحلل كـ concentric arcs.
+بعد الـ projection، الـ cone بيتفتح عشان يبقى flat.
+Equidistant Conic: الـ parallels مت.equal spacing — مش conformal ومش equal area بس مناسب لـ small areas.
+Lambert Conformal Conic: الـ central parallels متقاربة أكتر — بيحافظ على الـ shapes.
+Albers Equal Area Conic: الـ parallels في الـ edges متقاربة — بيحافظ على الـ areas.
+الـ meridians بتتقاطع على الـ cylinder surface بـ 90°.
+بعد القص، الـ meridians بتبقى equally spaced بس الـ parallels بتتبعد كل ما تقرب للـ poles.
+Mercator: من أشهر الـ cylindrical projections — conformal وبيحافظ على الـ directions (rhumb lines بتبقى straight). المسافات صحيحة بس على equator. الـ areas بتتبسط كل ما تقرب للـ poles (مثل: Greenland بتبان أكبر من Africa لكنها أصغر 14 مرة).
+الـ plane بتلمس الأرض عند point of contact.
+الـ focus بيتحدد بـ central longitude و central latitude.
+مهم
+في Planar projections، الـ directions من الـ focus بتبقى accurate.
+بصمجيات
+Mercator للملاحة، Robinson و Winkel Tripel للخرائط العامة، Albers للمساحات، Lambert للأشكال. أمثلة شائعة: ا Universal Transverse Mercator - UTM
+ا Lambert Conformal Conic
+ا Albers Equal Area Conic مثال على State Plane Coordinate System for California: AKA: Lambert Conformal Conic
+Projection surface: Conical
+Spatial properties: Shape and Distance
+False Easting = 6561666
+False Northing = 1640416
+Central Meridian = -119°
+Standard Parallel 1 = 36.00°
+Standard Parallel 2 = 37.25°
+Latitude of Origin = 35.33°
+Example coordinate in Monterey: X = 5,798,378 feet
+Y = 2,135,524 feet definition
+Universal Transverse Mercator - UTM is based on a cylindrical projection. كل مكان على الأرض بيقع في zone معينة من UTM.
+ا UTM مبني على transverse cylinder بيتحرك كل 6°.
+فيه 60 zones، كل zone عرضها 6° longitude.
+الـ zones مرقمة من 1 لـ 60.
+كل zone متقسمة horizontal bands عرض كل واحدة 8° latitude.
+الـ bands متسمية بحروف من C لـ X من الجنوب للشمال.
+الحروف A, B, Y, Z مخصصة للـ polar regions.
+الحروف I و O مش بتستخدم عشان متتلخبطش مع 1 و 0.
+مهم
+مصر في UTM zones: 35, 36, و R band. الـ central meridian لكل zone ليها scale factor = 0.9996 — يعني الأرقام بتبقى أصغر شوية من الواقع.
+الـ standard meridians (الاتنين على جنبين الـ central) بيقطعوا الـ cylinder على بعد 180 km من الـ central — الـ scale factor عليهم 1.
+بين الـ standard lines، الـ features بتظهر أصغر من الواقع (scale factor &lt; 1).
+بره الـ standard lines، الـ features بتظهر أكبر (scale factor &gt; 1).
+الـ error الداخلي لكل zone مش بيتجاوز 0.1% — يعني distortion أقل من 1 part in 1000. الـ zones العادية: 6° longitude × 8° latitude.
+فيه استثناءات: الـ band X اعرض — 12° latitude بدل 8° (من 72°N لـ 84°N).
+Zone 32V اتتوسعت لـ 9° عشان غرب النرويج.
+Zones 33X, 35X اتتوسعت لـ 12° عشان Svalbard.
+Zones 31X, 37X اتتوسعت لـ 9°.
+Zones 32X, 34X, 36X اتشالوا عشان الـ widenings دي. الـ Polar Regions (فوق 84°N وتحت 80°S) بتستخدم UPS - Universal Polar Stereographic. في ArcGIS فيه شوية نقاط مهمة مع coordinate systems: ا On-the-fly projection
+الفرق بين Define Projection و Project
+ا Predefined Projections
+ا Projection File - .prj
+ا Data Frame بياخد coordinate system بتاع أول data layer بتتضاف للمشروع. definition
+A .prj file is a text file that stores projection information. الـ .prj file بيتقسم to 3 أجزاء:
+مثال — .prj file لـ NAD 1983 UTM Zone 11N:PROJCS["NAD_1983_UTM_Zone_11N",
+GEOGCS["GCS_North_American_1983", DATUM["D_North_American_1983", SPHEROID["GRS_1980",6378137.0,298.257222101]], PRIMEM["Greenwich",0.0], UNIT["Degree",0.0174532925199433]],
+PROJECTION["Transverse_Mercator"],
+PARAMETER["False_Easting",500000.0],
+PARAMETER["False_Northing",0.0],
+PARAMETER["Central_Meridian",-117.0],
+PARAMETER["Scale_Factor",0.9996],
+PARAMETER["Latitude_Of_Origin",0.0],
+UNIT["Meter",1.0]] الـ 0.0174532925199433 = معامل التحويل من degree لـ radian.
+الـ SPHEROID بيحتوي على semi-major axis و inverse flattening. ArcGIS Catalog → Define Projection
+ArcGIS → Data Frame Properties → Coordinate System Tab
+PFO Map View → Coordinate system
+Terrasync → Coordinate System
+Export Utility → Shape Export Coordinate System
+definition
+On-the-fly projection هو feature بيخلي الـ GIS software تعرض data بأكتر من coordinate system بدون ما تغير الـ data فعليًا. الـ Data Frame بياخد coordinate system بتاع أول data layer بتتضاف — وبعدين كل الـ layers التانية بتتحول تلقائيًا عشان تتوافق.
+لو الـ data معندش coordinate system معروف، ArcGIS بيستخدم NAD27 كـ assumed datum.
+مهم
+الـ on-the-fly projection بس بـ display — مش بيغير الـ data فعليًا. لو هتستخدم الـ data في spatial analysis، لازم تعمل Project عشان تتأكد إن الـ data فعليًا في الـ coordinate system الصح. مكونات الـ GIS الأساسية: Hardware
+Software
+Data
+People
+Procedures
+Network أهم وأغلى component في الـ GIS غالبًا هو Data. ا Vector Data Model بيمثل البيانات باستخدام Point, Line, Polygon.
+ا Raster Data Model بيمثل البيانات كصورة أو matrix من pixels / cells.
+الصورة عبارة عن rows و columns، وكل cell ليها value أو color.
+definition
+Vector data structure: عبارة عن list of coordinates (X,Y) — كل point ليها إحداثيات محفوظة.
+Raster data structure: عبارة عن 2D array (matrix) — صفوف واعمده وكل cell ليها رقم أو لون.
+بصمجيات
+الـ Point ممكن يتسمّى بenames مختلفة حسب الـ organization: Point, Vertex, Node, Notch — كلها بتمثل نفس الفكرة. الـ Line في GIS مش straight line زي ما احنا متخيلين — هو curve لأن الشوارع والطرق بتتبع طبيعة الأرض (جبال، منعطفات). الـ Line بيتمثّل كـ series of points: Point 1 (X,Y) → Point 2 (X,Y) → ... → Point N (X,Y). الـ Polygon بيتمثّل بنفس الطريقة بس آخر point بيقفل مع أول point. في التخزين، الـ Line والـ Polygon ممكن يبقوا متشابهين كقائمة إحداثيات. الفرق في visualization: الـ Line مش بيقفل آخر point مع أول point.
+الـ Polygon بيقفل الشكل عشان يمثل area. الـ Line ممكن يتكون من أكتر من Arc.
+الـ Polygon / Area ممكن يتكون من أكتر من Arc مقفولين حوالين مساحة.
+مثال المحافظات: حدود محافظة مع محافظة تانية تعتبر relationship، ومن العلاقات دي نعرف مين جار مين. ا Vector غالبًا compact أكتر في التخزين مع الأشكال الهندسية الواضحة.
+ا Raster ممكن يحتاج storage كبير، خصوصًا مع الصور عالية الدقة.
+مثال على فرق التخزين: أرض 10m x 10m ممكن تتمثل في vector بأربع vertices، ولو raster cell size = 10m x 10m ممكن تتمثل بخلية واحدة.
+أرض 100m x 100m في vector لسه ممكن تبقى أربع vertices، لكن في raster بنفس cell size هتبقى 10 x 10 = 100 cells. الاختيار بين Vector و Raster بي depend على طبيعة البيانات والتحليل المطلوب.
+بصمجيات Coordinate Systems هدفها تخلي الـ layers تركب فوق بعض صح. لو الـ reference مختلف، الطريق أو الحدود ممكن يظهروا في مكان غلط والتحليل كله يطلع غلط.
+ا GCS بيحدد المكان على سطح الأرض بـ Latitude و Longitude. القيم دي angles، مش X,Y، عشان كده نفس الدرجة مش دايمًا بتساوي نفس المسافة.
+ا PCS بيحول الأرض لخريطة مسطحة بـ X,Y، وده أنسب للحسابات الدقيقة والـ large-scale mapping.
+ا Datum هو المرجع اللي الإحداثيات مبنية عليه. اختلافه ممكن يعمل shift بين layers حتى لو البيانات نفسها صح.
+شكل الأرض بيتقرب بثلاث مستويات: Sphere أبسط حاجة، Ellipsoid أدق هندسيًا، و Geoid أقرب للواقع عشان مرتبط بالـ gravity و mean sea level.
+ا Projection = تحويل من GCS لـ PCS. ا Reprojection = تحويل من PCS لنوع PCS تاني.
+أي projection لازم يعمل distortion في Area, Shape, Distance/Scale, أو Direction. الاختيار بيكون حسب الخاصية الأهم في الخريطة.
+الأنواع الأساسية للـ projections: Planar, Conical, و Cylindrical. ومن أهم الأنظمة UTM، ومصر في zones 35, 36 و band R.
+في ArcGIS: ا Define Projection بيعرف النظام بس، أما Project بيحول البيانات فعليًا. وملف .prj بيخزن معلومات الـ projection. ]]></description><link>lectures/lecture-3-coordinate-systems.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 3 - Coordinate Systems.md</guid><pubDate>Wed, 03 Jun 2026 15:44:08 GMT</pubDate></item><item><title><![CDATA[Index]]></title><description><![CDATA[ لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Index.md</guid><pubDate>Wed, 03 Jun 2026 13:15:55 GMT</pubDate></item><item><title><![CDATA[GIS Fundamentals 2]]></title><description><![CDATA[مقدمة الجزء ده بيغطي مفاهيم GIS الأساسية ونماذج البيانات.
+أهم المحاور: المفاهيم الأساسية للـ GIS, طبقات Vector, نماذج البيانات Vector و Raster, العلاقة بين Geometry و Topology و Attributes, وفرق Database عن Spatial Database.
+في آخر الملخص فيه مراجعة بتجمع تعريفات مهمة زي GISy, GIScience, GPS, SDE, IMS. definition
+Features have attributes associated with them. دي أول فكرة أساسية في الـ GIS.
+الـ Feature هو عنصر على الخريطة.
+والـ Attributes هي البيانات المرتبطة بالعنصر ده. لو بنرسم أماكن الأشجار: مكان كل شجرة بيتسجل على الخريطة ( يعني الشجره نفسها Feature).
+وكل شجرة ليها attributes زي النوع، العمر، الحالة، الارتفاع. في مثال الأشجار، بنرسم موقع كل شجرة ونحدد أي attributes تخص أي شجرة. وده هو أساس الـ GIS. بصمجيات
+الـ Feature = الحاجة نفسها على الخريطة.
+الـ Spatial Data = مكان الحاجة دي علي الخريطه
+الـ Attribute = بيانات الحاجة دي.
+definition
+Information is separated into layers. الفكرة التانية إن المعلومات بتتقسم لطبقات. كل طبقة تمثل نوع معين من البيانات. مثال: ا طبقة انهار ا طبقة طرق ا طبقة مباني كل طبقة ممكن تتحط فوق التانية عشان نطلع صورة وتحليل كامل. الطبقة الأساسية غالبا بتبقى تحت، وباقي الطبقات فوقها. معلومه من العملي كل Layer بيبقي ليها Geometry واحد بس
+مينفعش تحط Points و Lines و Polygons في نفس الـ Layer.
+يعني:
+Trees → Points
+Roads → Lines
+Buildings → Polygons العلاقة بين الـ map والـ database علاقة تفاعلية.
+لو اخترت feature من الـ map، الـ record المقابل ليه يتحدد في جدول البيانات.
+ولو اخترت record من الجدول، الـ feature المقابل ليه يتحدد على الخريطة.
+كمان التعديل على الـ Features الي في الماب او تقسيمها ممكن يغير الـ database. ا Vector layers بتمثل الـ features بطرق مختلفة ا Points
+ا Lines
+ا Polygons definition
+A point is good for representing information in which it is necessary to show where a feature is. الـ Point يمثل حاجة مكانها مهم، لكن حجمها أو مساحتها مش هي المهمة في الخريطة.
+أمثلة: شجرة.
+عمود نور.
+موقع حادثه. definition
+A line is suitable to represent many real world features, such as rivers in a river layer. الـ Line يمثل حاجة ممتدة في مسار.
+أمثلة: نهر.
+طريق.
+سكة حديد.
+كابل. definition
+Polygon is a solid multi-sided shape. الـ Polygon يمثل مساحة مقفولة.
+يعني شكل ليه حدود ومساحة.
+أمثلة: دولة.
+بحيرة.
+قطعة أرض.
+منطقة إدارية. ملخص definition
+GIS Data Models are methods of representing geographic space. الـ Data Model هو الطريقة اللي بتمثل بيها البيانات الجغرافية جوه الـ GIS.
+فيه نوعين أساسيين من GIS Data Models لتمثيل الـ geographic space: ا Vector
+ا Raster Note
+A database structure need seldom be made to suit a data model. But a well prepared data model is vital for a successful GIS analysis. مش لازم نعيد تصميم قاعدة البيانات كلها عشان تناسب Data Model معين، لكن لازم نفكر كويس في الـ Data Model نفسه لأن نجاح تحليل الـ GIS بيعتمد عليه بشكل كبير.
+definition
+Vector Data Model uses points and their x-, y-coordinates to represent spatial features: points, lines, and areas. الـ Vector بيمثل الواقع باستخدام إحداثيات.
+يعني كل feature بيتوصف بنقط وإحداثيات x, y. الـ Point عبارة عن node واحدة.
+ملوش area.
+بيتحدد بإحداثيات:
+(x, y) الـ Line أو Arc عبارة عن اتصال بين nodes أو vertices.
+بيبدأ من نقطة وينتهي عند نقطة.
+بيتحدد بسلسلة إحداثيات:
+(x1, y1), (x2, y2), ..., (xN, yN) الـ Polygon عبارة عن سلسلة arcs بتقفل حوالين label point.
+لازم يكون فيه closure point عشان الشكل يبقى مقفول. الـ Vector Representation مناسب لما عندك features منفصلة وواضحة الحدود.
+مثال: طريق، حدود دولة، قطعة أرض.
+definition
+Raster Data Model uses a grid with cells to represent spatial features. الـ Raster بيمثل المكان كـ شبكة (Grid). كل cell في الشبكة ليها value.
+الـ raster يقدر يمثل: ا Point: قيمة في cell واحدة.
+ا Line: سلسلة cells متصلة تمثل طول.
+ا Area: مجموعة cells متصلة تمثل شكل ومساحة. note
+Because the raster data model is a regular grid, spatial relationships are implicit. Therefore, explicitly storing spatial relationships is not required as it is for the vector data model. عشان الـ Raster عبارة عن شبكة منتظمة من الـ Cells، فموقع كل Cell بالنسبة للخلايا المجاورة معروف تلقائيًا من مكانها داخل الشبكة.
+عشان كده الـ GIS يقدر يفهم علاقات الجوار بسهولة من ترتيب الـ Cells نفسه، من غير ما يخزن العلاقات دي بشكل صريح زي الـ Vector. صور الـ satellite من الأشكال الشائعة للـ Raster.
+كل صورة satellite ليها Bands كتير (ممكن 5 أو 7 أو أكتر).
+كل band بيمثل Layer رقعي واحد.
+مثال: Red Band, Green Band, Near Infrared Band.
+definition
+DEM is a raster dataset where each cell represents elevation above sea level. الـ DEM ده Raster كل cell فيه بيمثل الارتفاع عن سطح البحر.
+بيستخدم في: تحليل المنحدرات.
+تحديد مسارات الصرف.
+دراسة التضاريس. definition
+Data is stored in four basic methods: points, lines, areas, and a grid (or raster). بيتخزن على هيئة إحداثيات (X,Y) مع بيانات وصفية (Attributes).
+مثال: نقطة في bird data بتمثل كل الطيور المسجلة في مكان معين و تاريخ معين. بيتكون من مجموعة نقاط متوصلة ببعض.
+كل Line بيبقى ليه Attributes مرتبطة بيه.
+بتتخزن كـ نقطتين و arc بيربطهم مع attributes في table.
+مثال: زي نهر, طريق. بيستخدم لتمثيل الحاجات اللي ليها مساحة وحدود.
+بيتكون من نقط (Points) , وخطوط (Arcs or lines) بتوصل النقط دي ببعض في شكل مغلق.
+زي Lines و Areas، الـ table بتخزن الـ points و lines مع الـ attributes.
+مثال:بحيره, قطعة ارض, حي سكني. الـGrid عبارة عن سلسلة square cells ليها value مرتبطة بكل cell.
+الـ grids بتستخدم لتمثيل مناطق واسعة وبتستخدم قيم مختلفة لتمثيل حاجات مختلفة.
+مثال: درجة الحرارة, الارتفاعات, الأمطار, صور الأقمار الصناعية.
+Temperature in Raster في الـ Raster كل Cell بتخزن رقم بيمثل قيمة الظاهرة في المكان ده.
+مثال: درجة حرارة منطقة في البحر = 18.0°C
+تتخزن داخل الـ Cell كقيمة 180 يعني الرقم المخزن مش شرط يكون درجة الحرارة نفسها، لكنه ترميز (Encoded Value) بيمثلها عشان يسهل تخزين البيانات ومعالجتها داخل الكمبيوتر. الـ Vector-based line: بتتخزن كـ flat file فيه coordinate pairs.
+الـ Raster-based line: بتتخزن كـ binary grid (0s و 1s) — كل cell فيها line بتبقي 1. الـ Vector أحسن للحاجات المنفصلة والواضحة زي الطرق والحدود وقطع الأراضي.
+الـ Raster أحسن للحاجات المستمرة زي الارتفاعات والحرارة والكثافة والصور.
+definition
+Geometry: coordinates and form of the objects.
+definition
+Topology: expresses explicitly the spatial relationships between features.
+definition
+Attributes: properties and values. الـGeometry بتقول الشكل والإحداثيات.
+الـTopology بيوضح العلاقات المكانية بين الـ features، مين جنب مين، ومين بيحد مين.
+الـAttributes بتقول معلومات وخصائص العنصر وقيمه.
+Note الـ Topology هو approach رياضي بيخلي نقدر ننظم الـ data بناءً على مبدأين: الـ Adjacency:الـ features اللي جنب بعض بتشارك common edge.
+الـ Connectivity: بتوصف إزاي الخطوط (Lines) متصلة ببعض عند نقاط (Nodes)، وكمان بتحدد اتجاه الخط بحيث يبقى معروف إيه الموجود على اليمين (Right Side) وإيه الموجود على الشمال (Left Side) بالنسبة لاتجاه الخط. حته زياده من الكتاب الـ Topology قواعد بتحدد الـ features إزاي بتشارك المكان الجغرافي. القواعد دي بتنقسم حسب نوع الـ feature:
+Point Rules Line Rules Polygon Rules يعني إيه Topology في الـ GIS؟ (بالمختصر)
+الـ Topology باختصار هي شوية قواعد وأدوات بتظبط العلاقات الهندسية والمكانية بين البيانات بتاعتك عشان تكون دقيقة ومظبوطة. بتشتغل إزاي؟ بتتحفظ جوه الـ Geodatabase كعلاقات (Relationships) بتحدد إزاي الـ Features بتشارك المكان مع بعضها، وكل ده من غير ما تغير أصل الـ Feature class نفسه (بيفضل Simple زي ما هو).
+ميزتها: ممتازة عشان تصطاد وتصلح أخطاء الرسم (Digitizing errors) زي الفراغات والتقاطعات، وضرورية جداً لو هتعمل تحليلات مكانية متقدمة. عيبها: البيانات اللي متطبق عليها Topology بتكون أبطأ شوية وبتاخد وقت أطول في العرض (Rendering) لو قارنتها بالبيانات العادية (Non-topological data) اللي بتفتح وتعرض أسرع. definition
+Attribute data is the "I" in GIS. حرف I في GIS هو Information، وده غالبا بيظهر في صورة Attribute Data. الـ GIS غالبا بيتقسم لمكونين: ا Coordinate information: بتوصف حاجات مكانية geometry أو spatial information.
+ا Attribute information: بتوصف properties غير مكانية مرتبطة بالعنصر. الـ attribute data غالبا بتتعرض في شكل جداول، عشان كده بنسميها Tabular Data. في ArcGIS، الـ attribute table بيبقى فيه: ا Records: الصفوف، كل صف يمثل feature.
+ا Fields / Attributes: الأعمدة، كل عمود يمثل خاصية. definition
+Spatial data describes the absolute and relative location (geometrical data) of geographic features. الـ Spatial Data يعني بيانات بتوصف مكان features.
+ممكن تكون: ا Discrete: حاجات منفصلة زي buildings أو roads أو trees.
+ا Continuous: حاجات ممتدة ومستمرة زي elevation أو temperature. مع تطور التكنولوجيا، أنواع بيانات تانية بقت شائعة زي image data و multimedia data.
+حسب المحتوى، ممكن نصنفها: ا Spatial: زي photos و animations و movies (بتوصف المكان).
+ا Attribute: زي sound و descriptions و narrations (بتوصف الخصائص). مثال: في بيانات Forestry Stand، موقع المنطقة على الخريطة وإحداثياتها يعتبر Spatial Data، بينما معلومات مثل Cover Group و Dominant Species و Crown Closure و Height تعتبر Attribute Data لأنها بتوصف خصائص المنطقة وليست موقعها.
+بصمجيات ا Vector بيمثل بـ points, lines, polygons.
+ا Raster بيمثل بـ grid cells.
+ا Geometry = الشكل والإحداثيات.
+ا Topology = العلاقات المكانية.
+ا Attributes = الخصائص والقيم.
+ا SDE لإدارة spatial data، و IMS لعرض maps through Internet.
+ا DEM = Raster كل cell فيه بيمثل ارتفاع عن سطح البحر.
+ا Satellite Imagery ليها Bands كتير، كل band بيمثل Layer. ]]></description><link>lectures/lecture-2-gis-data-models.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 2 - GIS Data Models.md</guid><pubDate>Wed, 03 Jun 2026 02:59:45 GMT</pubDate></item><item><title><![CDATA[GIS Fundamentals 1]]></title><description><![CDATA[مقدمة الجزء ده بيغطي أساسيات GIS - Geographic Information Systems.
+الـ GIS مش مجرد خريطة. هو نظام كامل بيجمع بين Geographic Position و Information System عشان نخزن ونحلل ونعرض بيانات مرتبطة بالمكان.
+أهم المحاور: Location Apps, تاريخ الـ GIS, تعريفه, مكوناته, وظائفه, وتطبيقاته. الـ Location Apps و Live Location Services من أشهر التطبيقات اليومية لفكرة الـ GIS.
+أي تطبيق بيستخدم مكانك الحالي أو بيعرض خريطة أو طريق أو موقع شخص تاني بيبقى داخل في نفس الفكرة العامة بتاعة الـ GIS.
+يعني لما تستخدم: خريطة عشان تعرف مكانك او Live Location عشان تبعت موقعك لحد.
+خدمة تعرض أماكن أو بيانات على الخريطة. كل ده مبني على نفس المبدأ: فيه مكان + فيه معلومة مرتبطة بالمكان. الـ GPS مش هو GIS الـ GPS بيحدد مكانك.
+الـ GIS هو النظام الأكبر اللي بياخد المكان ده ويحطه مع Maps, Databases, Layers, Analysis, و Output.
+يعني GPS يعتبر input داخل GIS، مش بديل عنه. definition
+John Snow analyzed a cholera outbreak in Soho, London in 1854. At this time people believed that cholera was spread in the air. Dr. Snow was skeptical of this hypothesis. من أهم الأمثلة التاريخية في GIS قصة John Snow في لندن سنة 1854.
+كان فيه وباء Cholera في منطقة Soho, London.
+وقتها الناس كانوا فاكرين إن الكوليرا بتنتشر عن طريق الهواء.
+بس John Snow مكانش مقتنع بالفرضية دي.
+عمل تحليل مكاني للحالات، يعني بص على أماكن الإصابات على الخريطة وشاف نمط انتشار المرض.
+مكان الحالات على الخريطة ساعده يفهم سبب المشكلة. ا John Snow بدأ يجمع أماكن الحالات على خريطة.
+كل ما يعرف حالة، يحدد مكانها، وبعدين يقارن أماكن الحالات بمصادر المياه الموجودة في المنطقة.
+الفكرة هنا شبه استخدام layers يدوي: طبقة فيها أماكن المرضى أو حالات الكوليرا.
+طبقة فيها مصادر المياه أو الآبار.
+وبعدين يقارن الطبقات ببعض عشان يطلع pattern. وصل لاستنتاج إن الحالات مرتبطة بمصدر مياه معين، يعني المشكلة مش في الهواء زي ما الناس كانت فاكرة، لكن في المياه.
+ده مرتبط بفكرة Geostatistics أو الإحصاء المكاني: يعني نستخدم الإحصاء بس مع المكان، ونشوف عدد الحالات في كل منطقة وعلاقتها بمصدر معين.
 Tip
-مش فاهم الصوره معناها ايه بس الدكتور حاططها في الكتاب الـ hardware systems بتدعم أكتر من نوع frame buffer.
-كل نوع بيحدد إزاي قيم الـ pixels بتتخزن في memory.
-الأنظمة المختلفة بتدعم فورماتس كتير للـ Frame Buffer عشان التوافق مع القديم (backward compatibility) وعشان توازن بين استهلاك الميموري، الأداء، ودقة الألوان. Grayscale
-Pseudo-color / Indexed color
-True-color ده أبسط نوع عندنا، والناس بتغلط وتسميه "أبيض وأسود"، بس هو في الحقيقة تدرجات الرمادي.
-في grayscale، كل pixel بيخزن intensity value يمثل درجة رمادي. أشهر طريقة لتطبيقه هي إن كل بيكسل ياخد 8 bits، وده بيدينا مستوى مختلف من الإضاءة. القيمة 0 بتمثل اللون الأسود (Black).
-القيمة 255 بتمثل اللون الأبيض (White).
-الأرقام اللي في النص دي درجات الرمادي (مثلاً 128 ده رمادي متوسط). البيكسلات بتتخزن في الميموري بنظام Row-major order، يعني بنمشي من الشمال لليمين في الصف، ولما يخلص ننزل للصف اللي تحته وهكذا.
-الصف الواحد الكامل من البيكسلات بنسميه Scan-line.
-<br> <img src="https://gtms03.alicdn.com/tfs/TB1k.AdQFXXXXasXVXXXXXXXXXX-2022-680.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-الدكتور مش مركز عليها ولا حاطط امثله فمش لازم تفهم الفكره اوي احفظ القانون وخلاص بما إن الـ 8 بت بيساووا 1 بايت (1 Byte)، يبقى كل بيكسل في الصورة بياخد مساحة 1 بايت بالظبط في الميموري, عشان كده الحسبة سهله: لو عندك صورة عرضها بيكسل، وطولها بيكسل، يبقى إجمالي عدد البيكسلات هو حاصل ضربهم : Memory Size = W * H (in bytes) دلوقتي لو أنا عايز ألون بيكسل معين في الإحداثيات ، الكمبيوتر هيعرف مكانه إزاي؟
-هنا بنحسب حاجة اسمها الـ Offset (اللي هو رمزه )، وده معناه البيكسل ده ترتيبه رقم كام من أول بايت في الميموري.
-Memory Offset (A) of pixel (x, y) = x + W * y الإحداثي بيعبر عن رقم الصف (بنبدا من 0). عشان تنزل للصف رقم ، لازم تتخطى عدد من الصفوف الكاملة اللي فوقيك, بما إن كل صف حجمه بيكسل، يبقى إنت هتتخطى مسافة .
-بعد ما نزلت للصف بتاعك، هتمشي جواه من الشمال لليمين مسافة عشان توصل للبيكسل بتاعك.
-تجمع الاتنين على بعض يديك المكان بالظبط!
-مثال لزياده الفهم (مش من الكتاب)
-لو عندنا شاشة شغالة بنظام الـ Grayscale Frame Buffer، أبعادها: Width بيكسل
-Height بيكسل وعايزين نحسب مساحة الصورة كلها، ومكان Pixel معين عند الإحداثيات :
-1. الحجم الكلي (Memory Size):
-بما إن كل بيكسل بياخد 1 Byte، يبقى هنضرب العرض في الطول: 2. مكان البيكسل في الميموري (Memory Offset):
-عشان نعرف البيكسل ده قاعد في البايت رقم كام من بداية الميموري، بنطبق المعادلة دي: يعني البيكسل بتاعنا متخزن في البايت رقم 40,100.
-interleaved scan-line storage زمان في الأنظمة القديمة، سرعة الميموري كانت بطيئة جدا مقارنة بسرعة تحديث الشاشة (Screen refresh rate)، وده كان بيعمل مشاكل مستفزة للعين زي الرعشة (Visible flickering) وإن الفريم يترسم نصه بس (Partially drawn frames).
-الحل: بدل ما نرسم الصورة صف ورا صف بالترتيب، استخدموا نظام الـ Interleaved؛ يعني الشاشة ترسم الصفوف الفردية الأول (1، 3، 5) وبعدين ترجع ترسم الصفوف الزوجية (2، 4، 6).
-التكنيك ده نجح إنه يداري عيوب الهاردوير الضعيف (Limited hardware)، بس في المقابل عقد الـ Graphics programming جدا على المبرمجين (كلهم بييجوا علي الغلبان). definition
-Pseudo-color frame buffer stores an index per pixel instead of storing the full RGB color directly. اسمه كمان Indexed Color Frame Buffer.
-الفكرة هنا إن البيكسل مش بيخزن اللون نفسه، لا ده بيخزن "رقم الإندكس" (من 0 لـ 255).
-أكبر عيب هنا إنك مقدرش تعرض غير 256 لون بس في نفس الوقت على الشاشة، بالرغم من إن الـ RGB مساحته بتشيل أكتر من 16.7 مليون لون ( ).
-الـ index ده بيشاور على لون في Color Lookup Table (CLUT) أو Palette.
-Index → (R, G, B) بيستخدم لحد دلوقتي في: ا اLegacy systems (الأنظمة القديمة)
-ا Backward compatibility modes (أوضاع التوافق)
-ا Resource-constrained devices (الأجهزة اللي الميموري بتاعتها ضعيفة جداً) definition
-True-color frame buffer stores the full RGB color value directly for each pixel. هنا إحنا مش محتاجين جدول ولا وجع دماغ، إحنا بنخزن اللون RGB على طول جوه البيكسل نفسه. التوزيعة الأشهر هي إننا ندي لكل لون 8 بت: Red: 8 bits
-Green: 8 bits
-Blue: 8 bits المجموع هيبقى 24 bits (يعني 3 بايت) لكل بيكسل، وعشان كده بنسميه 24-bit color. الميزة هنا إنك تقدر تعرض الـ 16.7 مليون لون في نفس الوقت، بس العيب إنه بيسحب ميموري قد الـ Pseudo-color تلات مرات، وبيحتاج Bandwidth أعلى. بسبب ان كل بيكسل بياخد 3 Bytes البيكسلات بتتخزن ورا بعضها في الميموري (Sequentially) بالشكل ده: البيكسل الأولاني (0, 0) هياخد اول تلاته بايتس من 0 لـ 2.
-البيكسل التاني اللي جنبه (1, 0) هياخد البايتس من 3 لـ 5.
-البيكسل التالت (2, 0) هياخد البايتس من 6 لـ 8.. وهكذا. بما إن البيكسل مبقاش بايت واحد زي زمان، القوانين بتاعتنا لازم تتعدل شوية عشان تضرب في 3. فظهر عندنا مصطلح جديد اسمه الـ Stride.
-الـ Stride (S): ده بيمثل حجم الصف الواحد الكامل (Scan-line) بالبايت. يعني لو الصورة عرضها بيكسل، يبقى الصف ده هياخد مساحة قد إيه في الميموري؟ هنضرب العرض في 3 (لان البيسل بياخد 3 بايتس).
-Stride (S) = 3 * W دلوقتي، لو عايزين نحسب مكان بيكسل معين في الميموري (Offset أو رمزه ) عند الإحداثيات ، هنستخدم المعادلة دي:
-Memory Offset (A) of pixel (x, y) = 3x + S * y زي المره الي فاتت عشان تنزل للصف رقم ، لازم تتخطى كل الصفوف اللي فوقيك. بما إن الصف الواحد حجمه بايت، يبقى هتتخطى مسافة .
-بعد ما وصلت للصف بتاعك، إنت عايز تمشي بيكسل ناحية اليمين. وبما إن كل بيكسل بياخد 3 بايت، يبقى هتمشي مسافة .
-تجمع الاتنين على بعض، يديك رقم البايت بالظبط اللي بيبدأ عنده البيكسل ده. لو مش فاهم احفظ القانونين وخلاص الموضوع مش مستاهل مش كل الأنظمة بتشتغل بـ 24-bit RGB (ساعات بيتقال عليه RGB888) بس. في فورماتس تانية ظهرت لأسباب تقنية أو معمارية في الهاردوير. ا BGR Order (BGR888): بعض صيغ الصور زي الويندوز بيت ماب (BMP) بتخزن الألوان بالعكس (أزرق، أخضر، أحمر). ده حصل عشان معالجات الـ PC زمان كانت بتستخدم معمارية الـ Little-endian. الأنظمة الحديثة بتستخدم فورماتس تانية زي: ا RGB565 (16-bit): بيوفر ميموري، بيدي للأحمر 5 بت، والأخضر 6، والأزرق 5.
-ا RGBA8888 (32-bit): ده بيضيف قناة رابعة اسمها Alpha channel (المسؤولة عن الشفافية)، وكل قناة بتاخد 8 بت (4 بايت للبيكسل). بصمجيات RGB565 = جودة أقل + ميموري أقل. RGB888 = لون كامل. BGR888 = RGB بالعكس. RGBA8888 = RGB + شفافية. بصمجيات مسائل المساحه : كده خلصنا المحاضره
-اتكلمنا في المحاضره دي عن Color Representation في الـ Computer Graphics.
-بدأنا بمفهوم اللون نفسه وإنه مش خاصية فيزيائية، ده ظاهرة إدراكية ناتجة عن تفاعل الضوء، الجسم، ونظرك.
-بعد كده عرفنا Color Models: ا RGB (Additive): خلط ضوء — بيستخدم في الشاشات والبروجيكتور. مفيش ضوء = Black, كل الألوان كاملة = White.
-ا CMY/CMYK (Subtractive): خلط حبر — بيستخدم في الطباعة. بيمتص wavelengths ويسيب غيرها ينعكس. وفي الآخر عرفنا Frame Buffer Formats: ا Grayscale: pixel واحد بايت (256 درجة رمادي)
-ا Pseudo-color: pixel بيخزن index يشاور على لون في CLUT (أقصى 256 لون)
-ا True-color (RGB888): pixel بيخزن RGB مباشرة — 3 بايت — 16.7 مليون لون
-ا RGB565 / RGBA8888: فورماتس بديلة للتوفير أو إضافةAlpha channel ]]></description><link>lectures/chapter-5-color-representation-in-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 5 - Color Representation in Computer Graphics.md</guid><pubDate>Mon, 01 Jun 2026 05:16:11 GMT</pubDate><enclosure url="https://pic2.zhimg.com/v2-7d7bdb13bae0106215d511a9e2199e05_1440w.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://pic2.zhimg.com/v2-7d7bdb13bae0106215d511a9e2199e05_1440w.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Mathematical Foundations of Computer Graphics - Lecture 2]]></title><description><![CDATA[مقدمة المحاضرة دي بتتكلم عن الأساس الرياضي في Computer Graphics، خصوصا الـ Vectors.
-هنفرق بين Vector, Scalar, و Point، وهنشوف vector notation، components، magnitude، unit vectors، normalization، وازاي نجيب الزاوية بين two vectors باستخدام Dot Product. الـ Vectors من أهم الأدوات الرياضية في Computer Graphics.
-بتستخدم عشان تمثل حاجات كتير في 2D و 3D زي: ا Positions
-ا Directions
-ا Distances
-ا Transformations definition
-Vector is a quantity that has both magnitude and direction. الـ Vector ليه حاجتين: Magnitude: الطول أو المقدار.
-Direction: الاتجاه. بعكس الـ Scalar اللي ليه magnitude بس من غير direction.
-هندسيا، الـ vector بيتعرض كـ سهم directed line segment: طول السهم بيمثل الـ magnitude (المقدار).
-اتجاه السهم بيمثل الـ direction (الاتجاه). Note
-Two vectors are equal if they have the same magnitude and direction, regardless of their position. يعني اتنين vectors ممكن يبقوا في مكانين مختلفين، بس يعتبروا equal لو ليهم نفس الطول ونفس الاتجاه.
+قصة John Snow مهمة عشان بتوري إن الـ GIS فكرته أقدم من البرامج الحديثة. زمان كان التحليل يدوي على خريطة، دلوقتي نفس الفكرة بتتعمل ببرامج وdatabases وlayers ( ومهمه عشان الدكتور جابها في الميد).
+حته زياده من الكتاب أول GIS اتعمل في كندا في الستينيات عشان يحدد موارد الأرض والاستخدامات الحالية والمستقبلية.
+في أواخر الستينيات، US Bureau of the Census عمل برنامج DIME (Dual Independent Map Encoding) لكل الشوارع الأمريكية عشان يدعم الإحصاء التلقائي.
+في أواخر السبعينيات، جامعة Harvard عملت ODYSSEY GIS.
+الـ Automated Cartography بدأ في الستينيات، وبحلول أواخر السبعينيات معظم الجهات الحكومية كانت بتشتغل بالكمبيوتر جزئيًا.
+الـ GIS بدأ ينتشر في التمانينيات لما أسعار الهاردوير نزلت و بقت ارخص . definition
+GIS answers the queries of: What, Where and Why. What is attribute, Where is location, and Why is analytical why. الـ GIS بيجاوب على أسئلة أساسية: What?
+Where?
+Why? الـ What معناها إيه الحاجة أو الـ attribute اللي بنتكلم عنها؟
+يعني المعلومة نفسها المرتبطة بالمكان.
+مثال: اسم الدولة.
+عدد السكان. الـ Where معناها الحاجة دي موجودة فين؟
+ودي نقطة أساسية عشان Space is essential to Geography.
+الجغرافيا أصلا معتمدة على المكان، فالسؤال المكاني هو قلب الـ GIS. ا Why معناها ليه النمط ده موجود؟ أو إيه التحليل اللي يفسر اللي شايفينه؟
+هنا الـ GIS يدخل في التحليل مش العرض بس.
+يعني مش بس نعرف إن الحوادث بتحصل في منطقة معينة، لكن نحاول نفهم: ليه بتحصل هناك؟
+في أوقات معينة؟
+هل فيه نمط مكاني أو زمني؟ بصمجيات ا What = الـ attribute أو المعلومة.
+ا Where = الـ location أو المكان.
+ا Why = الـ analysis او التحليل وفهم السبب. الفرق عن Database عادية الـ Database العادية ممكن تجاوبك على What: اسم، عنوان، رقم، قيمة، صفة.
+الـ GIS بيضيف عليها Where: الحاجة دي موجودة فين؟
+وبعد كده يدخل في Why: ليه النمط ده ظاهر هنا؟ وإيه العلاقة بين المكان والبيانات؟ definition
+GIS = Information System + Geographic Position.
 definition
-Scalar is a quantity fully described by a single value, meaning it has magnitude only and no direction. ده مجرد رقم بيوصف كمية ملهاش اتجاه. زي وزنك (70 كيلو)، أو درجة الحرارة (30 درجة). رقم بس من غير اتجاه. زي ما قولنا الـ Vectorده بقى عبارة عن رقم (مقدار) + اتجاه غالبا بنمثلها بسهم: طول السهم = magnitude
-اتجاه السهم = direction بنحتاج notation يوضح إن الكمية دي vector مش scalar ولا point,ومن أشهر طرق كتابة vector:
+GIS is a means of storing, retrieving, sorting, and comparing spatial data to support some analytic process. الـ GIS هو نظام معلومات، بس الفرق إنه بيشتغل على بيانات مرتبطة بالمكان. يعني عندك جزئين أساسيين: ا Information System: تخزين، استرجاع، ترتيب، مقارنة، إدارة بيانات.
+ا Geographic Position: مكان أو إحداثيات أو موقع على الأرض. لما الاتنين يتجمعوا، نقدر نعمل نظام يفهم البيانات مكانيًا. يعني مش بس نخزن إن فيه مدرسة، لكن نخزن مكانها، ونقارنها بمكان السكان والطرق والخدمات. الـ GIS مش خريطة لوحدها ومش database لوحدها. هو integration بين: ا Map / Graphic Representation
+ا Database / Attribute Data يعني عندك رسمة أو خريطة، وعندك جدول بيانات، والاتنين مربوطين ببعض. حته زياده من الكتاب
+GIS = CAD + DBMS + Spatial Analysis
+الـ CAD بيركز على رسم العناصر، والـ DBMS بيركز على تخزين البيانات، أما الـ GIS فيربط بين الخريطة والبيانات الوصفية بحيث أي تعديل في أحدهما ينعكس على الآخر. بالإضافة إلى ذلك، يستطيع تحليل العلاقات المكانية بين العناصر وإنتاج خرائط ومعلومات جديدة من هذه العلاقات.
 definition
-Point represents a fixed position in space and has no direction. دي مجرد مكان ثابت على الشاشة أو في الفراغ (زي إحداثيات و ). ملهاش لا طول ولا اتجاه. الـ points ممكن تتكتب بأكتر من طريقه منهم:
-P = (x, y)
-P = (x, y, z)
-P = [ x ] [ y ] P = [ x ] [ y ] [ z ] الفرق بين نقطتين P1 و P2 بيطلع vector:
-v = P2 - P1
-v = (x2 - x1, y2 - y1) النقطة ممكن تعتبر نهاية لـ vector خارج من الـ نقطة الاصل, يعني لو عندك مثلا نقطة P(3,2)نقدر نتخيل إن فيه vector بدأ من الـ origin الي هو (0,0) ووصل للنقطة (3,2), ساعتها هيبقي اسمه Position Vector لأنه بيحدد مكان النقطة بالنسبة للأصل.
-بصمجيات Point = مكان.
-Vector = حركة أو اتجاه من مكان لمكان. في الـ 2D (ثنائي الأبعاد): المتجه بيتكون من نقطتين و ، وبيتكتب كده أو بشكل عمودي (مصفوفة).
-في الـ 3D (ثلاثي الأبعاد): بيزيد عليه المحور التالت اللي هو العمق ، وبيتكتب كده .
-لو عندك vector: ا v = (4, 3)
-ده معناه: بيتحرك 4 units على x-axis.
-و 3 units على y-axis. الـ والـ دول عبارة عن "ضل" المتجه على المحاور. بص على الرسمة اللي تحت .. هتلاقي السهم الأزرق مايل، فبنعمله إسقاط (ننزل منه خطوط متقطعة): ظله على الأرض (المحور الأفقي x) بنسميه .
-ظله على الحيطة (المحور الرأسي y) بنسميه . <img style="background: white; padding: 10px; width: 600px; max-width: 100%;" src="https://d138zd1ktt9iqe.cloudfront.net/media/seo_landing_files/components-of-a-vector-in-the-coordinate-axes-1626994132.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> لو إنت معاك طول المتجه نفسه (اللي هو ) والزاوية بتاعته ()، تقدر تجيب مركباته بقوانين حساب المثلثات (الجا والجتا): عشان تجيب الـ : بتضرب الطول في جتا الزاوية. عشان تجيب الـ : بتضرب الطول في جا الزاوية. definition
-Vector magnitude is the length of a vector, or how much of the quantity it represents. الـ Magnitude هو طول الـ vector.
-مثال: vector بيعبر عن السرعه ممكن المقدار بتاعه يبقى 60 km/h.
-الـ magnitude هو المسافة من الـ origin للنقطة اللي الـ vector بيحددها.
-القوانين كلها مبني على فكرة قانون فيثاغورث، وعشان تحسب طول أي متجه (وبنرمز لطوله بالرمز أو ) بتجمع مربعات المركبات بتاعته وتحطهم تحت الجذر: في الـ 2D (بُعدين): لو المتجه ليه حركتين بالعرض والارتفاع : في الـ 3D (تلات أبعاد): لو زاد عليه العمق : القانون العام لأي أبعاد (n-Dimensions): مجموع مربعات كل المركبات اللي عندك تحت الجذر: الـ Normalization لما تحب تثبت اتجاه السهم بس تخلي طوله بيساوي 1 بالظبط (هنعرف يعني ايه كمان شوية). الـ Distance computation عشان تعرف البُعد بين أي نقطتين في اللعبة أو البرنامج. الـLighting &amp; Shading calculations عشان دقة النور بتعتمد على المسافة بين مصدر الضوء والمجسم. Note الـ Magnitude ممكن تتكتب بالشكل |v| أو ||v||. في المحاضرة هنستخدم |v|. <br> <img src="https://wumbo.net/formulas/magnitude-of-vector/magnitude-of-vector-main-dark@2x_hu_a88aab7fa2f14de6.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 600px; max-width: 100%;"> لو عندك متجه جواه البيانات دي جاهزة: و .
-عشان تجيب طوله، هتربعهم وتجمعهم تحت الجذر: ده معناه إن طول السهم ده في الفراغ بيساوي 5 وحدات.
-<br> <img src="https://blogmedia.testbook.com/blog/wp-content/uploads/2021/07/magnitude-bd06716c.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 600px; max-width: 100%;"> لو عندك نقطة البداية A(1,2) ونقطة النهاية B(4,6) وعايز تحسب طول المتجه AB الواصل بينهم:
-الخطوة 1 (هات المركبات): اطرح إحداثيات النهاية ناقص البداية عشان تعرف السهم مشي قد إيه في الـ X والـ Y: فكده المتجه بتاعنا بقى عبارة عن (3, 4).
-الخطوة 2 (احسب الطول): طبق القانون العادي على المركبات الجديدة: ده معناه: ان المسافة الحقيقية بين النقطةA والنقطة B هي 5 وحدات. في الـ 2D كنا بنحتاج زاوية واحدة عشان نفك المتجه لـ و عن طريق الـ والـ . أما في الـ 3D، الموضوع بيكبر معانا ومبقاش ينفع زاوية واحدة لأن السهم بيبقى طاير في الفراغ! فبنقيس الزاوية اللي بيعملها المتجه مع كل محور من المحاور التلاتة (). بنسمي الزوايا دي () (الفا , بيتا , جاما ) وبنستخدم حاجة اسمها Directional Cosines (جيوب تمام الاتجاه): مركبة محور العرض (): مركبة محور الارتفاع (): مركبة محور العمق (): مجموع مربعات جيب تمام الزوايا دي لازم يساوي 1 بالظبط: العلاقة دي بتأكد إن اتجاه الـ vector متعرف صح في 3D space.
-لو عايز تفهم ليه فهيا ليها اثبات رياضي ممكن تبحث عنه.
+GIS is a collection of computer hardware, software, and geographic data for capturing, managing, analyzing, and displaying all forms of geographically referenced information. Environmental Systems Research Institute (ESRI), 2007 (جت في الميد) التعريف ده مهم لأنه بيجمع كل أجزاء الـ GIS في جملة واحدة. الـ GIS عبارة عن مجموعة من: ا Hardware
+ا Software
+ا Geographic Data وبيستخدمهم عشان يعمل أربع وظائف رئيسية: ا Capturing: التقاط أو إدخال البيانات.
+ا Managing: إدارة البيانات.
+ا Analyzing: تحليل البيانات.
+ا Displaying: عرض البيانات. وكل ده على معلومات Geographically referenced، يعني معلومات ليها علاقة بمكان على الأرض. كلمة Geographically referenced مهمة في التعريف.
+معناها إن المعلومات الجغرافية لازم يكون لها مرجع مكاني موحد.
+لو جهات مختلفة رسمت طبقات مختلفة من غير مرجع واحد، الطبقات هتتركب غلط.
+عشان كده لازم يبقى فيه reference موحد للطبقات، بحيث كل layer تركب صح فوق التانية.
+definition الـ Base Map هي الخريطة الأصلية المرجعية اللي عليها بتتبني كل الطبقات. في أي دولة، الجهة المسؤولة عن إنتاج الصور المساحية الدقيقة هي الهيئة المساحية العسكرية. عشان نعمل Referenced Map في أي بلد، محتاجين صورة أو خريطة أصلية تبقى هي المرجع الأساسي.
+الصورة دي اسمها Base Map، وده اللي كل الـ layers بتتبني عليه.
+في أي دولة في العالم، الجهة الوحيدة المنتجة للصور المساحية الدقيقة هي: الهيئة المساحية العسكرية أو الجهة المختصة بالمساحة العسكرية.
+يعني Military Survey Authority. الصور دي بتروح بعدها لجهات مختلفة عشان تطلع Layers: جهة المباني والعقارات تطلع Buildings Layer.
+جهة الطرق والكباري تطلع Roads Layer.
+جهة المياه تطلع Water Network Layer. كل layer ليها Base Map واحد، وده اللي بيخلي الطبقات تركب فوق بعضها صح.
+لو مفيش Base Map موحد، الطبقات هتطلع غلط: عمود كهرباء في وسط المياه.
+مبنى فوق جنينة.
+طريق في مكان مش منطقي. حرف S في GIS ممكن يشير لأكتر من معنى حسب السياق: System
+Science
+Studies
+Service
+Survey definition
+Geographic Information System: a collection of computer hardware, software, and geographic data for capturing, managing, analyzing, and displaying all forms of geographically referenced information. ده المعنى الأشهر، وهو محور المادة.
+بيركز على النظام العملي اللي بنستخدمه عشان ندخل ونخزن ونحلل ونعرض البيانات الجغرافية.
 definition
-Unit Vector is a vector with magnitude equal to 1, and it represents direction only. الـ Unit Vector (متجه الوحدة): ده سهم طوله بيساوي 1 بالظبط، ووظيفته الوحيدة إنه يشاور على الاتجاه ومبيعبرش عن مسافة أو مقدار. بنرمز له بـ (v-hat).
+Geographic Information Science: comprehending the underlying conceptual issues of representing data and processes in space-time. ا GIScience ده العلم اللي ورا الـ GIS مهتم بالـ theory and concepts.
+بيهتم بأسئلة زي: إيه النظريات والمفاهيم اللي ورا التكنولوجيا؟
+الخوارزميات نطورها ازاي عشان النتائج تبقى أحسن؟ الـ GISystems يجاوب على what و where، أما GIScience مهتم بـ how والتطوير.
 definition
-Normalization is the process of converting a vector into a unit vector. الـ Normalization (التوحيد): دي العملية اللي بنحول بيها أي متجه عادي لمتجه وحدة (Unit Vector) ,بنعملها إزاي؟ بنقسم المتجه على طوله الحقيقي: بنحتاج الحركة دي في إيه في الجرافيكس؟ الإضاءة (Directional Lighting): لما نحسب اتجاه شعاع النور، إحنا مش محتاجين نعرف طول شعاع النور قد إيه، إحنا محتاجين اتجاهه بس عشان نحسب الظل.
-اتجاه الكاميرا (Camera Orientation): عشان نحدد الكاميرا بتبص في أنهي اتجاه بالظبط في اللعبة.
-الـ (Scaling): لما تحب تحرك أو تكبر مجسم في اتجاه معين من غير ما تبوظ أبعاده. مثال لزياده الفهم (اختياري)
-تخيل إنك واقف في مكانك وعايز تشاور لواحد صاحبك على مستشفى بعيده عنكم بـ 10 كيلومتر في اتجاه معين. المتجه الحقيقي اللي بيوصل للمستشفى طوله كبير جدا (10 كم مثلا).
-هل وأنت بتشاور لصاحبك محتاج تمد إيدك لمسافة 10 كيلومتر عشان يفهم؟ أكيد لأ
-إنت كل اللي بتعمله إنك بتفرد دراعك بطول 1 متر بالظبط (اكيد دراعك مش 1 متر بس بقرب المثال شوية) وتشاور في اتجاه المستشفى. صاحبك هيبص على اتجاه دراعك (اللي افترضنا طوله 1 متر) ويفهم الاتجاه. الـ Normalization هو بالظبط اللي دراعك عمله؛ أخدنا المتجه الكبير اللي رايح للمستشفى وقسمناه على مسافته (10 كم)، فصغرناه وخليناه سهم صغير طوله 1 متر بس بيشاور في نفس الاتجاه بالظبط، عشان الكمبيوتر يعرف المكان من غير ما يتلخبط برقم الـ 10 كم او يحسب حسابات زياده ومش ضرورية. الـ Dot Product بنستخدمه علشان نعرف الزاوية بين متجهين.
-الكمبيوتر في الأصل أعمى، مبيشوفش الأسهم مايلة إزاي، لكن بيحسب الزاوية (عن طريق الـ Cosine بتاعها).
-لو بتعمل لعبه وعندك مشكله، عندنا الحارس واللاعب, وعايزين نعرف هل اللاعب ده في نطاق رؤية الحارس ولا الحارس مش شايفه, هنعرف منين الزاوية الي الحارس بيبص ليها ؟
-<br> <img src="https://cdn.wolfire.com/blog/linear/sneak2.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 600px; max-width: 100%;"> عشان نحل المشكله دي هنستخدم الـ dot product. القانون ده بنستخدمه عشان نطلع رقم عشري بيعرفنا لو السهمين في نفس الاتجاه ولا عموديين على بعض ولا عكس بعض. هنا إنت أخدت الناتج بتاع الخطوة الأولى عشان نجيب الزاوية نفسها (). ا |v|: ده الـ magnitude بتاع vector v.
-ا |w|: ده الـmagnitude بتاع vector w.
-ا θ: الزاوية بين v و w.
-الزاوية بتتقاس غالبا بين 0° و 180°.
-الدكتور مشرحش امثله علي النقطه دي فهكتفي بالي في الكتاب
-نماذج التظليل (Shading Models): بنستخدم الـ Dot Product علشان نعرف الضوء واقع على السطح بزاوية ايه، وبالتالي نحدد السطح منور ولا غامق.
-اختبارات الرؤية (Visibility tests): كارت الشاشة بيعرف هل الـ object ده في مجال للكاميرا ولا لا؟ لو لا الكارت مبيرسموش أصلا عشان يوفر في الرامات ويزود الـ FPS
-الـSurface Orientation and Normal Evaluation: بنحدد اتجاه السطح والـ Normal Vector بتاعه، وده مهم في الإضاءة والانعكاسات والظلال.
-كده خلصنا المحاضره
-اتكلمنا في المحاضره دي عن الأساس الرياضي للـ Computer Graphics وعرفنا الفرق بين Scalar (رقم بس من غير اتجاه)، Point (مكان ثابت في الفراغ)، و Vector (ليه Magnitude و Direction).
-وعرفنا إزاي نحسب Vector Components في 2D و 3D باستخدام الـ directional cosines، وإن الـ Magnitude بنحسبها بالقانون |v| = sqrt(x² + y² + z²).
-واتكلمنا عن Unit Vectors - اللي طولها 1 وبتستخدم عشان تعبر عن الاتجاه بس، وإن الـ Normalization هي عملية تحويل أي Vector لـ Unit Vector عن طريق قسمته على Magnitude بتاعه.
-وفي الآخر عرفنا الـ Dot Product وازاي بنستخدمه عشان نحسب الزاوية بين Vectors، وده بيستخدم في مجالات زي الإضاءة Shading Models واختبارات الرؤية Visibility Tests.
-]]></description><link>lectures/chapter-2-mathematical-foundations-of-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 2 - Mathematical Foundations of Computer Graphics.md</guid><pubDate>Mon, 01 Jun 2026 05:06:41 GMT</pubDate><enclosure url="https://d138zd1ktt9iqe.cloudfront.net/media/seo_landing_files/components-of-a-vector-in-the-coordinate-axes-1626994132.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://d138zd1ktt9iqe.cloudfront.net/media/seo_landing_files/components-of-a-vector-in-the-coordinate-axes-1626994132.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Graphics Primitives - Lecture 3]]></title><description><![CDATA[مقدمة الشابتر ده بيتكلم عن الـ Graphics Primitives (الأشكال الأساسية).
-هنعرف المفاهيم الهندسية الأساسية زي النقطة والخط والسطح، وبعدين هندخل في تفاصيل رسم الأشكال الأساسية زي الخطوط، الدواير، المضلعات، والمنحنيات في Computer Graphics. قبل ما ندرس ازاي الأشكال بتترسم في الـ Computer Graphics، لازم نفهم المفاهيم الهندسية الأساسية اللي بتوصف الأشكال دي في الـ 2D والـ 3D.
+Geographic Information Studies: understanding the social, legal and ethical issues associated with the application of GISy and GISc. ده جانب اجتماعي وقانوني وأخلاقي.
+يعني استخدام الـ GIS مش تقني بس، فيه أسئلة مهمة: الخصوصية.
+القوانين المرتبطة بالمعلومات الجغرافية.
+الآثار الاجتماعية لاستخدام البيانات المكانية. definition
+Geographic Information Service: functionality provided by a software entity through its interfaces defined as named sets of operations, and provisions of information generated from geospatial data. ده بيركز على الخدمات اللي بتتعامل مع المعلومات الجغرافية.
+زي تصميم وتطوير نظم GIS، أو تقديم خرائط وخدمات جغرافية للمستخدمين.
+مثال عملي: خدمة تحديد Location داخل تطبيقات زي WhatsApp أو أي تطبيق موبايل. لما حد يبعتلك Location، ده service مبنية على Geographic Information.
+تطور الخدمات المكانية مرتبط بـ distributed object technology والإنترنت.
+ده خطوة كبيرة عشان يسهل الوصول للمعلومات الجغرافية و Geo-processing technology.
 definition
-A vertex (plural: vertices), also called a corner, is a point where two or more line segments meet. الـ Vertex (أو الرأس/الزاوية) هي النقطة اللي بيتقابل فيها خطين أو أكتر.
-هي اللي بتحدد شكل و هيكل الاشكال الهندسيه.
-في الـ 2D graphics: الـ vertices بتحدد زوايا المضلع (polygon corners): <img src="https://www.mathsisfun.com/geometry/images/pentagon-vertices.svg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 300px; max-width: 100%;"> في الـ 3D graphics: الـ vertices بتحدد زوايا المجسمات (polyhedra corners):
-<br> <img src="https://www.mathsisfun.com/geometry/images/vertex.svg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 300px; max-width: 100%;"> definition
-An edge is a line segment connecting two vertices. الـ Edge (أو الضلع) هو الخط اللي بيوصل بين اتنين vertices. <br>
-في الـ 2D polygon: الـ edges بتمثل الحدود (boundary) بتاعة الشكل. <img src="https://www.mathsisfun.com/geometry/images/pentagon-edges.svg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 200px; max-width: 100%;"> <br>
-في الـ 3D polyhedron: الـ edge هو خط التقاطع بين وجهين (intersection of two faces). <img src="https://www.mathsisfun.com/geometry/images/edges.svg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 200px; max-width: 100%;"> definition
-A face is one of the flat surfaces of a solid object. الـ Face (أو الوجه) هو السطح المسطح بتاع المجسم.
-كل face بيبقى متحوط بـ edges و vertices.
-في الـ Computer Graphics، كلمة face مرتبطة أكتر بالـ 3D objects.
-عدد الـ faces بيساعدنا نصنف المجسمات.
-مثال: الـ tetrahedron (الهرم الرباعي) ليه 4 أوجه مثلثة.
-<br> <img src="https://www.mathsisfun.com/geometry/images/faces.svg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 200px; max-width: 100%;"> كلمة Side شائعة في الـ 2D geometry ( side للمثلث أو للمستطيل).
-لكن في الـ 3D graphics، استخدام كلمة "side" مش دقيق وممكن يعمل لغبطة ambiguous.
-ممكن حد يقصد بيها edge، وممكن حد تاني يقصد بيها face.
-عشان الدقة، في الـ 3D بنستخدم Edge أو Face بدل side.
-<br> <img src="https://www.mathsisfun.com/geometry/images/side.svg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> <br> <img src="https://www.mathsisfun.com/geometry/images/box-real-fve.svg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> definition
-Graphics Primitives (or output primitives) are the fundamental geometric elements in computer graphics. الـ Graphics Primitives هي حجر الاساس اللي بنستخدمه عشان نركب صور وأشكال معقدة.
-أهم الـ primitives دي: Points, Lines, Circles, Ellipses, Polygons, Curves, Text.
+Geographic Information Survey: collecting spatial data from the field using measurement tools and field work. الـ Survey يعني جمع وقياس بيانات مكانية من الواقع.
+طرق التجميع الأساسية: عمل Field Survey يدوي في أماكن معينة.
+استخدام Aerial Survey (صور جوية من طيران فوق مناطق معينة).
+استخدام GPS لتسجيل مواقع دقيقة. فرق المساحة المهندسين بيشتغلوا في areas مش سهلة الوصول زي الغابات أو المناطق الجبلية.
+الهدف: جمع بيانات مكانية دقيقة وتغطية areas واسعة بسرعة.
+بصمجيات ا System = النظام اللي بنستخدمه.
+ا Science = العلم والنظريات اللي وراه.
+ا Studies = الآثار الاجتماعية والقانونية والأخلاقية.
+ا Service = خدمات مبنية على المعلومات الجغرافية.
+ا Survey = جمع وقياس بيانات مكانية. definition
+GIS is an organized collection of hardware, network, software, data, people, and procedures. مكونات الـ GIS الأساسية: Hardware
+Network
+Software
+Data
+People
+Procedures definition
+Hardware: the devices that the user interacts directly with to carry out GIS operations. يعني الأجهزة الملموسة اللي بنستخدمها في شغل الـ GIS.
+أمثلة: Computer
+Scanner
+Digitizer
+Plotter definition
+Software provides the functions that the user needs to store, analyze and display geographical information. البرامج هي اللي بتدينا أدوات التخزين والتحليل والعرض.
+مثال عام: برامج GIS و ArcGIS.
 definition
-A point is the most basic geometric primitive. It represents a specific location in 2D or 3D space. الـ Point هي أبسط وحدة.
-ملهاش لا حجم، ولا طول، ولا مساحة.
-مجرد مكان location في الـ space، وهي الأساس لباقي الأشكال.
-طبعا عارفين من قبل كده انها بتتمثل بالطريقة دي:
-2D:(x,y)
-3D:(x,y,z)
+Data is the most important component of GIS. البيانات هي قلب الـ GIS.
+الأنواع المذكورة: Vector Data
+Raster Data
+Image Data
+Attribute Data definition
+People are the most active component dealing with the design, programming and management of GIS. الناس هما اللي بيصمموا النظام ويديروه ويحللوا البيانات.
+من غير مستخدم فاهم، النظام مش هيطلع قرارات مفيدة. مجال الـ GIS فيه مجموعات مختلفة من المستخدمين، كل مجموعة ليها خلفية مختلفة وأولويات مختلفة: ا 1. Mature Technologies دول اللي بيشتغلوا مع الـ GIS كتقنية ناضجة وبيساهموا في إنتاج البيانات.
+زي: Surveyors, Engineers, Cartographers, Scientists using Remote Sensing. ا 2. Management and Decision-Making دول اللي بيستخدموا الـ GIS في اتخاذ القرارات.
+زي: Resource Managers, Urban Planners, Municipal Officials, Facilities Managers, Marketing and Retail Planning, Vehicle Routing and Scheduling. ا 3. Science and Research دول اللي بيدرسوا الـ GIS ويبحثوا فيه.
+زي: Universities, Government Labs.
+بيدوروا على أوجه الاختلاف والتشابه بين مجموعات الـ GIS المختلفة. definition
+Procedures are related to the management aspects of GIS. خطوات وقواعد العمل.
+يعني البيانات تدخل ازاي، تتحلل ازاي، تتراجع ازاي، وتطلع التقارير ازاي.
 definition
-A line in computer graphics is drawn as a finite line segment between two endpoints. الكمبيوتر مش بيعرف يرسم خط ملوش نهاية infinite، عشان كده دايما بيرسم قطعة مستقيمة line segment بين نقطتين ليها بداية ونهاية. Slope-intercept form: هنا الـ هو "الميل" (Slope)، والـ هي النقطة اللي الخط بيقطع فيها محور الصادات (-intercept). Parametric form: ا P0: نقطة البداية (في الـ 2D بتبقى (x0, y0) وفي الـ 3D بتبقى (x0, y0,z0)) ا P1: نقطة النهاية (في الـ 2D بتبقى (x1, y1)وفي الـ 3D بتبقى (x1, y1,z1)) ا P1 - P0: الـ direction vector (متجه الاتجاه) ا t: المتغير scalar parameter اللي بيحدد مكان النقطة على الخط. تفسير قيم t اt = 0: إنت واقف عند P0
-ا 0 &lt; t &lt; ا 1: إنت في حتة بين P0 و P1
-ا t = 1: إنت وصلت لـ P1
-ا t &lt; 0: إنت قبل الـ P0
-ا t &gt; 1: إنت عديت الـ P1 ا t(P1 - P0): الحتة دي بتعمل (Scaling) للمتجه. يعني بتطوله أو تقصره حسب قيمة . لو مثلاً ، يبقى إحنا كده جبنا نص المسافة بالظبط. ا P0 + t(P1 - P0): دي الخلاصة، بنجيب المتجه بعد ما حددنا طوله بالـ ونجمعه على نقطة البداية، فيدينا النقطة الجديدة اللي هنرسمها على الخط. ا DDA (Digital Differential Analyzer): Incrementally computes pixel position along the line. طريقة بتحسب أماكن البيكسلز على طول الخط خطوة بخطوة ورا بعض. ا خوارزمية (Bresenham's Line Algorithm): An efficient integer-based method for rasterizing lines. دي طريقة أذكى وأسرع بكتير، لأنها بتستخدم الأرقام الصحيحة بس (Integer-based) عشان ترسم الخطوط من غير كسور معقدة. تحديد حواف الأشكال (Outlining shapes).
-توصيل النقط ببعض في الرسومات البيانية أو المخططات (Connecting nodes).
-محاكاة المسارات في برامج الفيزيا (زي مثلاً مسار كورة بتترمي).
-definition
-A circle is the set of points at a fixed distance r (radius) from a center (xc, yc). الدايرة هي مجموعة نقط بتبعد مسافة ثابتة (نصف القطر r) عن المركز. Implicit equation: هنا الـ هو المركز بتاع الدائرة، والـ هو نصف القطر (Radius).
-Parametric form: ودي بتجيبلك نقطة نقطة على محيط الدائرة باستخدام الزوايا: , هنا الـ (ثيتا) هي الزاوية، وكل ما بتغير الزاوية (من 0 لـ 360 درجة)، المعادلتين دول بيحسبولك مكان النقطة الجديدة على حدود الدائرة. ا Circle equation method: Directly uses the implicit equation (inefficient due to floating-point calculation) الطريقة دي بتستخدم المعادلة الرياضية بشكل مباشر، بس يعيبها إنها مش عملية وبطيئة (inefficient) عشان بتعتمد على حسابات الأرقام العشرية والكسور (floating-point calculations). ا Midpoint Circle Algorithm: Efficient inter-based method exploiting symmetry. دي طريقة Efficient لأنها بتعتمد على الأرقام الصحيحة بس (integer-based method)، وبتستغل التماثل (symmetry) بتاع الدائرة عشان ترسمها أسرع. ا Bresenham's Circle Algorithm: Optimized version of the midpoint algorithm دي تعتبر نسخة متطورة ومتحسنة من خوارزمية Midpoint اللي لسه قايلين عليها. الأيقونات، الزراير، وأي circular UI elements.
-العجل، المدارات orbits، والحركة الدائرية في الـ animation.
-الكلام الي جاي لحد الـ text ملغي حسب كلام زمايلنا بس هشرحه احتياطيdefinition
-An ellipse is a stretched/compressed circle, defined as the locus of points whose sum of distances from two foci is constant. عبارة عن دائرة بس ممطوطة (stretched) أو مضغوطة (compressed).
-بالتعريف الرياضي: هو مجموعة من النقط، لو جمعت المسافة بين أي نقطة فيهم وبين نقطتين ثابتين (بنسميهم بؤرتين أو focal points) هيطلعلك دايماً رقم ثابت. Implicit equation: هنا الـ هو مركز الشكل. والـ والـ هما أنصاف الأقطار للمحاور (واحد اسمه المحور الأكبر semi-major والتاني المحور الأصغر semi-minor). Parametric form: بتترسم بطرق شبه رسم الدايرة بالظبط، بالاعتماد على التماثل symmetry والـ incremental methods. العدسات lenses والمدارات البيضاوية.
-اللوجوهات والتصميمات اللي فيها حواف مدورة.
-definition
-A polygon is a closed, non-self-intersecting shape formed by connecting line segments (edges) through vertices. المضلع هو شكل مقفول متكون من خطوط متوصلة ببعضها عن طريق vertices ومفيش خطوط بتقطع بعضها. Convex polygon (مضلع محدب): كل الزوايا الداخلية أقل من 180 درجة.
-الـ Algorithms بتبقى أسرع وأسهل بكتير مع النوع ده. Concave polygon (مضلع مقعر): فيه على الأقل زاوية داخلية واحدة أكبر من 180 درجة. <br> <img src="https://www.mathsisfun.com/geometry/images/concave-convex.svg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> في الكمبيوتر الجرافيكس، الخوارزميات بتحب يتعاملوا مع المضلعات المحدبة (Convex) أكتر لأنها أسهل وأسرع في الحسابات من المضلعات المقعرة. بيتمثل بلستة مترتبة عباره عن نقط Ordered list of vertices:
-[(x1, y1), (x2, y2), ...]
-ممكن يترسم فاضي من جوه outlined أو متلون filled. ا (Scanline Fill Algorithm): Used to fill polygons with color. دي طريقة بتستخدم عشان نملى المضلعات بالألوان سطر بسطر. ا (Boundary Fill Algorithm): Starts at a seed point and fills until it reaches the boundary. it is mainly used for simple , closed shapes. دي بتبدأ من نقطة معينة جوه الشكل (اسمها seed point) وتفضل تلون لحد ما تخبط في حدود الشكل من بره. الطريقة دي بنستخدمها مع الأشكال البسيطة المقفولة. الخرايط Maps والمناطق 2D.
-الأسطح Surfaces في الـ 3D modeling.
-أشكال التضاريس والمباني.
-definition
-A curve is a smooth continuous geometric object that may not be straight. المنحنى هو شكل هندسي ناعم ومستمر بس مش خط مستقيم. Bezier curves: المنحنى بيبدأ من أول نقطة تحكم، وبينتهي عند اخر نقطة تحكم، لكن مش شرط إنه يعدي على النقط اللي في النص. النقط اللي في النص دي وظيفتها إنها تشد او تخلي المنحنى ييجي ناحيتها عشان تديله شكله، يعني أماكن النقط دي هي اللي بتأثر على شكل المنحنى النهائي. درجة المنحنى (Bezier degree) بتتحدد بعدد النقط: نقطتين (linear Bezier): هيطلع منحنى خطي (يعني خط مستقيم).
-3 نقط (quadratic Bezier): هيطلعلك منحنى تربيعي.
-4 نقط (cubic Bezier): هيطلعلك منحنى تكعيبي، وده أكتر نوع مستخدم. Splines: منحنيات متقطعة بس متوصلة بنعومة Piecewise curves.
-بتتمثل عن طريق حاجة اسمها knot vectors و basis functions. منحنيات بيزيير (Bezier Curve): المعادلة بتاعتها شكلها يخض بس فكرتها بسيطة: الـ دي هي نقط التحكم اللي اتكلمنا عليها من شوية، والـ دي حاجة في الرياضة اسمها متعددات حدود بيرنشتاين (Bernstein polynomials)، ودي الدالة اللي بتحسب قوة تأثير كل نقطة تحكم على المنحنى عشان تطلعه ناعم. منحنيات الـ Splines: الكمبيوتر بيعرفها عن طريق حاجة اسمها "متجهات العقد" (knot vectors) ودوال أساسية (basis functions). دي ببساطة الأدوات الرياضية اللي بتخلي حتت المنحنى تلزق في بعضها من غير ما يبان أي تكسير. المسارات الناعمة Smooth paths.
-الأشكال العضوية Organic shapes في الرسم والأنيميشن.
-definition
-Text is a graphical primitive used to display alphanumeric characters and symbols on screen. النص هو primitive زيه زي أي شكل بنستخدمه عشان نعرض الحروف والرموز على الشاشة. أشكال الخطوط (Font styles): (زي serif, sans-serif, monospace).
-الرموز (Glyphs): شكل الحرف نفسه بيتخزن في الكمبيوتر بطريقتين: يا إما Outlines (فيكتور): يعني متخزن كمعادلات وحدود خارجية، وده مهما كبرته مش بيبكسل.
-أو Bitmaps: متخزن كصورة مكونة من بيكسلات (مربعات صغيرة). إزاي بنرسمه على الشاشة ؟ (Rendering) عملية الـ Rasterization: خدنا العملية دي قبل كده ولو مش فاكر فدي العملية اللي بنحول فيها شكل الحرف (اللي متخزن كمعادلات) لبيكسلات حقيقية عشان الشاشة تقدر تعرضه.
-تنعيم الحواف (Anti-aliasing): لما بنحول الحرف لبيكسلات ( حواف الحرف بتبقى jagged. التقنية دي بتعمل تنعيم للحواف دي عشان الحرف يبان ناعم وسلس. الـ Labels والـ captions.
-النصوص الديناميكية في الألعاب والبرامج.
-كده خلصنا المحاضره
-اتكلمنا في المحاضره دي عن Graphics Primitives (الأشكال الأساسية في الـ Computer Graphics) وعرفنا المفاهيم الهندسية الأساسية: Vertex (النقطة اللي بتتقابل فيها الخطوط)، Edge (الخط اللي بيوصل بين Vertices)، Face (السطح المسطح للمجسم)، و Side (مصطلح 2D مش دقيق في 3D).
-وبعد كده استعرضنا كل Primitive: Point - أبسط وحدة، مجرد مكان في الفراغ
-Line - قطعة مستقيمة بين نقطتين، وليها طرق تمثيل (Slope-Intercept و Parametric)
-Circle - مجموعة نقط على مسافة ثابتة r من المركز
-Ellipse - دائرة ممطوطة
-Polygon - شكل مقفول من خطوط (Convex و Concave)
-Curve - منحنيات ناعمة (Bezier و Splines)
-Text - حروف ورموز (Fonts و Glyphs) وعرفنا خوارزميات الرسم لكل شكل زي DDA و Bresenham للخطوط، و Midpoint و Bresenham للدواير، و Scanline و Boundary Fill للمضلعات.
-]]></description><link>lectures/chapter-3-graphics-primitives.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 3 - Graphics Primitives.md</guid><pubDate>Sun, 31 May 2026 22:09:13 GMT</pubDate><enclosure url="https://www.mathsisfun.com/geometry/images/pentagon-vertices.svg" length="0" type="image/svg+xml"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://www.mathsisfun.com/geometry/images/pentagon-vertices.svg&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Foundations of Computer Graphics - Lecture 1 [Part 4]]]></title><description><![CDATA[مقدمة هنكمل الشابتر الاول, في الجزء ده هنتكلم عن الألوان في الـ Computer Graphics، وإزاي الكمبيوتر بيخزن ويعرض الألوان باستخدام أنظمة مختلفة زي RGB وCMYK. كمان هنتعرف على مفاهيم مهمة زي Color Depth وAlpha Channel وتأثيرهم على جودة الصور والشفافية وحجم البيانات. definition
-Color Model is a mathematical framework used to represent colors as numerical values. الـ color models بتتقسم لنوعين أساسيين: Additive Color Models
-Subtractive Color Models التصنيف ده بيعتمد على هل اللون بيتكون بإضافة الضوء ولا بامتصاص الضوء. الـ Additive Color Models بتكون الألوان عن طريق دمج مصادر ضوء, كل ما تزود الاضاءه، اللون الناتج يبقى أفتح, ولما الاضاءه تزيد للاخر، الناتج يبقى white, لما مفيش ضوء، الناتج يبقى black.
-بتستخدم في الأجهزة الالكترونية اللي بتطلع ضوء زي: Computer monitors
-Televisions
-Mobile screens
-Projectors الـ RGB هو أهم additive color model في computer displays.
-اللون بيتكون من intensities مختلفة من الـ : Red والـ Green والـ Blue
-لما التلاتة يبقوا maximum، اللون يبقى white. <img src="https://cdn.prod.website-files.com/61f9082050036c6c4b4899f8/69a0485fb777604233e1f35c_a-1693558643138-2x.jpeg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> الـ Subtractive Color Models بتستخدم في الطباعة.
-بتدمج pigments أو inks عشان تمتص اطوال موجية معينة من الضوء.
-,ئأشهر model هنا هو CMYK: Cyan
-Magenta
-Yellow
-Black / Key Why Does CMYK Use K? الـ K معناها Key , المشكله اننا لو ضفنا الـ Cyan , Magenta , Yellow هيديلنا بني غامق فـ بنستخدم الـ key عشان نعرف ننتج اللون الاسود <br> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/SubtractiveColor.svg/500px-SubtractiveColor.svg.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 300px; max-width: 100%;">
-definition
-Color Depth is the number of bits used to represent the color of a single pixel. كل بيكسل على الشاشة محتاج مساحة في الميموري (بالـ Bit) عشان يخزن بيانات لونه. كل ما تزود مساحة الـ Bits للبيكسل الواحد، كل ما تقدر تطلع تدرجات ألوان أكتر بكتير.
-يعني 24-bit color بيمثل تقريبا:
-2^24 = 16,777,216 colors // More bits per pixel = more possible colors Bit Depth
-Bits Per Pixel (bpp)
-Bits Per Channel (bpc) <br> <img src="https://global.samsungdisplay.com/wp-content/uploads/2021/05/8Color-depth.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-definition
-Color Palette is a predefined table containing a limited set of colors available for an image or display. بدل ما نخزن اللون كامل لكل pixel، ممكن نخزن index بس.
-الـ index ده بيشاور على لون موجود في palette.
-الطريقة دي بتقلل memory usage و file size.
-كانت مهمة جدا في أنظمة الكمبيوتر القديمة, بس لسه بتستخدم ساعات لما memory efficiency تبقى مهمة.
-definition
-Indexed Color is a color representation method that uses a color palette. في Indexed Color: كل pixel بيخزن index value.
-الـ index بيشاور على لون داخل الـ palette.
-قيم الألوان الحقيقية بتتخزن مرة واحدة في الـ palette. بيستخدم غالبا مع color depth محدود زي: 1-bit
-4-bit
-<br>8-bit <img style="background: white; padding: 10px; width: 150px; max-width: 100%;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Indexed_palette.svg/250px-Indexed_palette.svg.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> التلاتة بيستخدموا RGB Color Model، بس بيختلفوا في عدد color combinations ووجود alpha channel. ا Higher color depth محتاج memory أكتر و processing power أكتر.
-بس أغلب modern graphics hardware بتدعمه.
-definition
-Alpha Channel is an additional component added to RGB to represent transparency. الـ Alpha Channel بيتحكم في درجة شفافية أو عتامة كل pixel.
-القيم الأقل معناها transparency (شفافيه) أعلى.
-القيم الأعلى معناها opacity (وضوح) أعلى.
-الـ 32-bit color بيستخدم alpha channel مع RGB عشان يدعم: ا Transparency
-ا Shadows
-ا Smooth blending
-<br>ا Advanced effects <img src="https://www.imageen.com/screenshots/iehelp/AlphaChannel2.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 300px; max-width: 100%;"> ألوان واقعية أكتر.
-الـ gradients أنعم.
-دعم أحسن للـ shadows والـ transparency والـ complex visual effects.
-ممكن يقلل eye strain أثناء مشاهدة الصور والفيديوهات. استهلاك أكبر للـ memory.
-محتاج processing power أكتر.
-ممكن يقلل FPS في الألعاب حسب graphics card ومتطلبات اللعبة.
-definition
-True Color is any color setting using at least 24 bits per pixel, capable of representing about 16.7 million colors. الـ True Color بيقدر يمثل الصور والـ complex graphics بدقة عالية في RGB Color Space.
-غالبا بيتقسم لـ 256 shade لكل channel: Red
-Green
-Blue بيدي display ناعم ودقيق للألوان.
-عدد الألوان فيه أكبر من اللي العين البشرية تقدر تميزه بدقة في حالات كتير.
-كده خلصنا الجزء الرابع
-اتكلمنا في المحاضره دي عن Color Models وعرفنا إن فيه نوعين: Additive (زي RGB و HSV و HSL - بيستخدم في الشاشات بإضافة الضوء) و Subtractive (زي CMYK - بيستخدم في الطباعة بامتصاص الضوء).
-وعرفنا الـ Color Depth - عدد البتات المستخدمة لكل Pixel، وكل ما زادت كل ما الألوان كانت أكتر ودقة أعلى (زي 24-bit True Color بـ 16.7 مليون لون).
-واتكلمنا عن Indexed Color و Color Palette - إن كل Pixel بيخزن Index بدل اللون الكامل عشان توفير memory، وده كان مهم في الأنظمة القديمة.
-وفي الآخر عرفنا الـ Alpha Channel - القناة الإضافية للشفافية في 32-bit color، و True Color (24-bit) وقارنا بين 16-bit و 24-bit و 32-bit.
-]]></description><link>lectures/chapter-1-[part-4]-foundations-of-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 1 - [Part 4] Foundations of Computer Graphics.md</guid><pubDate>Sun, 31 May 2026 21:54:36 GMT</pubDate><enclosure url="https://cdn.prod.website-files.com/61f9082050036c6c4b4899f8/69a0485fb777604233e1f35c_a-1693558643138-2x.jpeg" length="0" type="image/jpeg"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://cdn.prod.website-files.com/61f9082050036c6c4b4899f8/69a0485fb777604233e1f35c_a-1693558643138-2x.jpeg&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Fundamental Drawing Algorithms in Computer Graphics - Chapter 4 - [Part 2]]]></title><description><![CDATA[مقدمة ده الجزء التاني من الشابتر، وهنركز فيه على Circle Drawing Algorithms.
-هنستعرض أكتر من طريقة لرسم الدواير: من المعادلة المباشرة (Circle Equation) اللي بسيطة بس فيها مشاكل، للخوارزميات الأذكى واللي مش محتاجة كسور أو جذور زي Midpoint و Bresenham.
-هنفهم كمان مفهوم Eight-Way Symmetry اللي بيخلينا نوفر 7 أضعاف الحسابات.
-في الآخر هيكون عندنا مقارنة كاملة بين كل الخوارزميات عشان تعرف تختار الأنسب. بما إن الشاشات بتاعتنا Raster displays (عباره عن Grid يعني)، فإحنا محتاجين خوارزميات تقرب الشكل الدائري المتصل ده لمجموعة بيكسلات منفصلة (Discrete pixels) بكفاءة عالية.
-عشان الدائرة شكل متماثل جدا، معظم الخوارزميات بتستغل حاجة اسمها الـ Eight-way symmetry (التماثل الثماني).
-يعني بدل ما نحسب محيط الدائرة كله، إحنا بنحسب تمن واحد بس (1/8 من الدائرة)، وبنعكس النقط دي على باقي الأثمان عشان نقلل الحسابات.
-definition
-A circle is specified by its center (xc, yc) and radius r. أبسط طريقة نرسم بيها الدائرة هي إننا نستخدم معادلتها الرياضية. الدائرة في مستوى الإحداثيات بتتعرف بحاجتين: نقطة المركز: (Xc, Yc)
-نصف القطر: r معادلة الدائرة القياسية: الدائرة هي كل النقط اللي بعدها عن المركز ثابت، والمسافة الثابتة دي اسمها Radius. الفكرة هنا إننا نمشي خطوة خطوة على محور السينات بداية من أقصى الشمال لحد أقصى اليمين، وفي كل خطوة نحسب قيمة الصادات اللي تقابلها. نقطة البداية على الـ هتبقى: نقطة النهاية على الـ هتبقى: بنمشي بـ Unit increments (يعني بنزود الـ بمقدار 1 في كل خطوة). إشارة الـ دي بتطلعلي قيمتين للـ لكل قيمة (قيمة موجبة ترسم الـ Upper semicircle وقيمة سالبة ترسم الـ Lower semicircle)، عشان كده الدائرة بتترسم كاملة فوق وتحت. السؤال هيديلك المركز (xc, yc) ونصف القطر r.
-بنعمل Loop لكل قيمة X من أول Xc - r لحد Xc + r.
-احسب: ارسم النقطتين الناتجين.
-ممكن تستخدم symmetry عشان تقلل الحسابات. حالة خاصة وبسيطة جداً، لو كان مركز الدائرة هو نقطة الأصل (0, 0). ساعتها مش محتاجين نطرح Xc ولا Yc، والمعادلة بتتبسط وتبقى شكلها كده: سهلة في الفهم والتنفيذ. بتستخدم Floating-point operations (عمليات الكسور العشرية)، ودي تقيلة جداً وبطيئة على البروسيسور.
-ا Not suitable for real-time rendering: مينفعش نستخدمها في ألعاب أو حاجات محتاجة فريمات سريعة لانها بطيئة. الحسابات بتاعتها مش Efficient خالص، لأنها بتعتمد على عمليات الضرب (عشان نجيب التربيع) وعملية الـ Square root (الجذر التربيعي) اللي بنحاول نتجنبها على قد ما نقدر في الجرافيكس لأنها بطيئة جداً.
-ا Large gaps: بتعمل فراغات كبيرة في الرسمة لما يكون ميل الخط قريب من الرأسي (ودي هنشرحها بالتفصيل في جزء الـ Output) عايزين نرسم دائرة مركزها (0,0) ونصف قطرها r = 5 باستخدام معادلة الدائرة الأساسية (Direct Equation). أول حاجة بنعملها إننا بنجهز المعادلة بتاعتنا بناء على المركز ونصف القطر اللي معانا، عشان نستنتج قيمة الـ y.
-المعادلة القياسية للدايرة: بما إن المركز بتاعنا هو نقطة الأصل (0,0) (Special Case)، المعادلة هتتبسط وتبقى: حساب الـ y: هنودي الـ y في طرف لوحدها عشان دي اللي هنحسبها لكل بيكسل: تحديد اتجاه اللوب (Condition): هنعمل Loop على الـ x بداية من أقصى الشمال () لحد أقصى اليمين (). بس عشان التبسيط في الجدول بتاعنا، خلينا نمشي على الربع الأول بس (من 0 لـ 5) ونشوف النقط الموجبة. هنا بقى هنمسك قيم الـ x من أول 0 لحد 5، وفي كل مرة نعوض في المعادلة بتاعتنا عشان نجيب قيمة الـ y. وطبعا عشان دالة الـ Square root بتطلع أرقام عشرية (Floating-point)، لازم نعمل Rounding (نقرب) في الخر عشان نجيب الـ Pixel الصح. Final Pixels (الربع اليمين اللي فوق):(0,5), (1,5), (2,5), (3,4), (4,3), (5,0)<img border="0" alt="Chat GPT Image May 29 2026 07 30 56 PM" src="https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">implementation Code (عشان تجرب) import math
-import pygame
-import sys def draw_circle(screen, center_x, center_y, radius): for x in range(center_x - radius, center_x + radius + 1): dx = x - center_x square_term = radius**2 - dx**2 if square_term &lt; 0: continue dy = math.sqrt(square_term) y1 = round(center_y - dy) y2 = round(center_y + dy) screen.set_at((x, y1), (255, 255, 255)) screen.set_at((x, y2), (255, 255, 255)) pygame.init()
-screen = pygame.display.set_mode((500, 500))
-pygame.display.set_caption("Circle Demo")
-clock = pygame.time.Clock() running = True
-while running: for event in pygame.event.get(): if event.type == pygame.QUIT: running = False screen.fill((0, 0, 0)) draw_circle(screen, 250, 250, 150) pygame.display.flip() clock.tick(60) pygame.quit()
-sys.exit() <br> <img border="0" alt="image" src="https://i.ibb.co/JwxbrjkK/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> لما تعمل Run للكود ده وتشوف النتيجة (زي الصورة)، هتلاحظ حاجة غريبة : من فوق ومن تحت (Top and bottom edges): الدائرة طالعة ناعمة ومظبوطة (Smooth).
-من اليمين ومن الشمال (Left and right sides): الدائرة فيها فراغات واضحة جداً تحسها متقطعة (Noticeable gaps). ليه ده بيحصل؟ الفكره في الـ Discrete nature of the pixel grid (طبيعة الشاشة المتقطعة).
-لما بنقرب من أقصى اليمين أو أقصى الشمال، ميل الدائرة (Slope) بيبقى رأسي جدا. ده معناه إن مع كل خطوة صغيرة بنمشيها على الـ X، قيمة الـ Y بتتغير برقم كبير جدا.
-ولأننا بنمشي بمقدار 1 بيكسل بس على الـ Xوبنعمل Rounding، الالجورزم بتفوت بيكسلات كتير بالطول ومبترسمهاش، فبيطلع الشكل متقطع ومفيش نقط كفاية تغطي المنطقة دي.
-عشان كده، الحل ده مش عملي وبنلجأ لحلول تانية زي الـ Midpoint Circle Algorithm اللي هتحل المشكلة دي تماماً. لو جاهز ندخل عليها، دوس! definition
-Eight-way symmetry means a circle can be divided into eight identical octants, and one computed point can generate seven other symmetric points. عشان نخلي الخوارزمية بتاعتنا Efficient (سريعة وفعالة)، أول حاجة لازم نلاحظها إن الدائرة اللي مركزها نقطة الأصل (0, 0) ليها تماثل ثماني الأبعاد. الـ Optimization ده بيوفر علينا عمليات حسابية متكررة ملهاش لازمة (Redundant calculations).
-امتى نقول على شكل إنه متماثل؟ لو قدرنا نعمله تحويلات (زي الدوران أو الانعكاس) وفضل شكله زي ما هو متغيرش. الدايرة بقى بالذات ليها Infinite rotational symmetry (تماثل دوراني لا نهائي)، يعني مهما لفيتها بأي زاوية، هتفضل شكلها دائرة.
-يعني إحنا نقدر نقسم الدائرة لـ 8 حتت متساوية (كانها بيتزا 🍕 ) بخطوط بتترسم كل 45 درجة (عند 0°، 45°، 90°، 135°، وهكذا).
-كل حتة من التمانية دول متطابقة تماما مع الباقيين. يعني لو حسبنا ورسمنا تمن واحد بس (1/8)، نقدر نعكسه ونلفه عشان نجيب الـ 7 أتمان الباقيين ببلاش من غير حسابات معقدة.
-<br> <img src="https://www.tutorialspoint.com/computer_graphics/images/bresenhams_circle_generation_algorithm.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> كل تمن من الـ 8 أتمان بنسميه Octant. لو إحنا حسبنا نقطة واحدة بس اسمها موجودة على محيط الدائرة في الـ Octant الأول، نقدر نستنتج الـ 7 نقط الباقيين بمجرد إننا نبدل الـ مكان الـ أو نغير الإشارات بتاعتهم (موجب وسالب).
-<br> <img src="https://i.ytimg.com/vi/K64iHenRpso/hqdefault.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 600px; max-width: 100%;"> افرض إن الالجورزم بتاعتنا (بعد ما عملت حساباتها المعقدة) طلعت نقطة واحدة بس في التمن الأول وهي (2, 7) ، يعني الـ X = 2 والـ Y = 7. بدل ما الالجورزم تحسب باقي الدائرة، هتاخد النقطة دي وتطبق عليها الجدول اللي فوق عشان ترسم 8 بيكسلات في نفس اللحظة: النقطة في Octant 1 هتبقى: النقطة في Octant 2 هتبقى: النقطة في Octant 3 هتبقى: النقطة في Octant 4 هتبقى: النقطة في Octant 5 هتبقى: النقطة في Octant 6 هتبقى: النقطة في Octant 7 هتبقى: النقطة في Octant 8 هتبقى: لو استخدمنا الجورزم وحسبنا اول نقطة في التمن الاول لدائرة مركزها (0,0)، والنقطة دي (4, 3). عايزين نجيب الـ 7 نقط المتماثلة معاها في باقي الدائرة من غير ما نحسب معادلة الدائرة من أول وجديد.
-أول حاجة بنعملها إننا بنجهز قواعد الانعكاس (Reflection rules) اللي الخوارزمية بتبرمجها. إحنا عارفين إن الدائرة متماثلة في الـ 8 أثمان.لو النقطة الأساسية هي x = 4 و y = 3:
-عشان نروح للتمن اللي جنبه، بنعكس الـ x مكان الـ y.
-عشان نروح للنص الشمال، بنخلي السينات بالسالب.
-عشان نروح للنص اللي تحت، بنخلي الصادات بالسالب.
-هنا بقى الخوارزمية بتمسك النقطة اليتيمة اللي حسبتها (4, 3)، وتطبق عليها الـ 8 قواعد في نفس اللفة عشان تنور 8 بيكسلات مرة واحدة:Final Pixels:(4,3), (3,4), (-3,4), (-4,3), (-4,-3), (-3,-4), (3,-4), (4,-3)<br><img border="0" alt="Chat GPT Image May 29 2026 07 50 37 PM" src="https://i.ibb.co/hJgd2sz7/Chat-GPT-Image-May-29-2026-07-50-37-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Eight-way Symmetry Example Code
-import pygame
-import math # Constants
-WIDTH, HEIGHT = 800, 600
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-BLUE = (0, 0, 255) # For octant labels # Center and radius of the circle
-CENTER_X, CENTER_Y = WIDTH // 2, HEIGHT // 2
-RADIUS = 250 # Initialize Pygame
-pygame.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Eight-way Symmetry Example")
-screen.fill(WHITE) # Font for labeling
-font = pygame.font.SysFont("Arial", 20) # 1. Draw the circle using parametric form:
-# x = r * cos(theta), y = r * sin(theta)
-for theta in range(0, 360): rad = math.radians(theta) x = CENTER_X + round(RADIUS * math.cos(rad)) y = CENTER_Y - round(RADIUS * math.sin(rad)) pygame.draw.circle(screen, BLACK, (x, y), 1) # 2. Draw octant lines (every 45 degrees)
-for i in range(8): angle_deg = i * 45 rad = math.radians(angle_deg) end_x = CENTER_X + RADIUS * math.cos(rad) end_y = CENTER_Y - RADIUS * math.sin(rad) pygame.draw.line( screen, BLACK, (CENTER_X, CENTER_Y), (end_x, end_y), 1 ) # 3. Octant labels
-labels = [ "Oct1: (x, y)", "Oct2: (y, x)", "Oct3: (-y, x)", "Oct4: (-x, y)", "Oct5: (-x, -y)", "Oct6: (-y, -x)", "Oct7: (y, -x)", "Oct8: (x, -y)"
-] for i in range(8): angle_deg = i * 45 + 22.5 rad = math.radians(angle_deg) # Place text inside the circle label_x = CENTER_X + (RADIUS * 0.7) * math.cos(rad) label_y = CENTER_Y - (RADIUS * 0.7) * math.sin(rad) text = font.render(labels[i], True, BLUE) text_rect = text.get_rect(center=(label_x, label_y)) screen.blit(text, text_rect) # Update the display
-pygame.display.flip() # Main loop to keep window open
-running = True
-while running: for event in pygame.event.get(): if ( event.type == pygame.QUIT or ( event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE ) ): running = False pygame.quit() definition
-Midpoint Circle Algorithm is an efficient circle drawing algorithm that uses decision parameters to choose the next pixel. الالجورزم دي بتعتبر من أكفأ الطرق عشان نرسم بيها دوائر من غير الفراغات اللي شفناها قبل كده. فكرتها إنها بتيجي بين بيكسلين محتملين (واحد أفقي وواحد قطري (بالورب))، وتحسب نقطة الـ Midpoint (نقطة المنتصف) بينهم، وتشوف خط الدائرة الحقيقي أقرب لأنهي بيكسل فيهم عشان تنوره. ا Symmetry of Circles: بنستغل الـ 8-way symmetry الي اتكلمنا عنها قبل كده عشان نحسب تمن واحد بس (1/8) ونعكسه 7 مرات.
-ا Decision Parameter: بنستخدم معامل قرار عشان نحدد البيكسل الصح اللي عليه الدور.
-ا Integer Arithmetic: الميزة هنا إننا بنتجنب الـ Floating-point (الكسور) والـ Roots (الجذور) خالص، وكل حساباتنا بتبقى أرقام صحيحة، فبتبقى Computationally efficient (سريعة جداً للبروسيسور). بنبدأ بنقطة المركز (X0, Y0) ونصف القطر r.
-ا Initialize variables: بندي قيم ابتدائية للمتغيرات بتاعتنا للتمن الأول: x = 0
-y = r بنحسب الـDecision Parameter:
-decision parameter = 1 - r بنعمل Plot لأول نقطة وبنستخدم الـ Symmetry عشان نرسم الـ 8 نقط المتماثلين.
-في كل خطوة، بنحدث الـ Decision parameter وبناءً عليه بنقرر: هل نزود الـ بس؟ ولا نزود الـ وننقص الـ ؟ عايزين نرسم دائرة مركزها (0,0) ونصف قطرها r = 5 باستخدام معادلة الدائرة الأساسية (Direct Equation).
-عشان نقدر نعمل جدول trace صغير، خلينا ناخد مثال مصغر من النقط اللي في الكود:
-مركز الدائرة: (0, 0)
-نصف القطر (): 5
-تجهيز الخوارزمية:
-بنبدأ من أول نقطة خالص فوق خالص وهي نقطة البداية: x = 0 و y = r = 5.
-بنحسب قيمة الـ decision_param من القانون: الـ Loop بتاعنا هيفضل شغال طول ما قيمة x &lt; y.
-متتخضش هنا بقى الالجورزم بتشوف قيمة الـ Pkفي كل لفة عشان تاخد القرار.
-<br><img border="0" alt="Chat GPT Image May 29 2026 07 53 24 PM" src="https://i.ibb.co/v42DkXb5/Chat-GPT-Image-May-29-2026-07-53-24-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Midpoint Circle Algorithm Code
-import pygame
-import math # Function for midpoint circle algorithm to calculate circle points
-def midpoint_circle(center_x, center_y, radius): x = 0 y = radius decision_param = 1 - radius points = [] # Function to add 8 points for each symmetrical point in octants def add_symmetric_points(cx, cy, x, y): points.extend([ (cx + x, cy + y), (cx - x, cy + y), (cx + x, cy - y), (cx - x, cy - y), (cx + y, cy + x), (cx - y, cy + x), (cx + y, cy - x), (cx - y, cy - x) ]) # Add the initial points add_symmetric_points(center_x, center_y, x, y) # Begin algorithm loop to create circle points incrementally while x &lt; y: x += 1 if decision_param &lt; 0: decision_param += 2 * x + 1 else: y -= 1 decision_param += 2 * (x - y) + 1 # Add next set of symmetrical points add_symmetric_points(center_x, center_y, x, y) return points # ==========================================
-# Main Execution Block
-# ==========================================
-if __name__ == "__main__": # Initialize Pygame pygame.init() # Colors WHITE = (255, 255, 255) BLACK = (0, 0, 0) # Logical screen settings WIDTH, HEIGHT = 800, 600 PIXEL_SIZE = 1 # Circle parameters radius = 250 center = (WIDTH // 2, HEIGHT // 2) # Set up display screen = pygame.display.set_mode( (WIDTH * PIXEL_SIZE, HEIGHT * PIXEL_SIZE) ) pygame.display.set_caption( "Circle Drawing Using Midpoint Algorithm" ) # Fill background with white color screen.fill(WHITE) # Calculate all circle points using the algorithm points = midpoint_circle(*center, radius) # Draw each generated point for x, y in points: pygame.draw.rect( screen, BLACK, ( x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE ) ) # Update display pygame.display.flip() # Main loop running = True while running: for event in pygame.event.get(): if ( event.type == pygame.QUIT or ( event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE ) ): running = False # Quit Pygame pygame.quit() definition
-Bresenham's Circle Algorithm Similar to the Midpoint algorithm but uses integer arithmetic exclusively, making it faster and more efficient for hardware implementation. اBresenham عمل خوارزمية للدوائر زي ما عمل للخطوط بالظبط. شبه الـ Midpoint بس متظبطة أكتر بحيث إن كل عملياتها تكون جمع وطرح وضرب في أرقام صحيحة بس، وده بيخليها سريعه جدا. بتستخدم الـ Symmetry برده عشان تقلل الحسابات.
-بتحسب حاجة اسمها Error term (نفس فكرة الـ Decision parameter) عشان تقرر إحنا هنمشي أفقي (Increment x) ولا قطري (بالورب) (Decrement y). ا Initialize: x = 0
-y = r اDecision parameter بنرمزله بـ d وبنحسبه كده: d = 3 - 2r ا While loop: طول ما X &lt;= Y (يعني لسه مخلصناش التمن الأول بتاع الدائرة): بنعمل Plot (رسم) للـ 8 نقط المتماثلين حوالين المركز (Cx, Cy). ا If d &lt; 0: ده معناه إننا هنمشي أفقي (Move horizontally):
-x = x + 1 بنحدث معامل القرار: d = d + 4x + 6 ا Else: ده معناه إننا هنمشي قطري (Move diagonally):
-x = x + 1
-y = y - 1 بنحدث معامل القرار: d = d + 4(x - y) + 10 عايزين نرسم دايرة مركزها (0,0) ونصف قطرها r = 5 باستخدام Bresenham's Circle Algorithm.
-أول حاجة بنجهز المتغيرات بتاعتنا قبل ما ندخل في الـ Loop: نقطة البداية: و . بنحسب قيمة الـ Decision Parameter من قانون Bresenham d = 3 - 2r: الكود بيرسم أول 8 نقط متماثلة بناءً على النقطة (0, 5). شرط الدوران (Condition): الـ Loop بيفضل شغال طول ما x≤y. جوه الـ Loop، الخوارزمية بتزود الـ x بمقدار 1 الأول، وبعدين تبص على إشارة الـ d عشان تقرر هتقلل الـ y ولا لأ، وتحسب الـ d الجديدة بناءً على النقط الجديدة. النقط اللي طلعت من الكود ده للربع الأول هي: (0,5), (1,5), (2,4), (3,3), (4,2).
-<br><img border="0" alt="Chat GPT Image May 29 2026 08 10 00 PM" src="https://i.ibb.co/HL88Jxc2/Chat-GPT-Image-May-29-2026-08-10-00-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Bresenham Circle Algorithm Code
-import pygame # Function for Bresenham's circle algorithm to calculate circle points
-def bresenham_circle(center_x, center_y, radius): x = 0 y = radius d = 3 - 2 * radius points = [] # Function to add 8 points for each symmetrical point in octants def add_symmetric_points(cx, cy, x, y): points.extend([ (cx + x, cy + y), (cx - x, cy + y), (cx + x, cy - y), (cx - x, cy - y), (cx + y, cy + x), (cx - y, cy + x), (cx + y, cy - x), (cx - y, cy - x) ]) # Add the initial symmetric points for (0, radius) add_symmetric_points(center_x, center_y, x, y) # Begin algorithm loop while x &lt;= y: x += 1 if d &lt; 0: d = d + 4 * x + 6 else: y -= 1 d = d + 4 * (x - y) + 10 # Add next set of symmetrical points add_symmetric_points(center_x, center_y, x, y) return points # ==========================================
-# Main Execution Block
-# ==========================================
-if __name__ == "__main__": # Colors WHITE = (255, 255, 255) BLACK = (0, 0, 0) # Logical screen settings WIDTH, HEIGHT = 80, 60 PIXEL_SIZE = 10 # Circle parameters radius = 25 center = (WIDTH // 2, HEIGHT // 2) # Initialize Pygame pygame.init() screen = pygame.display.set_mode( (WIDTH * PIXEL_SIZE, HEIGHT * PIXEL_SIZE) ) pygame.display.set_caption( "Bresenham's Circle Algorithm" ) # Fill background screen.fill(WHITE) # Draw the circle points points = bresenham_circle(*center, radius) # Render the calculated points on screen for x, y in points: pygame.draw.rect( screen, BLACK, ( x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE ) ) # Update display pygame.display.flip() # Main loop running = True while running: for event in pygame.event.get(): if ( event.type == pygame.QUIT or ( event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE ) ): running = False pygame.quit() definition
-Parametric Circle Drawing Algorithm uses trigonometric functions ( and ) to calculate the coordinates of the circle. While simple, it is computationally expensive due to the use of floating-point operations. دي طريقة مختلفه بتعتمد على الدوال المثلثية اللي أخدناها في الرياضة.
-سهلة في الفهم، بس مكلفة حسابيا عشان بتستخدم floating-point operations. بنستخدم الـ Parametric equation بتاعت الدائرة، اللي بتجيب الإحداثيات عن طريق زاوية اسمها x = x0 + r cos(θ)
-y = y0 + r sin(θ) بنعمل Loop ونزود الزاوية من لحد (يعني لفة كاملة 360 درجة) عشان نولد كل النقط بتاعت الدائرة. خزن center (x0, y0) و radius r.
-خلي θ تتحرك من 0 لـ 2π.
-لكل قيمة θ، احسب x و y.
-ارسم النقطة الناتجة. استخدام sin, cos, و floating-point operations بيخليها أبطأ من integer-based algorithms. عايزين نرسم دايرة مركزها (0,0) ونصف قطرها r = 5 باستخدام معادلة الدائرة الأساسية (Direct Equation). المعادلة البارامترية (Parametric equation) للدائرة بتعتمد على زاوية الدوران (ثيتا). القوانين اللي هنعوض فيها هي:
-بما إن المركز (0,0)، القوانين هتبقى:الـ Loop بتاعنا بيلف على الزوايا من لحد .عشان منطولش الجدول بـ 360 خطوة، خلينا نمسك شوية زوايا مميزة في الربع الأول (من 0 لـ 90 درجة) ونشوف النقط بتتحسب إزاي:
-زي ما إنت شايف، الطريقة دي بتجيب النقط بشكل مباشر من غير ما تعتمد على النقطة اللي قبلها، وده اللي بيخليها مختلفة عن الـ Incremental Algorithms زي (DDA أو Bresenham).
-<br><img border="0" alt="Chat GPT Image May 29 2026 08 24 58 PM" src="https://i.ibb.co/99krP9Qs/Chat-GPT-Image-May-29-2026-08-24-58-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Parametric Circle Drawing Algorithm Code
-import pygame
-import math # ==========================================
-# Parametric Circle Drawing Algorithm
-# ========================================== # Initialize Pygame
-pygame.init() screen = pygame.display.set_mode((600, 500))
-pygame.display.set_caption( "Parametric Circle Drawing Algorithm"
-) # Colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0) # Fill background
-screen.fill(WHITE) # Circle parameters
-center_x, center_y = 300, 250
-radius = 200 # Draw circle using parametric equation
-for theta in range(0, 360): # Convert degrees to radians rad = math.radians(theta) # Calculate x and y coordinates x = center_x + radius * math.cos(rad) # Invert y because screen y increases downward y = center_y - radius * math.sin(rad) # Plot the pixel pygame.draw.circle( screen, BLACK, (round(x), round(y)), 1 ) # Update the display
-pygame.display.flip() # Main loop
-running = True
-while running: for event in pygame.event.get(): if ( event.type == pygame.QUIT or ( event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE ) ): running = False # Quit Pygame
-pygame.quit() كده خلصنا الجزء التاني
-اتكلمنا في الجزء ده عن Circle Drawing Algorithms - إزاي الكمبيوتر بيسوي Rasterization ويحول الدوائر الرياضية لـ Pixels على الشاشة.
-عرفنا 5 طرق لرسم الدواير: Circle Equation Method - سهل ومباشر بس فيه Square Root و Gaps كبيرة
-Eight-Way Symmetry - إن الدائرة ليها 8 Octants متماثلة، فبنحسب نقطة واحدة ونطلع 7 نقط تانية
-Midpoint Circle Algorithm - بيعتمد على Decision Parameter و Symmetry، بيحل مشكلة الـ Gaps
-Bresenham's Circle Algorithm - Integer-Based ومناسب للـ Hardware
-Parametric Circle - بيستخدم sin و cos، سهل فهمه بس أبطأ ]]></description><link>lectures/chapter-4-[part-2]-fundamental-drawing-algorithms-in-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 4 - [Part 2] Fundamental Drawing Algorithms in Computer Graphics.md</guid><pubDate>Sun, 31 May 2026 13:49:13 GMT</pubDate><enclosure url="https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/PzjxQFGn/Chat-GPT-Image-May-29-2026-07-30-56-PM.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Fundamental Drawing Algorithms in Computer Graphics - Chapter 4 - [Part 1]]]></title><description><![CDATA[مهم قبل ما تبدا الشابتر ده طويل ف اضطريت اقسمه لجزئين , وكمان الدكتور حاطط قوانين من غير امثلة (هو نزل مثالين بس علي المنصه) انا معرفش بصراحه هيجيب مسائل علي الحاجات دي ولا لا بس انا جبت امثلة كراسة العملي وشرحتها احتياطي.
-هتلاقي جداول وكلام كتير وطويل متتخضش الموضوع سهل اوي هو كل مشكلته انه طويل بس لو بصيت علي الامثله هتفهمها لوحدك اصلا.
-هتلاقي اكواد العملي تحت كل الجورزم للي عايز يجرب بس حسب كلام الدكتور هيا مش علينا حفظ.
-طول بالك وقول بسم الله مقدمه
-الشابتر ده هنقسمه لجزئين: الجزء الأول (اللي إحنا فيه) عن Line Drawing Algorithms، والتاني عن Circle Drawing Algorithms. الـ Drawing Algorithms هي الخوارزميات اللي بتخلي الكمبيوتر يرسم أشكال أساسية على شاشة مبنية من pixels.
-هنفهم ليه بنحتاج نحول الوصف الرياضي للشكل لمجموعة pixels، وبعدين هنتعمق في line drawing algorithms زي Direct Line Equation, DDA, و Bresenham — مع أمثلة تطبيقية لكل واحد. في Computer Graphics، رسم الأشكال الأساسية زي الخطوط والدواير حاجة اساسية عشان نعرف نرسم اي object.
-غالبا الشكل بيتوصف رياضيا بأرقام: الخط بيتحدد بنقطة بداية ونقطة نهاية.
-الدائرة بتتحدد بمركز ونصف قطر. المشكلة إن الشاشة مش continuous زي الرياضيات، هيا عبارة عن grid من pixels, عشان كده محتاجين نحول الوصف الرياضي ده لـ pixels تتلون على الشاشة.
-الفكرة الأساسية
-الـ Drawing Algorithm بيقرر أنهي pixels تتلون عشان الشكل الرياضي يبان أقرب حاجة للشكل الحقيقي على شاشة raster. خدنا الشابتر الي فات الـ Geometric Primitives وعرفنا انها الأشكال الأساسية اللي بنبني منها الرسومات, زي: Line
-Circle
-Polygon
-Curve كل primitive ليه وصف رياضي: الـ Line: بيتحدد بـ start point و end point.
-الـ Circle: بيتحدد بـ center و radius. الوصف الرياضي ده بيبقى في abstract coordinate space، يعني وصف دقيق على مستوى الرياضيات مش على مستوى الـ pixels.
-definition
-Rasterization is the process of converting continuous mathematical shapes into a set of discrete pixels. الشاشات الحديثة بتبقي Raster-Based، يعني الصورة فيها عبارة عن pixels مترتبة في grid مستطيل (عشان كده الشكل الرياضي مينفعش يتعرض مباشرة على الشاشة).
-لازم الاشكال الرياضية دي تتحول لبكسلات. عشان نفهم الموضوع، تخيل ان عندنا grid وعايزين نرسم vertical line (خط رأسي) من (2, 9) لـ (2, 16): ا x = 2 ثابت.
-ا y بيتحرك من 9 لـ 16. في الرياضة الفرق صغير ,بس في الشاشات الحقيقية الموضوع كبير، الـ resolutions ممكن يعدي 1000 × 1000 pixels.
-عشان كده الالجورزمز لازم تبقى accurate و efficient، خصوصا في real-time rendering.
-definition
-Drawing algorithms are fundamental techniques used in computer graphics to render shapes, lines, curves, and other geometric primitives on a screen or image. الـ Drawing Algorithms بتحدد إزاي lines و circles و curves وباقي primitives تتحول لـ pixels.
-الهدف إن الشكل النهائي يبقى قريب قدر الإمكان من الشكل الرياضي المقصود.
-بتستخدم في: Video games
-Simulations
-Scientific visualization
-Graphic design tools Note
-الشابتر بيركز على implementation توضيحي واحد لكل algorithm عشان يشرح الفكرة الأساسية، والتطبيقات والكود موجودين في كراسة العملي.
-definition
-Line drawing algorithms approximate straight line segments on discrete, pixel-based displays. زي ما قلنا قبل كده، الشاشة دي عبارة عن Grid من البيكسلات، فعشان ترسم خط مستقيم مايل، مستحيل يجي بالظبط على البيكسلات، عشان كده بنعمل تقريب (Approximation).
-الـ algorithm الأساسية زي الـ Digital Differential Analyzer (DDA) والـ Bresenham's algorithm بترسم الخط بلون واحد، وده بيعمل المشكله الي شوفناها قبل كده الـ aliasing . وبنستخدم الـ Anti-aliasing اللي بتدمج ألوان البيكسلات اللي حوالين الخط عشان تنعم الحواف دي. دي أبسط طريقة ممكن تفكر فيها، وهي إننا نستخدم معادلة الخط المستقيم العادية جداً اللي درسناها في الرياضة في ثانوي.
-عشان نرسم خط باستخدام الـ Slope-intercept form، بنمشي على الخطوات دي: بنحسب الميل (Slope) اللي هو والجزء المقطوع من محور الصادات (Intercept) اللي هو .
-بنعمل لوب او بنلف على قيم الـ اللي بين نقطة البداية والنهاية.
-لكل قيمة ، بنحسب قيمة الـ اللي بتقابلها من المعادلة: y = mx + c في الآخر بنعمل Plot (رسم) للبيكسل بعد ما نعمل التقريب (Rounding) لقيم سهلة ومباشرة.
-ممكن تتعامل مع : positive, negative, zero , or undefined slopes . معادلة الخط المستقيم بنستخدمها كأساس في خوارزميات تانية زي: ا DDA (Digital Differential Analyzer).
-ا Bresenham's Line Algorithm (using an implicit form). بتعتمد على Floating-Point Arithmetic (عمليات الكسور العشرية دي بطيئة شوية للكمبيوتر وممكن تدخلنا في rounding errors).
-أقل كفاءة من algorithms مبنية على integers زي Bresenham. الخط ممكن يتمثل بأكتر من شكل رياضي.
-في الـ Raster graphics، بنختار البيكسلات الأقرب لمسار الخط المثالي.
-لازم نحافظ على الـ Aspect ratio عشان الشكل ميبقاش مشوه. عايزين نرسم خط بين النقطتين (2,2) و (10,6) باستخدام معادلة الخط المستقيم المباشرة . أول حاجة بنعملها إننا بنحسب الـ Slope (الميل) اللي بنرمزله بـ m، والـ Y-intercept (الجزء المقطوع من محور الصادات) اللي بنرمزله بـ c. حساب الميل (): هنعوض في القانون ده عشان نجيب الميل: حساب الـ Y-intercept (): هنعوض بنقطة البدايه 2,2 في المعادلة c = y - mx (تقدر تعوض بأي نقطة عادي ) عشان نجيب c: المعادلة النهائية للخط: كده معانا c, m هنعوض بقي في القانون y = mx + c
-يبقى المعادلة اللي هنعوض فيها لكل بيكسل هي: تحديد اتجاه اللوب (Condition): بما إن التغير في السينات أكبر من التغير في الصادات ، يبقى ده Shallow line (خط مائل للأفقي). عشان كده إحنا هنعمل Loop على الـ (هنزود الـ بمقدار 1 في كل خطوة)، ونحسب الـ من المعادلة. لو Δy هي الأكبر، يبقى هنمشي وراها. يعني هنعمل Loop على محور الصادات (هنزود الـ بمقدار 1 في كل خطوة), ونحسب x بالقانون ده هنا بقى بنمسك قيم X من أول 2 لحد 10، وفي كل مرة نعوض في المعادلة بتاعتناy = 0.5x + 1عشان نجيب قيمة الـ y.
-وطبعا عشان دي أرقام عشرية (Floating-point)، لازم نعمل Rounding (نقرب) في الخر عشان نجيب الـ Pixel الصح.
-Final Pixels:(2,2), (3,3), (4,3), (5,4), (6,4), (7,5), (8,5), (9,6), (10,6)<img border="0" alt="Chat GPT Image May 29 2026 07 06 07 PM" src="https://i.ibb.co/84DdNVv4/Chat-GPT-Image-May-29-2026-07-06-07-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Line Equation Code (للتجربه)
-import pygame # Function to draw a line using the line equation (y = mx + c)
-def draw_line_equation(x0, y0, x1, y1): # 1. Handle Vertical Line (Infinite slope) if x0 == x1: for y in range(min(y0, y1), max(y0, y1) + 1): screen.set_at((x0, y), Red) return # بنعمل return عشان الكود ميحسبش الميل ويضرب Division by zero # 2. Calculate Slope (m) and Y-intercept (c) m = (y1 - y0) / (x1 - x0) # Slope c = y0 - m * x0 # Y-intercept # 3. Draw the line based on the slope type if abs(x1 - x0) &gt; abs(y1 - y0): # Shallow line (more horizontal) -&gt; Loop over x for x in range(min(x0, x1), max(x0, x1) + 1): y = m * x + c screen.set_at((x, round(y)), Black) else: # Steep line (more vertical) -&gt; Loop over y for y in range(min(y0, y1), max(y0, y1) + 1): x = (y - c) / m screen.set_at((round(x), y), Blue) # ==========================================
-# Main Execution Block
-# ==========================================
-if __name__ == "__main__": # Initialize pygame pygame.init() # Define colors Black = (0, 0, 0) Red = (255, 0, 0) Blue = (0, 0, 255) White = (255, 255, 255) # Get user input from the console print("Enter coordinates (x0, y0, x1, y1) separated by commas:") input_str = input("Example -&gt; 50,50,700,500: ") x0, y0, x1, y1 = map(int, input_str.split(',')) # Set up display screen = pygame.display.set_mode((800, 600)) pygame.display.set_caption("Line Drawing Using Line Equation") screen.fill(White) # Draw the line draw_line_equation(x0, y0, x1, y1) # Add text labels for start and end points font = pygame.font.Font("freesansbold.ttf", 13) text_surface1 = font.render(f"({x0},{y0})", True, Black) screen.blit(text_surface1, (x0 + 5, y0 - 17)) text_surface2 = font.render(f"({x1},{y1})", True, Black) screen.blit(text_surface2, (x1 + 5, y1 + 3)) # Update the display to show everything pygame.display.flip() # Main loop to keep the window open running = True while running: for event in pygame.event.get(): if event.type == pygame.QUIT: running = False if event.type == pygame.KEYDOWN: if event.key == pygame.K_ESCAPE: running = False pygame.time.wait(10) # Reduce CPU usage pygame.quit() definition
-DDA is a line-drawing algorithm that incrementally computes pixel positions using floating-point arithmetic. ده بقى Algorithm أذكى شوية. الغرض بتاعه إنه يقرب الخط المستقيم من خلال حساب إحداثيات البيكسلات اللي في النص خطوة بخطوة (Step-by-step). الفكرة الأساسية إننا بنزود الـ X أو الـ Y بخطوات صغيرة جداً بناءً على ميل الخط، وبنختار الاتجاه الغالب (Dominant direction) عشان نقلل الحسابات.
-يعني بنمشي خطوة خطوة بدل ما نحسب المعادلة كلها من الصفر كل مرة. خد نقطتين: (x0, y0) و (x1, y1).
-احسب الفرق: حدد عدد الخطوات (ناخد القيمة الأكبر بين الـ والـ .): احسب مقدار الزيادة في كل خطوة: ابدأ من (x0, y0).
-في كل خطوة زود x بـ xinc و y بـ yinc.
-ارسم pixel عند الإحداثيات بعد rounding. سهل ومفهوم.
-أسهل في التنفيذ من algorithms كتير.
-أسرع من direct line equation عشان بيستخدم incremental generation.
-بيقلل التكرار في الحسابات. لسه بيستخدم Floating-Point Arithmetic.
-ممكن يراكم rounding errors.
-ممكن يبقى أقل دقة عند endpoints. عايزين نرسم خط بين النقطتين (2,2) و (10,6) باستخدام DDA. أول حاجة بنعملها إننا بنجيب الفرق بين نقطة النهاية ونقطة البداية، عشان نعرف إحنا هنتحرك مسافة قد إيه على محور السينات والصادات,الفرق ده بنسميه Delta X و Delta Y.
-Δx = 10 - 2 = 8
-Δy = 6 - 2 = 4 بعد كده بنحسب الـ Steps. بناخد القيمة الأكبر بين الـ والـ . ليه؟ عشان نضمن إننا بنمشي خطوة خطوة على المحور الأطول، ويبقى الخط بتاعنا متصل ومفيش فيه فراغات.
-steps = max(8, 4) = 8 أخيراً، بنحسب الـ Increment (مقدار الزيادة). دي القيمة اللي هنزودها على الـ والـ في كل خطوة. بنقسم المسافة الكلية على عدد الخطوات.
-x_inc = Δx / steps = 8 / 8 = 1
-y_inc = Δy / steps = 4 / 8 = 0.5 يبقى كده إحنا فهمنا إن في كل خطوة، الـ هتزيد بمقدار 1 صحيح، بس الـ هتزيد بمقدار 0.5 (يعني نص خطوة). هنا بنبدأ التنفيذ. بنبدأ من أول نقطة (2.0, 2.0) وكل دورة بنزود الـ x_inc والـ y_inc.
-المشكلة اللي بتظهر هنا زي ما إنت شايف، إن الـ بتطلع بكسور زي 2.5 و 3.5. طبعا الشاشة مفهاش بكسل ونص, البيكسل ده مربع مش بيتقسم.
-عشان كده إحنا لازم نعمل خطوة الـ Rounding (التقريب)، عشان نحول الكسور دي لأرقام صحيحة الجهاز يقدر يفهمها (مثلا 2.5 هتتقرب وتبقى 3).
-(2,2), (3,3), (4,3), (5,4), (6,4), (7,5), (8,5), (9,6), (10,6)
-<br><img border="0" alt="Chat GPT Image May 29 2026 03 05 21 PM" src="https://i.ibb.co/R4ysxzcZ/Chat-GPT-Image-May-29-2026-03-05-21-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">definition
-Bresenham's Line Algorithm is an efficient integer-based algorithm for drawing straight lines on raster displays. ا Bresenham بيستخدم Decision Parameter عشان نختار البيكسل اللي عليه الدور من غير أي كسور.
-ميزته إنه بيتجنب floating-point calculations.
-عشان كده أسرع وأنسب للهاردوير. خد نقطتين: (x0, y0) و (x1, y1).
-احسب:
-Δx = x1 - x0
-Δy = y1 - y0 حدد نوع الخط (بنحدد ميل الخط عشان نعرف هنمشي على أي محور): لو |Δy| &lt;= |Δx| يبقى الخط Shallow، (يعني ميله خفيف وأقرب للأفقي).
-لو |Δy| &gt; |Δx| يبقى الخط Steep، (يعني ميله حاد وأقرب للرأسي). استخدم الـdecision parameter الي هو p: في shallow line: p = 2Δy - Δx في steep line:
-p = 2Δx - Δy بنبدأ من أول نقطة ,وفي كل خطوة بنحدث معامل القرار وبنرسم البيكسل اللي بعده. عايزين نرسم نفس الخط بين النقطتين (2,2) و (10,6) بس المرة دي باستخدام خوارزمية Bresenham. اول حاجة بنحدد نقط البداية والنهاية، وبنجيب الفرق بينهم.
-x0 = 2, y0 = 2
-x1 = 10, y1 = 6 نحسب الـ Delta X والـ Delta Y:
-Δx = 10 - 2 = 8
-Δy = 6 - 2 = 4 بما إن Δx &gt; Δy، يبقى الخط ده ميله خفيف (Shallow line)، وعشان كده إحنا هنعمل Iterate (نلف) على محور السينات x (يعني الـ x هتزيد دايما بـ 1)، والقرار كله هيبقى: هل نزود الـ y ولا نسيبها زي ما هي؟ عشان ناخد القرار ده من غير ما نستخدم أي كسور، بنحسب حاجة اسمها Decision Parameter (معامل القرار) وبنرمزله بـ p. أول قيمة ليه بنحسبها كده:
-p0 = 2Δy - Δx = 2(4) - 8 = 8 - 8 = 0 بعد كده في كل خطوة، بنبص على قيمة الـ p وبناءً عليها بنقرر: لو p ≥ 0: الـ y بتزيد بـ 1، وبنحسب الـ p الجديدة بالمعادلة دي: p = p + 2Δy - 2Δx لو p &lt; 0: الـ y بتفضل ثابتة زي ما هي، وبنحسب الـ p الجديدة بالمعادلة دي:
-p = p + 2Δy لاحظ إن كل الحسابات هنا جمع وطرح لأرقام صحيحة (Integers)، مفيش أي Rounding ولا كسور خالص
-لاحظ برده اننا بنزود الـ X كل مره بس الـ Y ساعات اه وساعات لا.
-(2,2), (3,3), (4,3), (5,4), (6,4), (7,5), (8,5), (9,6), (10,6) بما إن دي نفس النقط اللي طلعت من الـ DDA، فالرسمة هتكون هي هي بالظبط على الشبكة، بس الفكرة كلها إن الطريقة اللي وصلنا بيها للنقط دي أسرع بكتير ومفيهاش وجع دماغ الكسور.
-<br><img border="0" alt="Chat GPT Image May 29 2026 07 21 56 PM" src="https://i.ibb.co/Z1YS9Qpv/Chat-GPT-Image-May-29-2026-07-21-56-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">كده خلصنا الجزء الأول
-اتكلمنا في الجزء ده عن Drawing Algorithms - إزاي الكمبيوتر بيعمل Rasterization ويحول الأشكال الرياضية لـ Pixels على الشاشة.
-بالنسبة لـ Line Drawing عرفنا 3 طرق: ا Direct Line Equation (y = mx + c) - سهلة وبديهية بس فيها Floating-Point و Rounding Errors
-ا DDA - بيحسب Incrementally خطوة بخطوة، أسهل من Direct بس لسه فيه Floating-Point ومحتاج Rounding
-ا Bresenham's Line Algorithm - الأسرع عشان Integer-Based بالكامل وبيستخدم Decision Parameter، مش محتاج Rounding ولا كسور ]]></description><link>lectures/chapter-4-[part-1]-fundamental-drawing-algorithms-in-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 4 - [Part 1] Fundamental Drawing Algorithms in Computer Graphics.md</guid><pubDate>Sun, 31 May 2026 12:45:10 GMT</pubDate><enclosure url="https://i.ibb.co/84DdNVv4/Chat-GPT-Image-May-29-2026-07-06-07-PM.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/84DdNVv4/Chat-GPT-Image-May-29-2026-07-06-07-PM.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Index]]></title><description><![CDATA[ 29\5\2026 قبل ما تبدأ الشرح كالعاده مغطي المنهج كله ومش مفوت حاجة, لو ذاكرت من هنا بس باذن الله تخرج فاهم المنهج كله
-المنهج كله مشروح
-طبعا الدكتور هيجيب في الامتحان اسالة من كراسة العملي فمتنساش تذاكرها لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/Index.md</guid><pubDate>Sun, 31 May 2026 00:40:56 GMT</pubDate></item><item><title><![CDATA[3D Computer Graphics and Animation - Lecture 6]]></title><description><![CDATA[مقدمة الشابتر ده بيتكلم عن 3D Computer Graphics و Animation.
-هنفهم إزاي الـ 3D scenes بتتحول لـ 2D images، الفرق بين shading techniques زي Gouraud و Phong، وبعدها ندخل على Ray Tracing و Texture Mapping و 3D Modeling.
-في الآخر هنتكلم عن Animation وأنواعها ومبادئها الأساسية. الـ 2D كان آخره طول وعرض, الـ 3D بيزود عليهم بعد التالت وهو العمق (Depth). بنعمل كده عشان نقلد العالم الحقيقي زي مابنشوفه بالظبط. أي مشهد (3D Scene)، بيتكون من شوية حاجات أساسية: <img border="0" alt="Chat GPT Image May 30 2026 03 21 46 PM" src="https://i.ibb.co/wThv9K6/Chat-GPT-Image-May-30-2026-03-21-46-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-في الـ 3D، إحنا بنخزن بيانات للأجسام دي في الكمبيوتر، وبنعمل عليها حسابات زي: ا Transformations (زي النقل والدوران)
-ا Lighting (الإضاءة)
-ا Shading (التظليل) النتيجة النهائية بتكون 2D Image تتعرض على الشاشة، إما real-time أو pre-rendered. بالرغم من إننا عايشين في عالم 3D، بس الشاشات بتاعتنا مسطحة (2D). فبقي هدف الـ 3D graphics هو إنتاج صور 2D بتعبر عن العالم الـ 3D ده.
-Remember
-A model of a 3D scene is first constructed using geometric shapes, then transformed and projected onto a 2D viewing surface through a process known as Projection. الاول بنكون الـ 3D باشكال هندسية وبعدها بنحوله لـ 2D, العملية دي بنسميها الإسقاط (Projection).
-<br> <img style="background:white; padding:10px;" src="https://www.baeldung.com/wp-content/uploads/sites/4/2023/05/perspective-projection-1.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> الـ 3D فكرته أقرب للـ Vector graphics، لأننا بنوصف المشهد باستخدام أشكال هندسية بدائية (Geometric primitives) زي النقط، الخطوط، المضلعات (Polygons)، والأسطح، مش مجرد بيكسلات مرصوصة زي الـ Raster. بس ده مش معناه إننا مبنستخدمش الـ Raster خالص. ساعات بنجيب صورة 2D (راستر) ونلزقها على سطح الجسم الـ 3D عشان نديله تفاصيل واقعية. الصورة اللي بنستخدمها دي بنسميها Texture (خامة).
-والعملية دي نفسها بنسميها Texture mapping. المكتبات البرمجية والـ APIs زي OpenGL بتدعم الطريقتين، بس تركيزنا الأساسي بيكون على التعامل مع الـ Geometry. definition
-Rendering is the process of producing a 2D image from a 3D scene description. الـ Rendering مصطلح بنسمعه كتير في الالعاب , دي العملية اللي بناخد فيها الفايل بتاع المشهد (اللي فيه الـ geometry، الـ viewpoints، الـ textures، الإضاءة، والـ shading) وندخله على برنامج عشان يطلعلنا صورة ديجيتال نهائية.
-عشان العملية دي تقيلة جدا وفيها حسابات معقدة زي الـ Rendering equation، بنعتمد على كارت الشاشة (الـ GPU) عشان يساعد المعالج (الـ CPU) ويسرع العملية دي في حاجة اسمها الـ Graphics pipeline.
-عشان الصورة تطلع واقعية وشكلها حقيقي تحت الإضاءة الافتراضية اللي إنت حاططها، السوفتوير بيحل معادلة رياضية اسمها الـ Rendering equation. دي اللي بتظبط شكل الإضاءة عشان تطلع مظبوطة. في الأول الأجسام بتترسم في وضعية الـ Wireframe mode (كأنها مجسمات معمولة من سلك، بنشوف الحواف Edges بس).
-بعدين بنطبق حاجة اسمها Hidden line removal، ودي بتشيل الخطوط اللي المفروض تكون مستخبية ورا أسطح الجسم، عشان يبان كأنه جسم صلب.
-بعد كده بنطبق التظليل عشان نحسن إدراكنا للشكل والعمق.
-<br><img border="0" alt="Chat GPT Image May 30 2026 01 56 42 AM" src="https://i.ibb.co/gMBGfyK0/Chat-GPT-Image-May-30-2026-01-56-42-AM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">definition
-Shading is used to depict depth in 3D models by varying levels of brightness. الـ Shading ده هو التظليل اللي بيدي للـ 3D موديل بتاعنا عمق عشان تحس إنه مجسم حقيقي مش مجرد شكل مسطح، وده بنعمله عن طريق إننا بنغير درجات الإضاءة في الموديل.
-في التقنيات الحديثة، shade بيتطبق ديجيتال.
-من تقنيات shading في الرسم التقليدي: Cross-Hatching. خطوط متعامده (perpendicular) بكثافة مختلفة.
-الخطوط المتقاربة = أغمق.
-الخطوط المتباعدة = أفتح. الـ shading بيعتمد كمان على الـ lighting.
-الـ rendering غالبا بيستخدم اكتر من مصدر ضوء عشان يطلع شكل واقعي.
-<br><img border="0" alt="Chat GPT Image May 30 2026 03 36 50 PM" src="https://i.ibb.co/q3BNKnBT/Chat-GPT-Image-May-30-2026-03-36-50-PM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-أي مجسم مدور بيبقي عباره عن حتت مسطحة صغيرة (Tiny flat surfaces) مرصوصة جنب بعض
-الكمبيوتر بيحسب التظليل لكل حتة لوحدها حسب النور جاي منين.
-وعشان الشكل ميطلعش مضلع ومكسر زي الشكل ده : <br> <img src="https://i.ibb.co/Tq0r0Fg2/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> بنستخدم تقنيات تنعم الأسطح دي وتخليها تبان مدورة وطبيعية: ا Gouraud shading: التقنية دي بتنعم شكل الجسم عن طريق إنها بتعمل عملية حسابية اسمها Interpolating (تدرج للتظليل)، فبتخفي شكل المربعات أو الأسطح الفردية دي، والمجسم بيبان ناعم ومفيش فيه حتت مكسرة . ا Phong shading: اللمعان (Highlights): التقنية دي بتدي للمجسم لمعة واقعية بتعتمد على درجة لمعانه (Shininess) وزاوية نظرتك ليه (Viewing angle)، فبتبين الأماكن الناعمة اللي بتعكس النور وسط الأسطح المطفية (Matte أو Diffuse).
-الشفافية (Transparency): بتقدر تخلي الموديل شفاف زي الإزاز، النور يعدي منه وفي نفس الوقت السطح من بره يعكس الإضاءة. <br> <img src="https://media.springernature.com/lw685/springer-static/image/chp%3A10.1007%2F978-3-319-21822-9_6/MediaObjects/321155_1_En_6_Fig10_HTML.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-بصمجيات ا Flat Shading: لون/إضاءة واحدة لكل Polygon , الشكل يبان مكسر (Faceted). ا Gouraud Shading: بيحسب الإضاءة ويعمل Interpolation للـ surfaces , يخفي حدود المضلعات ويخلي الشكل أنعم (كأن فيه Gradient effect). ا Phong Shading: بتدي الجسم Highlights , Transparency , وبتدي شكل واقعي اكتر. التظليل بيغير ألوان الأسطح بناء على زاويتها بالنسبة لمصدر النور، خلينا نقارن التطور بتاعها:<br><img border="0" alt="Chat GPT Image May 30 2026 02 06 46 AM" src="https://i.ibb.co/qFYW7F8j/Chat-GPT-Image-May-30-2026-02-06-46-AM.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">definition
-Ray tracing generates images by tracing light paths through pixels on an image plane. الـ Ray Tracing تقنية بتطلع صور واقعية كأنها متصورة بكاميرا (Photorealistic)، وجودتها عالية جدا. بس المشكلة إنها بتسحب موارد كتير جدا وحساباتها معقدة (Greater computational cost). produces highly photorealistic images, often exceeding the quality of typical scanline methods, but with greater computational cost.
-<br> <img src="https://i.ytimg.com/vi/6oRlJzxN1Xw/maxresdefault.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> الفكرة بتاعتها ببساطة إنها: بتتتبع مسار شعاع النور من الكاميرا (Camera)، مرورا بكل بيكسل في شاشة العرض (Image Plane). ويفضل ماشي كـ شعاع رؤية (View Ray) لحد ما يخبط في أي مجسم في المشهد (Scene Object). ولما يخبط، بيطلع منه شعاع ضل (Shadow Ray) يروح لمصدر النور (Light Source) عشان يحسب الإضاءة والضل والانعكاسات بدقة عالية. <br> <img src="https://d29g4g2dyqv443.cloudfront.net/sites/default/files/pictures/2018/RayTracing/ray-tracing-image-1.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-definition
-Texture mapping adds detail, surface patterns, or color to 3D models. دي العملية اللي بنضيف بيها تفاصيل، نقوش، أو ألوان للموديل الـ 3D بتاعنا. عاملة بالظبط زي ما تجيب ورقة هدايا منقوشة وتغلف بيها كوره مثلا. وممكن كمان نحط أكتر من Texture على نفس السطح ودي حركة بنسميها Multitexturing. <br>
-ده شكل الاوبجكت من غير Textures: <img src="https://static.vecteezy.com/system/resources/previews/060/809/123/non_2x/smooth-white-sphere-with-subtle-texture-free-png.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 300px; max-width: 100%;"> <br>
-ده بعد ما ضفناله Textures: <img src="https://cdnb.artstation.com/p/assets/images/images/000/513/637/large/jason-raba-texturespheres.jpg?1425262408" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;"> لما بنيجي نلزق صورة 2D (اللي هي الـ Texture) على مجسم 3D مدور، غصب عننا بيحصل تشوهات في شكل الصورة عشان تتطبع على السطح ده. Spherical mapping distorts the image by compressing the poles into pie-wedges and stretching the equator, whereas Cylindrical mapping shares the same pole distortion but leaves the equator perfectly unstretched. الـ Spherical mapping بيعمل distort (تشوه) في الـ Poles على شكل مثلثات و stretch للـ Equator، إنما الـ Cylindrical mapping بيعمل distort للـ Poles برضه بس بيسيب الـ Equator سليم من غير أي stretch.
-زياده فهم (اختياري) الـ Spherical Mapping : بنحول إحداثيات النقطة الـ 3D لخطوط طول وعرض (Latitude و Longitude) عشان نغلف بيها كورة كاملة. ده بيعمل مشكلتين: ا Poles (الأقطاب): من فوق وتحت، الصورة بتضغط لحد ما تاخد شكل مثلثات أو حتت بيتزا (Pie-wedge shapes).
-ا Equator (خط الاستواء): في نص الكورة الصورة بتتمط (Stretched) عشان تغطي العرض ده كله. الـ Cylindrical Mapping : هنا إحنا بنلف الصورة على أسطوانة (زي ما بتلف ورقة على كانز). ا Poles: بيحصل فيها تشوه (Distortion) زي اللي بيحصل في أقطاب الكورة بالظبط.
-ا Equator: مختلف عن الكوره ,عشان الأسطوانة عرضها ثابت, الصورة في النص بتلف بسلاسة ومبيحصلهاش أي مط (أبعادها بتفضل مظبوطة). definition
-3D modeling is the creation of a mathematical or wireframe representation of a three-dimensional object using specialized software. هو إنك تبني المجسم نفسه جوه السوفتوير، كأنك بتنحت بس ديجيتال، وبنعمله تمثيل رياضي أو شبكي (Wireframe). الموديلز دي ممكن تتعمل أوتوماتيك أو بشكل يدوي زي النحت.
-Applications:
-الموديلز دي ممكن تترندر كصور 2D, بتستخدم في الـ Simulations , الـ Animation, الـ 3D printing.
-definition
-3D projection maps three-dimensional points onto a 2D plane. ده ببساطة هو الإسقاط، يعني إزاي نعرض نقط المجسم الـ 3D بتاعنا على شاشة مسطحة 2D. بيستخدم كتير جدا في الجرافيكس، الهندسة، والتصميم.
-<br> <img style="background:white; padding:10px;" src="https://www.baeldung.com/wp-content/uploads/sites/4/2023/05/perspective-projection-1.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-definition
-A 3D scanner captures real-world objects or environments to create digital 3D models. ده جهاز بياخد نسخة من العالم الحقيقي ويدخله للكمبيوتر. بيصور المجسمات الحقيقية ويطلعلنا حاجة اسمها Point cloud (سحابة من النقط) بنستخدمها عشان نعيد بناء شكل المجسم، وممكن كمان يلقط ألوانه.
-<br> <img src="https://www.sculpteo.com/wp-content/uploads/2019/12/3Dscaning-1200x900.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;"> <img src="https://www.sculpteo.com/wp-content/uploads/2020/01/Webp.net-resizeimage-21-2.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;"> Multiple scans from different angles are aligned (registration) and merged to produce a complete model. This overall process is the 3D scanning pipeline. الاسكانر ده شغال زي الكاميرا، ليه زاوية رؤية معينة (Cone-like field of view) ومبيقدرش يشوف غير الأسطح اللي مواجهاه بس.
-عشان كده، إحنا بناخد كذا لقطة من زوايا مختلفة ونعملهم محاذاة وتجميع مع بعض في عملية اسمها Registration عشان نطلع الموديل كامل.
-اللفة دي كلها على بعضها بنسميها الـ 3D scanning pipeline.
-definition
-Animation is a sequence of images that, when displayed rapidly one after another, creates the impression of continuous motion or change. ببساطة، animation هي عملية illusion of movement ( ا to give life).
-الفكرة إننا بنعرض صور ثابتة (Still images) ورا بعض بسرعة جدا، فالعين البشرية بتنخدع وتحس إن في حركة مستمرة، مع إن مفيش حاجة بتتحرك بجد وكلها صور منفصلة.
-الأنيميشن بيضيف بُعد الوقت (Dimension of time) للجرافيكس، وده بيخلينا نقدر نوصل معلومات أكتر بكتير من الصور الثابتة. التحدي الأساسي للـ (Animator) إنه يختار أدوات تديله تحكم ومرونة عشان يوصف الحركة اللي هو عايزها، وفي نفس الوقت ميمعملش كل حاجة يدوي عشان ميتسحلش في تفاصيل ملهاش لازمة. وطبعا مفيش أداة واحدة بتنفع لكل حاجة، الأدوات الفنية غير الأدوات اللي بتعمل محاكاة للواقع.
-definition
-Traditional Animation Animation that involves drawing each frame of a film by hand. After the drawings are completed and colored, they are photographed or scanned into a computer and combined with sound. الـ Traditional Animationدي الطريقه القديمة زي أفلام ديزني بتاعت زمان. الأرتيست بيقعد يرسم كل Frame بإيده، رسمة ورا التانية. بعد ما بيخلصوا رسم وتلوين على الورق، بياخدوا الرسومات دي يصوروها أو يعملولها سكان على الكمبيوتر، وبعدين يركبوا عليها الصوت.
-الموضوع ده متعب جداً وبيسحب وقت مهول (Extremely time-consuming)، عشان الثانبة الواحدة بس من الفيلم بتحتاج حوالي 24 رسمة بالايد!
-عشان المجهود الجبار ده، الشغل ده غالباً ملهاش حد يقدر يعمله غير ستوديوهات كبيرة. <br> <img src="https://images.griddo.udit.es/c/cover/q/70/w/1920/h/1080/p/center/f/jpeg/animacion-2-1920x1080" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;">
-definition
-Stop-Motion Animation An animation technique that requires the animator to physically manipulate objects in the scene, capture a single frame, adjust the objects, and repeat the process. الـ Stop-Motion Animation هنا بتجيب مجسمات حقيقية قدامك، تحركها حركة بسيطة ، وتاخد صورة بالكاميرا (Capture a frame)، وبعدين تحركها كمان حركة بسيطة وتاخد صورة تانية، وهكذا. ولما تعرض الصور دي ورا بعض بسرعة، تحس إن الجسم بيتحرك لوحده. الأجسام اللي بيستخدموها ممكن تكون أي حاجة: شخصيات صلصال (Clay figures)، ورق، أو حتى أدوات من البيت.
-في طرق بيستخدموا فيها أشخاص حقيقيين، يوقفوهم في وضعيات معينة وياخدوا فريم، وبعدين يغيروا الوضعية وياخدوا فريم تاني.
-في الآخر، كل الصور دي بتتجمع على شريط الفيلم وبيتركب معاها الصوت. <br> <img src="https://www.adobe.com/uk/creativecloud/animation/discover/media_1a446979c00087dabf92d48d4fcb28671f3ec5a30.png?width=750&amp;format=png&amp;optimize=medium" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;">
-definition
-Computer-Generated Animation Animation that uses software to create animated images and models, making the process generally faster than traditional methods. It can be used for both 2D and 3D characters and objects. الـ Computer-Generated Animation (أو الـ CG) دي الطريقه الحديثه. بنستخدم سوفتوير عشان نعمل الصور والمجسمات، ده بيخلي العملية أسرع وأسهل من الطرق القديمة. ده بينقسم لحتتين: ا 2D Computer Animation: زي التقليدي بالظبط، الأرتيست بيعمل سلسلة صور ورا بعض فيها اختلافات بسيطة عشان تعمل حركة، بس كله بيتم ديجيتال جوه البرنامج.
-ا 3D Computer Animation: هنا إحنا بنبني مجسم ديجيتال كامل (Digital model) للشخصية. التحريك هنا بيتم بطريقتين: يا إما الأرتيست بيتحكم في نقط معينة على المجسم اسمها Control points أو يغير في المتغيرات (Variables) بتاعتها عشان يحركها.
-أو بيستخدموا تقنية اسمها الـ Motion Capture (أو Mo-cap)، ودي عبارة عن إنهم بيجيبوا ممثل حقيقي، يسجلوا حركته الحقيقية، وبعدين يركبوا الحركة دي على الـ 3D Character بتاعهم في الكمبيوتر عشان يطلع واقعي جداً. الأنيميشن ملوش استخدام واحد بس، ده داخل في مجالات كتير، خلينا نشوف أهمهم: الترفيه (Entertainment): زي الأفلام، البرامج التلفزيونية، وألعاب الفيديو.
-التعليم (Education): الفيديوهات الشارحة والمحتوى التعليمي اللي بيبسط المعلومة.
-الإعلانات (Advertising): شغل الميديا الأونلاين والتسويق.
-البحث والتطوير (Research and development): بنعمل بيه محاكاة للآلات والأنظمة والعمليات (Simulations).
-التصميم والهندسة (Design and engineering): عشان نحلل ونختبر الأفكار بتاعتنا من غير ما نحتاج نصرف ونبني نماذج حقيقية (Physical prototypes).
-التجسيد العلمي (Scientific visualization): بيساعدنا نتخيل الظواهر المعقدة جداً، أو الحاجات الصغيرة أوي والكبيرة أوي اللي مستحيل نشوفها بعنينا المجردة.
-دعم الأبحاث العلمية وتحليل البيانات. الصور المتحركة مش بتتحرك فعلا. The illusion of movement occurs due to a phenomenon known as persistence of vision, where the human eye and brain briefly retain images. الـ illusion بيحصل بسبب Persistence of Vision: العين والدماغ بيحتفظوا بالصورة لفترة قصيرة بعد ما تختفي.
-الدماغ بيمهد الصور المتتالية، فيبان كأنها حركه مستمره. الـ Computer Animation هو صناعة الصور المتحركه باستخدام الكمبيوتر.
-ده يعتبر فرع من الجرافيكس والأنيميشن في نفس الوقت. ورغم إن الـ 3D هو الاشهر في الأنيميشن الحديث، بس الـ 2D graphics لسه بتستخدم كتير جدا عشان الـ Rendering بتاعها أسرع بكتير ومش بتحتاج موارد ولا إنترنت عالي (Low-bandwidth applications).
-في مجال السينما والأفلام، الشغل ده بنسميه CGI (Computer-Generated Imagery). عشان نحرك أي مجسم افتراضي (Virtual objects) جوه الكمبيوتر، لازم نكون عارفين إن المجسم ده متعرف بشوية خصائص أساسية زي: ا Position: مكانه فين.
-ا Orientation: اتجاهه ودورانه عاملين إزاي.
-ا Scale: حجمه قد إيه. الخصائص دي كلها بتتخزن رياضياً في حاجة اسمها Transformation matrices. والـ Animation بيحصل ببساطة لما الخصائص دي تتغير مع مرور الوقت. إحنا بقى بنعمل الأنيميشن ده إزاي ونتحكم في الموديل؟ السوفتوير فيه كذا تكنيك بنستخدمهم:بصمجيات الـ Keyframes: حدد البداية والنهاية والبرنامج يكمل اللي بينهم.
-الـ Procedural Animation: الخوارزمية هيا الي بتتحكم في الحركه, بستخدم مع الحاجات المعقده زي المطر.
-الـ Expression-Based Animation: المعادلات هيا الي بتتحكم في الحركه, بنستخدمهفي حركة الهيكل العظمي. كده خلصنا المحاضره
-اتكلمنا في المحاضره دي عن 3D Computer Graphics و Animation.
-بدأنا بـ Concepts of 3D وإن المشهد بيكوّن من (Geometric Models, Materials, Light Sources, Virtual Camera) وبنحوله لـ 2D عن طريق الـ Projection.
-بعد كده عرفنا الـ Rendering (إنتاج صورة 2D من مشهد 3D) وخطوات رسم الأجسام.
-بعدين دخلنا في Shading: ا Gouraud Shading: بيعمل Interpolation للاسطح عشان يخفي المضلعات.
-ا Phong Shading: بيدي Highlights و Transparency لشكل واقعي أكتر. وفي الآخر اتكلمنا عن: ا Ray Tracing: تقنية Photorealistic بتتتبع مسار الشعاع من الكاميرا.
-ا Texture Mapping: إضافة نقوش وألوان للـ 3D Models.
-ا 3D Modeling: بناء المجسمات (NURBS, Polygonal Mesh, Subdivision).
-ا 3D Projection: إسقاط النقط من 3D لـ 2D.
-ا 3D Scanners: مسح المجسمات الحقيقية وعمل Point cloud.
-ا Animation: أنواعها (Traditional, Stop-Motion, CG) وتقنياتها (Keyframes, Procedural, Expression-based). ]]></description><link>lectures/chapter-6-3d-computer-graphics-and-animation.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 6 - 3D Computer Graphics and Animation.md</guid><pubDate>Sun, 31 May 2026 00:39:37 GMT</pubDate><enclosure url="https://i.ibb.co/wThv9K6/Chat-GPT-Image-May-30-2026-03-21-46-PM.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/wThv9K6/Chat-GPT-Image-May-30-2026-03-21-46-PM.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Foundations of Computer Graphics - Lecture 1 [Part 5]]]></title><description><![CDATA[مقدمة هنكمل الشابتر الاول, في الجزء ده هنتعرف على أشهر Image Formats المستخدمة في الـ Computer Graphics، والفرق بينهم من حيث الجودة، الضغط، الشفافية، وحجم الملفات.
-كمان هنتكلم عن أنواع الـ Compression زي Lossy وLossless، وإزاي نختار الفورمات المناسب حسب استخدام الصورة سواء للويب، الطباعة، أو التصميم. الـ Image Format هو الطريقة اللي الصورة بتتخزن وتتفتح وتتشارك بيها بين الأجهزة والبرامج.
-اختيار الفورمات الصح بيأثر على حاجات مهمة زي: جودة الصورة Image Quality
-حجم الملف File Size
-سرعة التحميل Loading Speed
-التوافق مع البرامج والأجهزة Compatibility يعني لو الصورة للويب، أو للطباعة، أو للمشاركة الديجيتال، لازم تختار الفورمات حسب الاستخدام. كل format ليه طريقة ضغط مختلفة، ممكن تبقى Lossy أو Lossless.
-بعض الصيغ بتدعم الشفافية Transparency زي PNG, SVG, WebP, GIF.
-بعض الصيغ مش بتدعم الشفافية زي JPEG.
-الـ Vector Formats بتفضل sharp مهما كبرت الصورة.
-الـ Raster Formats ممكن تبكسل لما تكبرها أكتر من حجمها الطبيعي.
-definition
-BMP (Bitmap) is a raster image format developed by Microsoft and mainly associated with Windows. الـ BMP صيغة Raster قديمة مرتبطة غالبا بويندوز.
-حجم ملفاتها كبير أوي.
-مبنية على pixels، فمش بتعمل scaling كويس.
-بتدي صورة واضحة ودقيقة,بس الجودة بتقل لما تكبر لانها raster.
-غالبا بتتخزن من غير compression.
-definition
-JPEG / JPG is a widely used raster image format that uses lossy compression to reduce file size. الـ JPEG أو JPG من أشهر صيغ الصور.
-مناسب جدا للصور الفوتوغرافية لانها بتدعم الوان كتير حوالي (16.7 million colors).
-بيستخدم Lossy Compression، يعني بيقلل الحجم عن طريق فقد جزء من التفاصيل.
-حجم الملفات بتاعته صغيره.
-مش بيدعم Transparency. Photographs
-Web images
-Email and social media content
-definition
-GIF (Graphics Interchange Format) is a limited-color raster format used for simple graphics and animations. الـ GIF صيغة Raster محدودة الألوان.
-بيدعم لحد 256 colors بس.
-بيدعم Transparency.
-بيدعم Animation.
-بيدعم كمان Interlacing.
-Interlacing
-الـ Interlacing يعني الصورة تبدأ تظهر تدريجي وهي بتتحمل، الأول بجودة قليلة وبعدين التفاصيل تزيد مع الوقت لحد ما الصورة تكمل.
-ده بيساعد المستخدم يشوف محتوى الصورة بسرعة، خصوصا لو الاتصال بطيء. Simple animations
-Logos, icons, and banners
-Cartoons and line drawings
-definition
-PNG (Portable Network Graphics) is a lossless raster image format designed as an open and patent-free alternative to GIF. الـ PNG صيغة Raster بتستخدم Lossless Compression.
-اتعملت كبديل مفتوح ومجاني لـ GIF عشان تتجنب القيود القانونية القديمة.
-بتحافظ على جودة الصورة من غير فقد.
-بتدعم Transparency.
-بتدعم لحد حوالي 16.7 million colors.
-حجمها غالبا أكبر من JPEG. Logos and user interface elements
-Images requiring transparent backgrounds
-Screenshots
-definition
-TIFF (Tagged Image File Format) is a flexible, high-quality image format used in professional and publishing environments. الـ TIFF صيغة عالية الجودة ومرنة.
-بتستخدم في الطباعة الاحترافية والـ publishing.
-ممكن تبقى من غير ضغط أو بضغط Lossless.
-جودة الصورة فيها عالية جدا.
-حجم الملفات كبير.
-بتدعم معلومات إضافية عن الصورة عن طريق tags. Professional printing
-Scanning and archiving
-Desktop publishing
-definition
-WebP is a modern image format developed by Google to optimize image quality and file size for web applications. الـ WebP صيغة حديثة من Google.
-هدفها تقلل حجم الصور على الويب مع الحفاظ على جودة كويسة.
-معمولة كبديل عملي لـ JPEG, PNG, و GIF على الويب.
-بتدعم Lossy و Lossless Compression.
-حجمها أصغر من JPEG و PNG غالبا.
-بتدعم Transparency و Animation. Modern websites
-Performance-optimized web applications
-definition
-HEIF (High Efficiency Image File Format) is a modern container format designed for efficient image storage with high quality. الـ HEIF أو HEIC صيغة حديثة لتخزين الصور بكفاءة عالية.
-بتدي جودة كويسة مع حجم أقل.
-بتدعم تخزين أكتر من صورة جوه نفس الملف.
-بتدعم Metadata.
-بتدعم Transparency و HDR. Mobile photography
-High-quality image storage
-definition
-AVIF is a modern image format that provides excellent image quality with very small file sizes using advanced compression techniques. الـ AVIF من الصيغ الحديثة جدا.
-بيقدم جودة عالية مع حجم صغير جدا.
-كفاءة الضغط فيه أعلى من JPEG و WebP.
-بيدعم HDR, Transparency, و Animation.
-صيغة Royalty-free. Next-generation web graphics
-High-quality images with minimal storage requirements
-definition
-EPS (Encapsulated PostScript) is a vector image format used in professional graphic design and printing. الـ EPS صيغة Vector.
-بتستخدم كتير في التصميم والطباعة.
-بتتعمل لها scaling لأي حجم من غير فقدان جودة.
-قابلة للتعديل في برامج الـ vector graphics. Logos
-Illustrations
-Print-ready designs
-definition
-RAW image formats store unprocessed image data exactly as captured by the camera sensor or scanner. صيغ الـ RAW زي .raw, .cr2, .nef, .orf بتخزن بيانات الصورة الخام من الكاميرا أو الاسكانر.
-بتحافظ على أكبر قدر ممكن من معلومات الصورة والـ Dynamic Range.
-بتستخدم Higher Color Depth، وده بيساعد في تعديل الإضاءة والألوان بدقة.
-محتاجة برامج مخصوصة للعرض والتعديل.
-بتخزن Metadata كتير عن إعدادات الكاميرا وظروف التصوير. Professional and high-end photography
-Advanced image editing
-Color correction
-Post-processing workflows الصور اللي بتدعم Transparency زي PNG, SVG, WebP, و GIF بتندمج كويس مع الخلفيات الملونة أو اللي فيها patterns.
-الصور اللي مش بتدعم الشفافية زي JPEG هتظهر بخلفية ثابتة، وغالبا بتبقى بيضاء. اختيار صيغة الصورة بيعتمد على الاستخدام، الجودة المطلوبة، حجم الملف، والخصائص اللي محتاجها.
-بصمجيات لو صورة فوتوغرافية للويب ومحتاج حجم صغير، استخدم JPEG أو WebP.
-لو محتاج خلفية شفافة، استخدم PNG, WebP, أو GIF حسب الحالة.
-لو التصميم logo أو illustration وهيتكبر كتير، استخدم صيغة vector زي EPS. definition
-Data compression is an art used to reduce the size of a particular file. الـ Data Compression بيخلي المعلومات تتخزن بشكل مضغوط وده طبعا بيقلل حجم الملف، وبالتالي بيقلل مساحة التخزين ووقت نقل البيانات.
-definition
-Compression techniques try to find redundant data and remove these redundancies. يعني تقنيات الضغط بتدور على البيانات المتكررة Redundant Data وتشيل التكرار ده.
-الهدف في الآخر إننا نقلل حجم الملف عن طريق تقليل الـ Redundancy.
-ضغط البيانات بيتقسم لنوعين كبار: Lossless Compression
-Lossy Compression definition
-Lossless data compression allows the original data to be perfectly reconstructed from the compressed data. في Lossless Compression نقدر نرجع الداتا الأصلية بالظبط بعد فك الضغط.
-مناسب للـ illustrations، drawings، text، وأي حاجة ممكن تبان وحشة مع ضغط Lossy.
-أمثلة لصيغ lossless: ا PNG, GIF.
-بعض الصيغ زي TIFF و MNG ممكن تستخدم Lossless أو Lossy حسب الإعدادات. أغلب برامج الـ Lossless Compression بتعمل خطوتين: تعمل Statistical Model للداتا.
-تستخدم الموديل ده عشان تحول البيانات المتكررة أو المحتملة لـ Bit Sequences أقصر. definition
-Lossy data compression involves loss of information and reconstructs only an approximation of the original data. في Lossy Compression بيحصل فقد في جزء من المعلومات.
-الصورة بعد فك الضغط ممكن تبان قريبة جدا من الأصل، بس مش نسخة مطابقة.
-بيستخدم كتير مع: الـ Videos
-الـ Audio
-الـ Photographs بيدي حجم ملفات أصغر من lossless في أغلب الحالات.
-أغلب خوارزميات Lossy بتسمح بتغيير نسبة الضغط، يعني تقدر تبدل بين جودة أعلى أو حجم أصغر.
-مش مناسب للـ illustrations، drawings، و text عشان الـ Compression Artifacts بتبان فيها بوضوح.
-أشهر مثال عليه: JPEG. في الصور الـ Raster حجم الملف بيعتمد غالبا على 3 عوامل رئيسية. الـ Image Resolution هو عدد الـ pixels في الصورة.
-بيتحسب كده:
-Width × Height كل ما الـ resolution يزيد، عدد الـ pixels يزيد، وحجم الملف غالبا يزيد. الـ Color Depth هو عدد الـ bits المستخدمة لتمثيل لون كل pixel.
-كل ما عدد الـ Bits Per Pixel (bpp) يزيد، نقدر نمثل ألوان أكتر.
-بس في المقابل حجم البيانات المطلوبة لتخزين الصورة بيزيد. الصور غالبا بتتضغط عشان نقلل حجم الملف.
-ا Lossless Compression بيحافظ على كل معلومات الصورة الأصلية زي PNG و GIF.
-ا Lossy Compression بيقلل الحجم عن طريق تقريب المعلومات البصرية وحذف تفاصيل أقل ملاحظة للعين زي JPEG.
-حتى لو صورتين عندهم نفس resolution ونفس color depth ونفس compression format، حجمهم ممكن يختلف بسبب Image Complexity.
-Image Complexity ا Image Complexity يعني كمية التفاصيل والتغيرات البصرية جوه الصورة.
-الصور اللي فيها مساحات لون موحدة، ألوان قليلة، وأشكال بسيطة زي icons و line art بتبقى Low Complexity وبتتضغط كويس.
-الصور اللي فيها تفاصيل كتير، textures، gradients، وتغيرات ألوان كتير زي photographs بتبقى High Complexity وبتبقى أصعب في الضغط، خصوصا مع lossless. مثال
-صورة حجمها 640 × 480 pixels وعمق اللون فيها 24-bit:
-640 × 480 × 24 = 7,372,800 bits يعني تقريبا:
-921,600 bytes ≈ 0.88 MB دي مساحة الصورة الخام قبل أي compression. حجم الملف النهائي بعد الضغط بيعتمد على: Compression Algorithm
-Compression Settings
-Image Complexity تقدير تقريبي للحجم بعد الضغط:
-Compressed Size ≈ Raw Size × Compression Ratio الـ Vector Images بتتصرف بشكل مختلف عن الـ raster.
-حجم ملف الـ vector بيعتمد على عدد وتعقيد العناصر، مش على الـ pixel resolution.
-العناصر دي ممكن تكون: Lines
-Curves
-Shapes عشان كده تكبير صورة vector لأي حجم مش بيزود حجم الملف.
-وده بيخلي صيغ الـ vector مناسبة جدا لـ: Logos
-Diagrams
-Illustrations كده خلصنا الجزء الخامس والشابتر كله
-اتكلمنا في المحاضره دي عن Image Formats واستعرضنا كل الصيغ: BMP (قديم من غير ضغط)، JPEG (Lossy، مناسب للصور)، GIF (256 لون و Animation)، PNG (Lossless و Transparency)، TIFF (جودة عالية للطباعة)، WebP (حديث من Google)، HEIF/HEIC (حديث للتصوير)، AVIF (أحدث وأعلى كفاءة)، EPS (Vector)، و RAW (بيانات خام من الكاميرا).
-وعرفنا الفرق بين Lossless Compression (بنرجع الداتا زي ما هي زي PNG) و Lossy Compression (بنفقد جزء من المعلومات عشان حجم أصغر زي JPEG).
-وفي الآخر عرفنا إزاي نحسب حجم الملف: Raw Size = Width × Height × Color Depth، وإن Compression Ratio و Image Complexity بيأثروا على الحجم النهائي.
-]]></description><link>lectures/chapter-1-[part-5]-foundations-of-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 1 - [Part 5] Foundations of Computer Graphics.md</guid><pubDate>Sat, 30 May 2026 23:51:46 GMT</pubDate></item><item><title><![CDATA[Foundations of Computer Graphics - Lecture 1 [Part 3]]]></title><description><![CDATA[مقدمة هنكمل الشابتر الاول, الجزء ده من المحاضرة بيتكلم عن أنظمة الإحداثيات (Coordinate Systems) في الـ Computer Graphics.
-هنعرف الفرق بين Cartesian System و Screen System و Pixel Coordinates، وإزاي بنحول بينهم، وهنتعرف على Aspect Ratio definition
-Coordinate System is a method of assigning numerical values to geometric points so they can be uniquely identified in space. أي graphics system محتاج طريقة يحدد بيها مكان objects, الطريقة دي هي الـ Coordinate System.
-من غير coordinates مش هنعرف نحدد نقطة أو خط أو شكل موجود فين. الـ Cartesian Coordinate System هو النظام الرياضي الي كلنا عارفينه.
-النقطة في 2D بتتكتب:
-P(x, y) ا x: المكان الأفقي horizontal position.
-ا y: المكان الرأسي vertical position.
-في الرياضيات العادية: الـ origin (0, 0) بيبقى تحت على الشمال.
-قيم y بتزيد لفوق. النظام بيستخدم محورين متعامدين: ا x-axis: horizontal
-ا y-axis: vertical ده يعتبر الأساس النظري والرياضي اللي أنظمة الإحداثيات في graphics بتتبني عليه.
-مش بيعتمد على screen أو pixels أو hardware. <img src="https://www.geogebra.org/resource/f3zjnk3h/5IrSYoN1BF75qQTS/material-f3zjnk3h.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> في الـ 3D Graphics، النقطة بتتكتب:
-(x, y, z) الـ z-axis بيضيف العمق depth.
-عشان كده نقدر نمثل objects في مساحة ثلاثية الأبعاد. شاشات الكمبيوتر بتستخدم conventions مختلف عن الرياضيات.
-الـ origin (0, 0) بيبقى فوق على الشمال top-left corner (في الـ Cartesian system كان تحت علي الشمال).
-الـ x-axis بيزيد ناحية اليمين.
-<br>الـ y-axis بيزيد لتحت (في الـ Cartesian system كان بيزيد لفوق). <img src="https://www2.cs.sfu.ca/CourseCentral/166/oshklars/_images/screenCoord.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> بصمجيات
-في الرياضيات y بيطلع لفوق، لكن في الشاشات y بينزل لتحت. دي احنا عارفينها من قبل كده ,الصور بتتمثل كشبكة Raster, كل cell في الـ raster هي Pixel, وكل pixel ليه لون واحد وبالـ cells بتبقي عباره عن صفوف واعمده.
-(x, y) الـ columns بتتعد من الشمال لليمين بداية من 0.
-<br>الـ rows غالبا بتتعد من فوق لتحت بداية من 0. <img src="https://content.wolfram.com/sites/20/2016/07/addXtoUpperSmiley1.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> مش لازم coordinates تكون integers أو pixels.
-أحيانا بنستخدم وحدات قياس حقيقية , مثلا : لو مستطيل بيمثل أوضة مساحتها 15 foot × 12 foot، يبقى منطقي نستخدم: ا x من 0 لـ 15
-ا y من 0 لـ 12 أحيانا graphics system بيسمحلك تحدد custom coordinate system.
-الفكرة إنك بتحول نقطة من old coordinate system لـ new coordinate system مع الحفاظ على نفس relative position. عندك old limits: ا oldLeft, oldRight
-ا oldTop, oldBottom و هيديلك new limits: ا newLeft, newRight
-ا newTop, newBottom النقطة القديمة (oldX, oldY) بتتحول لنقطة جديدة (newX, newY). لو عندنا نقطة في "النظام القديم" وعايزين نعرف مكانها في "النظام الجديد" ، بنستخدم المعادلة دي: أي Coordinate Transformation بيتكون من خطوتين أساسيتين: ا Normalize (تحويل لنسبة): بنحول قيمة old لنسبة بين 0 و 1: ا Scale to new system: بنضرب النسبة في مدى النظام الجديد ونجمعها على البداية الجديدة: ليه الموضوع ده مهم؟
-الآلية دي بتتستخدم في كل حاجة في الـ Computer Graphics: OpenGL viewport transformation
-DirectX rendering pipeline
-Mouse input handling
-Game engines (Unity, Unreal Engine)
-Window resizing
-UI layout systems عايزين ننقل نقطة من نظام إحداثيات منطقي (من 0 لـ 100) لشاشة 800×600 بكسل.
-المعطيات:
-Old system: oldLeft = 0, oldRight = 100, oldTop = 0, oldBottom = 100
-New system: newLeft = 0, newRight = 800, newTop = 0, newBottom = 600
-النقطة: (oldX, oldY) = (25, 50)
-حساب newX:
-حساب newY:
-النتيجة: (25, 50) → (200, 300)
-النظام ده أشهر حاجة في OpenGL. الإحداثيات فيها بتتراوح من -1 لـ +1.
-المعطيات:
-oldLeft = -1, oldRight = +1, oldTop = -1, oldBottom = +1
-النقطة: (0, 0) — مركز النظام المنطقي
-حساب newX:
-حساب newY:
-النتيجة: (0, 0) → (400, 300)
-المركز المنطقي بقى مركز الشاشة بالظبط. الماوس بيشتغل بإحداثيات الشاشة (pixels)، بس إحنا محتاجين نحولها لنظامنا المنطقي. نفس القانون بس بعكس الاتجاه.
-المعطيات:
-Screen size: 800 × 600
-Logical system: من 0 لـ 100
-Mouse position: (600, 150)
-حساب oldX:
-حساب oldY:
-النتيجة: (600, 150) → (75, 25)
-بكده نقدر نحول أي mouse click لإحداثيات منطقية في تطبيقنا. لو شاشة Full HD (1920×1080) ونظام منطقي من 0 لـ 10.
-المعطيات:
-Old system: من 0 لـ 10
-New system: 1920 × 1080
-النقطة: (7, 2)
-حساب newX:
-حساب newY:
-النتيجة: (7, 2) → (1344, 216)definition
-Aspect Ratio is the ratio between width and height.
-<br> <img src="https://www.safelightimaging.com/uploads/b/a77f7755c45edddca229ec7ef8ce038a6b1dfc6f223341744bcc4b53c7e71b53/video-aspect-ratios_1736533139.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> القانون العام (لو عايز تحسب النسبه بتاعة الشاشه): قانون نظام الإحداثيات (لو عايز تحسب النسبة علي الـ Coordinate system): مثلا لو الـ aspect ratio عباره عن 2:1 يعني العرض ضعف الارتفاع. نظام الإحداثيات اللي بترسم عليه ليه Aspect Ratio، والشاشة اللي بتعرض عليها ليها Aspect Ratio. لو النسبتين دول مش قد بعض، الرسمة "هتتمط" أو هتبوظ. المعادلة دي بتمثل دايره:
-x^2 + y^2 = 9 لو aspect ratios مش متطابقة، الـدايره ممكن تظهر شكل بيضاوي.
-عشان نحافظ على دقة الأشكال، بنعدل: الـ horizontal range
-أو vertical range الهدف إن الزياده تبقى متساويه في الاتجاهين يعني لو هنزود الـ horizontal يبقي كمان نزود الـ vertical.
-definition
-Aliasing is the visual artifact that appears when continuous geometric shapes are approximated using a finite grid of square pixels. طبعا شرحناها قبل كده ولو ناسي هنشرحها تاني.
-الشاشة بتاعتنا عبارة عن شبكة مربعات صغيرة جداً اسمها "بيكسلات". المشكلة بتظهر لما تيجي ترسم خط مايل أو كيرف (دوران) على المربعات دي.
-بما إن البيكسلات مربعة ومرصوصة جنب بعض، مستحيل ترسم خط مايل ناعم عليها، فبيظهر تأثير اسمه Staircase Effect (تأثير السلالم أو الـ Jaggies)، وهو إن حواف الرسمة بتبان مشرشرة وشبه درجات السلم.
+Network allows rapid communication and sharing digital information. الشبكة بتسمح بمشاركة البيانات والخدمات الجغرافية بسرعة.
+عشان نعمل تحليل كامل، محتاجين نجمع الطبقات دي من جهات مختلفة.
+وده مهم في WebGIS و Online GIS.
+بدون Network، كل جهة هتشتغل لوحدها وهنخسر القيمة الحقيقية للـ GIS.
 بصمجيات
-الـ Aliasing بيحصل بسبب اننا : بنحاول نرسم أشكال ناعمة على بيكسلات مربعة ومتقطعة (Sampling Error)، لان البكسل بياخد غير واحد بس (Limited Resolution)، بيحصل لخبطة للكمبيوتر في تحديد مكان النقطة بالظبط (Ambiguity). definition
-Antialiasing is a technique used to reduce aliasing artifacts by smoothing object boundaries. الـ Antialiasing مش بيلغي aliasing, هو بيخليها أقل وضوحا للعين.
-بدل ما كل pixel ياخد لون واحد ، بنحسب قد إيه الشكل مغطي الـ pixel,يعني لو بنرسم خط اسود مايل مثلا , البكسلز الي علي الطرف نديلها لون وسط مش اسود ولا ابيض فيحصل كان الحواف بتسيح في بعضها او بتبقي انعم.
-<br><img alt="anti-aliasing" src="https://camo.githubusercontent.com/f8b6f14633a9b8d7cafd0e23db7008b1fc175808ffd9769eb788d1cc2ea3bd93/68747470733a2f2f686172647a6f6e652e65732f6170702f75706c6f6164732d686172647a6f6e652e65732f323032302f30342f416e74692d416c696173696e672d312e6a7067" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-الـ Antialiasing بيزود cost, بس بيحسن جودة الصوره بشكل كبير.
-كده خلصنا الجزء التالت
-اتكلمنا في المحاضره دي عن أنظمة الإحداثيات (Coordinate Systems) وعرفنا الفرق بين Cartesian System (الـ origin تحت على الشمال و y بتزيد لفوق) و Screen System (الـ origin فوق على الشمال و y بتزيد لتحت) و Pixel Coordinates (الـ columns من الشمال لليمين والـ rows من فوق لتحت).
-وعرفنا إزاي بنحول بين Coordinate Systems باستخدام معادلات الـ mapping، وإن Aspect Ratio = Width / Height، ولو الـ Aspect Ratio بتاع نظام الإحداثيات مش مطابق للشاشة، الشكل هيتشوه.
-واتكلمنا عن Aliasing - إنه تأثير السلاسل (Jaggies) اللي بيظهر لما بنحاول نرسم خطوط مائلة على شبكة Pixels، و Antialiasing اللي بيحل المشكلة دي باستخدام ألوان متوسطة على الحواف عشان تنعيم الشكل.
-]]></description><link>lectures/chapter-1-[part-3]-foundations-of-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 1 - [Part 3] Foundations of Computer Graphics.md</guid><pubDate>Sat, 30 May 2026 23:39:34 GMT</pubDate><enclosure url="https://www.geogebra.org/resource/f3zjnk3h/5IrSYoN1BF75qQTS/material-f3zjnk3h.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://www.geogebra.org/resource/f3zjnk3h/5IrSYoN1BF75qQTS/material-f3zjnk3h.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Foundations of Computer Graphics - Lecture 1 [Part 2]]]></title><description><![CDATA[مقدمة هنكمل الشابتر الاول ,الجزء ده من المحاضرة بيكمل كلامنا عن تمثيل الصور الرقمية.
-هنفصل أكتر في Raster Graphics و Vector Graphics، ونفهم بالتفصيل الـ Pixels و Pixel Art، وفي الآخر هنفرق بين الـ Pixels والـ Points والـ Dots. زي ما عرفنا الصور بتتخزن وتتمثل بطريقتين أساسيين: Raster Graphics
-Vector Graphics. <img src="https://penji.co/wp-content/uploads/2025/02/Chart_-Vector-vs.-Raster.png.webp" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+مكونات الـ GIS هما 6 (غلطت فيها في الميد والله) GIS is a convergence of technological fields and traditional disciplines. GIS has been called an 'enabling technology' because of the potential it offers for the wide variety of disciplines which must deal with spatial data. الـ GIS هو نتيجة ربط تطورات متعددة في مجالات مختلفة.
+كل مجال بيقدم تقنية معينة تساهم في الـ GIS.
+الـGeography
+الجغرافيا مهتمة بفهم العالم ومكان الإنسان فيه.
+ليها تاريخ طويل في Spatial Analysis.
+بتقدم تقنيات للتحليل المكاني ومنظور مكاني للأبحاث.
+الـCartography (رسم الخرائط)
+الـ Cartography مهتمة بعرض المعلومات المكانية.
+المصدر الرئيسي للبيانات المدخلة في الـ GIS هو الخرائط.
+بتقدم تاريخ طويل في تصميم الخرائط، وهي شكل مهم من مخرجات الـ GIS.
+الـ Computer Cartography بتقدم طرق تمثيل رقمي وmanipulation للميزات الكرتوغرافية.
+الـ Remote Sensing
+تقنية بتسجل صور من الفضاء والجو.
+مصدر رئيسي للبيانات الجغرافية.
+ميزة كبرى إن البيانات المفسرة من Remote Sensing ممكن تندمج مع طبقات أخرى في الـ GIS.
+الـ Photogrammetry
+استخدام الصور الجوية وتقنيات قياس دقيقة منها.
+المصدر الأكبر للبيانات عن Topography (ارتفاعات سطح الأرض) المدخلة في الـ GIS.
+الـ Surveying
+قياس مواقع الأشياء على سطح الأرض، خصوصا الحدود العقارية.
+بتقدم بيانات عالية الجودة عن مواقع الحدود والأراضي والمباني.
+الـ Statistics
+نماذج كتير في الـ GIS إحصائية الطبيعة.
+تقنيات إحصائية كتير بتستخدم في التحليل.
+مهمة في فهم مشاكل الخطأ وعدم اليقين في بيانات الـ GIS.
+الـ Computer Science (احنا)
+محرك رئيسي لتطور الـ GIS.
+ا Artificial Intelligence (AI) بتستخدم الكمبيوتر عشان تاخد قرارات بناءً على بيانات متاحة.
+ا CAD بتقدم تقنيات إدخال وعرض وتمثيل البيانات، خصوصا في 3D.
+ا Computer Graphics بتقدم hardware وsoftware لمعالجة وعرض الأشياء الرسومية.
+ا DBMS بتقدم طرق تمثيل البيانات الرقمية وإجراءات تصميم النظام والتعامل مع كميات كبيرة من البيانات.
+الـ Mathematics
+فروع كتير من الرياضيات، خصوصا Geometry و Graph Theory، بتستخدم في تصميم وتحليل بيانات الـ GIS.
 definition
-Raster Graphic, or Bitmap Graphic, is an image made from many small colored square elements called pixels or dots. الـ Raster Image بتتكون من شبكة pixels.
-كل pixel ليه: لون color
-مكان position الصورة بتتحدد بحاجتين مهمين: ا Resolution: العرض × الارتفاع بالـ pixels
-ا Color Depth: عدد الـ bits المستخدمة عشان تمثل لون كل pixel مناسبة للصور الواقعية photographs.
-بتتعامل كويس مع الصور المعقدة اللي فيها تغيرات ألوان بسيطة وتدريجات كتير.
-سهل تعدل على pixels معينة جوه الصورة.
-بتستخدم في الـ Pixel art , Web images بتفقد الجودة لما تكبرها بسبب الـ Pixelation.
-الصور الـ high-resolution بتاخد مساحه كبيره.
-صعب تعدل شكل معين لوحده من غير ما تأثر على باقي الصورة، عشان الصورة كلها pixels مش objects مستقلة.
+Scanner is used to convert the analog paper map to computer readable form automatically. الـ Scanner بيحول الخريطة الورقية لصورة رقمية يقدر الكمبيوتر يقراها.
+يعني بياخد حاجة analog ويطلعها في شكل رقمي.
+مثال: خريطة أثرية قديمة أو خريطة ورقية عادية.
 definition
-Vector Graphics represent images using mathematical equations that define shapes, lines, curves, and colors. الـ Vector Graphics بتتمثل بمعادلات رياضية وبتبقي عباره عن: Points
-Lines
-Curves
-Polygons مناسبه للـ logos والـ icons والرسومات اللي بتتغير أحجامها كتير.
-حجم الملفات غالبا صغير، خصوصا مع الأشكال البسيطة.
-سهل تعدل shapes معينة لوحدها.
-دقيقة جدا، عشان كده مناسبة للـ technical drawings والـ designs. مش مناسبة للصور الواقعية أو الـ photorealistic images.
-عمل تفاصيل كتير جدا بالـ vector ممكن يبقى time-consuming.
-الـ rendering بتاع vector images المعقدة ممكن يحتاج processing power أكتر. لما تحتاج صور واقعية زي photographs.
-لما تكون شغال على textures أو gradients معقدة.
-لما الصورة هتتعرض بحجم ثابت أو resolution ثابت زي web images. لما تحتاج صورة قابلة للتكبير والتصغير زي logos و icons.
-لما تعمل illustrations أو technical drawings.
-لما الصورة هتتطبع بأحجام مختلفة زي business cards أو billboards.
-بصمجيات لو عايز تفاصيل واقعية يبقى Raster, لو عايز shapes وخطوط وlogo ومحتاجة scaling يبقى Vector. definition
-Pixel is short for Picture Element, and it is the smallest addressable element in a digital image. الـ Pixel هو أصغر وحدة ممكن تتحكم فيها في الصورة الرقمية وهو حجر الاساس للـ Raster Graphics.
-الـ pixels بتترتب في شبكة 2D منتظمة وعدد الـ pixels هو اللي بيحدد الـ Resolution. الصورة بتتكون من rows و columns وكل pixel ليه مكان في الشبكة.
-الـ resolution بيتكتب بالشكل ده: width × height
-مثال: 1920 × 1080 يعني 1920 pixels أفقي و 1080 pixels رأسي. كل ما عدد الـ pixels يزيد، الصورة تبقى أوضح وأحد, أمثلة على resolutions: 320 × 200: low resolution
-1920 × 1080: Full HD
-3840 × 2160: 4K في الصور الـ grayscale أو black-and-white، كل pixel بيتخزن كقيمة intensity, ممكن تبقى من: 0.0: black
-1.0: white بس عشان التخزين binary، غالبا بتتخزن كـ integer من: 0: black
-255: white في الصور الملونة، كل pixel بيتكون من 3 components: Red R
-Green G
-Blue B كل component غالبا بيتخزن في 8-bit من 0 لـ 255.
-عدد الألوان الممكنة في RGB 24-bit: 256 × 256 × 256 = 16,777,216 colors صورة resolution بتاعها 800 × 600 فيها: 800 × 600 = 480,000 pixels زيادة الـ resolution بتحسن الجودة عشان بتزود عدد الـ pixels المتاحة لتمثيل التفاصيل الصغيرة.
+Digitizer is used to transform information from analog format (paper map) to digital format so it can be stored and displayed with a computer. الـ Digitizer بيحول معلومات من خريطة ورقية لشكل رقمي.
+الهدف إن البيانات تتخزن وتتعرض على الكمبيوتر.
+مثال: عندك خريطة أثرية لطريق قديم أو خريطة لمنطقة محددة. عايز تحطها في GIS.
+الخطوة الأولى: تمسحها بالـ Scanner أو تستخدم Digitizer عشان تحولها لشكل رقمي.
+بعد كده تقدر تشتغل عليها في الـ GIS وتضيفها كـ Layer. معلومه علي السريع كده الـ Scanner والـ Digitizer الاتنين ممكن يستخدموا عشان يحولوا الخرايط لبيانات رقمية , بس الـ Scanner الناتج بيكون صورة Raster والـ Digitizer الناتج بيكون بيانات Vector definition
+CAD provides techniques for data input, displaying, and representing data particularly in 3 dimensions. الـ CAD بيساعد في إدخال وعرض وتمثيل البيانات، خصوصا في 3D.
+هو مش GIS كامل، بس مرتبط بتمثيل وتصميم البيانات.
 definition
-Pixel Art is a form of digital art created using raster graphics software, where images are edited at the pixel level. الـ Pixel Art بيتم عن طريق تعديل pixels واحدة واحدة أو باستخدام algorithms.
-كان منتشر جدا في الألعاب القديمة لان ساعتها كانت امكانيات الاجهزه ضعيفه, بس لسه مستخدم لحد دلوقتي عشان شكله المميز والـnostalgia.
-الـ Pixel Art ممكن يتعمل بالايد أو بـ algorithms, بيستخدم عدد ألوان محدود عشان يبقي بسيط , وبيبقي فيها عيوب مقصودة بتدي character للشكل. الـ Pixel هو أصغر عنصر في electronic image (صور علي الشاشات مش صور حقيقية بتترسم علي ورق).
-كل ما عدد الـ pixels يزيد، جودة الصورة تزيد.
-في الشاشات الملونة، الـ pixel غالبا بيتكون من 3 subpixels,ا red, green , blue الـ Point واختصارها pt هي وحدة قياس في typography.
-بتستخدم لقياس ارتفاع الخطوط font heights والـ 1 point بتساوي 1/72 inch.
-علاقة الـ points بالـ pixels بتعتمد على screen resolution أو PPI. الـ Dot هي أصغر وخدة physical بيعملها بستخدمها الطابعات (printers) على الورق.
-بيتقاس غالبا باستخدام DPI,معناها Dots Per Inch Pixels vs Points: الـ pixels هيا screen-based وبتعتمد على PPI.
-الـ points عباره عن وحدة قياس ثابتة. Points vs Dots: الـ points للتصميم والـ typography.
-الـ dots للطباعة.
-علاقة الاتنين بتعتمد على DPI بتاع الطابعة. Pixels vs Dots: الـ pixels رقمية digital.
-الـ dots مادية physical. بصمجيات Pixel للشاشة.
-Point للخطوط والقياسات الطباعية.
-Dot للطابعة. كده خلصنا الجزء التاني
-اتكلمنا في المحاضره دي عن تمثيل وتخزين الصور الرقمية وعرفنا بالتفصيل الفرق بين Raster Graphics (صور من Pixels، بتعتمد على Resolution، بتتبكسل لما تكبر) و Vector Graphics (صور من معادلات رياضية، scalable، مناسبة للوجوهات).
-وعرفنا الـ Pixel بالتفصيل - إنه أصغر وحدة في الصورة الرقمية، وإن الـ Resolution بتتحسب بـ Width × Height، وإن كل Pixel في الصور الملونة بيتكون من 3 مكونات R, G, B.
-واتكلمنا عن Pixel Art وإنه كان منتشر في الألعاب القديمة ولسه مستخدم لغاية دلوقتي لشكله المميز.
-وفي الآخر فرقنا بين Pixel (للشاشة)، Point (للطباعة والخطوط و 1 pt = 1/72 inch)، و Dot (أصغر وحدة في الطباعة وتتقاس بـ DPI).
-]]></description><link>lectures/chapter-1-[part-2]-foundations-of-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 1 - [Part 2] Foundations of Computer Graphics.md</guid><pubDate>Sat, 30 May 2026 23:26:18 GMT</pubDate><enclosure url="https://penji.co/wp-content/uploads/2025/02/Chart_-Vector-vs.-Raster.png.webp" length="0" type="image/webp"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://penji.co/wp-content/uploads/2025/02/Chart_-Vector-vs.-Raster.png.webp&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Foundations of Computer Graphics - Lecture 1 [Part 1]]]></title><description><![CDATA[مقدمة المحاضرة دي اطول محاضرة في المنهج والدكتور مقسمها خمس اجزاء, فيها أهم مفاهيم الـ Computer Graphics.
-هنتكلم عن 2D Graphics، الفرق بين Raster و Vector، الـ Pixels، الـ Coordinate Systems، مشكلة Aliasing، وكمان Color Models و Color Depth ودي حاجات كلها هنتطرق ليها بعدين في محاضرات منفصله بتفصيل اكتر. definition
-Computer graphics refers to images created or manipulated by computers, including the hardware and software systems used. الـ Computer graphics هي مجال بيهتم بإنشاء ومعالجة الصور والنماذج باستخدام الكمبيوتر، سواء كانت ثنائية أو ثلاثية الأبعاد أو متحركة. وبيستخدم في مجالات كتيرة منهنا الأفلام والألعاب وتوليد الصور وعرضها على الشاشات. الصور الرقمية في الـ Computer Graphics ليها طريقتين أساسيين للتكوين: Raster Graphics:
-الصورة بتتكون من عدد كبير جدا من الـ pixels (مربعات صغيرة ملونة).
-كل ما عدد الـ pixels يزيد الصورة تبقى أوضح.
-النوع ده مناسب للصور الحقيقية والفوتوشوب، لكن لو كبرت الصورة جامد الجودة بتقل وتبقى مبكسلة. Vector Graphics:
-الصورة بتتعمل باستخدام خطوط وأشكال ومعادلات رياضية بدل الـ pixels.
-عشان كده تقدر تكبرها أو تصغرها من غير ما الجودة تبوظ.
-النوع ده مناسب للوجوهات والأيقونات والرسومات الهندسية. definition
-2D Computer Graphics refers to the creation, manipulation, and rendering of images in a two-dimensional space. ا 2D Graphics بتتعامل مع صور مسطحة، بعكس 3D Graphics اللي فيها عمق z-axis.
-المساحة هنا متعرفة بمحورين: x-axis: أفقي horizontal
-y-axis: رأسي vertical دي أهم التقنيات اللي بتظهر في شغل 2D Graphics.
+GPS is a set of hardware and software designed to determine accurate locations on the earth using signals received from satellites. الـ GPS بيحدد مواقع دقيقة على الأرض باستخدام إشارات من الأقمار الصناعية.
+مهم جدا كمدخل من مداخل البيانات المكانية.
 definition
-Rendering is the process of generating a 2D image from models, data, or mathematical descriptions. الـ Rendering هو عملية تحويل المعادلات أو الداتا أو الاكواد لصورة 2D تتعرض على الشاشة ونقدر نشوفها. Converts vector-based shapes into a grid of pixels (bitmap) الـRasterization بيحول الاشكال الي معموله بالـVector لشبكة Pixels أو Bitmap.
-بعد التحويل، النظام بيحدد لون كل Pixel حسب الشكل الأصلي, يعني بيتحول من شكل رياضي لصورة مبنية من مربعات صغيرة. Reduces visual artifacts such as jagged edges by blending pixel colors along the edges of shapes الـ Anti-aliasing (او تنعيم الحواف) وظيفته إنه يشيل الحواف المشرشرة أو اللي طالعة شبه السلالم (jagged edges) على أطراف الرسومات والمجسمات عشان تبان طبيعية وواقعية.
-يعني كأنه بيعمل "صنفرة" للبيكسلات ويسيح ألوانها في بعضها عشان يخلي حواف الحاجة ناعمة ومريحة للعين بدل ما تبقى مبكسلة.
-هنشرحه بتفصيل اكتر بعدين <img alt="anti-aliasing" src="https://camo.githubusercontent.com/f8b6f14633a9b8d7cafd0e23db7008b1fc175808ffd9769eb788d1cc2ea3bd93/68747470733a2f2f686172647a6f6e652e65732f6170702f75706c6f6164732d686172647a6f6e652e65732f323032302f30342f416e74692d416c696173696e672d312e6a7067" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-Uses patterns of pixels to simulate colors and gradients that may not be available in a limited color palette. الـ Dithering هو "خدعة بصرية" بيعملها الكمبيوتر عن طريق إنه بيستخدم انماط معينه من الـ Pixelsعشان يعوض نقص الألوان المتاحة في الصورة.
-يعني من الاخر بيرص بيكسلات بألوان مختلفة جنب بعضها بنمط معين عشان يحاكي لون جديد.
-<br><img alt="Dithering" src="https://wiki.snapmaker.com/luban/luban_ui/laser/configuration_bar/639.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">definition
-Transformations modify the position, size, orientation, or shape of objects in a 2D space. الـ Transformations بيغير مكان أو حجم أو اتجاه أو شكل العنصر في الـ 2D.
-بتتمثل باستخدام transformation matrices.
+SDE helps manage spatial data to provide quicker retrieval of that data from database engines such as Oracle, SQL Server and Informix. الـ SDE معناها Spatial Data Engine. وظيفتها إدارة البيانات المكانية وتسهيل استرجاعها بسرعة من قواعد البيانات. اتطورت لمجتمعين: ا GIS Community
+ا DBMS Community الهدف إن قواعد البيانات العادية تقدر تدعم Spatial Technology. يقدر يتعامل مع بيانات جاية من مصادر مختلفة: يعني لو عندك data في Excel أو في SQL Server أو في Access، الـ GIS يقدر يستقبلها ويعالجها. definition
+IMS provides maps through the Internet usually as images. ا IMS معناها Internet Map Server.
+بيوفر خرائط عن طريق الإنترنت، غالبا في شكل صور.
+بيخلي ناس مش لازم تكون فاهمة GIS تقدر تشوف وتتفاعل مع الخرائط.
+مرتبط بـ: ا WebGIS
+ا Online GIS خرائط مرفوعة على الإنترنت ومتاحة لكل المستخدمين.
+الناس تقدر تشوف الأماكن، وتضيف أماكن جديدة، وتحط صور وأسماء على الخريطة.
+بصمجيات ا SDE = إدارة واسترجاع أسرع للـ spatial data من databases.
+ا IMS = عرض خرائط على الإنترنت للمستخدمين (Online). الـ GIS بيتعامل مع منظومة software وأدوات مرتبطة، مش برنامج واحد بس.
+أمثلة: ا ArcGIS في إدارة وعرض وتحليل البيانات المكانية والجداول الوصفية.
+ا QGIS كاتجاه أو بديل مشهور في برامج الـ GIS.
+ا CAD كأداة مرتبطة بإدخال وعرض وتمثيل البيانات.
+ا SDE لإدارة spatial data داخل database engines.
+ا IMS لتقديم الخرائط عبر الإنترنت. البنية الأساسية للـ GIS ممكن تتلخص بالشكل ده:
+Data Input -&gt; Geographic Database -&gt; Transformation and Analysis -&gt; Output Display أمثلة إدخال البيانات: Satellite Imagery
+Air Photos
+Digitize
+Scan
+Digital Elevation Model
+GPS
+Tiger/Line يعني مصادر البيانات ممكن تكون صور أقمار صناعية، صور جوية، خرائط ممسوحة، بيانات GPS، أو نماذج ارتفاعات. بعد الإدخال، البيانات بتتخزن في Geographic Database.
+الفرق هنا عن database عادية إن البيانات مش attributes بس، دي كمان مرتبطة بمكان. بعد التخزين، النظام يعمل تحويلات وتحليلات.
+التحليل ممكن يجاوب أسئلة زي: فين المشكلة؟
+إيه اللي تغير؟
+إيه العلاقة بين طبقات مختلفة؟ مخرجات الـ GIS ممكن تكون: Maps
+Charts
+Reports definition
+Where is what? means obtaining information from a location. يعني تبدأ من مكان وتسأل: إيه الموجود هنا؟
+مثال: تضغط على قطعة أرض على الخريطة وتعرف المالك، العنوان، المساحة، نوع الاستخدام، والتقييم.
 definition
-Clipping restricts rendering to a defined region such as a viewport or window. الـ Clipping يعني بنحدد منطقة ونرسم بس الجزء اللي جوه المنطقة دي.
-أي جزء خارج الـ viewport أو الـ المنطقة الي حددناها بيتقص ومبيتعرضش.
-<br><img alt="clipping" src="https://www.baeldung.com/wp-content/uploads/sites/4/2023/06/ClippingStarObject-6.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">بصمجيات من الاخر الـ Point Clipping بتتعامل مع النقط (points) والـ Line Clipping بيتعامل مع الخطوط (lines) اما الـ Polygon Clipping بيتعامل مع الـ polygons الي هيا الاشكال المعقده بصمجيات ا Cohen بتتعامل مع الخطوط العادية , اما Liang-Barsky بتستخدم parametric equations, و Sutherland بقي بتتعامل مع الـ polygons الي هيا الاشكال المعقده definition
-Compositing combines multiple images, layers, or graphical elements to produce a final image. الـ Compositing يعني تركيب أكتر من صورة أو طبقة فوق بعض عشان نطلع صورة نهائية.
-بيستخدم في: Image editing (لو بتستخدم فوتوشوب هتبقي عارف الكلام ده )
-Special effects
-UI rendering بصمجيات الـ Alpha Blending بيستخدم الـ transparency , الـ Masking بيحدد حته تظهر (revealed) وحته لا (hidden), الـ Layering من اسمها بتبقي separate layers definition Shading simulates lighting effects in 2D graphics to create the illusion of depth, texture, and material properties. الـ Shading بيحاول يخلي عنصر 2D يبان فيه إحساس بالإضاءة والعمق والخامة.
-يعني مش بيحول الصورة لـ 3D، بس بيخليك تحس انها 3D.
-<br> <img src="https://i.pcmag.com/imagery/encyclopedia-terms/flat-shading-_shading.fit_lim.size_1050x.gif" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-بصمجيات الـ Flat بيعمل شكل وبدائي وبيبقي لون واحد (single color)، الـ Gouraud بيعمل تدرج في الالوان (gradient)، الـ Phong بيبقي واقعي جداً (realistic lighting.)، والـ Shadow من اسمه بيعمل اسقاط للظلال (shadow buffer) definition
-Text rendering focuses on displaying high-quality text that is visually clear and readable. الـ Text Rendering مسؤول عن عرض النصوص بشكل واضح وحاد وقابل للقراءة.
-بيتعامل مع: Fonts
-Spacing
-Visual clarity
-Readability on screens and printed media definition
-Vector fonts represent characters using mathematical curves, mainly Bezier curves. الـ Vector Fonts بتمثل الحروف بمنحنيات ومعادلات رياضية (زي الـ vector images بالظبط).
-ميزتها الأساسية إنها بتتكبر وتصغر من غير ما تفقد الجودة(برده زي الـ vector images). Scalable.
-Resolution-independent. محتاجة resources أكتر في الـ rendering.
-definition
-Bitmap fonts store characters as fixed-size pixel grids. الـ Bitmap Fonts بتخزن كل حرف كشبكة pixels جاهزة بحجم معين (زي الـ raster images). Fast rendering.
-Efficient. Not scalable.
-لما تكبرها بتبكسل.
-<br> <img src="https://business.oregonstate.edu/sites/default/files/styles/large/public/2025-07/vector_bitmap.jpg.webp?itok=GM989ndm" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-definition
-Kerning adjusts spacing between specific pairs of characters to improve readability and visual balance. الـ Kerning بيتحكم في المسافة الي بين الحروف.
-مثلا (AVATAR) -&gt; (A V A T A R)
-definition
-Ligatures replace certain character pairs with a single stylized glyph. ا Ligatures بيتحكم في طريقة ربط الحروف مع بعضها (زي الانجليزي المشبك كده).
-الهدف إنها تحسن الشكل الجمالي aesthetics والقراءة readability.
-<br> <img src="https://www.thoughtco.com/thmb/XJdl7ssTe3yfxjvOwsjPb2Gd3kc=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/ligatures-typography-485e1c327ac04091abd2691104ead363.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> زي الصور, لما النص يتعرض على شاشة الحواف ممكن تبان متكسرة عشان الشاشة مبنية من pixels.
-ا Anti-aliasing بينعم حواف النص عن طريق مزج pixels الحواف مع الألوان اللي حواليها.
-definition
-Subpixel rendering improves text clarity by using the red, green, and blue subpixels of LCD displays. الـ Subpixel Rendering بتحسن حدة النصوص عن طريق انها بتستغل إن كل pixel في شاشة LCD غالبًا متكوّن من subpixels: Red
-Green
-Blue كده خلصنا الجزء الأول
-اتكلمنا في المحاضره دي عن مقدمة في الـ Computer Graphics وعرفنا إنها مجال بيهتم بإنشاء ومعالجة الصور باستخدام الكمبيوتر.
-وعرفنا الفرق بين Raster Graphics (صورة من Pixels) و Vector Graphics (صورة من معادلات رياضية)، وإن 2D Graphics بتشتغل على محورين x و y.
-بعد كده عرفنا أهم تقنيات الـ 2D Graphics: ا Rendering وتحويل الداتا لصورة (وفيه Rasterization, Anti-aliasing, Dithering)
-ا Transformations اللي بتغير موقع/حجم/اتجاه العناصر (Translation, Scaling, Rotation, Shearing, Reflection)
-ا Clipping وقص الأجزاء الخارجة عن المنطقة المحددة (Point, Line, Polygon ومعاهم Algorithms زي Cohen-Sutherland و Liang-Barsky و Sutherland-Hodgman)
-ا Compositing وتركيب الطبقات (Alpha Blending, Masking, Layering)
-ا Shading اللي بيعمل إحساس بالعمق والإضاءة (Flat, Gouraud, Phong, Shadow Mapping) واخر حاجه اتكلمنا عن Text Rendering وعرفنا فيه Vector Fonts (TTF, OTF) و Bitmap Fonts و Kerning و Ligatures و Anti-aliasing للنصوص و Subpixel Rendering.
-]]></description><link>lectures/chapter-1-[part-1]-foundations-of-computer-graphics.html</link><guid isPermaLink="false">2 - Areas/College/Computer Graphics/lectures/Chapter 1 - [Part 1] Foundations of Computer Graphics.md</guid><pubDate>Thu, 28 May 2026 19:36:38 GMT</pubDate><enclosure url="https://camo.githubusercontent.com/f8b6f14633a9b8d7cafd0e23db7008b1fc175808ffd9769eb788d1cc2ea3bd93/68747470733a2f2f686172647a6f6e652e65732f6170702f75706c6f6164732d686172647a6f6e652e65732f323032302f30342f416e74692d416c696173696e672d312e6a7067" length="0" type="false"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://camo.githubusercontent.com/f8b6f14633a9b8d7cafd0e23db7008b1fc175808ffd9769eb788d1cc2ea3bd93/68747470733a2f2f686172647a6f6e652e65732f6170702f75706c6f6164732d686172647a6f6e652e65732f323032302f30342f416e74692d416c696173696e672d312e6a7067&quot;&gt;&lt;/figure&gt;</content:encoded></item></channel></rss>
+What is where? means querying information to find location. يعني تبدأ بمعلومة وتدور على مكانها.
+مثال: عايز تعرف فين كل الأراضي الصناعية، أو فين المناطق ذات كثافة عالية.
+بصمجيات ا Where is what? = عندي location وعايز أعرف بياناته.
+ا What is where? = عندي attribute وعايز أعرف مكانه. للـ GIS استخدامات كتير، منها: ا Mapping Where Things Are نرسم أماكن الأشياء.
+مثال: أماكن المدارس، المستشفيات، الأشجار، الحوادث، الطرق. ا Mapping Quantities نرسم الكميات على الخريطة.
+مثال: عدد السكان في كل منطقة، عدد الحوادث، كمية الإنتاج. ا Mapping Densities نرسم الكثافة.
+يعني مش بس العدد، لكن العدد بالنسبة للمساحة.
+مثال: كثافة السكان في كيلومتر مربع واحد في مناطق مختلفة. مثال: Traffic Density خرايط الطرق بتعرض traffic density بألوان مختلفة: أخضر = حركة سلسة، _traffic قليل.
+أصفر = حركة عادية.
+أحمر = زحمة شديدة. الألوان دي مبنية على بيانات حقيقية من المستخدمين والـ mobile devices. ا Getting Information About a Feature ممكن تضغط على feature وتطلع بياناته.
+أمثلة: ا Area
+ا Owner
+ا Address ا GIS Queries الـ GIS يقدر يجاوب على أسئلة كتير زي: ا What is at this location?: إيه الموجود في المكان ده؟
+ا Where is the nearest gas station?: أقرب بنزينة فين؟
+ا How do I get there?: أروح هناك ازاي؟ كل سؤال ده بيعالج شكل مختلف من التحليل المكاني. ا Routing and Navigation الـ GIS بيستخدم في تحديد أفضل طريق من مكان لمكان.
+المدخلات: بيانات الـ Road Network.
+بيانات الـ Traffic Density.
+بيانات الـ Speed Limits.
+بيانات الـ Signals. المخرجات: أفضل route من النقطة A للنقطة B. ا Change Detection استخدام GIS عشان نعرف التغير مع الزمن.
+مثال: مقارنة خريطة المدينة في 1950 مع خريطة 1990.
+نشوف المدينة كبرت ازاي، أو الأرض اتغير استخدامها ازاي.
+ده مهم في التخطيط العمراني ومراقبة التوسع العمراني. ا Geocoding : the process of converting addresses into geographic coordinates (latitude/longitude) to be placed on a map. الـ Geocoding بيحول عناوين (Address) لإحداثيات (Latitude, Longitude). يعني لما تكتب عنوان مكان، النظام بيحوله لنقطة على الخريطة. ا Predictive / Forecasting Analysis استخدام GIS للتنبؤ بأحداث مستقبلية بناءً على بيانات مكانية.
+مثال: توقع أماكن الحوادث بناءً على أنماط سابقة.
+أو توقع التوسع العمراني فيnext 10 years. ا Land Parcel Based Applications تطبيقات مرتبطة بقطع الأراضي.
+زي: ا Land acquisition
+ا Environmental impact statements
+ا Water quality management ملخص ا GIS = Information System + Geographic Position.
+الـ GIS بيشتغل على What, Where, Why.
+التعريف المهم: hardware + software + geographic data عشان capture, manage, analyze, display geographically referenced information.
+أهم مفهومين: features ليها attributes، والبيانات بتتقسم layers.
+اBase Map هي الخريطة الأصلية المرجعية، والجهة المسؤولة عنها هي الهيئة المساحية العسكرية.
+كل Layer لازم يكون فيها نوع geometry واحد بس (points أو lines أو polygons).
+اData هي أغلى وأهم مكون في GIS - جمعها وتنظيفها بياخد معظم الوقت والميزانية.
+اProcedures بتختلف حسب المجال: ماسورة مياه ≠ خط كهرباء ≠ طريق.
+ا Network أساسي لأن البيانات موزعة على جهات مختلفة ومحتاجة ربط.
+الـ GIS مش بس خرائط - فيه Database Management System أو Data Engine جواه.
+ا GIS Functions: Input → Processing → Output.
+ا GIS Queries: أقرب بنزينة فين؟ أقرب مستشفى فين؟ إيه اللي اتغير؟
+ا Digitization = تحويل خريطة ورقية لرقمية.
+ا Geocoding = تحويل عناوين لإحداثيات على الخريطة. ]]></description><link>lectures/lecture-1-gis-fundamentals.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 1 - GIS Fundamentals.md</guid><pubDate>Wed, 03 Jun 2026 01:37:12 GMT</pubDate></item></channel></rss>
