@@ -1,4 +1,118 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[GIS]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>GIS</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Fri, 05 Jun 2026 17:17:05 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Fri, 05 Jun 2026 17:16:55 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[Index]]></title><description><![CDATA[ 5\6\2026 قبل ما تبدأ طبعا لان الدكتور ممكن يجيب اسالة علي اي حاجة حرفيا حتي العملي ف انا اعتمدت في الشرح علي السلايدات والكتاب ومحتوي المحاضره فاعذروني علي الرغي الي هتلاقوه بس حاولت اغطي كل حاجة علي قد ما اقدر
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[GIS]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>GIS</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Fri, 05 Jun 2026 21:14:24 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Fri, 05 Jun 2026 21:14:14 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[GIS Fundamentals 8 — Cartography (Map Elements)]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن الخرائط (Cartography) وعناصر الخريطة (Map Elements).
+أهم المحاور: مقاييس القياس (Nominal, Ordinal, Interval, Ratio)، استراتيجيات الترميز (Point, Line, Area, Dot Distribution)، وتشريح الخريطة (Neatline, Border, Title, Legend, Scale, North Arrow, Inset Map). مستويات قياس البيانات (Scales of Measurement)، بتتقسم لـ 4 أنواع حسب إحنا بنستخدم الأرقام إزاي:
+أربعة مقاييس للبيانات
+القيم العددية بتتحدد بالنسبة لـ 4 مقاييس: Nominal data information that is simply grouped into categories on the basis of qualitative considerations: a road distinguished from a river or a forest distinguished from an open field.
+1. المقياس الاسمي (Nominal):
+الفكرة: الأرقام هنا مجرد "هوية أو اسم" للتمييز فقط، ملهاش أي قيمة رياضية.
+الخصائص: مفيش ترتيب، ومينفعش نجمع أو نطرح.
+الأمثلة: زي رقم تليفونك. رقم الـ T-shirt بتاع المتسابق (المتسابق رقم 9 مش معناه إنه أحسن أو أكبر من رقم 5، ده مجرد كود ليه).
+في الـ GIS: تصنيف الحاجات زي (غابة، نهر، طريق). الأرقام بتعمل هوية بس — مش بتدي ترتيب أو قيم.
+يعني: رقم التليفون (2218000 مش اكبر من 2217000).
+<img border="0" alt="image" src="https://i.ibb.co/RdyKYJP/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+Ordinal data is grouped by rank on the basis of some quantitative measure: small, medium, and large cities or single-lane, double-lane, and four-lane roads. الأرقام هنا بتعبر عن "ترتيب أو رتبة"، لكن منعرفش المسافة أو الفرق بين كل رتبة والتانية قد إيه.
+أمثلة: مراكز السباق (1st, 2nd, 3rd) — مش عارفين الفرق الزمني بينهم.
+الـ Ordinal Data: بيانات بتتجمع حسب الترتيب بناءً على قياس كمي — مدن صغيرة/متوسطة/كبيرة، طرق حاره واحدة/اتنين/أربعة.
+<br><img border="0" alt="image" src="https://i.ibb.co/998nss5M/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+هنا الترتيب موجود، وكمان الطرح بين الأرقام ليه معنى ثابت، لكن مفيش صفر حقيقي (الصفر مش معناه انعدام الحاجة).
+الطرح ينفع، لكن القسمة/النسبة مينفعش.
+القسمة مش معنوية — 200°C مش ضعف 100°C.
+درجات الحرارة (Celsius): درجة 20°C أدفى من 10°C بعشر درجات (الطرح شغال)، لكن مينفعش تقول إن 20°C "ضعف حرارة" 10°C؛ لأن مثلا عشان تقول ان 2 ضعف 4 لازم يكون الرقمين بادئين من الصفر (اول مره اعرف المعلومه دي). ده أعلى وأدق مقياس. فيه ترتيب، والمسافات متساوية، وكمان فيه صفر حقيقي مطلق.
+الخصائص: الجمع، الطرح، والأهم القسمة والنسبة كلهم ليهم معنى.
+أمثلة: الوزن (50 kg = نص 100 kg)، مدة السباق ( اللي خلص السباق في 5 ساعات، أخد "ضعف" الوقت بتاع اللي خصه في ساعتين ونص (5 / 2.5 = ).
+صفر الميزان مطلق، لكن صفر Celsius مش مطلق.
+<br><img border="0" alt="pasted image 20260605220457" src="https://i.ibb.co/3y7zXMkg/pasted-image-20260605220457.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">ملاحظة مهمة معظم البيانات الجغرافية في الـ GIS Nominal أو Ordinal — القيم بتعمل ترتيب أو هوية بس، ونادرًا Interval أو Ratio. Three Levels of Measurement: Nominal (Qualitative) — بيانات نوعية.
+Ordinal — بيانات مرتبة.
+Ratio (Quantitative) — بيانات كمية. <br><img border="0" alt="image" src="https://i.ibb.co/nqJBY1z9/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+الفكرة: بنستخدم رمز (غالباً دائرة)، وحجم الرمز ده بيكبر ويصغر حسب القيمة اللي بيعبر عنها. (مثلاً: دائرة كبيرة = عدد سكان كتير، دائرة صغيرة = عدد سكان قليل).
+الميزة (Easy to see distribution): ممتازة جداً عشان توريك "التوزيع المكاني". بمجرد النظر للخريطة هتعرف الأماكن الزحمة والأماكن الفاضية.
+العيب (Hard to see if overlapping): لو الأماكن قريبة من بعض والقيم كبيرة، الدوائر هتكبر وتدخل في بعضها (Overlapping) وتغطي على تفاصيل الخريطة وماتعرفش تقراها كويس.
+<br>
+<img border="0" alt="image" src="https://i.ibb.co/whLhPr1F/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> ### 2. الرسومات البيانية على الخريطة (Charts on the Map)
+الفكرة: بدل ما نحط دائرة أو لون، بنحط رسم بياني كامل (زي الـ Pie Chart أو الـ Bar Chart) جوه كل منطقة أو محافظة على الخريطة.
+الميزة (Magnitudes and categories obvious): بتوضح الأرقام (الكميات) والفئات بدقة. (مثلاً: تقدر تشوف رسمة بتوضح نسبة الذكور للإناث في كل محافظة بوضوح).
+العيب (Hides spatial pattern): الرسومات البيانية بتعمل "زحمة بصرية"، فبتداري معالم الخريطة الأصلية، وبتخليك مش قادر تلمح "النمط الجغرافي العام" بسهولة.
+<br>
+<img border="0" alt="image" src="https://i.ibb.co/9KDSHqz/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> الجزء ده بيشرح "عناصر الخريطة الأساسية" (Map Elements) وإزاي بنعمل إخراج نهائي للخريطة (Map Composition) بحيث تطلع مريحة للعين وفيها توازن بصري (Visual Balance).
+<br><img border="0" alt="image" src="https://i.ibb.co/7NvXSwJ6/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+Map Scale: Map scale defines the amount of reduction of reality. ده من أهم العناصر، وهو "نسبة تصغير الواقع على الورقة".
+قاعدة مهمه في الـ GIS: دايماً يفضل "تصغر" خريطة دقتها عالية، بدل ما "تكبر" خريطة دقتها قليلة (عشان الجودة والتفاصيل بتبوظ لما بتكبر).
+3 أنواع من Scale: مقياس لفظي (Verbal Scale): بيتكتب بالكلمات العادية، زي: (1 سم يمثل 1 متر).
+مقياس كسري/نسبي (RF - Representative Fraction): بيتكتب كنسبة مئوية، زي: (1:100,000) يعني كل 1 سم على الخريطة بيساوي 100,000 سم في الحقيقة.
+مقياس خطي (Graphic Bar): مسطرة مرسومة على الخريطة ومتقسمة مسافات. (وده أفضل نوع للخرايط المطبوعة، لأنك لو صورت الخريطة وكبرتها أو صغرتها، المسطرة هتكبر وتصغر معاها بنسبة وتناسب). <br>
+<img border="0" alt="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS94_Ll1KuysKo_mlPcdmJ-FCmolfIfMVDxXA&amp;s" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+Title الفرق بين المقياس الكبير والصغير (مهمة ): ا Large Scale (مقياس كبير): الكسر بتاعه كبير (زي 1:1,000). بيعرض مساحة صغيرة بس فيها تفاصيل كتير جداً (زي خريطة شارعك).
+ا Small Scale (مقياس صغير): الكسر بتاعه صغير (زي 1:1,000,000). بيعرض مساحة كبيرة جداً بس تفاصيلها قليلة (زي خريطة العالم أو خريطة مصر كلها). The reference area on a map that lists: • The colors, • Symbols, • Line patterns, • Shadings and other annotation used on the map, and their meanings. <br>ده "القاموس" بتاع الخريطة. بيترجم للـ User كل حاجة مرسومة (الألوان، الرموز، أشكال الخطوط، التظليل) معناها إيه في الحقيقة. (مثال: الخط الأحمر = سكة حديد). <img border="0" alt="image" src="https://i.ibb.co/4RZz5Tfs/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 200px; max-width: 100%;"> The question of what is north can be an issue on some maps. مؤشر بيعرفك اتجاه الشمال فين. وفيه نوعين من الشمال: الشمال الحقيقي (True North): الاتجاه الثابت للقطب الشمالي (وده اللي بنستخدمه في الخرايط).
+الشمال المغناطيسي (Magnetic North): ده اللي البوصلة بتشاور عليه، ومكانه بيتغير بمرور الزمن بسبب تغيرات القشرة الأرضية. <br>
+<img border="0" alt="image" src="https://i.ibb.co/jvgKt94B/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 300px; max-width: 100%;"> Readers will need to know about the sources from which the map was derived. لازم تكتب البيانات بتاعتك جاية منين (زي هيئة المساحة أو قمر صناعي معين) عشان القارئ يثق في دقة وصحة الخريطة. لازم يكون واضح، بيشد الانتباه، ومناسب للهدف من الخريطة والجمهور اللي هيقراها. ودي الطريقة اللي فردنا بيها الأرض "الكروية" على ورقة "مسطحة". لازم يتكتب نوع الـ Projection لأن أي Projection في الدنيا بيعمل تشويه في واحدة من الأربعة دول: (المساحة Area، المسافة Distance، الاتجاه Direction، أو الشكل Shape). اسم الشخص أو الشركة اللي رسمت وأخرجت الخريطة. عنصر حساس جداً. القارئ لازم يعرف الخريطة دي معموله سنة كام، لأن لو خريطة "طرق" قديمة ممكن تودي الناس في داهية، بينما خرايط تانية (زي الجبال) مش بتتأثر أوي بمرور الزمن. The outer neatline of a map--its border--helps to frame the entire map composition to draw the reader's attention to the various elements of information.
+Neatlines are also used to "clip" the area of the body of the map and of locator, and inset maps ده "البرواز" أو الخطوط اللي بتحوط الخريطة. بتعمل حاجتين بتفصل الخريطة عن الورقة وتشد عين القارئ.
+بتستخدم كـ (مقص) تقطع بيه حدود منطقة معينة عشان تعرضها في خريطة فرعية. The cartographer adds a "helper" or locator map that places the body of the map within a larger geographical context with which the reader can be expected to be familiar. دي خريطة "مُساعدة" صغيرة بتتحط في الجنب، بتوريك "السياق الأكبر". (مثال: لو أنت عامل خريطة لمدينة المنصورة، بتحط خريطة صغيرة لمصر كلها وفيها نقطة حمرا على المنصورة عشان لو حد مش من المنصوره يعرف مكانها فين). provide the reader with additional close-up, "zoomed in" maps of these smaller areas. دي عكس اللي فوق. لو الخريطة الأصلية زحمة جداً وفيها حتة مليانة تفاصيل متداخلة ومش باينة، بنقوم واخدين الحتة دي في مربع على جنب ونعملها "Zoom in" عشان نوضحها.
+ملخص 1. مقاييس البيانات (Scales): ا Nominal: تصنيف وهوية فقط (أنواع الأراضي، رقم التليفون).
+ا Ordinal: ترتيب ورتبة فقط (الأول، التاني).
+ا Interval: فرق ثابت بين القيم لكن مفيش صفر مطلق (درجة الحرارة).
+ا Ratio: دقة كاملة بـ صفر مطلق، ينفع فيها القسمة (الوزن، المسافة). 2. استراتيجيات الترميز (Symbols): ا Graduated (رموز متدرجة): حجم الرمز يعبر عن القيمة. (حلوة للتوزيع المكاني، عيبها التداخل في الزحمة).
+ا Charts (رسومات بيانية): دقيقة في الأرقام، بس بتعمل زحمة وتداري معالم الخريطة الأساسية. 3. عناصر الخريطة (Map Anatomy): ا Scale (المقياس): المقياس الكبير = تفاصيل كتير لشارع، المقياس الصغير = تفاصيل قليلة لدولة. (المقياس الخطي هو الأفضل للطباعة).
+ا Legend: قاموس الخريطة (معاني الألوان والرموز).
+اNeatlines: برواز الخريطة الخارجي.
+اLocator Map: خريطة مساعدة بتوريك مكانك جوه سياق أكبر (نقطة على خريطة الدولة).
+اInset Map: خريطة مكبرة (Zoom-in) لحتة معينة زحمة في الخريطة عشان توضحها.
+حاجات تانية: Title (العنوان)، Direction (اتجاه الشمال)، Projection (المسقط - دايماً بيعمل نسبة تشوه)، والـ Date/Source (تاريخ ومصدر البيانات). ]]></description><link>lectures/lecture-8-cartography.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 8 - Cartography.md</guid><pubDate>Sun, 12 Apr 2026 00:00:00 GMT</pubDate><enclosure url="https://i.ibb.co/RdyKYJP/image.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/RdyKYJP/image.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 7 — Spatial Data Structure]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن هياكل البيانات المكانية (Spatial Data Structures) — إزاي البيانات المكانية (نقاط، خطوط، مناطق) بتتخزن في الـ GIS.
+أهم المحاور: Point Data (K-D Tree, PR Quadtree, Grid Files), Line Data (Arc-Node, Chain Codes), Area Data (Boundary Model, Region Quadtree), و R-Trees كـ Index ديناميكي. هياكل البيانات المكانية اتقسمت حسب نوع البيانات نفسها الي: ا Point Data: بيتم تخزينها بطرق زيCell Method, Point Quadtrees, K-D Trees, PR Quadtrees, Grid Filess.
+ا Line Data: بيتم تخزينها باستخدام Arc-Node Structure, Chain Codes.
+ا Area Data: بيتم تخزينها باستخدام Boundary Model, Region Quadtree. الـ R-Tree هي Dynamic Index Structure مخصص للبيانات المكانية. الـ B+ Tree كويس للبيانات الخطية (1D)، لكن مش مناسب للبيانات المكانية (2D/3D).
+الـ R-Tree بيحل المشكلة دي عن طريق تقسيم المساحة لمستطيلات حد أدنى (MBR). ا Height Balanced — كل المسارات من الروت للورقة طولها متساوي.
+ا 2 types of nodes: فيها نوعين, Internal Nodes و Leaf Nodes.
+ا Leaves point to disk pages — الـ Leaves بتبقى شايلة "عناوين" (Pointers) بتوديك لمكان تخزينها الفعلي على الهارد ديسك.
+ا Records in the leaves point to actual data objects — كل Record جواه مؤشر مباشر بيسحب العنصر أو الشكل الفعلي من قاعدة البيانات..
+ا Max Capacity = اM — لو النود بتشيل عدد (M) من البيانات كحد أقصى، فلازم على الأقل تكون مليانة للنص (M/2).
+ا Completely Dynamic — لو ضفت بيانات جديدة أو مسحت بيانات قديمة، الشجرة بتعدل نفسها وتتوازن تلقائياً من غير ما تحتاج توقف النظام وتبني الشجرة كلها من الصفر.
+ا Guaranteed Fan-out of M/2 — كل نود (ما عدا الروت) يكون طالع منها على الأقل فروع عددها M/2، وده اللي بيحافظ على توازن الشجرة.
+كل Leaf Record هو MBR (Minimum Bounding Rectangle) — كل سجل في الأوراق بيمثل (MBR - Minimum Bounding Rectangle)، يعني بيحوط العنصر اللي جواه في "أصغر مستطيل ممكن" من غير ما يسيب مساحات فاضية كتير ملهاش لازمة.
+ا Root has at least two children) — الروت لازم يتقسم لفرعين علي الاقل. ا M هنا بيمثل السعة القصوى (Maximum Capacity) لأي Node جوه الشجرة. عشان تتخيلها ببساطة، اعتبر الـ R-Tree دي عاملة زي "فولدرات الكمبيوتر"؛ فولدر كبير جواه فولدرات أصغر، لحد ما تفتح آخر فولدر تلاقي جواه الملفات الحقيقية. ا Internal Nodes: دي بتمثل "الفولدرات الكبيرة والمتوسطة" اللي في الشجرة، ومفيهاش بيانات حقيقية، وظيفتها بس توجهك. وكل عقدة فيها بتتكون من حاجتين: المستطيل (N dimensional rectangle): ده مستطيل وهمي كبير بيترسم عشان يحوط مجموعة من المستطيلات الأصغر منه (ممكن يكون 2D على خريطة عادية، أو 3D لو الخريطة مجسمة).
+المؤشر (Child pointer): ده السهم أو "العنوان" اللي بيشاور على المستطيلات الأصغر (الأبناء) اللي موجودين جوه المستطيل الكبير ده. ا Leaf Nodes: دي "نهاية فروع الشجرة"، ودي اللي بتوصلك للبيانات الحقيقية. وبرضه بتتكون من حاجتين: أصغر مستطيل محيط (MBR - Minimum Bounding Rectangle): ده المستطيل اللي بيترسم حوالين الشكل الحقيقي بالظبط على الخريطة (زي مبنى أو بحيرة) عشان يحجمه بأقل مساحة ممكنة من غير أي فراغات ملهاش لازمة.
+مؤشر البيانات (Tuple-identifier): ده السهم الأخير اللي بياخدك من إيدك ويوديك للـ "Hard Disk" (أو قاعدة البيانات) عشان تقرا البيانات الفعلية بتاعت الشكل ده (زي اسمه، نوعه، مساحته، إلخ). <img border="0" alt="image" src="https://i.ibb.co/dw4tjnM2/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+الأشكال الي متلونه ازرق (المستطيلات الصغيرة والنقط) اللي تحت دي البيانات الحقيقية بتاعتنا (مثلاً: بيوت، بحيرات، شوارع).
+كل مجموعة أشكال زرقا قريبة من بعض حوطناهم بـ مستطيل رفيع على قدهم بالظبط (زي المستطيلات a, b, c, d), المستطيلات الرفيعة دي هي الـ (MBR) اللي جوه العقد الورقية (Leaf Nodes).
+في الشجرة اللي فوق، هتلاقي الحروف دي (a, b, c...) هي اللي في المستوى قبل الأخير، وكل حرف طالع منه خطوط لتحت (دي المؤشرات أو الـ Tuple-identifiers اللي بتوديك للشكل الأزرق الحقيقي).
+بعدها جمعنا كل كام مستطيل رفيع قريبين من بعض، وحوطناهم بـ مستطيل تخين كبير (دي العقد الداخلية).
+من الاخر البيانات الحقيقية (الأشكال الزرقاء): دي العناصر الفعلية اللي على الخريطة (بيوت، شوارع، إلخ) وموجودة جوه أصغر مستطيلات. العقد الورقية / Leaf Nodes (المستطيلات الرفيعة a,b,c...): دي أصغر مستطيلات (MBR) بتترسم عشان تحوط الأشكال الزرقاء بالظبط، وبتكون في المستوى قبل الأخير في الشجرة اللي فوق. العقد الداخلية / Internal Nodes (المستطيلات الكبيرة m,n,o,p): دي مستطيلات "تجميعية" أكبر، كل مستطيل فيهم بيلم جواه مجموعة من المستطيلات الرفيعة القريبة من بعض. الجذر / Root Node (البلوك [m|n|o|p]): ده قمة الشجرة (نقطة البداية)، وجواه المؤشرات اللي بتوزعك على المستطيلات الكبيرة عشان تبدأ رحلة البحث. الإضافة (Inserts): إنك تحط عنصر أو شكل جديد في الشجرة.
+الحذف (Deletes): إنك تمسح عنصر من الشجرة.
+التحديث (Updates): خلي بالك، التحديث هنا مش بيحصل في نفس المكان، لكن النظام بيمسح العنصر القديم ويضيفه من جديد بتعديلاته. (السبب: إن تغيير حجم العنصر ممكن يغير حجم المستطيلات اللي محوطاه، فالأضمن يمسحه ويضيفه عشان الشجرة تتوزن صح). دي الميزة الأقوى للـ R-Tree، إنها بتعمل "بحث مكاني" (Spatial Search).
+امثله: البحث جوه مساحة معينة: "هاتلي أسماء كل الطرق اللي جوه مساحة 1 كيلومتر مربع؟".
+البحث في مسار معين: "إيه المباني اللي هتقابلني وأنا ماشي بين مبنى كذا ومبنى كذا؟"
+الاحتواء الكامل (Contained): "هاتلي كل المستطيلات (العناصر) اللي واقعة بالكامل جوه المستطيل اللي ببحث بيه".
+التقاطع (Intersecting): "هاتلي كل المستطيلات اللي بتتقاطع أو بتلمس المستطيل اللي ببحث بيه" (حتى لو جزء منها بس هو اللي جوه). الـ K-D Tree (K-Dimensional Tree) هو Binary Search Tree كل عقدة فيه نقطة في K بُعد.
+بيستخدم لتخزين النقاط في K أبعاد (مثلًا: 2D أو 3D).
+الـ Range queries: دي اهم ميزه, بتمكنك تبحث بأكتر من شرط (Key) في نفس الوقت. مثال: لو بتبحث في داتا بيز، تقدر تقول: "هاتلي الناس اللي سنهم بين 34 و 49 وكمان مرتبهم بين 100 ألف و 150 ألف". أشهر مجالاتها: بتستخدم بكثرة في الـ GIS (عشان الإحداثيات) والجرافيكس.
+هي تطوير للـ binary search tree اللي خدناها زمان (BST)، بس بدل ما كانت بتبحث في بُعد واحد (1D)، بقت بتبحث في عدد من الأبعاد (-dimensional).
+النود في الـ K-D Tree مش بتشيل قيمة واحدة، دي بتشيل (مجموعة قيم مع بعضها = Vector)، بالإضافة لـ (الأسهم = Pointers) اللي بتوديك للخطوة اللي بعدها في الشجرة.
+<br><img border="0" alt="image" src="https://i.ibb.co/spDWTK5W/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> 1. عملية الإدخال (Insert): إنت بتدخل عنصر ليه بُعدين (Vector حجمه 2، زي [X, Y]).
+دايماً العنصر الجديد بينزل في آخر الشجرة كـ ورقة (Leaf).
+الفكره هنا: المقارنة بتتغير حسب المستوى. يعني وإنت نازل في الشجرة، بتسأل نفسك: "أنا في مستوى كام؟ لو 0 هقارن الـ X، لو 1 هقارن الـ Y"، وهكذا بالتبادل. 2. عملية البحث في نطاق مستطيل (Orthogonal Range Query): عشان تبحث عن بيانات جوه منطقة محددة، إنت بتدي للكمبيوتر حدود "صندوق" يبحث جواه: البُعد الأول key[0] (زي محور X): بتديله حد أدنى low[0] وحد أقصى high[0].
+البُعد التاني key[1] (زي محور Y): بتديله حد أدنى low[1] وحد أقصى high[1]. الكمبيوتر بيمشي في الشجرة ويجيبلك بس النقط اللي واقعة جوه الصندوق ده. الحالات الخاصة للبحث الصندوق ده مش دايماً لازم يكون مستطيل، ده ممكن يتغير حسب إنت بتبحث عن إيه بالظبط، وعندنا حالتين: الحالة الأولى: التطابق التام (Exact match) القاعدة: low[level] = high[level] (يعني الحد الأدنى بيساوي الأقصى في كل الأبعاد).
+الشرح: لو إنت قولت للكمبيوتر دورلي في الـ X من النقطة 5 للنقطة 5، وفي الـ Y من 10 لـ 10.. كده المستطيل انكمش وبقى عبارة عن نقطة واحدة بس.
+الخلاصة: إنت هنا مش بتبحث في مساحة، إنت بتبحث عن إحداثيات "نقطة محددة بالظبط" عشان تتأكد هي موجودة في الداتا بيز ولا لأ. الحالة التانية: التطابق الجزئي (Partial match) القاعدة: بتحدد النطاق لبعض المحاور، والمحاور التانية بتعتبرها واخدة من (من سالب ما لا نهاية لموجب ما لا نهاية).
+الشرح: افرض إنك بتبحث بشرط واحد بس، زي "هاتلي كل الموظفين اللي سنهم من 20 لـ 30 سنة" ومش مهتم بالمرتب (محور Y). <br><img border="0" alt="image" src="https://i.ibb.co/tPHsY50x/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> القاعده الي بنمشي عليها: المستوى 0 (الروت): بنقارن بمحور X. (لو أصغر تروح شمال، لو أكبر تروح يمين).
+المستوى 1: بنقارن بمحور Y. (لو أصغر تنزل شمال، لو أكبر تنزل يمين).
+المستوى 2: نرجع نقارن بـ X.
+المستوى 3: نرجع نقارن بـ Y.. وهكذا. تعالى نمشي مع الأرقام واحدة واحدة ونشوف اترصت في الشجرة إزاي: 1. النقطة (A = 65, 50): أول نقطة دخلت، فبقت هي الـ Root.
+2. النقطة (B = 60, 70): نقف عند A (مستوى 0 يعني نقارن X): الـ X بتاعت B بـ (60) أصغر من الـ X بتاعت A الي بـ (65).
+النتيجة: B تروح شمال A. 3. النقطة (C = 70, 60): نقف عند A (مستوى 0 نقارن X): الـ X بتاعت Cبـ (70) أكبر من 65.
+النتيجة: C تروح يمين A. 4. النقطة (D = 75, 25): نقف عند A (نقارن X): 75 أكبر من 65 ⬅️ نروح يمين عند C.
+نقف عند C (مستوى 1 يعني نقارن Y): الـ Y بتاعت D بـ (25) أصغر من الـ Y بتاعت C بـ (60).
+النتيجة: D تنزل شمال C. 5. النقطة (E = 50, 90): نقف عند A (نقارن X): 50 أصغر من 65 ⬅️ نروح شمال عند B.
+نقف عند B (مستوى 1 نقارن Y): الـ Y بتاعت E بـ (90) أكبر من الـ Y بتاعت B بـ (70).
+النتيجة: E تنزل يمين B. Tip لو التري 3d (فيها تلات قيم X,Y,Z ) يبقي هنعمل نفس الحاجة بس نزود Z: المستوى 0 (الروت): بنقارن بمحور X. (لو أصغر شمال، لو أكبر يمين).
+المستوى 1: بنقارن بمحور Y.
+المستوى 2: بنقارن بمحور Z.
+المستوى 3: نرجع نعيد الدورة ونقارن بـ X.
+المستوى 4: نرجع نقارن بـ Y.. وهكذا. Java Code (مش عارف مهم ولا لا بس موجود في المحاضره)
+public void insert(Vector&lt;T&gt; x) { root = insert(x, root, 0);
+} private KdNode&lt;T&gt; insert(Vector&lt;T&gt; x, KdNode&lt;T&gt; t, int level) { if (t == null) t = new KdNode(x); int compareResult = x.get(level).compareTo(t.data.get(level)); if (compareResult &lt; 0) t.left = insert(x, t.left, 1 - level); else if (compareResult &gt; 0) t.right = insert(x, t.right, 1 - level); else ; // do nothing if equal return t;
+} ملاحظة: 1 - level بيعيد البُعد — لو level=0 (X) يبقى 1-0=1 (Y).
+ملخص هياكل البيانات المكانية بتتقسم حسب نوع البيانات: Point Data (K-D Tree, PR Quadtree, Grid Files), Line Data (Arc-Node, Chain Codes), Area Data (Boundary Model, Region Quadtree).
+ا R-Tree = Dynamic Index Structure للبيانات المكانية (2D/3D). حلّ محل الـ B+ Tree اللي مش مناسب للأبعاد المتعددة. ا Properties: Height Balanced, Internal Nodes + Leaf Nodes, Leaves بتشاور على Disk Pages، كل Leaf Record = MBR، Max Capacity = M (min M/2)، Completely Dynamic، Root لازم يبقى ليه ابنين على الأقل.
+-ا Structure: Internal Nodes = (Rectangle + Child pointer). Leaf Nodes = (MBR + Tuple-identifier للـ Data).
+ا Operations: ا Insert, Delete, Update ]]></description><link>lectures/lecture-7-spatial-data-structure.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 7 - Spatial Data Structure.md</guid><pubDate>Sun, 12 Apr 2026 00:00:00 GMT</pubDate><enclosure url="https://i.ibb.co/dw4tjnM2/image.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/dw4tjnM2/image.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Index]]></title><description><![CDATA[ 5\6\2026 قبل ما تبدأ طبعا لان الدكتور ممكن يجيب اسالة علي اي حاجة حرفيا حتي العملي ف انا اعتمدت في الشرح علي السلايدات والكتاب ومحتوي المحاضره فاعذروني علي الرغي الي هتلاقوه بس حاولت اغطي كل حاجة علي قد ما اقدر
 هتلاقي في الشرح callouts مقفوله دي الي فيها الشرح الزياده الي موجود في الكتاب ومش موجود في المحاضرات وده انا حطيته زياده عشان لو جه منه نبقي عدينا عليه علي الاقل وبما اننا منعرفش فيه مقالي في الامتحان ولا لا ف راجع علي المنهج كذا مره بحيث تعرف النظري وذاكر المسائل كويس لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Index.md</guid><pubDate>Fri, 05 Jun 2026 17:15:07 GMT</pubDate></item><item><title><![CDATA[GIS Fundamentals 6 — Spatial Data Inputs]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن مصادر إدخال البيانات المكانية (Spatial Data Inputs) في الـ GIS.
 أهم المحاور: تصنيف البيانات الجغرافية, الطرق الرئيسية لجمع البيانات (Photogrammetry, Remote Sensing, GPS), وآليات كل طريقة بالتفصيل. خرائط الـ GIS رقمية (Digital) مش Analog — كل البيانات بتتخزن في الكمبيوتر وبتتحلل رقميًا.
 وظيفة الـ GIS هي جمع البيانات من مصادر مختلفة ودمجها في قاعدة بيانات موحدة (Integrated GIS Database).
