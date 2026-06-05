@@ -1,4 +1,459 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Prolog]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>Prolog</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Thu, 04 Jun 2026 16:59:08 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Thu, 04 Jun 2026 16:59:00 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[GIS Fundamentals 5]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن الـ Raster Data Model في الـ GIS، مع مقارنة بـ Vector و TIN.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[GIS]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>GIS</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Fri, 05 Jun 2026 00:30:25 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Fri, 05 Jun 2026 00:30:16 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[GIS Fundamentals 2]]></title><description><![CDATA[مقدمة الجزء ده بيغطي مفاهيم GIS الأساسية ونماذج البيانات.
+أهم المحاور: المفاهيم الأساسية للـ GIS, طبقات Vector, نماذج البيانات Vector و Raster, العلاقة بين Geometry و Topology و Attributes, وفرق Database عن Spatial Database.
+في آخر الملخص فيه مراجعة بتجمع تعريفات مهمة زي GISy, GIScience, GPS, SDE, IMS. definition
+Features have attributes associated with them. دي أول فكرة أساسية في الـ GIS.
+الـ Feature هو عنصر على الخريطة.
+والـ Attributes هي البيانات المرتبطة بالعنصر ده. لو بنرسم أماكن الأشجار: مكان كل شجرة بيتسجل على الخريطة ( يعني الشجره نفسها Feature).
+وكل شجرة ليها attributes زي النوع، العمر، الحالة، الارتفاع. في مثال الأشجار، بنرسم موقع كل شجرة ونحدد أي attributes تخص أي شجرة. وده هو أساس الـ GIS. بصمجيات
+الـ Feature = الحاجة نفسها على الخريطة.
+الـ Spatial Data = مكان الحاجة دي علي الخريطه
+الـ Attribute = بيانات الحاجة دي.
+definition
+Information is separated into layers. الفكرة التانية إن المعلومات بتتقسم لطبقات.
+كل طبقة تمثل نوع معين من البيانات.
+مثال: ا طبقة انهار ا طبقة طرق ا طبقة مباني <img src="https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/styles/full_width/public/thumbnails/image/Figure3_STEMModeling.jpg?itok=g52rEgUB" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;"> كل طبقة ممكن تتحط فوق التانية عشان نطلع صورة وتحليل كامل.
+الطبقة الأساسية غالبا بتبقى تحت، وباقي الطبقات فوقها. معلومه من العملي كل Layer بيبقي ليها Geometry واحد بس
+مينفعش تحط Points و Lines و Polygons في نفس الـ Layer.
+يعني:
+Trees → Points
+Roads → Lines
+Buildings → Polygons العلاقة بين الـ map والـ database علاقة تفاعلية.
+لو اخترت feature من الـ map، الـ record المقابل ليه يتحدد في جدول البيانات.
+ولو اخترت record من الجدول، الـ feature المقابل ليه يتحدد على الخريطة.
+كمان التعديل على الـ Features الي في الماب او تقسيمها ممكن يغير الـ database. ا Vector layers بتمثل الـ features بطرق مختلفة ا Points
+ا Lines
+ا Polygons definition
+A point is good for representing information in which it is necessary to show where a feature is. الـ Point يمثل حاجة مكانها مهم، لكن حجمها أو مساحتها مش هي المهمة في الخريطة.
+أمثلة: شجرة.
+عمود نور.
+موقع حادثه. definition
+A line is suitable to represent many real world features, such as rivers in a river layer. الـ Line يمثل حاجة ممتدة في مسار.
+أمثلة: نهر.
+طريق.
+سكة حديد.
+كابل. definition
+Polygon is a solid multi-sided shape. الـ Polygon يمثل مساحة مقفولة.
+يعني شكل ليه حدود ومساحة.
+أمثلة: دولة.
+بحيرة.
+قطعة أرض.
+منطقة إدارية. <br> <img src="https://saylordotorg.github.io/text_essentials-of-geographic-information-systems/section_08/5e0adb92da29fb258470bfeb5265cc55.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;">
+ملخص definition
+GIS Data Models are methods of representing geographic space. الـ Data Model هو الطريقة اللي بتمثل بيها البيانات الجغرافية جوه الـ GIS.
+فيه نوعين أساسيين من GIS Data Models لتمثيل الـ geographic space: ا Vector
+ا Raster Note
+A database structure need seldom be made to suit a data model. But a well prepared data model is vital for a successful GIS analysis. مش لازم نعيد تصميم قاعدة البيانات كلها عشان تناسب Data Model معين، لكن لازم نفكر كويس في الـ Data Model نفسه لأن نجاح تحليل الـ GIS بيعتمد عليه بشكل كبير.
+definition
+Vector Data Model uses points and their x-, y-coordinates to represent spatial features: points, lines, and areas. الـ Vector بيمثل الواقع باستخدام إحداثيات.
+يعني كل feature بيتوصف بنقط وإحداثيات x, y. الـ Point عبارة عن node واحدة.
+ملوش area.
+بيتحدد بإحداثيات:
+(x, y) الـ Line أو Arc عبارة عن اتصال بين nodes أو vertices.
+بيبدأ من نقطة وينتهي عند نقطة.
+بيتحدد بسلسلة إحداثيات:
+(x1, y1), (x2, y2), ..., (xN, yN) الـ Polygon عبارة عن سلسلة arcs بتقفل حوالين label point.
+لازم يكون فيه closure point عشان الشكل يبقى مقفول. الـ Vector Representation مناسب لما عندك features منفصلة وواضحة الحدود.
+مثال: طريق، حدود دولة، قطعة أرض.
+definition
+Raster Data Model uses a grid with cells to represent spatial features. الـ Raster بيمثل المكان كـ شبكة (Grid).
+<br> <img src="https://www.researchgate.net/publication/360058688/figure/fig6/AS:1147297345880065@1650548411660/Comparison-of-Raster-and-Vector-data.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;"> كل cell في الشبكة ليها value.
+الـ raster يقدر يمثل: ا Point: قيمة في cell واحدة.
+ا Line: سلسلة cells متصلة تمثل طول.
+ا Area: مجموعة cells متصلة تمثل شكل ومساحة. note
+Because the raster data model is a regular grid, spatial relationships are implicit. Therefore, explicitly storing spatial relationships is not required as it is for the vector data model. عشان الـ Raster عبارة عن شبكة منتظمة من الـ Cells، فموقع كل Cell بالنسبة للخلايا المجاورة معروف تلقائيًا من مكانها داخل الشبكة.
+عشان كده الـ GIS يقدر يفهم علاقات الجوار بسهولة من ترتيب الـ Cells نفسه، من غير ما يخزن العلاقات دي بشكل صريح زي الـ Vector. صور الـ satellite من الأشكال الشائعة للـ Raster.
+كل صورة satellite ليها Bands كتير (ممكن 5 أو 7 أو أكتر).
+كل band بيمثل Layer رقعي واحد.
+مثال: Red Band, Green Band, Near Infrared Band.
+definition
+DEM is a raster dataset where each cell represents elevation above sea level. الـ DEM ده Raster كل cell فيه بيمثل الارتفاع عن سطح البحر.
+بيستخدم في: تحليل المنحدرات.
+تحديد مسارات الصرف.
+دراسة التضاريس. definition
+Data is stored in four basic methods: points, lines, areas, and a grid (or raster). بيتخزن على هيئة إحداثيات (X,Y) مع بيانات وصفية (Attributes).
+مثال: نقطة في bird data بتمثل كل الطيور المسجلة في مكان معين و تاريخ معين. بيتكون من مجموعة نقاط متوصلة ببعض.
+كل Line بيبقى ليه Attributes مرتبطة بيه.
+بتتخزن كـ نقطتين و arc بيربطهم مع attributes في table.
+مثال: زي نهر, طريق. بيستخدم لتمثيل الحاجات اللي ليها مساحة وحدود.
+بيتكون من نقط (Points) , وخطوط (Arcs or lines) بتوصل النقط دي ببعض في شكل مغلق.
+زي Lines و Areas، الـ table بتخزن الـ points و lines مع الـ attributes.
+مثال:بحيره, قطعة ارض, حي سكني. الـGrid عبارة عن سلسلة square cells ليها value مرتبطة بكل cell.
+الـ grids بتستخدم لتمثيل مناطق واسعة وبتستخدم قيم مختلفة لتمثيل حاجات مختلفة.
+مثال: درجة الحرارة, الارتفاعات, الأمطار, صور الأقمار الصناعية.
+Temperature in Raster في الـ Raster كل Cell بتخزن رقم بيمثل قيمة الظاهرة في المكان ده.
+مثال: درجة حرارة منطقة في البحر = 18.0°C
+تتخزن داخل الـ Cell كقيمة 180 يعني الرقم المخزن مش شرط يكون درجة الحرارة نفسها، لكنه ترميز (Encoded Value) بيمثلها عشان يسهل تخزين البيانات ومعالجتها داخل الكمبيوتر. الـ Vector-based line: بتتخزن كـ flat file فيه coordinate pairs.
+الـ Raster-based line: بتتخزن كـ binary grid (0s و 1s) — كل cell فيها line بتبقي 1.
+<br> <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhXqF1_Lf_mZHL0CPmSUNv-sQanZEPdRRfFGEicvoZ2QAe_baDlpVLVQKcR7yjSv8eeZ_Q3MnfwwiEegqflzFmUYI2kwZrNANYAvl_Fu3fhjvf0QXosX3EH7QGWeVpbgCoeQqZLNUSaazCCFTtYtWyJZzBA5b2Y-ciVq-f4kt42SOJYrgZXQpg9jqu_iw/s1108/RasterVector.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;"> الـ Vector أحسن للحاجات المنفصلة والواضحة زي الطرق والحدود وقطع الأراضي.
+الـ Raster أحسن للحاجات المستمرة زي الارتفاعات والحرارة والكثافة والصور. Geometry: coordinates and form of the objects. Topology: expresses explicitly the spatial relationships between features. Attributes: properties and values. الـGeometry بتقول الشكل والإحداثيات.
+الـTopology بيوضح العلاقات المكانية بين الـ features، مين جنب مين، ومين بيحد مين.
+الـAttributes بتقول معلومات وخصائص العنصر وقيمه.
+Note الـ Topology هو approach رياضي بيخلي نقدر ننظم الـ data بناءً على مبدأين: الـ Adjacency:الـ features اللي جنب بعض بتشارك common edge.
+الـ Connectivity: بتوصف إزاي الخطوط (Lines) متصلة ببعض عند نقاط (Nodes)، وكمان بتحدد اتجاه الخط بحيث يبقى معروف إيه الموجود على اليمين (Right Side) وإيه الموجود على الشمال (Left Side) بالنسبة لاتجاه الخط. يعني إيه Topology في الـ GIS؟ (بالمختصر)
+الـ Topology باختصار هي شوية قواعد وأدوات بتظبط العلاقات الهندسية والمكانية بين البيانات بتاعتك عشان تكون دقيقة ومظبوطة. بتشتغل إزاي؟ بتتحفظ جوه الـ Geodatabase كعلاقات (Relationships) بتحدد إزاي الـ Features بتشارك المكان مع بعضها، وكل ده من غير ما تغير أصل الـ Feature class نفسه (بيفضل Simple زي ما هو).
+ميزتها: ممتازة عشان تصطاد وتصلح أخطاء الرسم (Digitizing errors) زي الفراغات والتقاطعات، وضرورية جداً لو هتعمل تحليلات مكانية متقدمة. عيبها: البيانات اللي متطبق عليها Topology بتكون أبطأ شوية وبتاخد وقت أطول في العرض (Rendering) لو قارنتها بالبيانات العادية (Non-topological data) اللي بتفتح وتعرض أسرع. definition
+Attribute data is the "I" in GIS. حرف I في GIS هو Information، وده غالبا بيظهر في صورة Attribute Data. الـ GIS غالبا بيتقسم لمكونين: ا Coordinate information: بتوصف حاجات مكانية geometry أو spatial information.
+ا Attribute information: بتوصف properties غير مكانية مرتبطة بالعنصر. الـ attribute data غالبا بتتعرض في شكل جداول، عشان كده بنسميها Tabular Data. في ArcGIS، الـ attribute table بيبقى فيه: ا Records: الصفوف، كل صف يمثل feature.
+ا Fields / Attributes: الأعمدة، كل عمود يمثل خاصية. definition
+Spatial data describes the absolute and relative location (geometrical data) of geographic features. الـ Spatial Data يعني بيانات بتوصف مكان features.
+ممكن تكون: ا Discrete: حاجات منفصلة زي buildings أو roads أو trees.
+ا Continuous: حاجات ممتدة ومستمرة زي elevation أو temperature. مع تطور التكنولوجيا، أنواع بيانات تانية بقت شائعة زي image data و multimedia data.
+حسب المحتوى، ممكن نصنفها: ا Spatial: زي photos و animations و movies (بتوصف المكان).
+ا Attribute: زي sound و descriptions و narrations (بتوصف الخصائص). مثال: في بيانات Forestry Stand، موقع المنطقة على الخريطة وإحداثياتها يعتبر Spatial Data، بينما معلومات مثل Cover Group و Dominant Species و Crown Closure و Height تعتبر Attribute Data لأنها بتوصف خصائص المنطقة وليست موقعها.
+بصمجيات ا Vector بيمثل بـ points, lines, polygons.
+ا Raster بيمثل بـ grid cells.
+ا Geometry = الشكل والإحداثيات.
+ا Topology = العلاقات المكانية.
+ا Attributes = الخصائص والقيم.
+ا SDE لإدارة spatial data، و IMS لعرض maps through Internet.
+ا DEM = Raster كل cell فيه بيمثل ارتفاع عن سطح البحر.
+ا Satellite Imagery ليها Bands كتير، كل band بيمثل Layer. ]]></description><link>lectures/lecture-2-gis-data-models.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 2 - GIS Data Models.md</guid><pubDate>Fri, 05 Jun 2026 00:25:18 GMT</pubDate><enclosure url="https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/styles/full_width/public/thumbnails/image/Figure3_STEMModeling.jpg?itok=g52rEgUB" length="0" type="false"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/styles/full_width/public/thumbnails/image/Figure3_STEMModeling.jpg?itok=g52rEgUB&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 1]]></title><description><![CDATA[مقدمة الجزء ده بيغطي أساسيات GIS - Geographic Information Systems.
+الـ GIS مش مجرد خريطة. هو نظام كامل بيجمع بين Geographic Position و Information System عشان نخزن ونحلل ونعرض بيانات مرتبطة بالمكان.
+أهم المحاور: Location Apps, تاريخ الـ GIS, تعريفه, مكوناته, وظائفه, وتطبيقاته. الـ Location Apps و Live Location Services من أشهر التطبيقات اليومية لفكرة الـ GIS.
+أي تطبيق بيستخدم مكانك الحالي أو بيعرض خريطة أو طريق أو موقع شخص تاني بيبقى داخل في نفس الفكرة العامة بتاعة الـ GIS.
+يعني لما تستخدم: خريطة عشان تعرف مكانك او Live Location عشان تبعت موقعك لحد.
+خدمة تعرض أماكن أو بيانات على الخريطة. كل ده مبني على نفس المبدأ: فيه مكان + فيه معلومة مرتبطة بالمكان. الـ GPS مش هو GIS الـ GPS بيحدد مكانك.
+الـ GIS هو النظام الأكبر اللي بياخد المكان ده ويحطه مع Maps, Databases, Layers, Analysis, و Output.
+يعني GPS يعتبر input داخل GIS، مش بديل عنه. definition
+John Snow analyzed a cholera outbreak in Soho, London in 1854. At this time people believed that cholera was spread in the air. Dr. Snow was skeptical of this hypothesis. من أهم الأمثلة التاريخية في GIS قصة John Snow في لندن سنة 1854.
+كان فيه وباء Cholera في منطقة Soho, London.
+وقتها الناس كانوا فاكرين إن الكوليرا بتنتشر عن طريق الهواء.
+بس John Snow مكانش مقتنع بالفرضية دي.
+عمل تحليل مكاني للحالات، يعني بص على أماكن الإصابات على الخريطة وشاف نمط انتشار المرض.
+مكان الحالات على الخريطة ساعده يفهم سبب المشكلة. ا John Snow بدأ يجمع أماكن الحالات على خريطة.
+كل ما يعرف حالة، يحدد مكانها، وبعدين يقارن أماكن الحالات بمصادر المياه الموجودة في المنطقة.
+الفكرة هنا شبه استخدام layers يدوي: طبقة فيها أماكن المرضى أو حالات الكوليرا.
+طبقة فيها مصادر المياه أو الآبار.
+وبعدين يقارن الطبقات ببعض عشان يطلع pattern. وصل لاستنتاج إن الحالات مرتبطة بمصدر مياه معين، يعني المشكلة مش في الهواء زي ما الناس كانت فاكرة، لكن في المياه.
+ده مرتبط بفكرة Geostatistics أو الإحصاء المكاني: يعني نستخدم الإحصاء بس مع المكان، ونشوف عدد الحالات في كل منطقة وعلاقتها بمصدر معين. <img src="https://blog.rtwilson.com/wp-content/uploads/2012/01/SnowMap_Points.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;">
+Tip
+قصة John Snow مهمة عشان بتوري إن الـ GIS فكرته أقدم من البرامج الحديثة. زمان كان التحليل يدوي على خريطة، دلوقتي نفس الفكرة بتتعمل ببرامج وdatabases وlayers ( ومهمه عشان الدكتور جابها في الميد).
+حته زياده من الكتاب أول GIS اتعمل في كندا في الستينيات عشان يحدد موارد الأرض والاستخدامات الحالية والمستقبلية.
+في أواخر الستينيات، US Bureau of the Census عمل برنامج DIME (Dual Independent Map Encoding) لكل الشوارع الأمريكية عشان يدعم الإحصاء التلقائي.
+في أواخر السبعينيات، جامعة Harvard عملت ODYSSEY GIS.
+الـ Automated Cartography بدأ في الستينيات، وبحلول أواخر السبعينيات معظم الجهات الحكومية كانت بتشتغل بالكمبيوتر جزئيًا.
+الـ GIS بدأ ينتشر في التمانينيات لما أسعار الهاردوير نزلت و بقت ارخص . definition
+GIS answers the queries of: What, Where and Why. What is attribute, Where is location, and Why is analytical why. الـ GIS بيجاوب على أسئلة أساسية: What?
+Where?
+Why? الـ What معناها إيه الحاجة أو الـ attribute اللي بنتكلم عنها؟
+يعني المعلومة نفسها المرتبطة بالمكان.
+مثال: اسم الدولة.
+عدد السكان. الـ Where معناها الحاجة دي موجودة فين؟
+ودي نقطة أساسية عشان Space is essential to Geography.
+الجغرافيا أصلا معتمدة على المكان، فالسؤال المكاني هو قلب الـ GIS. ا Why معناها ليه النمط ده موجود؟ أو إيه التحليل اللي يفسر اللي شايفينه؟
+هنا الـ GIS يدخل في التحليل مش العرض بس.
+يعني مش بس نعرف إن الحوادث بتحصل في منطقة معينة، لكن نحاول نفهم: ليه بتحصل هناك؟
+في أوقات معينة؟
+هل فيه نمط مكاني أو زمني؟ بصمجيات ا What = الـ attribute أو المعلومة.
+ا Where = الـ location أو المكان.
+ا Why = الـ analysis او التحليل وفهم السبب. الفرق عن Database عادية الـ Database العادية ممكن تجاوبك على What: اسم، عنوان، رقم، قيمة، صفة.
+الـ GIS بيضيف عليها Where: الحاجة دي موجودة فين؟
+وبعد كده يدخل في Why: ليه النمط ده ظاهر هنا؟ وإيه العلاقة بين المكان والبيانات؟ definition
+GIS is a means of storing, retrieving, sorting, and comparing spatial data to support some analytic process.
+GIS = Information System + Geographic Position. الـ GIS هو نظام معلومات، بس الفرق إنه بيشتغل على بيانات مرتبطة بالمكان. يعني عندك جزئين أساسيين: ا Information System: تخزين، استرجاع، ترتيب، مقارنة، إدارة بيانات.
+ا Geographic Position: مكان أو إحداثيات أو موقع على الأرض. لما الاتنين يتجمعوا، نقدر نعمل نظام يفهم البيانات مكانيًا. يعني مش بس نخزن إن فيه مدرسة، لكن نخزن مكانها، ونقارنها بمكان السكان والطرق والخدمات. الـ GIS مش خريطة لوحدها ومش database لوحدها. هو integration بين: ا Map / Graphic Representation
+ا Database / Attribute Data يعني عندك رسمة أو خريطة، وعندك جدول بيانات، والاتنين مربوطين ببعض. حته زياده من الكتاب
+GIS = CAD + DBMS + Spatial Analysis
+الـ CAD بيركز على رسم العناصر، والـ DBMS بيركز على تخزين البيانات، أما الـ GIS فيربط بين الخريطة والبيانات الوصفية بحيث أي تعديل في أحدهما ينعكس على الآخر. بالإضافة إلى ذلك، يستطيع تحليل العلاقات المكانية بين العناصر وإنتاج خرائط ومعلومات جديدة من هذه العلاقات.
+definition
+GIS is a collection of computer hardware, software, and geographic data for capturing, managing, analyzing, and displaying all forms of geographically referenced information. Environmental Systems Research Institute (ESRI), 2007 (جت في الميد) التعريف ده مهم لأنه بيجمع كل أجزاء الـ GIS في جملة واحدة. الـ GIS عبارة عن مجموعة من: ا Hardware
+ا Software
+ا Geographic Data وبيستخدمهم عشان يعمل أربع وظائف رئيسية: ا Capturing: التقاط أو إدخال البيانات.
+ا Managing: إدارة البيانات.
+ا Analyzing: تحليل البيانات.
+ا Displaying: عرض البيانات. وكل ده على معلومات Geographically referenced، يعني معلومات ليها علاقة بمكان على الأرض. كلمة Geographically referenced مهمة في التعريف.
+معناها إن المعلومات الجغرافية لازم يكون لها مرجع مكاني موحد.
+لو جهات مختلفة رسمت طبقات مختلفة من غير مرجع واحد، الطبقات هتتركب غلط.
+عشان كده لازم يبقى فيه reference موحد للطبقات، بحيث كل layer تركب صح فوق التانية.
+definition الـ Base Map هي الخريطة الأصلية المرجعية اللي عليها بتتبني كل الطبقات. في أي دولة، الجهة المسؤولة عن إنتاج الصور المساحية الدقيقة هي الهيئة المساحية العسكرية. عشان نعمل Referenced Map في أي بلد، محتاجين صورة أو خريطة أصلية تبقى هي المرجع الأساسي.
+الصورة دي اسمها Base Map، وده اللي كل الـ layers بتتبني عليه.
+في أي دولة في العالم، الجهة الوحيدة المنتجة للصور المساحية الدقيقة هي: الهيئة المساحية العسكرية أو الجهة المختصة بالمساحة العسكرية.
+يعني Military Survey Authority. الصور دي بتروح بعدها لجهات مختلفة عشان تطلع Layers: جهة المباني والعقارات تطلع Buildings Layer.
+جهة الطرق والكباري تطلع Roads Layer.
+جهة المياه تطلع Water Network Layer. كل layer ليها Base Map واحد، وده اللي بيخلي الطبقات تركب فوق بعضها صح.
+لو مفيش Base Map موحد، الطبقات هتطلع غلط: عمود كهرباء في وسط المياه.
+مبنى فوق جنينة.
+طريق في مكان مش منطقي. حرف S في GIS ممكن يشير لأكتر من معنى حسب السياق: System
+Science
+Studies
+Service
+Survey definition
+Geographic Information System: a collection of computer hardware, software, and geographic data for capturing, managing, analyzing, and displaying all forms of geographically referenced information. ده المعنى الأشهر، وهو محور المادة.
+بيركز على النظام العملي اللي بنستخدمه عشان ندخل ونخزن ونحلل ونعرض البيانات الجغرافية.
+definition
+Geographic Information Science: comprehending the underlying conceptual issues of representing data and processes in space-time. ا GIScience ده العلم اللي ورا الـ GIS مهتم بالـ theory and concepts.
+بيهتم بأسئلة زي: إيه النظريات والمفاهيم اللي ورا التكنولوجيا؟
+الخوارزميات نطورها ازاي عشان النتائج تبقى أحسن؟ الـ GISystems يجاوب على what و where، أما GIScience مهتم بـ how والتطوير.
+definition
+Geographic Information Studies: understanding the social, legal and ethical issues associated with the application of GISy and GISc. ده جانب اجتماعي وقانوني وأخلاقي.
+يعني استخدام الـ GIS مش تقني بس، فيه أسئلة مهمة: الخصوصية.
+القوانين المرتبطة بالمعلومات الجغرافية.
+الآثار الاجتماعية لاستخدام البيانات المكانية. definition
+Geographic Information Service: functionality provided by a software entity through its interfaces defined as named sets of operations, and provisions of information generated from geospatial data. ده بيركز على الخدمات اللي بتتعامل مع المعلومات الجغرافية.
+زي تصميم وتطوير نظم GIS، أو تقديم خرائط وخدمات جغرافية للمستخدمين.
+مثال عملي: خدمة تحديد Location داخل تطبيقات زي WhatsApp أو أي تطبيق موبايل. لما حد يبعتلك Location، ده service مبنية على Geographic Information.
+تطور الخدمات المكانية مرتبط بـ distributed object technology والإنترنت.
+ده خطوة كبيرة عشان يسهل الوصول للمعلومات الجغرافية و Geo-processing technology.
+definition
+Geographic Information Survey: collecting spatial data from the field using measurement tools and field work. الـ Survey يعني جمع وقياس بيانات مكانية من الواقع.
+طرق التجميع الأساسية: عمل Field Survey يدوي في أماكن معينة.
+استخدام Aerial Survey (صور جوية من طيران فوق مناطق معينة).
+استخدام GPS لتسجيل مواقع دقيقة. فرق المساحة المهندسين بيشتغلوا في areas مش سهلة الوصول زي الغابات أو المناطق الجبلية.
+الهدف: جمع بيانات مكانية دقيقة وتغطية areas واسعة بسرعة.
+بصمجيات ا System = النظام اللي بنستخدمه.
+ا Science = العلم والنظريات اللي وراه.
+ا Studies = الآثار الاجتماعية والقانونية والأخلاقية.
+ا Service = خدمات مبنية على المعلومات الجغرافية.
+ا Survey = جمع وقياس بيانات مكانية. definition
+GIS is an organized collection of hardware, network, software, data, people, and procedures. مكونات الـ GIS الأساسية: Hardware
+Network
+Software
+Data
+People
+Procedures definition
+Hardware: the devices that the user interacts directly with to carry out GIS operations. يعني الأجهزة الملموسة اللي بنستخدمها في شغل الـ GIS.
+أمثلة: Computer
+Scanner
+Digitizer
+Plotter definition
+Software provides the functions that the user needs to store, analyze and display geographical information. البرامج هي اللي بتدينا أدوات التخزين والتحليل والعرض.
+مثال عام: برامج GIS و ArcGIS.
+definition
+Data is the most important component of GIS. البيانات هي قلب الـ GIS.
+الأنواع المذكورة: Vector Data
+Raster Data
+Image Data
+Attribute Data definition
+People are the most active component dealing with the design, programming and management of GIS. الناس هما اللي بيصمموا النظام ويديروه ويحللوا البيانات.
+من غير مستخدم فاهم، النظام مش هيطلع قرارات مفيدة. مجال الـ GIS فيه مجموعات مختلفة من المستخدمين، كل مجموعة ليها خلفية مختلفة وأولويات مختلفة: ا 1. Mature Technologies دول اللي بيشتغلوا مع الـ GIS كتقنية ناضجة وبيساهموا في إنتاج البيانات.
+زي: Surveyors, Engineers, Cartographers, Scientists using Remote Sensing. ا 2. Management and Decision-Making دول اللي بيستخدموا الـ GIS في اتخاذ القرارات.
+زي: Resource Managers, Urban Planners, Municipal Officials, Facilities Managers, Marketing and Retail Planning, Vehicle Routing and Scheduling. ا 3. Science and Research دول اللي بيدرسوا الـ GIS ويبحثوا فيه.
+زي: Universities, Government Labs.
+بيدوروا على أوجه الاختلاف والتشابه بين مجموعات الـ GIS المختلفة. definition
+Procedures are related to the management aspects of GIS. خطوات وقواعد العمل.
+يعني البيانات تدخل ازاي، تتحلل ازاي، تتراجع ازاي، وتطلع التقارير ازاي.
+definition
+Network allows rapid communication and sharing digital information. الشبكة بتسمح بمشاركة البيانات والخدمات الجغرافية بسرعة.
+عشان نعمل تحليل كامل، محتاجين نجمع الطبقات دي من جهات مختلفة.
+وده مهم في WebGIS و Online GIS.
+بدون Network، كل جهة هتشتغل لوحدها وهنخسر القيمة الحقيقية للـ GIS.
+بصمجيات
+مكونات الـ GIS هما 6 (غلطت فيها في الميد والله) GIS is a convergence of technological fields and traditional disciplines. GIS has been called an 'enabling technology' because of the potential it offers for the wide variety of disciplines which must deal with spatial data. الـ GIS هو نتيجة ربط تطورات متعددة في مجالات مختلفة.
+كل مجال بيقدم تقنية معينة تساهم في الـ GIS.
+الـ Geography
+الجغرافيا مهتمة بفهم العالم ومكان الإنسان فيه.
+ليها تاريخ طويل في Spatial Analysis.
+بتقدم تقنيات للتحليل المكاني ومنظور مكاني للأبحاث.
+الـ Cartography (رسم الخرائط)
+الـ Cartography مهتمة بعرض المعلومات المكانية.
+المصدر الرئيسي للبيانات المدخلة في الـ GIS هو الخرائط.
+بتقدم تاريخ طويل في تصميم الخرائط، وهي شكل مهم من مخرجات الـ GIS.
+الـ Computer Cartography بتقدم طرق تمثيل رقمي وmanipulation للميزات الكرتوغرافية.
+الـ Remote Sensing
+تقنية بتسجل صور من الفضاء والجو.
+مصدر رئيسي للبيانات الجغرافية.
+ميزة كبرى إن البيانات المفسرة من Remote Sensing ممكن تندمج مع طبقات أخرى في الـ GIS.
+الـ Photogrammetry
+استخدام الصور الجوية وتقنيات قياس دقيقة منها.
+المصدر الأكبر للبيانات عن Topography (ارتفاعات سطح الأرض) المدخلة في الـ GIS.
+الـ Surveying
+قياس مواقع الأشياء على سطح الأرض، خصوصا الحدود العقارية.
+بتقدم بيانات عالية الجودة عن مواقع الحدود والأراضي والمباني.
+الـ Statistics
+نماذج كتير في الـ GIS إحصائية الطبيعة.
+تقنيات إحصائية كتير بتستخدم في التحليل.
+مهمة في فهم مشاكل الخطأ وعدم اليقين في بيانات الـ GIS.
+الـ Computer Science (احنا)
+محرك رئيسي لتطور الـ GIS.
+ا Artificial Intelligence (AI) بتستخدم الكمبيوتر عشان تاخد قرارات بناءً على بيانات متاحة.
+ا CAD بتقدم تقنيات إدخال وعرض وتمثيل البيانات، خصوصا في 3D.
+ا Computer Graphics بتقدم hardware وsoftware لمعالجة وعرض الأشياء الرسومية.
+ا DBMS بتقدم طرق تمثيل البيانات الرقمية وإجراءات تصميم النظام والتعامل مع كميات كبيرة من البيانات.
+الـ Mathematics
+فروع كتير من الرياضيات، خصوصا Geometry و Graph Theory، بتستخدم في تصميم وتحليل بيانات الـ GIS.
+definition
+Scanner is used to convert the analog paper map to computer readable form automatically. الـ Scanner بيحول الخريطة الورقية لصورة رقمية يقدر الكمبيوتر يقراها.
+يعني بياخد حاجة analog ويطلعها في شكل رقمي.
+مثال: خريطة أثرية قديمة أو خريطة ورقية عادية.
+definition
+Digitizer is used to transform information from analog format (paper map) to digital format so it can be stored and displayed with a computer. الـ Digitizer بيحول معلومات من خريطة ورقية لشكل رقمي.
+الهدف إن البيانات تتخزن وتتعرض على الكمبيوتر.
+مثال: عندك خريطة أثرية لطريق قديم أو خريطة لمنطقة محددة. عايز تحطها في GIS.
+الخطوة الأولى: تمسحها بالـ Scanner أو تستخدم Digitizer عشان تحولها لشكل رقمي.
+بعد كده تقدر تشتغل عليها في الـ GIS وتضيفها كـ Layer. معلومه علي السريع كده الـ Scanner والـ Digitizer الاتنين ممكن يستخدموا عشان يحولوا الخرايط لبيانات رقمية , بس الـ Scanner الناتج بيكون صورة Raster والـ Digitizer الناتج بيكون بيانات Vector definition
+CAD provides techniques for data input, displaying, and representing data particularly in 3 dimensions. الـ CAD بيساعد في إدخال وعرض وتمثيل البيانات، خصوصا في 3D.
+هو مش GIS كامل، بس مرتبط بتمثيل وتصميم البيانات.
+definition
+GPS is a set of hardware and software designed to determine accurate locations on the earth using signals received from satellites. الـ GPS بيحدد مواقع دقيقة على الأرض باستخدام إشارات من الأقمار الصناعية.
+مهم جدا كمدخل من مداخل البيانات المكانية.
+definition
+SDE helps manage spatial data to provide quicker retrieval of that data from database engines such as Oracle, SQL Server and Informix. الـ SDE معناها Spatial Data Engine. وظيفتها إدارة البيانات المكانية وتسهيل استرجاعها بسرعة من قواعد البيانات. اتطورت لمجتمعين: ا GIS Community
+ا DBMS Community الهدف إن قواعد البيانات العادية تقدر تدعم Spatial Technology. يقدر يتعامل مع بيانات جاية من مصادر مختلفة: يعني لو عندك data في Excel أو في SQL Server أو في Access، الـ GIS يقدر يستقبلها ويعالجها. definition
+IMS provides maps through the Internet usually as images. ا IMS معناها Internet Map Server.
+بيوفر خرائط عن طريق الإنترنت، غالبا في شكل صور.
+بيخلي ناس مش لازم تكون فاهمة GIS تقدر تشوف وتتفاعل مع الخرائط.
+مرتبط بـ: ا WebGIS
+ا Online GIS خرائط مرفوعة على الإنترنت ومتاحة لكل المستخدمين.
+الناس تقدر تشوف الأماكن، وتضيف أماكن جديدة، وتحط صور وأسماء على الخريطة.
+بصمجيات ا SDE = إدارة واسترجاع أسرع للـ spatial data من databases.
+ا IMS = عرض خرائط على الإنترنت للمستخدمين (Online). الـ GIS بيتعامل مع منظومة software وأدوات مرتبطة، مش برنامج واحد بس.
+أمثلة: ا ArcGIS في إدارة وعرض وتحليل البيانات المكانية والجداول الوصفية.
+ا QGIS كاتجاه أو بديل مشهور في برامج الـ GIS.
+ا CAD كأداة مرتبطة بإدخال وعرض وتمثيل البيانات.
+ا SDE لإدارة spatial data داخل database engines.
+ا IMS لتقديم الخرائط عبر الإنترنت. البنية الأساسية للـ GIS ممكن تتلخص بالشكل ده:
+Data Input -&gt; Geographic Database -&gt; Transformation and Analysis -&gt; Output Display أمثلة إدخال البيانات: Satellite Imagery
+Air Photos
+Digitize
+Scan
+Digital Elevation Model
+GPS
+Tiger/Line يعني مصادر البيانات ممكن تكون صور أقمار صناعية، صور جوية، خرائط ممسوحة، بيانات GPS، أو نماذج ارتفاعات. بعد الإدخال، البيانات بتتخزن في Geographic Database.
+الفرق هنا عن database عادية إن البيانات مش attributes بس، دي كمان مرتبطة بمكان. بعد التخزين، النظام يعمل تحويلات وتحليلات.
+التحليل ممكن يجاوب أسئلة زي: فين المشكلة؟
+إيه اللي تغير؟
+إيه العلاقة بين طبقات مختلفة؟ مخرجات الـ GIS ممكن تكون: Maps
+Charts
+Reports definition
+Where is what? means obtaining information from a location. يعني تبدأ من مكان وتسأل: إيه الموجود هنا؟
+مثال: تضغط على قطعة أرض على الخريطة وتعرف المالك، العنوان، المساحة، نوع الاستخدام، والتقييم.
+definition
+What is where? means querying information to find location. يعني تبدأ بمعلومة وتدور على مكانها.
+مثال: عايز تعرف فين كل الأراضي الصناعية، أو فين المناطق ذات كثافة عالية.
+بصمجيات ا Where is what? = عندي location وعايز أعرف بياناته.
+ا What is where? = عندي attribute وعايز أعرف مكانه. للـ GIS استخدامات كتير، منها: ا Mapping Where Things Are نرسم أماكن الأشياء.
+مثال: أماكن المدارس، المستشفيات، الأشجار، الحوادث، الطرق. ا Mapping Quantities نرسم الكميات على الخريطة.
+مثال: عدد السكان في كل منطقة، عدد الحوادث، كمية الإنتاج. ا Mapping Densities نرسم الكثافة.
+يعني مش بس العدد، لكن العدد بالنسبة للمساحة.
+مثال: كثافة السكان في كيلومتر مربع واحد في مناطق مختلفة. مثال: Traffic Density خرايط الطرق بتعرض traffic density بألوان مختلفة: أخضر = حركة سلسة، _traffic قليل.
+أصفر = حركة عادية.
+أحمر = زحمة شديدة. الألوان دي مبنية على بيانات حقيقية من المستخدمين والـ mobile devices. ا Getting Information About a Feature ممكن تضغط على feature وتطلع بياناته.
+أمثلة: ا Area
+ا Owner
+ا Address ا GIS Queries الـ GIS يقدر يجاوب على أسئلة كتير زي: ا What is at this location?: إيه الموجود في المكان ده؟
+ا Where is the nearest gas station?: أقرب بنزينة فين؟
+ا How do I get there?: أروح هناك ازاي؟ كل سؤال ده بيعالج شكل مختلف من التحليل المكاني. ا Routing and Navigation الـ GIS بيستخدم في تحديد أفضل طريق من مكان لمكان.
+المدخلات: بيانات الـ Road Network.
+بيانات الـ Traffic Density.
+بيانات الـ Speed Limits.
+بيانات الـ Signals. المخرجات: أفضل route من النقطة A للنقطة B. ا Change Detection استخدام GIS عشان نعرف التغير مع الزمن.
+مثال: مقارنة خريطة المدينة في 1950 مع خريطة 1990.
+نشوف المدينة كبرت ازاي، أو الأرض اتغير استخدامها ازاي.
+ده مهم في التخطيط العمراني ومراقبة التوسع العمراني. ا Geocoding : the process of converting addresses into geographic coordinates (latitude/longitude) to be placed on a map. الـ Geocoding بيحول عناوين (Address) لإحداثيات (Latitude, Longitude). يعني لما تكتب عنوان مكان، النظام بيحوله لنقطة على الخريطة. ا Predictive / Forecasting Analysis استخدام GIS للتنبؤ بأحداث مستقبلية بناءً على بيانات مكانية.
+مثال: توقع أماكن الحوادث بناءً على أنماط سابقة.
+أو توقع التوسع العمراني فيnext 10 years. ا Land Parcel Based Applications تطبيقات مرتبطة بقطع الأراضي.
+زي: ا Land acquisition
+ا Environmental impact statements
+ا Water quality management ملخص ا GIS = Information System + Geographic Position.
+الـ GIS بيشتغل على What, Where, Why.
+التعريف المهم: hardware + software + geographic data عشان capture, manage, analyze, display geographically referenced information.
+أهم مفهومين: features ليها attributes، والبيانات بتتقسم layers.
+اBase Map هي الخريطة الأصلية المرجعية، والجهة المسؤولة عنها هي الهيئة المساحية العسكرية.
+كل Layer لازم يكون فيها نوع geometry واحد بس (points أو lines أو polygons).
+اData هي أغلى وأهم مكون في GIS - جمعها وتنظيفها بياخد معظم الوقت والميزانية.
+اProcedures بتختلف حسب المجال: ماسورة مياه ≠ خط كهرباء ≠ طريق.
+ا Network أساسي لأن البيانات موزعة على جهات مختلفة ومحتاجة ربط.
+الـ GIS مش بس خرائط - فيه Database Management System أو Data Engine جواه.
+ا GIS Functions: Input → Processing → Output.
+ا GIS Queries: أقرب بنزينة فين؟ أقرب مستشفى فين؟ إيه اللي اتغير؟
+ا Digitization = تحويل خريطة ورقية لرقمية.
+ا Geocoding = تحويل عناوين لإحداثيات على الخريطة. ]]></description><link>lectures/lecture-1-gis-fundamentals.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 1 - GIS Fundamentals.md</guid><pubDate>Thu, 04 Jun 2026 23:39:13 GMT</pubDate><enclosure url="https://blog.rtwilson.com/wp-content/uploads/2012/01/SnowMap_Points.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://blog.rtwilson.com/wp-content/uploads/2012/01/SnowMap_Points.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Index]]></title><description><![CDATA[ لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Index.md</guid><pubDate>Thu, 04 Jun 2026 22:09:52 GMT</pubDate></item><item><title><![CDATA[GIS Fundamentals 6 — Spatial Data Inputs]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن مصادر إدخال البيانات المكانية (Spatial Data Inputs) في الـ GIS.
+أهم المحاور: تصنيف البيانات الجغرافية, الطرق الرئيسية لجمع البيانات (Photogrammetry, Remote Sensing, GPS), وآليات كل طريقة بالتفصيل. خرائط الـ GIS رقمية (Digital) مش Analog — كل البيانات بتتخزن في الكمبيوتر وبتتحلل رقميًا.
+وظيفة الـ GIS هي جمع البيانات من مصادر مختلفة ودمجها في قاعدة بيانات موحدة (Integrated GIS Database).
+مصادر البيانات
+البيانات بتيجي من مصادر كتير: خرائط موجودة (Maps) — خرائط ورقية بتتمسح ورقمية.
+بيانات أقمار صناعية (Satellite Data) — صور من الفضاء.
+بيانات رقمية (Digital Data) — ملفات رقمية جاهزة.
+بيانات جدولية (Tabular Data) — جداول إكسل وقواعد بيانات.
+أفكار ومعلومات (Soft Ideas) — معرفة وخبرات chuyênية. Data Pipeline
+Reality → Features → Objects → Entities → Attributes
+كل ظاهرة في الواقع بيتكتبها الـ GIS كـ Feature (نقطة، خط، مضلع) وبعدها بيتمثّل كـ Object فيه Attributes. ا Primary Data Collection: جمع البيانات من المصدر الأصلي لأول مرة .
+ا Secondary Data Collection: تحويل أو معالجة بيانات موجودة بالفعل.
+definition Photogrammetry is the technology of obtaining reliable 3-D information about physical objects through processes of measuring, and interpreting photographic images. هي التكنولوجيا اللي بنقدر من خلالها نطلع مجسمات أو خرائط ثلاثية الأبعاد (3D) لأي مكان أو مبنى، عن طريق استخدام صور فوتوغرافية عادية (2D).
+الـ Photogrammetry بتستخدم صور جوية (Aerial Photos) عشان تجيب قياسات ومعلومات مكانية عن المجسمات على سطح الأرض.
+بتعتمد على فكرة تقليد عين الإنسان. ربنا خلق لينا عينين كل عين بتشوف نفس الحاجة بس من زاوية مختلفة اختلاف بسيط. المخ بياخد الصورتين دول يدمجهم مع بعض، وده اللي بيخلينا نقدر نشوف "العمق" ونحس بالأبعاد الـ 3D. Stereoscopic Vision: Viewing an object from 2 different camera positions achieves 3-D effects.
+Stereoscopy ا Binocular Vision: كل عين بتشوف الصورة من زاوية مختلفة، والدماغ بيدمجهم في صورة ثلاثية الأبعاد.
+أهم شرط عشان الطريقة دي تنجح (قاعدة التداخل - Overlap): الطيارة مستحيل تصور كل حتة مرة واحدة وتمشي، لازم الصور "تركب على بعضها" عشان نضمن إن كل مبنى اتصور من زاويتين مختلفتين (عشان نعمل فكرة العينين اللي شرحناها فوق). التداخل الأمامي (Overlap): الطيارة وهي ماشية لقدام، الصورة الجديدة لازم تغطي من 60% لـ 80% من مساحة الصورة اللي لسه متصورة قبلها. (الصورتين دول مع بعض بنسميهم Stereo Pair).
+التداخل الجانبي (Sidelap): لما الطيارة تلف وترجع في خط موازي عشان تصور الشارع اللي جنبه، الخط الجديد بيتداخل مع الخط القديم بنسبة 20% لـ 30%. <img src="https://www.researchgate.net/profile/Kinga-Kiss-2/publication/262375346/figure/fig4/AS:667782517645325@1536223167277/Overlap-between-aerial-photographs.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+المميزات تفاصيل عالية (High Resolution) — صور أوضح من الصور الأقمار الصناعية القديمة.
+تكاليف معقولة لمساحات صغيرة ومتوسطة.
+مرنة — ممكن تصوير في أي وقت حسب الطقس. العيوب محتاجة طقس صافي (Clear Weather) — الغيوم والضباب بيأثروا على جودة الصور.
+معالجة بطيئة — الصور الجوية بتحتاج معالجة كتير.
+تكلفة عالية لمساحات كبيرة. الاستشعار عن بُعد (Remote Sensing) هو علم اكتساب معلومات عن سطح الأرض بدون لمس مباشر (Without Physical Contact) — عن طريق كشف وتسجيل الطاقة المنعكسة أو المُصدَرة من الأجسام.
+RS Process
+The process of acquiring information about the Earth's surface without being in contact with it — by sensing and recording reflected or emitted energy and processing, analyzing, and applying that information. بيعتمد على قياس "الأشعة الكهرومغناطيسية" (Electromagnetic radiation) اللي بتنعكس أو بتنبعث من الأجسام، باستخدام أجهزة استشعار (Sensors) بتلقط موجات مختلفة (زي الضوء المرئي، أو الميكروويف).
+ا HOW MUCH — تحديد بالعد أو قياس المساحة أو النسبة المئوية.
+ا WHERE — ربط المواقع بالخرائط أو المواقع الحقيقية على الأرض.
+ملاحظة: كلمة "Where" بتتكون لفترة زمنية كمان (التوقيت مهم). الاستشعار السلبي (Passive): جهاز بيستقبل بس. بيعتمد على مصدر إضاءة طبيعي (غالباً الشمس). الاستشعار الإيجابي (Active): جهاز "بيبعت ويستقبل". الجهاز نفسه بيطلع أشعة تخبط في الأرض وترجعله يقيسها. كأنك بتصور بالليل وشغلت الفلاش. (أشهر أمثلته: الرادار RADAR، والليزر LIDAR).
+Passive RS Interactions فيه 3 تفاعلات بتحصل في الـ Passive RS: ا Extinction: الطاقة بتتمتص أو تتبعثر من الحزمة.
+ا Emission: الطاقة بتتسرَّب من الجسم (الغلاف الجوي).
+ا Scattering: الطاقة الطبيعية بتتتبعثر نحو القمر الصناعي. Active RS Interaction في الـ Active RS فيه تفاعل واحد بيحصل الـ Backscattering: الإشعاع الاصطناعي بيتبعثر رجوعًا نحو القمر الصناعي من سطح الأرض. RS Elements ا Energy Source / Illumination (A) — مصدر الطاقة (الشمس).
+ا Radiation and the Atmosphere (B) — مرور الإشعاع عبر الغلاف الجوي.
+ا Interaction with the Target (C) — تفاعل الطاقة مع السطح.
+ا Recording of Energy by the Sensor (D) — تسجيل الطاقة بالحساس (القمر الصناعي).
+ا Transmission, Reception, and Processing (E) — نقل البيانات ومعالجتها.
+ا Interpretation and Analysis (F) — تفسير وتحليل البيانات.
+ا Application (G) — التطبيق (خرائط، تقارير). Radiation Interactions
+-لما الأشعة أو الطاقة (Incident Energy - I) بتسيب الغلاف الجوي وتخبط في سطح الأرض بيحصلها حاجة من تلاتة (أو ميكس بينهم): الامتصاص (Absorption - A): الهدف بيمتص الطاقة دي. (زي الأسفلت لما يمتص حرارة الشمس ويسخن).
+النفاذية (Transmission - T): الأشعة بتخترق الهدف وتعدي الناحية التانية. (زي لما الضوء بيعدي جوه الماية أو إزاز الشباك).
+الانعكاس (Reflection - R): الأشعة بتخبط في الهدف و"ترتد" وتنعكس تاني لفوق. (وده أهم واحد بالنسبة لنا، لأن ده اللي القمر الصناعي بيلقطه عشان يصور الهدف).
+النسب بتاعت كل تفاعل بتعتمد على الطول الموجي (Wavelength) و نوع المادة (Material) و حالة السطح (Condition). نظام تحديد الموقع العالمي (GPS) هو نظام ملاحة فضائي مبني على قمر صناعي، بيتم التحكم فيه من الولايات المتحدة (U.S Air Force) لصالح وزارة الدفاع (DOD).
+اشتغل كامل العمليات (Fully Operational) في 26 يونيو 1993 مع إطلاق القمر الصناعي الـ 24.
+جهاز الـ GPS بتاعك بيستقبل إشارات عشان يحسب 3 حاجات: (مكانك، سرعتك، والوقت).
+عشان الموبايل يقدر يحدد مكانك بدقة في الـ 3D (خط الطول، دائرة العرض، والارتفاع) ويظبط الوقت، لازم يلقط إشارة من 4 أقمار صناعية على الأقل. كل ما الأقمار زادت، الدقة زادت.
+GPS Characteristics مجاني (Free)
+دقيق (Precise)
+موثوق (Reliable)
+يشتغل في كل الظروف الجوية (All Weather)
+في أي وقت وأي مكان (Anytime &amp; Anywhere) — مع ملاحظة إن "Almost!" على الشريحة
+لا نهائي المستخدمين (Unlimited User Capacity) الـ GPS النظام مبني على 3 شرائح (Segments). ا Space Segment
+ا Control Segment
+ا User Segment <br> <img src="https://www.pdhonline.com/courses/l116/fig2.gif" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> ا مجموعه (constellation) من 24 قمر صناعي بيدوروا حول الأرض على ارتفاع حوالي 11,000 ميل بحري (nautical mile). كل قمر بيدور مرة كل 12 ساعة. كل قمر ليه رقم تعريفي فريد وبيبث إشارة فريدة. الإشارة بتسافر بـ سرعة الضوء (Speed of Light). كل قمر فيه ساعة عالية الدقة — 0.000000003 ثانية. زي ما اتفقنا قبل كده، عشان الجهاز يحدد مكانك، لازم يعرف المسافة بينك وبين أكتر من قمر صناعي. الـ GPS بيستخدم نوعين من الإشارات عشان يحسب المسافة دي: الـ Code-phase ranging الـ Carrier-phase ranging الـ Code-Phase Ranging (حساب المسافة بالكود): الإشارة (Signal &amp; Time stamp): كل قمر صناعي بيبعت إشارة فريدة خاصة بيه، ومكتوب عليها "وقت انطلاقها" بالظبط.
+حساب الزمن (Time Delay): الرسيفر (الموبايل) متسجل عليه نسخة من نفس الإشارة، فبيحسب الإشارة اتأخرت قد إيه عشان توصله (وقت الوصول - وقت الانطلاق).
+المعادلة (The Equation): الجهاز بيحسب المسافة بقانون السرعة: (المسافة = الزمن × السرعة). الـ Carrier-phase ranging: الطريقة دي بتعتمد على إن الجهاز بيقيس المسافة بـ "عد موجات الراديو" نفسها اللي شايلة الإشارة، بدل ما يقرا الكود اللي جواها. وعشان الموجات دي قصيرة جداً، بتدي دقة مرعبة بالسنتيمتر، فبيستخدموها في أجهزة المساحة الهندسية الاحترافية مش في الموبايلات العادية. دي محطات موجودة على الأرض (محطة رئيسية ومحطات فرعية) متوزعة في العالم. المحطة رئيسية وظيفتها إنها تراقب الأقمار الصناعية، تظبط مساراتها، وتصلح ساعاتها لو أخرت أو قدمت. 5 محطات تحكم حول العالم: ا Falcon AFB, Colorado Springs — Master Control Monitor Station
+ا Hawaii Monitor Station
+ا Ascension Island Monitor Station
+ا Diego Garcia Monitor Station
+ا Kwajalein Monitor Station النظام فيه كمان 12 انتينا (command and control antennas) ، و16 محطة مراقبة Master Control Station determines satellite conditions (orbit, clock, health status) and calibrates the satellite’s clock ده جهاز الـ GPS بتاعك (أو موبايلك). وظيفته بس إنه يستقبل ويفك شفرة الإشارات اللي جاية من الأقمار ومبيبعتش حاجة. المستقبل الأساسي مفيش جهاز إرسال (No Transmitter).
+مستويات دقة مختلفة — من $100 لـ $30,000.
+المستقبل بيحدد موقعه عن طريق التثليث المساحي (Trilateration).
+Types of Receivers Garmin Handheld — مستقبل يدوي للمستخدمين العاديين.
+Trimble GeoCE — جهاز ميداني للمحترفين.
+HiPer Pro — جهاس مسحي دقيق على Tripod. كل قمر صناعي بيعرف موقعه ومسافته من مركز الأرض وبيبث المعلومات دي باستمرار. المستقبل بيحسب مسافته من كل قمر وبيحدد موقعه. قمر صناعي واحد: المستقبل ممكن يكون في أي مكان على الدائرة المحيطة بالقمر.
+<br> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0mgtErblxkQ-cUyHCx5R_1B8FGO3k8RGdPQ&amp;s" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> قمرين: المستقبل بيضيق لموقعين فقط (نقطتين بتتقاطع).
+<br> <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQefqIb1Vf4ddzhz7TsR2ICr-Gy9FeCF-pK-HBV1xmUKTSz9jQr" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> 3 أقمار: المستقبل بيحدد موقعه لأن أحد المواقع بيكون في الفضاء (غير ممكن).
+<br> <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTz5mVMhKU1fpywp4WqnD2uBCI9i9nQlGBR_f1IgG3h1fIEI8Sz" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> 4 أقمار أو أكتر: الدقة بتزيد كل ما الأكتر أقمار اتستخدمت.
+<br> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq9CjJ9ZXEZyxQx4S9HJzqNNyew5c5DUGuvw&amp;s" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> ملاحظة: الأقل 4 أقمار مطلوبين لحساب الموقع في 3 أبعاد + فرق الوقت (Time Offset). أحياناً الـ GPS بيغلط، ده بيحصل بسبب: ا Satellite Geometry — توزيع الأقمار في السماء.
+ا Satellite Orbits — أخطاء في مسار القمر.
+ا Multipath — إشارات بترتد من أسطح صلبة (مباني، عربيات).
+ا Atmospheric Effects — الغلاف الجوي بيبطئ الإشارة.
+ا Clock — أخطاء في ساعة المستقبل أو القمر. Satellite Geometry ا Good PDOP: ألما الأقمار تكون متوزعة وبعيدة عن بعض في السماء، التقاطع بتاعهم بيكون دقيق جداً . ا Poor PDOP: لو الأقمار كلها متجمعة في حتة واحدة في السماء (فوق دماغك مثلاً)، التقاطع بيكون واسع والدقة بتقل جداً. ا PDOP = Position Dilution of Precision — كل ما القيمة أخفض، كل ما الدقة أعلى. <br><img border="0" alt="image" src="https://i.ibb.co/93TmTskr/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Sources of Signal Interference ا Earth's Atmosphere — الغلاف الجوي بيأثر على سرعة الإشارة.
+ا Solid Structures — المباني بتسبب Multipath.
+ا Metal — العربيات والهياكل المعدنية بترتد الإشارة.
+ا Electro-magnetic Fields — الأسلاك الكهربائية بتسبب تداخل. Atmospheric Error إشارات الراديو بتسافر بسرعة الضوء في الفضاء، لكن الغلاف الجوي بيبطئهم.
+الإشارات منخفضة التردد بتتأثر أكتر.
+المستقبل بيفرق بين وقت وصول الترددات العالية والمنخفضة وبيحسب تصحيح. نظام تحديد الموقع العالمي التفاضلي (DGPS) بيبعت إشارات تصحيح (RTCM Corrections) للأجهزة على الأرض وبيزود دقة الموقع وجودة الإشارة.
+عشان نحل مشاكل الأخطاء، عملوا نظام اسمه DGPS. الفكرة إننا بنحط جهاز GPS ثابت على الأرض إحنا "عارفين إحداثياته الحقيقية بالمللي". الجهاز ده بيستقبل الإشارة ويقارنها بمكانه الحقيقي، فيعرف "قيمة الخطأ" كام، ويقوم باعت إشارة لاسلكية لجهازك (اللي بيتحرك) يقوله: "نقص 5 متر من الـ X، وزود 3 متر على الـ Y عشان تبقى دقيق".
+How DGPS Works ا DGPS Site بيبقي في موقع معروف تمامًا (True Coordinates = x+0, y+0).
+القمر الصناعي بيبث إشارة فيها خطأ (Error).
+المستقبل العادي بيحسب موقعه مع الخطأ: x+30, y+60.
+الـ DGPS Site بيحسب الخطأ ويبعت تصحيح (Correction): x-5, y+3.
+المستقبل بيستخدم التصحيح: x+25, y+63 → أدق بكتير. Real-Time DGPS: التصحيح بيحصل في الوقت الفعلي (Real-Time) على السفن، العربيات، والمروحيات.
+<br><img border="0" alt="image" src="https://i.ibb.co/qMzm5b6Z/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+### 6.6) Future GPSFuture Systems ا GPS (USA) — النظام الحالي.
+ا GLONASS (Russia) — نظام روسي.
+ا GALILEO (Europe) — نظام أوروبي. الأنظمة دي بتشتغل مع بعض وبتعلي الدقة والتوفر.
+ملخص مصادر البيانات: Primary (جمع أولي) و Secondary (جمع ثانوي) × Raster/Vector.
+الفوتوجرامترية (Photogrammetry): بتستخدم صور جوية مع Overlap 60% و Sidelap 30% + Stereoscopy لإنشاء إحداثيات.
+الاستشعار عن بُعد (Remote Sensing): علم الحصول على معلومات بدون لمس مباشر — Passive (شمس) و Active (LIDAR/RADAR).
+عناصر الـ RS السبعة: Energy Source → Atmosphere → Target Interaction → Sensor Recording → Transmission → Interpretation → Application.
+تفاعلات الإشعاع: Absorption, Transmission, Reflection — بت depend على الطول الموجي والمادة.
+ا GPS: نظام ملاحة فضائي بـ 3 شرائح (Space, Control, User) — 24 قمر على ارتفاع 11,000 nautical mile.
+التثليث (Trilateration): 4 أقمار على الأقل لحساب الموقع في 3 أبعاد + الوقت.
+أخطاء GPS: Geometry, Orbits, Multipath, Atmosphere, Clock.
+ا PDOP: كل ما أكتر انتشار الأقمار، كل ما الدقة أعلى.
+ا DGPS: محطة على موقع معروف بتبعت تصحيحات للمستقبلات → دقة أعلى.
+أنظمة مستقبلية: GPS (USA), GLONASS (Russia), GALILEO (Europe). ]]></description><link>lectures/lecture-6-spatial-data-inputs.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 6 - Spatial Data Inputs.md</guid><pubDate>Sun, 12 Apr 2026 00:00:00 GMT</pubDate><enclosure url="https://www.researchgate.net/profile/Kinga-Kiss-2/publication/262375346/figure/fig4/AS:667782517645325@1536223167277/Overlap-between-aerial-photographs.jpg" length="0" type="image/jpeg"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://www.researchgate.net/profile/Kinga-Kiss-2/publication/262375346/figure/fig4/AS:667782517645325@1536223167277/Overlap-between-aerial-photographs.jpg&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 5]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن الـ Raster Data Model في الـ GIS، مع مقارنة بـ Vector و TIN.
 أهم المحاور: الـ Tessellations, تعريف وخصائص الـ RDM, نموذج الـ TIN, عناصر الـ RDM, أنواع بيانات الـ Raster, مقارنة الـ Raster مع الـ Vector و الـ TIN, هياكل البيانات (Cell-by-Cell, Run-Length Encoding, Quadtree, Block Coding, Chain Coding, Wavelet), تحويل البيانات, ودمج الـ Raster مع الـ Vector. في الـ GIS فيه 3 نماذج بيانات رئيسية (Geographic Data Models): الـ Vector Data Model ممتاز للعناصر المنفصلة اللي ليها: موقع محدد تمامًا (Well-defined location).
 شكل واضح (Shape). لكن الـ VDM مش بيشتغل كويس مع الظواهر المكانية اللي بتتغير باستمرار (Spatial phenomena that vary continuously) زي Precipitation, Elevation, و Soil Erosion.
 يعني
@@ -119,7 +574,7 @@ Raster Pyramids الـ Raster Pyramids هي مجموعة نسخ من الـ Rast
 هياكل البيانات: Cell-by-Cell, Run-Length Encoding, Quadtree, Block Coding, Chain Coding, Wavelet (MrSID — lossy, يقلل لـ 2%).
 تحويل البيانات: Rasterization (Vector→Raster, 3 خطوات) و Vectorization (Raster→Vector, 3 عناصر).
 دمج Raster + Vector: DOQs كخلفية، DEMs لاستخراج التضاريس، صور الأقمار الصناعية للدمج.
-مقارنة Raster vs Vector vs TIN: الـ Raster أسرع لكن أكبر حجمًا، الـ Vector أبطأ لكن أدق، الـ TIN متوازن بين الدقة وحجم البيانات. ]]></description><link>lectures/lecture-5-raster-data-model.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 5 - Raster Data Model.md</guid><pubDate>Thu, 04 Jun 2026 16:58:37 GMT</pubDate><enclosure url="https://i.ibb.co/xthpr1Fz/Screenshot-2026-06-04-154943.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/xthpr1Fz/Screenshot-2026-06-04-154943.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Index]]></title><description><![CDATA[ لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Index.md</guid><pubDate>Thu, 04 Jun 2026 02:09:00 GMT</pubDate></item><item><title><![CDATA[GIS Fundamentals 4]]></title><description><![CDATA[مقدمة الجزء ده بيغطي Georelational Vector Data Model في الـ GIS.
+مقارنة Raster vs Vector vs TIN: الـ Raster أسرع لكن أكبر حجمًا، الـ Vector أبطأ لكن أدق، الـ TIN متوازن بين الدقة وحجم البيانات. ]]></description><link>lectures/lecture-5-raster-data-model.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 5 - Raster Data Model.md</guid><pubDate>Thu, 04 Jun 2026 16:58:37 GMT</pubDate><enclosure url="https://i.ibb.co/xthpr1Fz/Screenshot-2026-06-04-154943.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/xthpr1Fz/Screenshot-2026-06-04-154943.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 4]]></title><description><![CDATA[مقدمة الجزء ده بيغطي Georelational Vector Data Model في الـ GIS.
 أهم المحاور: نموذج البيانات الجيوم relations, تمثيل العناصر البسيطة (نقط, خطوط, مضلعات), Topology, بيانات بدون Topology (Shapefiles), ونماذج البيانات للمزايا المركبة (TIN, TIGER). لما بتبص على خريطة ورقية، بتشوف: شكل المعالم الجغرافية (roads, rivers, cities).
 العلاقات المكانية بينهم (مثلا: Utah محاطة بـ Idaho, Montana, Wyoming, Nevada, Oregon, Washington, و Canada). السؤال المهم: إزاي الكمبيوتر يشوف نفس المعالم والعلاقات دي؟
 نموذج البيانات الـ Vector بيحل المشكلة دي في خطوتين:
@@ -320,365 +775,4 @@ Define Projection vs Project: اDefine Projection — بييعرّف النظا�
 ا Projection = تحويل من GCS لـ PCS. ا Reprojection = تحويل من PCS لنوع PCS تاني.
 أي projection لازم يعمل distortion في Area, Shape, Distance/Scale, أو Direction. الاختيار بيكون حسب الخاصية الأهم في الخريطة.
 الأنواع الأساسية للـ projections: Planar, Conical, و Cylindrical. ومن أهم الأنظمة UTM، ومصر في zones 35, 36 و band R.
-في ArcGIS: ا Define Projection بيعرف النظام بس، أما Project بيحول البيانات فعليًا. وملف .prj بيخزن معلومات الـ projection. ]]></description><link>lectures/lecture-3-coordinate-systems.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 3 - Coordinate Systems.md</guid><pubDate>Wed, 03 Jun 2026 21:45:08 GMT</pubDate><enclosure url="https://gisrsstudy.com/wp-content/uploads/2022/08/GCS-vs-PCS.jpg" length="0" type="image/jpeg"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://gisrsstudy.com/wp-content/uploads/2022/08/GCS-vs-PCS.jpg&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 2]]></title><description><![CDATA[مقدمة الجزء ده بيغطي مفاهيم GIS الأساسية ونماذج البيانات.
-أهم المحاور: المفاهيم الأساسية للـ GIS, طبقات Vector, نماذج البيانات Vector و Raster, العلاقة بين Geometry و Topology و Attributes, وفرق Database عن Spatial Database.
-في آخر الملخص فيه مراجعة بتجمع تعريفات مهمة زي GISy, GIScience, GPS, SDE, IMS. definition
-Features have attributes associated with them. دي أول فكرة أساسية في الـ GIS.
-الـ Feature هو عنصر على الخريطة.
-والـ Attributes هي البيانات المرتبطة بالعنصر ده. لو بنرسم أماكن الأشجار: مكان كل شجرة بيتسجل على الخريطة ( يعني الشجره نفسها Feature).
-وكل شجرة ليها attributes زي النوع، العمر، الحالة، الارتفاع. في مثال الأشجار، بنرسم موقع كل شجرة ونحدد أي attributes تخص أي شجرة. وده هو أساس الـ GIS. بصمجيات
-الـ Feature = الحاجة نفسها على الخريطة.
-الـ Spatial Data = مكان الحاجة دي علي الخريطه
-الـ Attribute = بيانات الحاجة دي.
-definition
-Information is separated into layers. الفكرة التانية إن المعلومات بتتقسم لطبقات. كل طبقة تمثل نوع معين من البيانات. مثال: ا طبقة انهار ا طبقة طرق ا طبقة مباني كل طبقة ممكن تتحط فوق التانية عشان نطلع صورة وتحليل كامل. الطبقة الأساسية غالبا بتبقى تحت، وباقي الطبقات فوقها. معلومه من العملي كل Layer بيبقي ليها Geometry واحد بس
-مينفعش تحط Points و Lines و Polygons في نفس الـ Layer.
-يعني:
-Trees → Points
-Roads → Lines
-Buildings → Polygons العلاقة بين الـ map والـ database علاقة تفاعلية.
-لو اخترت feature من الـ map، الـ record المقابل ليه يتحدد في جدول البيانات.
-ولو اخترت record من الجدول، الـ feature المقابل ليه يتحدد على الخريطة.
-كمان التعديل على الـ Features الي في الماب او تقسيمها ممكن يغير الـ database. ا Vector layers بتمثل الـ features بطرق مختلفة ا Points
-ا Lines
-ا Polygons definition
-A point is good for representing information in which it is necessary to show where a feature is. الـ Point يمثل حاجة مكانها مهم، لكن حجمها أو مساحتها مش هي المهمة في الخريطة.
-أمثلة: شجرة.
-عمود نور.
-موقع حادثه. definition
-A line is suitable to represent many real world features, such as rivers in a river layer. الـ Line يمثل حاجة ممتدة في مسار.
-أمثلة: نهر.
-طريق.
-سكة حديد.
-كابل. definition
-Polygon is a solid multi-sided shape. الـ Polygon يمثل مساحة مقفولة.
-يعني شكل ليه حدود ومساحة.
-أمثلة: دولة.
-بحيرة.
-قطعة أرض.
-منطقة إدارية. ملخص definition
-GIS Data Models are methods of representing geographic space. الـ Data Model هو الطريقة اللي بتمثل بيها البيانات الجغرافية جوه الـ GIS.
-فيه نوعين أساسيين من GIS Data Models لتمثيل الـ geographic space: ا Vector
-ا Raster Note
-A database structure need seldom be made to suit a data model. But a well prepared data model is vital for a successful GIS analysis. مش لازم نعيد تصميم قاعدة البيانات كلها عشان تناسب Data Model معين، لكن لازم نفكر كويس في الـ Data Model نفسه لأن نجاح تحليل الـ GIS بيعتمد عليه بشكل كبير.
-definition
-Vector Data Model uses points and their x-, y-coordinates to represent spatial features: points, lines, and areas. الـ Vector بيمثل الواقع باستخدام إحداثيات.
-يعني كل feature بيتوصف بنقط وإحداثيات x, y. الـ Point عبارة عن node واحدة.
-ملوش area.
-بيتحدد بإحداثيات:
-(x, y) الـ Line أو Arc عبارة عن اتصال بين nodes أو vertices.
-بيبدأ من نقطة وينتهي عند نقطة.
-بيتحدد بسلسلة إحداثيات:
-(x1, y1), (x2, y2), ..., (xN, yN) الـ Polygon عبارة عن سلسلة arcs بتقفل حوالين label point.
-لازم يكون فيه closure point عشان الشكل يبقى مقفول. الـ Vector Representation مناسب لما عندك features منفصلة وواضحة الحدود.
-مثال: طريق، حدود دولة، قطعة أرض.
-definition
-Raster Data Model uses a grid with cells to represent spatial features. الـ Raster بيمثل المكان كـ شبكة (Grid). كل cell في الشبكة ليها value.
-الـ raster يقدر يمثل: ا Point: قيمة في cell واحدة.
-ا Line: سلسلة cells متصلة تمثل طول.
-ا Area: مجموعة cells متصلة تمثل شكل ومساحة. note
-Because the raster data model is a regular grid, spatial relationships are implicit. Therefore, explicitly storing spatial relationships is not required as it is for the vector data model. عشان الـ Raster عبارة عن شبكة منتظمة من الـ Cells، فموقع كل Cell بالنسبة للخلايا المجاورة معروف تلقائيًا من مكانها داخل الشبكة.
-عشان كده الـ GIS يقدر يفهم علاقات الجوار بسهولة من ترتيب الـ Cells نفسه، من غير ما يخزن العلاقات دي بشكل صريح زي الـ Vector. صور الـ satellite من الأشكال الشائعة للـ Raster.
-كل صورة satellite ليها Bands كتير (ممكن 5 أو 7 أو أكتر).
-كل band بيمثل Layer رقعي واحد.
-مثال: Red Band, Green Band, Near Infrared Band.
-definition
-DEM is a raster dataset where each cell represents elevation above sea level. الـ DEM ده Raster كل cell فيه بيمثل الارتفاع عن سطح البحر.
-بيستخدم في: تحليل المنحدرات.
-تحديد مسارات الصرف.
-دراسة التضاريس. definition
-Data is stored in four basic methods: points, lines, areas, and a grid (or raster). بيتخزن على هيئة إحداثيات (X,Y) مع بيانات وصفية (Attributes).
-مثال: نقطة في bird data بتمثل كل الطيور المسجلة في مكان معين و تاريخ معين. بيتكون من مجموعة نقاط متوصلة ببعض.
-كل Line بيبقى ليه Attributes مرتبطة بيه.
-بتتخزن كـ نقطتين و arc بيربطهم مع attributes في table.
-مثال: زي نهر, طريق. بيستخدم لتمثيل الحاجات اللي ليها مساحة وحدود.
-بيتكون من نقط (Points) , وخطوط (Arcs or lines) بتوصل النقط دي ببعض في شكل مغلق.
-زي Lines و Areas، الـ table بتخزن الـ points و lines مع الـ attributes.
-مثال:بحيره, قطعة ارض, حي سكني. الـGrid عبارة عن سلسلة square cells ليها value مرتبطة بكل cell.
-الـ grids بتستخدم لتمثيل مناطق واسعة وبتستخدم قيم مختلفة لتمثيل حاجات مختلفة.
-مثال: درجة الحرارة, الارتفاعات, الأمطار, صور الأقمار الصناعية.
-Temperature in Raster في الـ Raster كل Cell بتخزن رقم بيمثل قيمة الظاهرة في المكان ده.
-مثال: درجة حرارة منطقة في البحر = 18.0°C
-تتخزن داخل الـ Cell كقيمة 180 يعني الرقم المخزن مش شرط يكون درجة الحرارة نفسها، لكنه ترميز (Encoded Value) بيمثلها عشان يسهل تخزين البيانات ومعالجتها داخل الكمبيوتر. الـ Vector-based line: بتتخزن كـ flat file فيه coordinate pairs.
-الـ Raster-based line: بتتخزن كـ binary grid (0s و 1s) — كل cell فيها line بتبقي 1. الـ Vector أحسن للحاجات المنفصلة والواضحة زي الطرق والحدود وقطع الأراضي.
-الـ Raster أحسن للحاجات المستمرة زي الارتفاعات والحرارة والكثافة والصور.
-definition
-Geometry: coordinates and form of the objects.
-definition
-Topology: expresses explicitly the spatial relationships between features.
-definition
-Attributes: properties and values. الـGeometry بتقول الشكل والإحداثيات.
-الـTopology بيوضح العلاقات المكانية بين الـ features، مين جنب مين، ومين بيحد مين.
-الـAttributes بتقول معلومات وخصائص العنصر وقيمه.
-Note الـ Topology هو approach رياضي بيخلي نقدر ننظم الـ data بناءً على مبدأين: الـ Adjacency:الـ features اللي جنب بعض بتشارك common edge.
-الـ Connectivity: بتوصف إزاي الخطوط (Lines) متصلة ببعض عند نقاط (Nodes)، وكمان بتحدد اتجاه الخط بحيث يبقى معروف إيه الموجود على اليمين (Right Side) وإيه الموجود على الشمال (Left Side) بالنسبة لاتجاه الخط. حته زياده من الكتاب الـ Topology قواعد بتحدد الـ features إزاي بتشارك المكان الجغرافي. القواعد دي بتنقسم حسب نوع الـ feature:
-Point Rules Line Rules Polygon Rules يعني إيه Topology في الـ GIS؟ (بالمختصر)
-الـ Topology باختصار هي شوية قواعد وأدوات بتظبط العلاقات الهندسية والمكانية بين البيانات بتاعتك عشان تكون دقيقة ومظبوطة. بتشتغل إزاي؟ بتتحفظ جوه الـ Geodatabase كعلاقات (Relationships) بتحدد إزاي الـ Features بتشارك المكان مع بعضها، وكل ده من غير ما تغير أصل الـ Feature class نفسه (بيفضل Simple زي ما هو).
-ميزتها: ممتازة عشان تصطاد وتصلح أخطاء الرسم (Digitizing errors) زي الفراغات والتقاطعات، وضرورية جداً لو هتعمل تحليلات مكانية متقدمة. عيبها: البيانات اللي متطبق عليها Topology بتكون أبطأ شوية وبتاخد وقت أطول في العرض (Rendering) لو قارنتها بالبيانات العادية (Non-topological data) اللي بتفتح وتعرض أسرع. definition
-Attribute data is the "I" in GIS. حرف I في GIS هو Information، وده غالبا بيظهر في صورة Attribute Data. الـ GIS غالبا بيتقسم لمكونين: ا Coordinate information: بتوصف حاجات مكانية geometry أو spatial information.
-ا Attribute information: بتوصف properties غير مكانية مرتبطة بالعنصر. الـ attribute data غالبا بتتعرض في شكل جداول، عشان كده بنسميها Tabular Data. في ArcGIS، الـ attribute table بيبقى فيه: ا Records: الصفوف، كل صف يمثل feature.
-ا Fields / Attributes: الأعمدة، كل عمود يمثل خاصية. definition
-Spatial data describes the absolute and relative location (geometrical data) of geographic features. الـ Spatial Data يعني بيانات بتوصف مكان features.
-ممكن تكون: ا Discrete: حاجات منفصلة زي buildings أو roads أو trees.
-ا Continuous: حاجات ممتدة ومستمرة زي elevation أو temperature. مع تطور التكنولوجيا، أنواع بيانات تانية بقت شائعة زي image data و multimedia data.
-حسب المحتوى، ممكن نصنفها: ا Spatial: زي photos و animations و movies (بتوصف المكان).
-ا Attribute: زي sound و descriptions و narrations (بتوصف الخصائص). مثال: في بيانات Forestry Stand، موقع المنطقة على الخريطة وإحداثياتها يعتبر Spatial Data، بينما معلومات مثل Cover Group و Dominant Species و Crown Closure و Height تعتبر Attribute Data لأنها بتوصف خصائص المنطقة وليست موقعها.
-بصمجيات ا Vector بيمثل بـ points, lines, polygons.
-ا Raster بيمثل بـ grid cells.
-ا Geometry = الشكل والإحداثيات.
-ا Topology = العلاقات المكانية.
-ا Attributes = الخصائص والقيم.
-ا SDE لإدارة spatial data، و IMS لعرض maps through Internet.
-ا DEM = Raster كل cell فيه بيمثل ارتفاع عن سطح البحر.
-ا Satellite Imagery ليها Bands كتير، كل band بيمثل Layer. ]]></description><link>lectures/lecture-2-gis-data-models.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 2 - GIS Data Models.md</guid><pubDate>Wed, 03 Jun 2026 02:59:45 GMT</pubDate></item><item><title><![CDATA[GIS Fundamentals 1]]></title><description><![CDATA[مقدمة الجزء ده بيغطي أساسيات GIS - Geographic Information Systems.
-الـ GIS مش مجرد خريطة. هو نظام كامل بيجمع بين Geographic Position و Information System عشان نخزن ونحلل ونعرض بيانات مرتبطة بالمكان.
-أهم المحاور: Location Apps, تاريخ الـ GIS, تعريفه, مكوناته, وظائفه, وتطبيقاته. الـ Location Apps و Live Location Services من أشهر التطبيقات اليومية لفكرة الـ GIS.
-أي تطبيق بيستخدم مكانك الحالي أو بيعرض خريطة أو طريق أو موقع شخص تاني بيبقى داخل في نفس الفكرة العامة بتاعة الـ GIS.
-يعني لما تستخدم: خريطة عشان تعرف مكانك او Live Location عشان تبعت موقعك لحد.
-خدمة تعرض أماكن أو بيانات على الخريطة. كل ده مبني على نفس المبدأ: فيه مكان + فيه معلومة مرتبطة بالمكان. الـ GPS مش هو GIS الـ GPS بيحدد مكانك.
-الـ GIS هو النظام الأكبر اللي بياخد المكان ده ويحطه مع Maps, Databases, Layers, Analysis, و Output.
-يعني GPS يعتبر input داخل GIS، مش بديل عنه. definition
-John Snow analyzed a cholera outbreak in Soho, London in 1854. At this time people believed that cholera was spread in the air. Dr. Snow was skeptical of this hypothesis. من أهم الأمثلة التاريخية في GIS قصة John Snow في لندن سنة 1854.
-كان فيه وباء Cholera في منطقة Soho, London.
-وقتها الناس كانوا فاكرين إن الكوليرا بتنتشر عن طريق الهواء.
-بس John Snow مكانش مقتنع بالفرضية دي.
-عمل تحليل مكاني للحالات، يعني بص على أماكن الإصابات على الخريطة وشاف نمط انتشار المرض.
-مكان الحالات على الخريطة ساعده يفهم سبب المشكلة. ا John Snow بدأ يجمع أماكن الحالات على خريطة.
-كل ما يعرف حالة، يحدد مكانها، وبعدين يقارن أماكن الحالات بمصادر المياه الموجودة في المنطقة.
-الفكرة هنا شبه استخدام layers يدوي: طبقة فيها أماكن المرضى أو حالات الكوليرا.
-طبقة فيها مصادر المياه أو الآبار.
-وبعدين يقارن الطبقات ببعض عشان يطلع pattern. وصل لاستنتاج إن الحالات مرتبطة بمصدر مياه معين، يعني المشكلة مش في الهواء زي ما الناس كانت فاكرة، لكن في المياه.
-ده مرتبط بفكرة Geostatistics أو الإحصاء المكاني: يعني نستخدم الإحصاء بس مع المكان، ونشوف عدد الحالات في كل منطقة وعلاقتها بمصدر معين.
-Tip
-قصة John Snow مهمة عشان بتوري إن الـ GIS فكرته أقدم من البرامج الحديثة. زمان كان التحليل يدوي على خريطة، دلوقتي نفس الفكرة بتتعمل ببرامج وdatabases وlayers ( ومهمه عشان الدكتور جابها في الميد).
-حته زياده من الكتاب أول GIS اتعمل في كندا في الستينيات عشان يحدد موارد الأرض والاستخدامات الحالية والمستقبلية.
-في أواخر الستينيات، US Bureau of the Census عمل برنامج DIME (Dual Independent Map Encoding) لكل الشوارع الأمريكية عشان يدعم الإحصاء التلقائي.
-في أواخر السبعينيات، جامعة Harvard عملت ODYSSEY GIS.
-الـ Automated Cartography بدأ في الستينيات، وبحلول أواخر السبعينيات معظم الجهات الحكومية كانت بتشتغل بالكمبيوتر جزئيًا.
-الـ GIS بدأ ينتشر في التمانينيات لما أسعار الهاردوير نزلت و بقت ارخص . definition
-GIS answers the queries of: What, Where and Why. What is attribute, Where is location, and Why is analytical why. الـ GIS بيجاوب على أسئلة أساسية: What?
-Where?
-Why? الـ What معناها إيه الحاجة أو الـ attribute اللي بنتكلم عنها؟
-يعني المعلومة نفسها المرتبطة بالمكان.
-مثال: اسم الدولة.
-عدد السكان. الـ Where معناها الحاجة دي موجودة فين؟
-ودي نقطة أساسية عشان Space is essential to Geography.
-الجغرافيا أصلا معتمدة على المكان، فالسؤال المكاني هو قلب الـ GIS. ا Why معناها ليه النمط ده موجود؟ أو إيه التحليل اللي يفسر اللي شايفينه؟
-هنا الـ GIS يدخل في التحليل مش العرض بس.
-يعني مش بس نعرف إن الحوادث بتحصل في منطقة معينة، لكن نحاول نفهم: ليه بتحصل هناك؟
-في أوقات معينة؟
-هل فيه نمط مكاني أو زمني؟ بصمجيات ا What = الـ attribute أو المعلومة.
-ا Where = الـ location أو المكان.
-ا Why = الـ analysis او التحليل وفهم السبب. الفرق عن Database عادية الـ Database العادية ممكن تجاوبك على What: اسم، عنوان، رقم، قيمة، صفة.
-الـ GIS بيضيف عليها Where: الحاجة دي موجودة فين؟
-وبعد كده يدخل في Why: ليه النمط ده ظاهر هنا؟ وإيه العلاقة بين المكان والبيانات؟ definition
-GIS = Information System + Geographic Position.
-definition
-GIS is a means of storing, retrieving, sorting, and comparing spatial data to support some analytic process. الـ GIS هو نظام معلومات، بس الفرق إنه بيشتغل على بيانات مرتبطة بالمكان. يعني عندك جزئين أساسيين: ا Information System: تخزين، استرجاع، ترتيب، مقارنة، إدارة بيانات.
-ا Geographic Position: مكان أو إحداثيات أو موقع على الأرض. لما الاتنين يتجمعوا، نقدر نعمل نظام يفهم البيانات مكانيًا. يعني مش بس نخزن إن فيه مدرسة، لكن نخزن مكانها، ونقارنها بمكان السكان والطرق والخدمات. الـ GIS مش خريطة لوحدها ومش database لوحدها. هو integration بين: ا Map / Graphic Representation
-ا Database / Attribute Data يعني عندك رسمة أو خريطة، وعندك جدول بيانات، والاتنين مربوطين ببعض. حته زياده من الكتاب
-GIS = CAD + DBMS + Spatial Analysis
-الـ CAD بيركز على رسم العناصر، والـ DBMS بيركز على تخزين البيانات، أما الـ GIS فيربط بين الخريطة والبيانات الوصفية بحيث أي تعديل في أحدهما ينعكس على الآخر. بالإضافة إلى ذلك، يستطيع تحليل العلاقات المكانية بين العناصر وإنتاج خرائط ومعلومات جديدة من هذه العلاقات.
-definition
-GIS is a collection of computer hardware, software, and geographic data for capturing, managing, analyzing, and displaying all forms of geographically referenced information. Environmental Systems Research Institute (ESRI), 2007 (جت في الميد) التعريف ده مهم لأنه بيجمع كل أجزاء الـ GIS في جملة واحدة. الـ GIS عبارة عن مجموعة من: ا Hardware
-ا Software
-ا Geographic Data وبيستخدمهم عشان يعمل أربع وظائف رئيسية: ا Capturing: التقاط أو إدخال البيانات.
-ا Managing: إدارة البيانات.
-ا Analyzing: تحليل البيانات.
-ا Displaying: عرض البيانات. وكل ده على معلومات Geographically referenced، يعني معلومات ليها علاقة بمكان على الأرض. كلمة Geographically referenced مهمة في التعريف.
-معناها إن المعلومات الجغرافية لازم يكون لها مرجع مكاني موحد.
-لو جهات مختلفة رسمت طبقات مختلفة من غير مرجع واحد، الطبقات هتتركب غلط.
-عشان كده لازم يبقى فيه reference موحد للطبقات، بحيث كل layer تركب صح فوق التانية.
-definition الـ Base Map هي الخريطة الأصلية المرجعية اللي عليها بتتبني كل الطبقات. في أي دولة، الجهة المسؤولة عن إنتاج الصور المساحية الدقيقة هي الهيئة المساحية العسكرية. عشان نعمل Referenced Map في أي بلد، محتاجين صورة أو خريطة أصلية تبقى هي المرجع الأساسي.
-الصورة دي اسمها Base Map، وده اللي كل الـ layers بتتبني عليه.
-في أي دولة في العالم، الجهة الوحيدة المنتجة للصور المساحية الدقيقة هي: الهيئة المساحية العسكرية أو الجهة المختصة بالمساحة العسكرية.
-يعني Military Survey Authority. الصور دي بتروح بعدها لجهات مختلفة عشان تطلع Layers: جهة المباني والعقارات تطلع Buildings Layer.
-جهة الطرق والكباري تطلع Roads Layer.
-جهة المياه تطلع Water Network Layer. كل layer ليها Base Map واحد، وده اللي بيخلي الطبقات تركب فوق بعضها صح.
-لو مفيش Base Map موحد، الطبقات هتطلع غلط: عمود كهرباء في وسط المياه.
-مبنى فوق جنينة.
-طريق في مكان مش منطقي. حرف S في GIS ممكن يشير لأكتر من معنى حسب السياق: System
-Science
-Studies
-Service
-Survey definition
-Geographic Information System: a collection of computer hardware, software, and geographic data for capturing, managing, analyzing, and displaying all forms of geographically referenced information. ده المعنى الأشهر، وهو محور المادة.
-بيركز على النظام العملي اللي بنستخدمه عشان ندخل ونخزن ونحلل ونعرض البيانات الجغرافية.
-definition
-Geographic Information Science: comprehending the underlying conceptual issues of representing data and processes in space-time. ا GIScience ده العلم اللي ورا الـ GIS مهتم بالـ theory and concepts.
-بيهتم بأسئلة زي: إيه النظريات والمفاهيم اللي ورا التكنولوجيا؟
-الخوارزميات نطورها ازاي عشان النتائج تبقى أحسن؟ الـ GISystems يجاوب على what و where، أما GIScience مهتم بـ how والتطوير.
-definition
-Geographic Information Studies: understanding the social, legal and ethical issues associated with the application of GISy and GISc. ده جانب اجتماعي وقانوني وأخلاقي.
-يعني استخدام الـ GIS مش تقني بس، فيه أسئلة مهمة: الخصوصية.
-القوانين المرتبطة بالمعلومات الجغرافية.
-الآثار الاجتماعية لاستخدام البيانات المكانية. definition
-Geographic Information Service: functionality provided by a software entity through its interfaces defined as named sets of operations, and provisions of information generated from geospatial data. ده بيركز على الخدمات اللي بتتعامل مع المعلومات الجغرافية.
-زي تصميم وتطوير نظم GIS، أو تقديم خرائط وخدمات جغرافية للمستخدمين.
-مثال عملي: خدمة تحديد Location داخل تطبيقات زي WhatsApp أو أي تطبيق موبايل. لما حد يبعتلك Location، ده service مبنية على Geographic Information.
-تطور الخدمات المكانية مرتبط بـ distributed object technology والإنترنت.
-ده خطوة كبيرة عشان يسهل الوصول للمعلومات الجغرافية و Geo-processing technology.
-definition
-Geographic Information Survey: collecting spatial data from the field using measurement tools and field work. الـ Survey يعني جمع وقياس بيانات مكانية من الواقع.
-طرق التجميع الأساسية: عمل Field Survey يدوي في أماكن معينة.
-استخدام Aerial Survey (صور جوية من طيران فوق مناطق معينة).
-استخدام GPS لتسجيل مواقع دقيقة. فرق المساحة المهندسين بيشتغلوا في areas مش سهلة الوصول زي الغابات أو المناطق الجبلية.
-الهدف: جمع بيانات مكانية دقيقة وتغطية areas واسعة بسرعة.
-بصمجيات ا System = النظام اللي بنستخدمه.
-ا Science = العلم والنظريات اللي وراه.
-ا Studies = الآثار الاجتماعية والقانونية والأخلاقية.
-ا Service = خدمات مبنية على المعلومات الجغرافية.
-ا Survey = جمع وقياس بيانات مكانية. definition
-GIS is an organized collection of hardware, network, software, data, people, and procedures. مكونات الـ GIS الأساسية: Hardware
-Network
-Software
-Data
-People
-Procedures definition
-Hardware: the devices that the user interacts directly with to carry out GIS operations. يعني الأجهزة الملموسة اللي بنستخدمها في شغل الـ GIS.
-أمثلة: Computer
-Scanner
-Digitizer
-Plotter definition
-Software provides the functions that the user needs to store, analyze and display geographical information. البرامج هي اللي بتدينا أدوات التخزين والتحليل والعرض.
-مثال عام: برامج GIS و ArcGIS.
-definition
-Data is the most important component of GIS. البيانات هي قلب الـ GIS.
-الأنواع المذكورة: Vector Data
-Raster Data
-Image Data
-Attribute Data definition
-People are the most active component dealing with the design, programming and management of GIS. الناس هما اللي بيصمموا النظام ويديروه ويحللوا البيانات.
-من غير مستخدم فاهم، النظام مش هيطلع قرارات مفيدة. مجال الـ GIS فيه مجموعات مختلفة من المستخدمين، كل مجموعة ليها خلفية مختلفة وأولويات مختلفة: ا 1. Mature Technologies دول اللي بيشتغلوا مع الـ GIS كتقنية ناضجة وبيساهموا في إنتاج البيانات.
-زي: Surveyors, Engineers, Cartographers, Scientists using Remote Sensing. ا 2. Management and Decision-Making دول اللي بيستخدموا الـ GIS في اتخاذ القرارات.
-زي: Resource Managers, Urban Planners, Municipal Officials, Facilities Managers, Marketing and Retail Planning, Vehicle Routing and Scheduling. ا 3. Science and Research دول اللي بيدرسوا الـ GIS ويبحثوا فيه.
-زي: Universities, Government Labs.
-بيدوروا على أوجه الاختلاف والتشابه بين مجموعات الـ GIS المختلفة. definition
-Procedures are related to the management aspects of GIS. خطوات وقواعد العمل.
-يعني البيانات تدخل ازاي، تتحلل ازاي، تتراجع ازاي، وتطلع التقارير ازاي.
-definition
-Network allows rapid communication and sharing digital information. الشبكة بتسمح بمشاركة البيانات والخدمات الجغرافية بسرعة.
-عشان نعمل تحليل كامل، محتاجين نجمع الطبقات دي من جهات مختلفة.
-وده مهم في WebGIS و Online GIS.
-بدون Network، كل جهة هتشتغل لوحدها وهنخسر القيمة الحقيقية للـ GIS.
-بصمجيات
-مكونات الـ GIS هما 6 (غلطت فيها في الميد والله) GIS is a convergence of technological fields and traditional disciplines. GIS has been called an 'enabling technology' because of the potential it offers for the wide variety of disciplines which must deal with spatial data. الـ GIS هو نتيجة ربط تطورات متعددة في مجالات مختلفة.
-كل مجال بيقدم تقنية معينة تساهم في الـ GIS.
-الـGeography
-الجغرافيا مهتمة بفهم العالم ومكان الإنسان فيه.
-ليها تاريخ طويل في Spatial Analysis.
-بتقدم تقنيات للتحليل المكاني ومنظور مكاني للأبحاث.
-الـCartography (رسم الخرائط)
-الـ Cartography مهتمة بعرض المعلومات المكانية.
-المصدر الرئيسي للبيانات المدخلة في الـ GIS هو الخرائط.
-بتقدم تاريخ طويل في تصميم الخرائط، وهي شكل مهم من مخرجات الـ GIS.
-الـ Computer Cartography بتقدم طرق تمثيل رقمي وmanipulation للميزات الكرتوغرافية.
-الـ Remote Sensing
-تقنية بتسجل صور من الفضاء والجو.
-مصدر رئيسي للبيانات الجغرافية.
-ميزة كبرى إن البيانات المفسرة من Remote Sensing ممكن تندمج مع طبقات أخرى في الـ GIS.
-الـ Photogrammetry
-استخدام الصور الجوية وتقنيات قياس دقيقة منها.
-المصدر الأكبر للبيانات عن Topography (ارتفاعات سطح الأرض) المدخلة في الـ GIS.
-الـ Surveying
-قياس مواقع الأشياء على سطح الأرض، خصوصا الحدود العقارية.
-بتقدم بيانات عالية الجودة عن مواقع الحدود والأراضي والمباني.
-الـ Statistics
-نماذج كتير في الـ GIS إحصائية الطبيعة.
-تقنيات إحصائية كتير بتستخدم في التحليل.
-مهمة في فهم مشاكل الخطأ وعدم اليقين في بيانات الـ GIS.
-الـ Computer Science (احنا)
-محرك رئيسي لتطور الـ GIS.
-ا Artificial Intelligence (AI) بتستخدم الكمبيوتر عشان تاخد قرارات بناءً على بيانات متاحة.
-ا CAD بتقدم تقنيات إدخال وعرض وتمثيل البيانات، خصوصا في 3D.
-ا Computer Graphics بتقدم hardware وsoftware لمعالجة وعرض الأشياء الرسومية.
-ا DBMS بتقدم طرق تمثيل البيانات الرقمية وإجراءات تصميم النظام والتعامل مع كميات كبيرة من البيانات.
-الـ Mathematics
-فروع كتير من الرياضيات، خصوصا Geometry و Graph Theory، بتستخدم في تصميم وتحليل بيانات الـ GIS.
-definition
-Scanner is used to convert the analog paper map to computer readable form automatically. الـ Scanner بيحول الخريطة الورقية لصورة رقمية يقدر الكمبيوتر يقراها.
-يعني بياخد حاجة analog ويطلعها في شكل رقمي.
-مثال: خريطة أثرية قديمة أو خريطة ورقية عادية.
-definition
-Digitizer is used to transform information from analog format (paper map) to digital format so it can be stored and displayed with a computer. الـ Digitizer بيحول معلومات من خريطة ورقية لشكل رقمي.
-الهدف إن البيانات تتخزن وتتعرض على الكمبيوتر.
-مثال: عندك خريطة أثرية لطريق قديم أو خريطة لمنطقة محددة. عايز تحطها في GIS.
-الخطوة الأولى: تمسحها بالـ Scanner أو تستخدم Digitizer عشان تحولها لشكل رقمي.
-بعد كده تقدر تشتغل عليها في الـ GIS وتضيفها كـ Layer. معلومه علي السريع كده الـ Scanner والـ Digitizer الاتنين ممكن يستخدموا عشان يحولوا الخرايط لبيانات رقمية , بس الـ Scanner الناتج بيكون صورة Raster والـ Digitizer الناتج بيكون بيانات Vector definition
-CAD provides techniques for data input, displaying, and representing data particularly in 3 dimensions. الـ CAD بيساعد في إدخال وعرض وتمثيل البيانات، خصوصا في 3D.
-هو مش GIS كامل، بس مرتبط بتمثيل وتصميم البيانات.
-definition
-GPS is a set of hardware and software designed to determine accurate locations on the earth using signals received from satellites. الـ GPS بيحدد مواقع دقيقة على الأرض باستخدام إشارات من الأقمار الصناعية.
-مهم جدا كمدخل من مداخل البيانات المكانية.
-definition
-SDE helps manage spatial data to provide quicker retrieval of that data from database engines such as Oracle, SQL Server and Informix. الـ SDE معناها Spatial Data Engine. وظيفتها إدارة البيانات المكانية وتسهيل استرجاعها بسرعة من قواعد البيانات. اتطورت لمجتمعين: ا GIS Community
-ا DBMS Community الهدف إن قواعد البيانات العادية تقدر تدعم Spatial Technology. يقدر يتعامل مع بيانات جاية من مصادر مختلفة: يعني لو عندك data في Excel أو في SQL Server أو في Access، الـ GIS يقدر يستقبلها ويعالجها. definition
-IMS provides maps through the Internet usually as images. ا IMS معناها Internet Map Server.
-بيوفر خرائط عن طريق الإنترنت، غالبا في شكل صور.
-بيخلي ناس مش لازم تكون فاهمة GIS تقدر تشوف وتتفاعل مع الخرائط.
-مرتبط بـ: ا WebGIS
-ا Online GIS خرائط مرفوعة على الإنترنت ومتاحة لكل المستخدمين.
-الناس تقدر تشوف الأماكن، وتضيف أماكن جديدة، وتحط صور وأسماء على الخريطة.
-بصمجيات ا SDE = إدارة واسترجاع أسرع للـ spatial data من databases.
-ا IMS = عرض خرائط على الإنترنت للمستخدمين (Online). الـ GIS بيتعامل مع منظومة software وأدوات مرتبطة، مش برنامج واحد بس.
-أمثلة: ا ArcGIS في إدارة وعرض وتحليل البيانات المكانية والجداول الوصفية.
-ا QGIS كاتجاه أو بديل مشهور في برامج الـ GIS.
-ا CAD كأداة مرتبطة بإدخال وعرض وتمثيل البيانات.
-ا SDE لإدارة spatial data داخل database engines.
-ا IMS لتقديم الخرائط عبر الإنترنت. البنية الأساسية للـ GIS ممكن تتلخص بالشكل ده:
-Data Input -&gt; Geographic Database -&gt; Transformation and Analysis -&gt; Output Display أمثلة إدخال البيانات: Satellite Imagery
-Air Photos
-Digitize
-Scan
-Digital Elevation Model
-GPS
-Tiger/Line يعني مصادر البيانات ممكن تكون صور أقمار صناعية، صور جوية، خرائط ممسوحة، بيانات GPS، أو نماذج ارتفاعات. بعد الإدخال، البيانات بتتخزن في Geographic Database.
-الفرق هنا عن database عادية إن البيانات مش attributes بس، دي كمان مرتبطة بمكان. بعد التخزين، النظام يعمل تحويلات وتحليلات.
-التحليل ممكن يجاوب أسئلة زي: فين المشكلة؟
-إيه اللي تغير؟
-إيه العلاقة بين طبقات مختلفة؟ مخرجات الـ GIS ممكن تكون: Maps
-Charts
-Reports definition
-Where is what? means obtaining information from a location. يعني تبدأ من مكان وتسأل: إيه الموجود هنا؟
-مثال: تضغط على قطعة أرض على الخريطة وتعرف المالك، العنوان، المساحة، نوع الاستخدام، والتقييم.
-definition
-What is where? means querying information to find location. يعني تبدأ بمعلومة وتدور على مكانها.
-مثال: عايز تعرف فين كل الأراضي الصناعية، أو فين المناطق ذات كثافة عالية.
-بصمجيات ا Where is what? = عندي location وعايز أعرف بياناته.
-ا What is where? = عندي attribute وعايز أعرف مكانه. للـ GIS استخدامات كتير، منها: ا Mapping Where Things Are نرسم أماكن الأشياء.
-مثال: أماكن المدارس، المستشفيات، الأشجار، الحوادث، الطرق. ا Mapping Quantities نرسم الكميات على الخريطة.
-مثال: عدد السكان في كل منطقة، عدد الحوادث، كمية الإنتاج. ا Mapping Densities نرسم الكثافة.
-يعني مش بس العدد، لكن العدد بالنسبة للمساحة.
-مثال: كثافة السكان في كيلومتر مربع واحد في مناطق مختلفة. مثال: Traffic Density خرايط الطرق بتعرض traffic density بألوان مختلفة: أخضر = حركة سلسة، _traffic قليل.
-أصفر = حركة عادية.
-أحمر = زحمة شديدة. الألوان دي مبنية على بيانات حقيقية من المستخدمين والـ mobile devices. ا Getting Information About a Feature ممكن تضغط على feature وتطلع بياناته.
-أمثلة: ا Area
-ا Owner
-ا Address ا GIS Queries الـ GIS يقدر يجاوب على أسئلة كتير زي: ا What is at this location?: إيه الموجود في المكان ده؟
-ا Where is the nearest gas station?: أقرب بنزينة فين؟
-ا How do I get there?: أروح هناك ازاي؟ كل سؤال ده بيعالج شكل مختلف من التحليل المكاني. ا Routing and Navigation الـ GIS بيستخدم في تحديد أفضل طريق من مكان لمكان.
-المدخلات: بيانات الـ Road Network.
-بيانات الـ Traffic Density.
-بيانات الـ Speed Limits.
-بيانات الـ Signals. المخرجات: أفضل route من النقطة A للنقطة B. ا Change Detection استخدام GIS عشان نعرف التغير مع الزمن.
-مثال: مقارنة خريطة المدينة في 1950 مع خريطة 1990.
-نشوف المدينة كبرت ازاي، أو الأرض اتغير استخدامها ازاي.
-ده مهم في التخطيط العمراني ومراقبة التوسع العمراني. ا Geocoding : the process of converting addresses into geographic coordinates (latitude/longitude) to be placed on a map. الـ Geocoding بيحول عناوين (Address) لإحداثيات (Latitude, Longitude). يعني لما تكتب عنوان مكان، النظام بيحوله لنقطة على الخريطة. ا Predictive / Forecasting Analysis استخدام GIS للتنبؤ بأحداث مستقبلية بناءً على بيانات مكانية.
-مثال: توقع أماكن الحوادث بناءً على أنماط سابقة.
-أو توقع التوسع العمراني فيnext 10 years. ا Land Parcel Based Applications تطبيقات مرتبطة بقطع الأراضي.
-زي: ا Land acquisition
-ا Environmental impact statements
-ا Water quality management ملخص ا GIS = Information System + Geographic Position.
-الـ GIS بيشتغل على What, Where, Why.
-التعريف المهم: hardware + software + geographic data عشان capture, manage, analyze, display geographically referenced information.
-أهم مفهومين: features ليها attributes، والبيانات بتتقسم layers.
-اBase Map هي الخريطة الأصلية المرجعية، والجهة المسؤولة عنها هي الهيئة المساحية العسكرية.
-كل Layer لازم يكون فيها نوع geometry واحد بس (points أو lines أو polygons).
-اData هي أغلى وأهم مكون في GIS - جمعها وتنظيفها بياخد معظم الوقت والميزانية.
-اProcedures بتختلف حسب المجال: ماسورة مياه ≠ خط كهرباء ≠ طريق.
-ا Network أساسي لأن البيانات موزعة على جهات مختلفة ومحتاجة ربط.
-الـ GIS مش بس خرائط - فيه Database Management System أو Data Engine جواه.
-ا GIS Functions: Input → Processing → Output.
-ا GIS Queries: أقرب بنزينة فين؟ أقرب مستشفى فين؟ إيه اللي اتغير؟
-ا Digitization = تحويل خريطة ورقية لرقمية.
-ا Geocoding = تحويل عناوين لإحداثيات على الخريطة. ]]></description><link>lectures/lecture-1-gis-fundamentals.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 1 - GIS Fundamentals.md</guid><pubDate>Wed, 03 Jun 2026 01:37:12 GMT</pubDate></item></channel></rss>
+في ArcGIS: ا Define Projection بيعرف النظام بس، أما Project بيحول البيانات فعليًا. وملف .prj بيخزن معلومات الـ projection. ]]></description><link>lectures/lecture-3-coordinate-systems.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 3 - Coordinate Systems.md</guid><pubDate>Wed, 03 Jun 2026 21:45:08 GMT</pubDate><enclosure url="https://gisrsstudy.com/wp-content/uploads/2022/08/GCS-vs-PCS.jpg" length="0" type="image/jpeg"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://gisrsstudy.com/wp-content/uploads/2022/08/GCS-vs-PCS.jpg&quot;&gt;&lt;/figure&gt;</content:encoded></item></channel></rss>
