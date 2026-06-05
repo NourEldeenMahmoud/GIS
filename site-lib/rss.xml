@@ -1,4 +1,100 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[GIS]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>GIS</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Fri, 05 Jun 2026 16:43:53 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Fri, 05 Jun 2026 16:43:45 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[GIS Fundamentals 5]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن الـ Raster Data Model في الـ GIS، مع مقارنة بـ Vector و TIN.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[GIS]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>GIS</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Fri, 05 Jun 2026 17:17:05 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Fri, 05 Jun 2026 17:16:55 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[Index]]></title><description><![CDATA[ 5\6\2026 قبل ما تبدأ طبعا لان الدكتور ممكن يجيب اسالة علي اي حاجة حرفيا حتي العملي ف انا اعتمدت في الشرح علي السلايدات والكتاب ومحتوي المحاضره فاعذروني علي الرغي الي هتلاقوه بس حاولت اغطي كل حاجة علي قد ما اقدر
+هتلاقي في الشرح callouts مقفوله دي الي فيها الشرح الزياده الي موجود في الكتاب ومش موجود في المحاضرات وده انا حطيته زياده عشان لو جه منه نبقي عدينا عليه علي الاقل وبما اننا منعرفش فيه مقالي في الامتحان ولا لا ف راجع علي المنهج كذا مره بحيث تعرف النظري وذاكر المسائل كويس لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Index.md</guid><pubDate>Fri, 05 Jun 2026 17:15:07 GMT</pubDate></item><item><title><![CDATA[GIS Fundamentals 6 — Spatial Data Inputs]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن مصادر إدخال البيانات المكانية (Spatial Data Inputs) في الـ GIS.
+أهم المحاور: تصنيف البيانات الجغرافية, الطرق الرئيسية لجمع البيانات (Photogrammetry, Remote Sensing, GPS), وآليات كل طريقة بالتفصيل. خرائط الـ GIS رقمية (Digital) مش Analog — كل البيانات بتتخزن في الكمبيوتر وبتتحلل رقميًا.
+وظيفة الـ GIS هي جمع البيانات من مصادر مختلفة ودمجها في قاعدة بيانات موحدة (Integrated GIS Database).
+مصادر البيانات
+البيانات بتيجي من مصادر كتير: خرائط موجودة (Maps) — خرائط ورقية بتتمسح ورقمية.
+بيانات أقمار صناعية (Satellite Data) — صور من الفضاء.
+بيانات رقمية (Digital Data) — ملفات رقمية جاهزة.
+بيانات جدولية (Tabular Data) — جداول إكسل وقواعد بيانات.
+أفكار ومعلومات (Soft Ideas) — معرفة وخبرات. Data Pipeline
+Reality → Features → Objects → Entities → Attributes
+كل ظاهرة في الواقع بيتكتبها الـ GIS كـ Feature (نقطة، خط، مضلع) وبعدها بيتمثّل كـ Object فيه Attributes. ا Primary Data Collection: جمع البيانات من المصدر الأصلي لأول مرة.
+ا Secondary Data Collection: تحويل أو معالجة بيانات موجودة بالفعل.
+definition Photogrammetry is the technology of obtaining reliable 3-D information about physical objects through processes of measuring, and interpreting photographic images. هي التكنولوجيا اللي بنقدر من خلالها نطلع مجسمات أو خرائط ثلاثية الأبعاد (3D) لأي مكان أو مبنى، عن طريق استخدام صور فوتوغرافية عادية (2D).
+الـ Photogrammetry بتستخدم صور جوية (Aerial Photos) عشان تجيب قياسات ومعلومات مكانية عن المجسمات على سطح الأرض.
+بتعتمد على فكرة تقليد عين الإنسان. ربنا خلق لينا عينين كل عين بتشوف نفس الحاجة بس من زاوية مختلفة اختلاف بسيط. المخ بياخد الصورتين دول يدمجهم مع بعض، وده اللي بيخلينا نقدر نشوف "العمق" ونحس بالأبعاد الـ 3D. Stereoscopic Vision: Viewing an object from 2 different camera positions achieves 3-D effects.
+Stereoscopy ا Binocular Vision: كل عين بتشوف الصورة من زاوية مختلفة، والدماغ بيدمجهم في صورة ثلاثية الأبعاد.
+أهم شرط عشان الطريقة دي تنجح (قاعدة التداخل - Overlap): الطيارة مستحيل تصور كل حتة مرة واحدة وتمشي، لازم الصور "تركب على بعضها" عشان نضمن إن كل مبنى اتصور من زاويتين مختلفتين (عشان نعمل فكرة العينين اللي شرحناها فوق). التداخل الأمامي (Overlap): الطيارة وهي ماشية لقدام، الصورة الجديدة لازم تغطي من 60% لـ 80% من مساحة الصورة اللي لسه متصورة قبلها. (الصورتين دول مع بعض بنسميهم Stereo Pair).
+التداخل الجانبي (Sidelap): لما الطيارة تلف وترجع في خط موازي عشان تصور الشارع اللي جنبه، الخط الجديد بيتداخل مع الخط القديم بنسبة 20% لـ 30%. <img src="https://www.researchgate.net/profile/Kinga-Kiss-2/publication/262375346/figure/fig4/AS:667782517645325@1536223167277/Overlap-between-aerial-photographs.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+المميزات تفاصيل عالية (High Resolution) — صور أوضح من الصور الأقمار الصناعية القديمة.
+تكاليف معقولة لمساحات صغيرة ومتوسطة.
+مرنة — ممكن تصوير في أي وقت حسب الطقس. العيوب محتاجة طقس صافي (Clear Weather) — الغيوم والضباب بيأثروا على جودة الصور.
+معالجة بطيئة — الصور الجوية بتحتاج معالجة كتير.
+تكلفة عالية لمساحات كبيرة. RS Process
+The process of acquiring information about the Earth's surface without being in contact with it — by sensing and recording reflected or emitted energy and processing, analyzing, and applying that information. الاستشعار عن بُعد (Remote Sensing) هو علم اكتساب معلومات عن سطح الأرض بدون لمس مباشر (Without Physical Contact) — عن طريق كشف وتسجيل الطاقة المنعكسة أو المُصدَرة من الأجسام. بيعتمد على قياس "الأشعة الكهرومغناطيسية" (Electromagnetic radiation) اللي بتنعكس أو بتنبعث من الأجسام، باستخدام أجهزة استشعار (Sensors) بتلقط موجات مختلفة (زي الضوء المرئي، أو الميكروويف).
+ا HOW MUCH — تحديد بالعد أو قياس المساحة أو النسبة المئوية.
+ا WHERE — ربط المواقع بالخرائط أو المواقع الحقيقية على الأرض.
+ملاحظة: كلمة "Where" بتتكون لفترة زمنية كمان (التوقيت مهم). الاستشعار السلبي (Passive): جهاز بيستقبل بس. بيعتمد على مصدر إضاءة طبيعي (غالباً الشمس). الاستشعار الإيجابي (Active): جهاز "بيبعت ويستقبل". الجهاز نفسه بيطلع أشعة تخبط في الأرض وترجعله يقيسها. كأنك بتصور بالليل وشغلت الفلاش. (أشهر أمثلته: الرادار RADAR، والليزر LIDAR).
+Passive RS Interactions فيه 3 تفاعلات بتحصل في الـ Passive RS: ا Extinction: الطاقة بتتمتص أو تتبعثر من الحزمة.
+ا Emission: الطاقة بتتسرَّب من الجسم (الغلاف الجوي).
+ا Scattering: الطاقة الطبيعية بتتتبعثر نحو القمر الصناعي. Active RS Interaction في الـ Active RS فيه تفاعل واحد بيحصل الـ Backscattering: الإشعاع الاصطناعي بيتبعثر رجوعًا نحو القمر الصناعي من سطح الأرض. RS Elements ا Energy Source / Illumination (A) — مصدر الطاقة (الشمس).
+ا Radiation and the Atmosphere (B) — مرور الإشعاع عبر الغلاف الجوي.
+ا Interaction with the Target (C) — تفاعل الطاقة مع السطح.
+ا Recording of Energy by the Sensor (D) — تسجيل الطاقة بالحساس (القمر الصناعي).
+ا Transmission, Reception, and Processing (E) — نقل البيانات ومعالجتها.
+ا Interpretation and Analysis (F) — تفسير وتحليل البيانات.
+ا Application (G) — التطبيق (خرائط، تقارير). Radiation Interactions
+-لما الأشعة أو الطاقة (Incident Energy - I) بتسيب الغلاف الجوي وتخبط في سطح الأرض بيحصلها حاجة من تلاتة (أو ميكس بينهم): الامتصاص (Absorption - A): الهدف بيمتص الطاقة دي. (زي الأسفلت لما يمتص حرارة الشمس ويسخن).
+النفاذية (Transmission - T): الأشعة بتخترق الهدف وتعدي الناحية التانية. (زي لما الضوء بيعدي جوه الماية أو إزاز الشباك).
+الانعكاس (Reflection - R): الأشعة بتخبط في الهدف و"ترتد" وتنعكس تاني لفوق. (وده أهم واحد بالنسبة لنا، لأن ده اللي القمر الصناعي بيلقطه عشان يصور الهدف).
+النسب بتاعت كل تفاعل بتعتمد على الطول الموجي (Wavelength) و نوع المادة (Material) و حالة السطح (Condition). نظام تحديد الموقع العالمي (GPS) هو نظام ملاحة فضائي مبني على قمر صناعي، بيتم التحكم فيه من الولايات المتحدة (U.S Air Force) لصالح وزارة الدفاع (DOD).
+اشتغل في 26 يونيو 1993 مع إطلاق القمر الصناعي الـ 24.
+جهاز الـ GPS بتاعك بيستقبل إشارات عشان يحسب 3 حاجات: (مكانك، سرعتك، والوقت).
+عشان الموبايل يقدر يحدد مكانك بدقة في الـ 3D (خط الطول، دائرة العرض، والارتفاع) ويظبط الوقت، لازم يلقط إشارة من 4 أقمار صناعية على الأقل. كل ما الأقمار زادت، الدقة زادت.
+GPS Characteristics مجاني (Free)
+دقيق (Precise)
+موثوق (Reliable)
+يشتغل في كل الظروف الجوية (All Weather)
+في أي وقت وأي مكان (Anytime &amp; Anywhere) — مع ملاحظة إن "Almost!" على الشريحة
+لا نهائي المستخدمين (Unlimited User Capacity) الـ GPS النظام مبني على 3 شرائح (Segments). ا Space Segment
+ا Control Segment
+ا User Segment <br> <img src="https://www.pdhonline.com/courses/l116/fig2.gif" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> ا مجموعه (constellation) من 24 قمر صناعي بيدوروا حول الأرض على ارتفاع حوالي 11,000 ميل بحري (nautical mile). كل قمر بيدور مرة كل 12 ساعة. كل قمر ليه رقم تعريفي فريد وبيبث إشارة فريدة. الإشارة بتسافر بـ سرعة الضوء (Speed of Light). كل قمر فيه ساعة عالية الدقة — 0.000000003 ثانية. زي ما اتفقنا قبل كده، عشان الجهاز يحدد مكانك، لازم يعرف المسافة بينك وبين أكتر من قمر صناعي. الـ GPS بيستخدم نوعين من الإشارات عشان يحسب المسافة دي: الـ Code-phase ranging الـ Carrier-phase ranging الـ Code-Phase Ranging (حساب المسافة بالكود): الإشارة (Signal &amp; Time stamp): كل قمر صناعي بيبعت إشارة فريدة خاصة بيه، ومكتوب عليها "وقت انطلاقها" بالظبط.
+حساب الزمن (Time Delay): الرسيفر (الموبايل) متسجل عليه نسخة من نفس الإشارة، فبيحسب الإشارة اتأخرت قد إيه عشان توصله (وقت الوصول - وقت الانطلاق).
+المعادلة (The Equation): الجهاز بيحسب المسافة بقانون السرعة: (المسافة = الزمن × السرعة). الـ Carrier-phase ranging: الطريقة دي بتعتمد على إن الجهاز بيقيس المسافة بـ "عد موجات الراديو" نفسها اللي شايلة الإشارة، بدل ما يقرا الكود اللي جواها. وعشان الموجات دي قصيرة جداً، بتدي دقة مرعبة بالسنتيمتر، فبيستخدموها في أجهزة المساحة الهندسية الاحترافية مش في الموبايلات العادية. دي محطات موجودة على الأرض (محطة رئيسية ومحطات فرعية) متوزعة في العالم. المحطة رئيسية وظيفتها إنها تراقب الأقمار الصناعية، تظبط مساراتها، وتصلح ساعاتها لو أخرت أو قدمت. 5 محطات تحكم حول العالم: ا Falcon AFB, Colorado Springs — Master Control Monitor Station
+ا Hawaii Monitor Station
+ا Ascension Island Monitor Station
+ا Diego Garcia Monitor Station
+ا Kwajalein Monitor Station النظام فيه كمان 12 انتينا (command and control antennas) ، و16 محطة مراقبة Master Control Station determines satellite conditions (orbit, clock, health status) and calibrates the satellite’s clock ده جهاز الـ GPS بتاعك (أو موبايلك). وظيفته بس إنه يستقبل ويفك شفرة الإشارات اللي جاية من الأقمار ومبيبعتش حاجة. المستقبل الأساسي مفيش جهاز إرسال (No Transmitter).
+مستويات دقة مختلفة — من $100 لـ $30,000.
+المستقبل بيحدد موقعه عن طريق التثليث المساحي (Trilateration).
+Types of Receivers Garmin Handheld — مستقبل يدوي للمستخدمين العاديين.
+Trimble GeoCE — جهاز ميداني للمحترفين.
+HiPer Pro — جهاس مسحي دقيق على Tripod. كل قمر صناعي بيعرف موقعه ومسافته من مركز الأرض وبيبث المعلومات دي باستمرار. المستقبل بيحسب مسافته من كل قمر وبيحدد موقعه. قمر صناعي واحد: المستقبل ممكن يكون في أي مكان على الدائرة المحيطة بالقمر.
+<br> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0mgtErblxkQ-cUyHCx5R_1B8FGO3k8RGdPQ&amp;s" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> قمرين: المستقبل بيضيق لموقعين فقط (نقطتين بتتقاطع).
+<br> <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQefqIb1Vf4ddzhz7TsR2ICr-Gy9FeCF-pK-HBV1xmUKTSz9jQr" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> 3 أقمار: المستقبل بيحدد موقعه لأن أحد المواقع بيكون في الفضاء (غير ممكن).
+<br> <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTz5mVMhKU1fpywp4WqnD2uBCI9i9nQlGBR_f1IgG3h1fIEI8Sz" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> 4 أقمار أو أكتر: الدقة بتزيد كل ما الأكتر أقمار اتستخدمت.
+<br> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq9CjJ9ZXEZyxQx4S9HJzqNNyew5c5DUGuvw&amp;s" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> ملاحظة: الأقل 4 أقمار مطلوبين لحساب الموقع في 3 أبعاد + فرق الوقت (Time Offset). أحياناً الـ GPS بيغلط، ده بيحصل بسبب: ا Satellite Geometry — توزيع الأقمار في السماء.
+ا Satellite Orbits — أخطاء في مسار القمر.
+ا Multipath — إشارات بترتد من أسطح صلبة (مباني، عربيات).
+ا Atmospheric Effects — الغلاف الجوي بيبطئ الإشارة.
+ا Clock — أخطاء في ساعة المستقبل أو القمر. Satellite Geometry ا Good PDOP: ألما الأقمار تكون متوزعة وبعيدة عن بعض في السماء، التقاطع بتاعهم بيكون دقيق جداً . ا Poor PDOP: لو الأقمار كلها متجمعة في حتة واحدة في السماء (فوق دماغك مثلاً)، التقاطع بيكون واسع والدقة بتقل جداً. ا PDOP = Position Dilution of Precision — كل ما القيمة أخفض، كل ما الدقة أعلى. <br><img border="0" alt="image" src="https://i.ibb.co/93TmTskr/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Sources of Signal Interference ا Earth's Atmosphere — الغلاف الجوي بيأثر على سرعة الإشارة.
+ا Solid Structures — المباني بتسبب Multipath.
+ا Metal — العربيات والهياكل المعدنية بترتد الإشارة.
+ا Electro-magnetic Fields — الأسلاك الكهربائية بتسبب تداخل. Atmospheric Error إشارات الراديو بتسافر بسرعة الضوء في الفضاء، لكن الغلاف الجوي بيبطئهم.
+الإشارات منخفضة التردد بتتأثر أكتر.
+المستقبل بيفرق بين وقت وصول الترددات العالية والمنخفضة وبيحسب تصحيح. نظام تحديد الموقع العالمي التفاضلي (DGPS) بيبعت إشارات تصحيح (RTCM Corrections) للأجهزة على الأرض وبيزود دقة الموقع وجودة الإشارة.
+عشان نحل مشاكل الأخطاء، عملوا نظام اسمه DGPS. الفكرة إننا بنحط جهاز GPS ثابت على الأرض إحنا "عارفين إحداثياته الحقيقية بالمللي". الجهاز ده بيستقبل الإشارة ويقارنها بمكانه الحقيقي، فيعرف "قيمة الخطأ" كام، ويقوم باعت إشارة لاسلكية لجهازك (اللي بيتحرك) يقوله: "نقص 5 متر من الـ X، وزود 3 متر على الـ Y عشان تبقى دقيق".
+How DGPS Works ا DGPS Site بيبقي في موقع معروف تمامًا (True Coordinates = x+0, y+0).
+القمر الصناعي بيبث إشارة فيها خطأ (Error).
+المستقبل العادي بيحسب موقعه مع الخطأ: x+30, y+60.
+الـ DGPS Site بيحسب الخطأ ويبعت تصحيح (Correction): x-5, y+3.
+المستقبل بيستخدم التصحيح: x+25, y+63 → أدق بكتير. Real-Time DGPS: التصحيح بيحصل في الوقت الفعلي (Real-Time) على السفن، العربيات، والمروحيات.
+<br><img border="0" alt="image" src="https://i.ibb.co/qMzm5b6Z/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+### 6.6) Future GPSFuture Systems ا GPS (USA) — النظام الحالي.
+ا GLONASS (Russia) — نظام روسي.
+ا GALILEO (Europe) — نظام أوروبي. الأنظمة دي بتشتغل مع بعض وبتعلي الدقة والتوفر.
+ملخص مصادر البيانات: Primary (جمع أولي) و Secondary (جمع ثانوي) × Raster/Vector.
+الفوتوجرامترية (Photogrammetry): بتستخدم صور جوية مع Overlap 60% و Sidelap 30% + Stereoscopy لإنشاء إحداثيات.
+الاستشعار عن بُعد (Remote Sensing): علم الحصول على معلومات بدون لمس مباشر — Passive (شمس) و Active (LIDAR/RADAR).
+عناصر الـ RS السبعة: Energy Source → Atmosphere → Target Interaction → Sensor Recording → Transmission → Interpretation → Application.
+تفاعلات الإشعاع: Absorption, Transmission, Reflection — بت depend على الطول الموجي والمادة.
+ا GPS: نظام ملاحة فضائي بـ 3 شرائح (Space, Control, User) — 24 قمر على ارتفاع 11,000 nautical mile.
+التثليث (Trilateration): 4 أقمار على الأقل لحساب الموقع في 3 أبعاد + الوقت.
+أخطاء GPS: Geometry, Orbits, Multipath, Atmosphere, Clock.
+ا PDOP: كل ما أكتر انتشار الأقمار، كل ما الدقة أعلى.
+ا DGPS: محطة على موقع معروف بتبعت تصحيحات للمستقبلات → دقة أعلى.
+أنظمة مستقبلية: GPS (USA), GLONASS (Russia), GALILEO (Europe). ]]></description><link>lectures/lecture-6-spatial-data-inputs.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 6 - Spatial Data Inputs.md</guid><pubDate>Sun, 12 Apr 2026 00:00:00 GMT</pubDate><enclosure url="https://www.researchgate.net/profile/Kinga-Kiss-2/publication/262375346/figure/fig4/AS:667782517645325@1536223167277/Overlap-between-aerial-photographs.jpg" length="0" type="image/jpeg"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://www.researchgate.net/profile/Kinga-Kiss-2/publication/262375346/figure/fig4/AS:667782517645325@1536223167277/Overlap-between-aerial-photographs.jpg&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 5]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن الـ Raster Data Model في الـ GIS، مع مقارنة بـ Vector و TIN.
 أهم المحاور: الـ Tessellations, تعريف وخصائص الـ RDM, نموذج الـ TIN, عناصر الـ RDM, أنواع بيانات الـ Raster, مقارنة الـ Raster مع الـ Vector و الـ TIN, هياكل البيانات (Cell-by-Cell, Run-Length Encoding, Quadtree, Block Coding, Chain Coding, Wavelet), تحويل البيانات, ودمج الـ Raster مع الـ Vector. في الـ GIS فيه 3 نماذج بيانات رئيسية (Geographic Data Models): الـ Vector Data Model ممتاز للعناصر المنفصلة اللي ليها: موقع محدد تمامًا (Well-defined location).
 شكل واضح (Shape). لكن الـ VDM مش بيشتغل كويس مع الظواهر المكانية اللي بتتغير باستمرار (Spatial phenomena that vary continuously) زي Precipitation, Elevation, و Soil Erosion.
 يعني
@@ -610,100 +706,4 @@ What is where? means querying information to find location. يعني تبدأ ب
 ا Service: الخدمات والتطبيقات (زي شير اللوكيشن).
 ا Survey: تجميع وقياس البيانات من الواقع. ا إدخال البيانات: الـ Scanner بيحول الخريطة لصورة (Raster)، والـ Digitizer بيحولها لبيانات متجهة (Vector).
 ا مصطلحات قواعد البيانات: ا SDE (Spatial Data Engine): بيسرع استرجاع البيانات المكانية من قواعد البيانات (زي SQL).
-ا IMS (Internet Map Server): بيعرض الخرايط للمستخدمين على الإنترنت (Online GIS). ا من تطبيقات الـ GIS: حساب الكثافة (Densities)، تحديد المسارات (Routing)، رصد التغيرات مع الزمن (Change Detection)، والـ Geocoding (تحويل العنوان العادي لإحداثيات). ]]></description><link>lectures/lecture-1-gis-fundamentals.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 1 - GIS Fundamentals.md</guid><pubDate>Fri, 05 Jun 2026 14:37:44 GMT</pubDate><enclosure url="https://blog.rtwilson.com/wp-content/uploads/2012/01/SnowMap_Points.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://blog.rtwilson.com/wp-content/uploads/2012/01/SnowMap_Points.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Index]]></title><description><![CDATA[ لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Index.md</guid><pubDate>Thu, 04 Jun 2026 22:09:52 GMT</pubDate></item><item><title><![CDATA[GIS Fundamentals 6 — Spatial Data Inputs]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن مصادر إدخال البيانات المكانية (Spatial Data Inputs) في الـ GIS.
-أهم المحاور: تصنيف البيانات الجغرافية, الطرق الرئيسية لجمع البيانات (Photogrammetry, Remote Sensing, GPS), وآليات كل طريقة بالتفصيل. خرائط الـ GIS رقمية (Digital) مش Analog — كل البيانات بتتخزن في الكمبيوتر وبتتحلل رقميًا.
-وظيفة الـ GIS هي جمع البيانات من مصادر مختلفة ودمجها في قاعدة بيانات موحدة (Integrated GIS Database).
-مصادر البيانات
-البيانات بتيجي من مصادر كتير: خرائط موجودة (Maps) — خرائط ورقية بتتمسح ورقمية.
-بيانات أقمار صناعية (Satellite Data) — صور من الفضاء.
-بيانات رقمية (Digital Data) — ملفات رقمية جاهزة.
-بيانات جدولية (Tabular Data) — جداول إكسل وقواعد بيانات.
-أفكار ومعلومات (Soft Ideas) — معرفة وخبرات chuyênية. Data Pipeline
-Reality → Features → Objects → Entities → Attributes
-كل ظاهرة في الواقع بيتكتبها الـ GIS كـ Feature (نقطة، خط، مضلع) وبعدها بيتمثّل كـ Object فيه Attributes. ا Primary Data Collection: جمع البيانات من المصدر الأصلي لأول مرة .
-ا Secondary Data Collection: تحويل أو معالجة بيانات موجودة بالفعل.
-definition Photogrammetry is the technology of obtaining reliable 3-D information about physical objects through processes of measuring, and interpreting photographic images. هي التكنولوجيا اللي بنقدر من خلالها نطلع مجسمات أو خرائط ثلاثية الأبعاد (3D) لأي مكان أو مبنى، عن طريق استخدام صور فوتوغرافية عادية (2D).
-الـ Photogrammetry بتستخدم صور جوية (Aerial Photos) عشان تجيب قياسات ومعلومات مكانية عن المجسمات على سطح الأرض.
-بتعتمد على فكرة تقليد عين الإنسان. ربنا خلق لينا عينين كل عين بتشوف نفس الحاجة بس من زاوية مختلفة اختلاف بسيط. المخ بياخد الصورتين دول يدمجهم مع بعض، وده اللي بيخلينا نقدر نشوف "العمق" ونحس بالأبعاد الـ 3D. Stereoscopic Vision: Viewing an object from 2 different camera positions achieves 3-D effects.
-Stereoscopy ا Binocular Vision: كل عين بتشوف الصورة من زاوية مختلفة، والدماغ بيدمجهم في صورة ثلاثية الأبعاد.
-أهم شرط عشان الطريقة دي تنجح (قاعدة التداخل - Overlap): الطيارة مستحيل تصور كل حتة مرة واحدة وتمشي، لازم الصور "تركب على بعضها" عشان نضمن إن كل مبنى اتصور من زاويتين مختلفتين (عشان نعمل فكرة العينين اللي شرحناها فوق). التداخل الأمامي (Overlap): الطيارة وهي ماشية لقدام، الصورة الجديدة لازم تغطي من 60% لـ 80% من مساحة الصورة اللي لسه متصورة قبلها. (الصورتين دول مع بعض بنسميهم Stereo Pair).
-التداخل الجانبي (Sidelap): لما الطيارة تلف وترجع في خط موازي عشان تصور الشارع اللي جنبه، الخط الجديد بيتداخل مع الخط القديم بنسبة 20% لـ 30%. <img src="https://www.researchgate.net/profile/Kinga-Kiss-2/publication/262375346/figure/fig4/AS:667782517645325@1536223167277/Overlap-between-aerial-photographs.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-المميزات تفاصيل عالية (High Resolution) — صور أوضح من الصور الأقمار الصناعية القديمة.
-تكاليف معقولة لمساحات صغيرة ومتوسطة.
-مرنة — ممكن تصوير في أي وقت حسب الطقس. العيوب محتاجة طقس صافي (Clear Weather) — الغيوم والضباب بيأثروا على جودة الصور.
-معالجة بطيئة — الصور الجوية بتحتاج معالجة كتير.
-تكلفة عالية لمساحات كبيرة. الاستشعار عن بُعد (Remote Sensing) هو علم اكتساب معلومات عن سطح الأرض بدون لمس مباشر (Without Physical Contact) — عن طريق كشف وتسجيل الطاقة المنعكسة أو المُصدَرة من الأجسام.
-RS Process
-The process of acquiring information about the Earth's surface without being in contact with it — by sensing and recording reflected or emitted energy and processing, analyzing, and applying that information. بيعتمد على قياس "الأشعة الكهرومغناطيسية" (Electromagnetic radiation) اللي بتنعكس أو بتنبعث من الأجسام، باستخدام أجهزة استشعار (Sensors) بتلقط موجات مختلفة (زي الضوء المرئي، أو الميكروويف).
-ا HOW MUCH — تحديد بالعد أو قياس المساحة أو النسبة المئوية.
-ا WHERE — ربط المواقع بالخرائط أو المواقع الحقيقية على الأرض.
-ملاحظة: كلمة "Where" بتتكون لفترة زمنية كمان (التوقيت مهم). الاستشعار السلبي (Passive): جهاز بيستقبل بس. بيعتمد على مصدر إضاءة طبيعي (غالباً الشمس). الاستشعار الإيجابي (Active): جهاز "بيبعت ويستقبل". الجهاز نفسه بيطلع أشعة تخبط في الأرض وترجعله يقيسها. كأنك بتصور بالليل وشغلت الفلاش. (أشهر أمثلته: الرادار RADAR، والليزر LIDAR).
-Passive RS Interactions فيه 3 تفاعلات بتحصل في الـ Passive RS: ا Extinction: الطاقة بتتمتص أو تتبعثر من الحزمة.
-ا Emission: الطاقة بتتسرَّب من الجسم (الغلاف الجوي).
-ا Scattering: الطاقة الطبيعية بتتتبعثر نحو القمر الصناعي. Active RS Interaction في الـ Active RS فيه تفاعل واحد بيحصل الـ Backscattering: الإشعاع الاصطناعي بيتبعثر رجوعًا نحو القمر الصناعي من سطح الأرض. RS Elements ا Energy Source / Illumination (A) — مصدر الطاقة (الشمس).
-ا Radiation and the Atmosphere (B) — مرور الإشعاع عبر الغلاف الجوي.
-ا Interaction with the Target (C) — تفاعل الطاقة مع السطح.
-ا Recording of Energy by the Sensor (D) — تسجيل الطاقة بالحساس (القمر الصناعي).
-ا Transmission, Reception, and Processing (E) — نقل البيانات ومعالجتها.
-ا Interpretation and Analysis (F) — تفسير وتحليل البيانات.
-ا Application (G) — التطبيق (خرائط، تقارير). Radiation Interactions
--لما الأشعة أو الطاقة (Incident Energy - I) بتسيب الغلاف الجوي وتخبط في سطح الأرض بيحصلها حاجة من تلاتة (أو ميكس بينهم): الامتصاص (Absorption - A): الهدف بيمتص الطاقة دي. (زي الأسفلت لما يمتص حرارة الشمس ويسخن).
-النفاذية (Transmission - T): الأشعة بتخترق الهدف وتعدي الناحية التانية. (زي لما الضوء بيعدي جوه الماية أو إزاز الشباك).
-الانعكاس (Reflection - R): الأشعة بتخبط في الهدف و"ترتد" وتنعكس تاني لفوق. (وده أهم واحد بالنسبة لنا، لأن ده اللي القمر الصناعي بيلقطه عشان يصور الهدف).
-النسب بتاعت كل تفاعل بتعتمد على الطول الموجي (Wavelength) و نوع المادة (Material) و حالة السطح (Condition). نظام تحديد الموقع العالمي (GPS) هو نظام ملاحة فضائي مبني على قمر صناعي، بيتم التحكم فيه من الولايات المتحدة (U.S Air Force) لصالح وزارة الدفاع (DOD).
-اشتغل كامل العمليات (Fully Operational) في 26 يونيو 1993 مع إطلاق القمر الصناعي الـ 24.
-جهاز الـ GPS بتاعك بيستقبل إشارات عشان يحسب 3 حاجات: (مكانك، سرعتك، والوقت).
-عشان الموبايل يقدر يحدد مكانك بدقة في الـ 3D (خط الطول، دائرة العرض، والارتفاع) ويظبط الوقت، لازم يلقط إشارة من 4 أقمار صناعية على الأقل. كل ما الأقمار زادت، الدقة زادت.
-GPS Characteristics مجاني (Free)
-دقيق (Precise)
-موثوق (Reliable)
-يشتغل في كل الظروف الجوية (All Weather)
-في أي وقت وأي مكان (Anytime &amp; Anywhere) — مع ملاحظة إن "Almost!" على الشريحة
-لا نهائي المستخدمين (Unlimited User Capacity) الـ GPS النظام مبني على 3 شرائح (Segments). ا Space Segment
-ا Control Segment
-ا User Segment <br> <img src="https://www.pdhonline.com/courses/l116/fig2.gif" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 400px; max-width: 100%;"> ا مجموعه (constellation) من 24 قمر صناعي بيدوروا حول الأرض على ارتفاع حوالي 11,000 ميل بحري (nautical mile). كل قمر بيدور مرة كل 12 ساعة. كل قمر ليه رقم تعريفي فريد وبيبث إشارة فريدة. الإشارة بتسافر بـ سرعة الضوء (Speed of Light). كل قمر فيه ساعة عالية الدقة — 0.000000003 ثانية. زي ما اتفقنا قبل كده، عشان الجهاز يحدد مكانك، لازم يعرف المسافة بينك وبين أكتر من قمر صناعي. الـ GPS بيستخدم نوعين من الإشارات عشان يحسب المسافة دي: الـ Code-phase ranging الـ Carrier-phase ranging الـ Code-Phase Ranging (حساب المسافة بالكود): الإشارة (Signal &amp; Time stamp): كل قمر صناعي بيبعت إشارة فريدة خاصة بيه، ومكتوب عليها "وقت انطلاقها" بالظبط.
-حساب الزمن (Time Delay): الرسيفر (الموبايل) متسجل عليه نسخة من نفس الإشارة، فبيحسب الإشارة اتأخرت قد إيه عشان توصله (وقت الوصول - وقت الانطلاق).
-المعادلة (The Equation): الجهاز بيحسب المسافة بقانون السرعة: (المسافة = الزمن × السرعة). الـ Carrier-phase ranging: الطريقة دي بتعتمد على إن الجهاز بيقيس المسافة بـ "عد موجات الراديو" نفسها اللي شايلة الإشارة، بدل ما يقرا الكود اللي جواها. وعشان الموجات دي قصيرة جداً، بتدي دقة مرعبة بالسنتيمتر، فبيستخدموها في أجهزة المساحة الهندسية الاحترافية مش في الموبايلات العادية. دي محطات موجودة على الأرض (محطة رئيسية ومحطات فرعية) متوزعة في العالم. المحطة رئيسية وظيفتها إنها تراقب الأقمار الصناعية، تظبط مساراتها، وتصلح ساعاتها لو أخرت أو قدمت. 5 محطات تحكم حول العالم: ا Falcon AFB, Colorado Springs — Master Control Monitor Station
-ا Hawaii Monitor Station
-ا Ascension Island Monitor Station
-ا Diego Garcia Monitor Station
-ا Kwajalein Monitor Station النظام فيه كمان 12 انتينا (command and control antennas) ، و16 محطة مراقبة Master Control Station determines satellite conditions (orbit, clock, health status) and calibrates the satellite’s clock ده جهاز الـ GPS بتاعك (أو موبايلك). وظيفته بس إنه يستقبل ويفك شفرة الإشارات اللي جاية من الأقمار ومبيبعتش حاجة. المستقبل الأساسي مفيش جهاز إرسال (No Transmitter).
-مستويات دقة مختلفة — من $100 لـ $30,000.
-المستقبل بيحدد موقعه عن طريق التثليث المساحي (Trilateration).
-Types of Receivers Garmin Handheld — مستقبل يدوي للمستخدمين العاديين.
-Trimble GeoCE — جهاز ميداني للمحترفين.
-HiPer Pro — جهاس مسحي دقيق على Tripod. كل قمر صناعي بيعرف موقعه ومسافته من مركز الأرض وبيبث المعلومات دي باستمرار. المستقبل بيحسب مسافته من كل قمر وبيحدد موقعه. قمر صناعي واحد: المستقبل ممكن يكون في أي مكان على الدائرة المحيطة بالقمر.
-<br> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0mgtErblxkQ-cUyHCx5R_1B8FGO3k8RGdPQ&amp;s" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> قمرين: المستقبل بيضيق لموقعين فقط (نقطتين بتتقاطع).
-<br> <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQefqIb1Vf4ddzhz7TsR2ICr-Gy9FeCF-pK-HBV1xmUKTSz9jQr" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> 3 أقمار: المستقبل بيحدد موقعه لأن أحد المواقع بيكون في الفضاء (غير ممكن).
-<br> <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTz5mVMhKU1fpywp4WqnD2uBCI9i9nQlGBR_f1IgG3h1fIEI8Sz" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> 4 أقمار أو أكتر: الدقة بتزيد كل ما الأكتر أقمار اتستخدمت.
-<br> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq9CjJ9ZXEZyxQx4S9HJzqNNyew5c5DUGuvw&amp;s" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> ملاحظة: الأقل 4 أقمار مطلوبين لحساب الموقع في 3 أبعاد + فرق الوقت (Time Offset). أحياناً الـ GPS بيغلط، ده بيحصل بسبب: ا Satellite Geometry — توزيع الأقمار في السماء.
-ا Satellite Orbits — أخطاء في مسار القمر.
-ا Multipath — إشارات بترتد من أسطح صلبة (مباني، عربيات).
-ا Atmospheric Effects — الغلاف الجوي بيبطئ الإشارة.
-ا Clock — أخطاء في ساعة المستقبل أو القمر. Satellite Geometry ا Good PDOP: ألما الأقمار تكون متوزعة وبعيدة عن بعض في السماء، التقاطع بتاعهم بيكون دقيق جداً . ا Poor PDOP: لو الأقمار كلها متجمعة في حتة واحدة في السماء (فوق دماغك مثلاً)، التقاطع بيكون واسع والدقة بتقل جداً. ا PDOP = Position Dilution of Precision — كل ما القيمة أخفض، كل ما الدقة أعلى. <br><img border="0" alt="image" src="https://i.ibb.co/93TmTskr/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">Sources of Signal Interference ا Earth's Atmosphere — الغلاف الجوي بيأثر على سرعة الإشارة.
-ا Solid Structures — المباني بتسبب Multipath.
-ا Metal — العربيات والهياكل المعدنية بترتد الإشارة.
-ا Electro-magnetic Fields — الأسلاك الكهربائية بتسبب تداخل. Atmospheric Error إشارات الراديو بتسافر بسرعة الضوء في الفضاء، لكن الغلاف الجوي بيبطئهم.
-الإشارات منخفضة التردد بتتأثر أكتر.
-المستقبل بيفرق بين وقت وصول الترددات العالية والمنخفضة وبيحسب تصحيح. نظام تحديد الموقع العالمي التفاضلي (DGPS) بيبعت إشارات تصحيح (RTCM Corrections) للأجهزة على الأرض وبيزود دقة الموقع وجودة الإشارة.
-عشان نحل مشاكل الأخطاء، عملوا نظام اسمه DGPS. الفكرة إننا بنحط جهاز GPS ثابت على الأرض إحنا "عارفين إحداثياته الحقيقية بالمللي". الجهاز ده بيستقبل الإشارة ويقارنها بمكانه الحقيقي، فيعرف "قيمة الخطأ" كام، ويقوم باعت إشارة لاسلكية لجهازك (اللي بيتحرك) يقوله: "نقص 5 متر من الـ X، وزود 3 متر على الـ Y عشان تبقى دقيق".
-How DGPS Works ا DGPS Site بيبقي في موقع معروف تمامًا (True Coordinates = x+0, y+0).
-القمر الصناعي بيبث إشارة فيها خطأ (Error).
-المستقبل العادي بيحسب موقعه مع الخطأ: x+30, y+60.
-الـ DGPS Site بيحسب الخطأ ويبعت تصحيح (Correction): x-5, y+3.
-المستقبل بيستخدم التصحيح: x+25, y+63 → أدق بكتير. Real-Time DGPS: التصحيح بيحصل في الوقت الفعلي (Real-Time) على السفن، العربيات، والمروحيات.
-<br><img border="0" alt="image" src="https://i.ibb.co/qMzm5b6Z/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-### 6.6) Future GPSFuture Systems ا GPS (USA) — النظام الحالي.
-ا GLONASS (Russia) — نظام روسي.
-ا GALILEO (Europe) — نظام أوروبي. الأنظمة دي بتشتغل مع بعض وبتعلي الدقة والتوفر.
-ملخص مصادر البيانات: Primary (جمع أولي) و Secondary (جمع ثانوي) × Raster/Vector.
-الفوتوجرامترية (Photogrammetry): بتستخدم صور جوية مع Overlap 60% و Sidelap 30% + Stereoscopy لإنشاء إحداثيات.
-الاستشعار عن بُعد (Remote Sensing): علم الحصول على معلومات بدون لمس مباشر — Passive (شمس) و Active (LIDAR/RADAR).
-عناصر الـ RS السبعة: Energy Source → Atmosphere → Target Interaction → Sensor Recording → Transmission → Interpretation → Application.
-تفاعلات الإشعاع: Absorption, Transmission, Reflection — بت depend على الطول الموجي والمادة.
-ا GPS: نظام ملاحة فضائي بـ 3 شرائح (Space, Control, User) — 24 قمر على ارتفاع 11,000 nautical mile.
-التثليث (Trilateration): 4 أقمار على الأقل لحساب الموقع في 3 أبعاد + الوقت.
-أخطاء GPS: Geometry, Orbits, Multipath, Atmosphere, Clock.
-ا PDOP: كل ما أكتر انتشار الأقمار، كل ما الدقة أعلى.
-ا DGPS: محطة على موقع معروف بتبعت تصحيحات للمستقبلات → دقة أعلى.
-أنظمة مستقبلية: GPS (USA), GLONASS (Russia), GALILEO (Europe). ]]></description><link>lectures/lecture-6-spatial-data-inputs.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 6 - Spatial Data Inputs.md</guid><pubDate>Sun, 12 Apr 2026 00:00:00 GMT</pubDate><enclosure url="https://www.researchgate.net/profile/Kinga-Kiss-2/publication/262375346/figure/fig4/AS:667782517645325@1536223167277/Overlap-between-aerial-photographs.jpg" length="0" type="image/jpeg"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://www.researchgate.net/profile/Kinga-Kiss-2/publication/262375346/figure/fig4/AS:667782517645325@1536223167277/Overlap-between-aerial-photographs.jpg&quot;&gt;&lt;/figure&gt;</content:encoded></item></channel></rss>
+ا IMS (Internet Map Server): بيعرض الخرايط للمستخدمين على الإنترنت (Online GIS). ا من تطبيقات الـ GIS: حساب الكثافة (Densities)، تحديد المسارات (Routing)، رصد التغيرات مع الزمن (Change Detection)، والـ Geocoding (تحويل العنوان العادي لإحداثيات). ]]></description><link>lectures/lecture-1-gis-fundamentals.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 1 - GIS Fundamentals.md</guid><pubDate>Fri, 05 Jun 2026 14:37:44 GMT</pubDate><enclosure url="https://blog.rtwilson.com/wp-content/uploads/2012/01/SnowMap_Points.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://blog.rtwilson.com/wp-content/uploads/2012/01/SnowMap_Points.png&quot;&gt;&lt;/figure&gt;</content:encoded></item></channel></rss>
