@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[GIS]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>GIS</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Fri, 05 Jun 2026 14:09:48 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Fri, 05 Jun 2026 14:09:39 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[GIS Fundamentals 5]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن الـ Raster Data Model في الـ GIS، مع مقارنة بـ Vector و TIN.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[GIS]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.png</url><title>GIS</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Fri, 05 Jun 2026 16:43:53 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Fri, 05 Jun 2026 16:43:45 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[GIS Fundamentals 5]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن الـ Raster Data Model في الـ GIS، مع مقارنة بـ Vector و TIN.
 أهم المحاور: الـ Tessellations, تعريف وخصائص الـ RDM, نموذج الـ TIN, عناصر الـ RDM, أنواع بيانات الـ Raster, مقارنة الـ Raster مع الـ Vector و الـ TIN, هياكل البيانات (Cell-by-Cell, Run-Length Encoding, Quadtree, Block Coding, Chain Coding, Wavelet), تحويل البيانات, ودمج الـ Raster مع الـ Vector. في الـ GIS فيه 3 نماذج بيانات رئيسية (Geographic Data Models): الـ Vector Data Model ممتاز للعناصر المنفصلة اللي ليها: موقع محدد تمامًا (Well-defined location).
 شكل واضح (Shape). لكن الـ VDM مش بيشتغل كويس مع الظواهر المكانية اللي بتتغير باستمرار (Spatial phenomena that vary continuously) زي Precipitation, Elevation, و Soil Erosion.
 يعني
@@ -9,10 +9,7 @@ definition Tessellations geometric arrangements of figures that completely cover
 مفيش تداخل (No Overlaps): الأشكال ماينفعش تركب أو تغطي على بعضها. <img border="0" alt="Screenshot 2026 06 04 154943" src="https://i.ibb.co/xthpr1Fz/Screenshot-2026-06-04-154943.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
 الشكل الهندسي لـ Tessellation بياخد أشكال مختلفة: ا Triangle — مثلث (3 أضلاع).
 ا Quad (Quadrilateral) — أرباع الأضلاع (4 أضلاع).
-ا Pentagon — خماسي (5 أضلاع) — الدفاع الأمريكي اسمها Pentagon لأن الشكل خماسي من فوق.
-ا Hexagon — سداسي (6 أضلاع).
-ا Heptagon — سبع أضلاع (7).
-ا Octagon — ثمان أضلاع (8). Three Basic Regular Tessellations
+ا Pentagon — خماسي (5 أضلاع) Three Basic Regular Tessellations
 في 3 أشكال أساسية من الـ Regular Tessellations: Triangular — مثلثات.
 Square — مربعات.
 Hexagonal — سداسيات. لو رصيت الأرض بمربعات أو مثلثات، الشكل الناتج هو الـ Raster.
@@ -39,9 +36,8 @@ definition Raster Data Model (RDM) The regular square or rectangular tessellatio
 لو الحجم 30 متر، يعني المربع بيمثل 30×30 متر=900 متر مربع. (الـ 10 متر دقتها أعلى وتفاصيلها أوضح بكتير). كل ما حجم المربع (الخلية/البيكسل) يِصغر، كل ما الدقة والتفاصيل تبقى أحسن وأوضح.
 مشكلة الخلية الكبيرة لو فيه مربع ضخم (مثلاً 100×100 متر) بيغطي حتة أرض في الحقيقة نصها غابة، وربعها بحيرة، وربعها مباني. المربع ده في الـ Raster لازم ياخد قيمة واحدة بس. هنديله قيمة الغابة ولا البحيرة؟ دي اسمها مشكلة الـ "Mixed Features".
 عشان نحلها بنصغر حجم الخلايا، بس ده بيخلي حجم الملف كبير جداً وبياخد وقت طويل في المعالجة (Processing).. نطاقات الـ Raster (Raster Bands) — الـ Raster ممكن يكون: ا Single Band — نطاق واحد: الخلية فيها رقم واحد بس بيعبر عن حاجة واحدة. مثال: نموذج الارتفاع الرقمي (DEM)، المربع ده ارتفاعه 50 متر عن سطح البحر. مفيش معلومات تانية في الخلية دي. ا Multi-Band — نطاقات متعددة: كل خلية ليها أكتر من قيمة. مثال: صور الأقمار الصناعية (Satellite Image) — ممكن يكون فيها 5, 7, أو أكتر من نطاق.
-كل نطاق بيمثل مدى أمواج (Spectral band) من الطيف الكهرومغناطيسي. <br><img border="0" alt="image" src="https://raw.githubusercontent.com/NEONScience/NEON-Data-Skills/main/graphics/raster-general/single_multi_raster.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-- **1. الجزء اللي على الشمال: Single Band Raster (نطاق واحد)** - زي ما إنت شايف، دي **طبقة واحدة (ورقة واحدة)** وكل مربع في الطبقة دي بيشيل **قيمة واحدة بس**. - **مثال:** لو افترضنا إن دي خريطة لدرجات الحرارة، فالنقطة الخضراء دي مثلاً متسجل فيها رقم (25)، اللي هو درجة الحرارة في المكان ده. مفيش أي معلومة تانية الخلية دي تقدر تشيلها.
-2. الجزء اللي على اليمين: Multi Band Raster (نطاقات متعددة) هنا بقى هتلاحظ إنهم 4 طبقات مرصوصين فوق بعض بالظبط، وكلهم بيمثلوا نفس المكان الجغرافي.
+كل نطاق بيمثل مدى أمواج (Spectral band) من الطيف الكهرومغناطيسي. <br><img border="0" alt="image" src="https://raw.githubusercontent.com/NEONScience/NEON-Data-Skills/main/graphics/raster-general/single_multi_raster.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> 1. الجزء اللي على الشمال: Single Band Raster (نطاق واحد) زي ما إنت شايف، دي طبقة واحدة (ورقة واحدة) وكل مربع في الطبقة دي بيشيل قيمة واحدة بس.
+مثال: لو افترضنا إن دي خريطة لدرجات الحرارة، فالنقطة الخضراء دي مثلاً متسجل فيها رقم (25)، اللي هو درجة الحرارة في المكان ده. مفيش أي معلومة تانية الخلية دي تقدر تشيلها. 2. الجزء اللي على اليمين: Multi Band Raster (نطاقات متعددة) هنا بقى هتلاحظ إنهم 4 طبقات مرصوصين فوق بعض بالظبط، وكلهم بيمثلوا نفس المكان الجغرافي.
 دي بتعبر عن فكرة صور الأقمار الصناعية. الطبقات الأربعة دول ممكن يكونوا: الطبقة الأولى (اللي تحت): بتسجل الأشعة الزرقاء.
 الطبقة التانية: بتسجل الأشعة الخضراء.
 الطبقة التالتة: بتسجل الأشعة الحمراء.
@@ -50,34 +46,95 @@ definition Raster Data Model (RDM) The regular square or rectangular tessellatio
 في تعديلين لازم يتعملوا عشان الـ Raster يرتبط بنظام إحداثيات مُشروع: ال origin في نظام الإحداثيات المشروع بيبقى تحت علي الشمال (Lower-left corner)، لكن origin الـ Raster بيبقى فوق علي الشمال (Upper-left corner).
 إحداثيات المشروع لازم تتطابق مع الصفوف والأعمدة بتاعة الـ Raster. حته زياده من الكتاب
 الـ Raster في الـ GIS مش نوع واحد ده بيشمل أنواع كتير من البيانات حسب الغرض منها:
-ا 1. Satellite Imagery (صور الأقمار الصناعية) صور بتتصور من الأقمار الصناعية عشان تقيس الضوء المنعكس من سطح الأرض. ممكن تبقى: ا Single-Band: أبيض وأسود (نطاق طيفي واحد). ا Multispectral: أكتر من نطاق طيفي للتحليل والتصنيف. ا 2. Digital Elevation Models (DEMs) دي خرائط بتمثل ارتفاعات سطح الأرض. كل Pixel فيها بيخزن قيمة الارتفاع عند المكان ده. من أدق طرق إنتاجها حاليًا تقنية LiDAR اللي بتستخدم الليزر. ا 3. Digital Orthophoto Quadrangles (DOQ) صور جوية متصورة من طيارات. بعد التصوير بيتم تصحيحها هندسيًا عشان يتشال منها أي ميل أو تشوه. في الآخر بتبقى دقيقة مكانيًا وتتعامل معاها كأنها خريطة. ا 4. Scanned Maps (الخرائط الممسوحة ضوئيًا) خرائط ورقية اتعملها Scan وتحولت لبيانات Raster. ا DRG (Digital Raster Graphics) خريطة طبوغرافية ورقية اتعملها Scan واتحفظت كصورة Raster ملونة. ا Bi-Level Images صور فيها قيمتين بس (0 و 1) أو أبيض وأسود. بتستخدم كتير قبل تحويل الخطوط والحدود إلى بيانات Vector. ا 5. Graphic Files (ملفات الصور العادية) ملفات صور معروفة زي: ا JPEG ا TIFF ا PNG أهم نوع في الـ GIS هو GeoTIFF لأنه بيخزن الإحداثيات والمعلومات المكانية جوه الملف نفسه. ا 6. GIS-Specific Raster Formats صيغ Raster خاصة ببرامج الـ GIS. شركة ESRI مثلًا بتسميها Grids. وبتنقسم إلى: ا Integer Grid: قيم صحيحة وليها Attribute Table. ا Floating Grid: قيم عشرية للبيانات المستمرة زي الارتفاعات، وغالبًا مبيكونش ليها Attribute Table. Comparison
+ا 1. Satellite Imagery (صور الأقمار الصناعية) صور بتتصور من الأقمار الصناعية عشان تقيس الضوء المنعكس من سطح الأرض. ممكن تبقى: ا Single-Band: أبيض وأسود (نطاق طيفي واحد). ا Multispectral: أكتر من نطاق طيفي للتحليل والتصنيف. ا 2. Digital Elevation Models (DEMs) دي خرائط بتمثل ارتفاعات سطح الأرض. كل Pixel فيها بيخزن قيمة الارتفاع عند المكان ده. من أدق طرق إنتاجها حاليًا تقنية LiDAR اللي بتستخدم الليزر. ا 3. Digital Orthophoto Quadrangles (DOQ) صور جوية متصورة من طيارات. بعد التصوير بيتم تصحيحها هندسيًا عشان يتشال منها أي ميل أو تشوه. في الآخر بتبقى دقيقة مكانيًا وتتعامل معاها كأنها خريطة. ا 4. Scanned Maps (الخرائط الممسوحة ضوئيًا) خرائط ورقية اتعملها Scan وتحولت لبيانات Raster. ا DRG (Digital Raster Graphics) خريطة طبوغرافية ورقية اتعملها Scan واتحفظت كصورة Raster ملونة. ا Bi-Level Images صور فيها قيمتين بس (0 و 1) أو أبيض وأسود. بتستخدم كتير قبل تحويل الخطوط والحدود إلى بيانات Vector. ا 5. Graphic Files (ملفات الصور العادية) ملفات صور معروفة زي: ا JPEG ا TIFF ا PNG أهم نوع في الـ GIS هو GeoTIFF لأنه بيخزن الإحداثيات والمعلومات المكانية جوه الملف نفسه. Comparison
 "Raster is faster, but raster is vaster, and vector just seems more corrector" الـ Raster أسرع في الجمع والعرض، لكنه بياخد مساحة أكبر.
 الـ Vector أبطأ في الجمع، لكنه أدق و بياخد مساحة أقل. معلومه زياده من الكتاب
 لو الجهاز بتاعك فيه Processor ضعيف و Memory قديمة، الـ Raster هياخد وقت طويل عشان الصور كبيرة جدًا.
 مثال: صورة من الساحة العسكرية ممكن تاخد 300+ GB — ده بسبب إن الـ Raster بيخزن كل خلية لواحدها.
-Raster Pyramids الـ Raster Pyramids هي مجموعة نسخ من الـ Raster بدقة أقل (Reduced Resolution) بتتخزن عشان تسرّع عملية عرض البيانات على الشاشة (Screen Drawing). كل مستوى في الهرم بيكون نسخة أصغر من الصورة الأصلية، وبالتالي يحتاج وقت أقل في العرض والمعالجة. لما تعمل Zoom Out، البرنامج بيستخدم النسخة المناسبة من الـ Pyramid بدل ما يقرأ الصورة الأصلية كاملة. في ArcMap غالبًا بتتخزن الـ Pyramids في ملفات بامتداد .rrd. إنشاء الـ Pyramids لما تضيف Raster جديد في ArcMap ومفيش Pyramids موجودة، البرنامج غالبًا هيطلب منك تعملها (Build Pyramids). العملية دي بتحصل مرة واحدة وبعدها بتساعد في تسريع العرض بشكل ملحوظ. مثال لو عندك Raster حجمه 10000 × 10000 بكسل: Pyramid Level 1: 5000 × 5000 Pyramid Level 2: 2500 × 2500 Pyramid Level 3: 1250 × 1250 لما تعرض الصورة على مستوى عام (Overview) أو تعمل Zoom Out بشكل كبير، ArcMap هيستخدم النسخة الأصغر بدل الصورة الأصلية، وده بيخلي العرض أسرع بكتير ويقلل استهلاك الموارد. ]]></description><link>lectures/lecture-5-raster-data-model.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 5 - Raster Data Model.md</guid><pubDate>Fri, 05 Jun 2026 14:07:38 GMT</pubDate><enclosure url="https://i.ibb.co/xthpr1Fz/Screenshot-2026-06-04-154943.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/xthpr1Fz/Screenshot-2026-06-04-154943.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 4]]></title><description><![CDATA[مقدمة الجزء ده بيغطي Georelational Vector Data Model في الـ GIS.
+Raster Pyramids الـ Raster Pyramids هي مجموعة نسخ من الـ Raster بدقة أقل (Reduced Resolution) بتتخزن عشان تسرّع عملية عرض البيانات على الشاشة (Screen Drawing). كل مستوى في الهرم بيكون نسخة أصغر من الصورة الأصلية، وبالتالي يحتاج وقت أقل في العرض والمعالجة. لما تعمل Zoom Out، البرنامج بيستخدم النسخة المناسبة من الـ Pyramid بدل ما يقرأ الصورة الأصلية كاملة. في ArcMap غالبًا بتتخزن الـ Pyramids في ملفات بامتداد .rrd. إنشاء الـ Pyramids لما تضيف Raster جديد في ArcMap ومفيش Pyramids موجودة، البرنامج غالبًا هيطلب منك تعملها (Build Pyramids). العملية دي بتحصل مرة واحدة وبعدها بتساعد في تسريع العرض بشكل ملحوظ. مثال لو عندك Raster حجمه 10000 × 10000 بكسل: Pyramid Level 1: 5000 × 5000 Pyramid Level 2: 2500 × 2500 Pyramid Level 3: 1250 × 1250 لما تعرض الصورة على مستوى عام (Overview) أو تعمل Zoom Out بشكل كبير، ArcMap هيستخدم النسخة الأصغر بدل الصورة الأصلية، وده بيخلي العرض أسرع بكتير ويقلل استهلاك الموارد. definition Cell-by-Cell Encoding : A raster is stored as a matrix, and its cell values are written into a file by row and column. هو أبسط هيكل بيانات للـ Raster. الـ Raster بيتخزن كـ Matrix وقيم الخلايا بتتكتب في ملف صف بصف وعمود بعمود (By row and column).
+الطريقة دي مثالية لو قيم الخلايا بتتغير باستمرار (Continuous) — زي بيانات الارتفاع وصور الأقمار الصناعية.
+صور الأقمار الصناعية كمان بتشتغل بالطريقة دي.
+<br>
+<img border="0" alt="image" src="https://i.ibb.co/gZjyxwwM/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> الـ Raster على الشاشة بيبان كأنه شبكة ثنائية الأبعاد (2D Matrix) مكونة من صفوف وأعمدة. لكن الكمبيوتر مبيخزنوش كده الـ Linear Array: الكمبيوتر بياخد قيم الخلايا دي ويرصها كلها في "خط واحد طويل" (Linear array). يعني بيمسك الصف الأول يكتب أرقامه ورا بعض، وبعدين يلزق فيه الصف التاني، والتالت، وهكذا.
+الإحداثيات الضمنية (Implicit Location): الكمبيوتر مش بيخزن إحداثيات (X, Y) لكل خلية. ليه؟ لأننا مجرد ما نعرف الخلية دي في الصف الكام والعمود الكام، الكمبيوتر يقدر يحسب مكانها الجغرافي تلقائياً. <br><img border="0" alt="image" src="https://i.ibb.co/HfJdqmVd/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> بما إن الكمبيوتر حول خزن البيانات في طابور طويل من الأرقام، لو جه يفتح الملف تاني مش هيعرف الطابور ده يمثل خريطة أبعادها كام في كام!(يعني هل دول 1000 صف × 1000 عمود، ولا 500 صف × 2000 عمود؟). عشان كده، أي ملف Raster لازم يتكون من حتتين: البيانات نفسها: اللي هي الأرقام المكتوبة صف ورا صف.
+الـ Header (رأس الملف): وبتكون مكتوبة في أول الملف خالص عشان تفهم الكمبيوتر يقرأ الأرقام دي إزاي. الـ Header ده بيكون جواه معلومات أساسية زي: عدد الصفوف والأعمدة (Rows and Columns): عشان الكمبيوتر يعرف يكسر طابور الأرقام الطويل ده ويرجعه لشبكة (Matrix) تاني.
+عدد البتات (Number of Bits): اللي بتحدد حجم الخلية في الذاكرة والألوان المتاحة (مثلاً 8-bit يعني 256 لون/قيمة).
+نوع البيانات (Type): هل الأرقام دي صحيحة (Integer) ولا عشرية (Floating)
+مفتاح الخريطة (Legend).
+الإحداثيات الجغرافية (Coordinate Transformation): المعلومات اللي بتربط الصورة دي بمكانها الحقيقي على كوكب الأرض (Georeferencing). حته زياده من الكتاب لما الـ Raster يكون فيه أكتر من نطاق (Multi-band)، فيه 3 صيغ لتخزين البيانات: ا Band Sequential (.bsq): كل نطاق بيبقى ملف منفصل — Band 1, Band 2...
+ا Band Interleaved by Line (.bil): القيم بتتكتب صف بصف — Row 1 Band 1, Row 1 Band 2...
+ا Band Interleaved by Pixel (.bip): القيم بتتكتب بكسل ببكسل — Pixel(1,1) Band 1, Pixel(1,1) Band 2... زي ما قلنا قبل كده "Raster is vaster" (حجمه كبير)، وده بيعمل مشكلة كبيرة وبطء لو حابين نبعت الملفات دي أو نخزنها. عشان كده اخترعوا (Compression Algorithms) عشان نقلل مساحة الملفات دي.
+ومن اشهر الطرق دي: ا Run Length Encoding
+ا Block Coding
+ا Chain Coding
+ا Quadtrees
+ا Wavelet Compression (زي صيغة MrSID): دي طريقة قوية جداً بتضغط الملف لحد 2% من حجمه الأصلي لكنها Lossy (يعني بتضحي بشوية جودة وتفاصيل مقابل تصغير الحجم). definition Run-Length Encoding Adjacent cells along a row with the same value are treated as group called a run length encoding. دي طريقه بتخزن تسلسل القيم المتكررة (Repeated Sequences), بدل ما الكمبيوتر يكتب قيمة كل خلية لوحدها ويفضل يكررها، بيعد الخلايا اللي شبه بعض ورا بعض ويكتبهم كـ مجموعة.
+مثال: بدل ما نكتب الخريطة كده: A A A A A A A A A A B B A A A... بنكتبها بالـ RLE كده: 10A 2B 3A...
+يعني (عشر خلايا قيمتهم A، بعدهم خليتين قيمتهم B، بعدهم 3 خلايا قيمتهم A). <br><img border="0" alt="image" src="https://i.ibb.co/csjSV7P/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"><br><img border="0" alt="image" src="https://i.ibb.co/27FKXgM5/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 600px; max-width: 100%;">
+بدل ما البرنامج يسجل إحداثيات كل بيكسل لوحده، بيحاول يجمع البيكسلات اللي ليها نفس القيمة، ويسجل بس نقطة البداية بتاعة كل كتلة وحجمها.
+يعني بنشوف اكبر مربع نقدر نخزنه وهو في المثال بتاعنا في الصوره مربع 3x3 ,وبيبدا من 5,2
+نشوف بعدها لو فيه مربعات تانية نقدر نجمعها مع بعضها هنلاقي مربعين 2x2 مكانهم 8,3 و 7,5وهكذا لحد ما نخزن كله.
+<br><img border="0" alt="image" src="https://i.ibb.co/DDsCKRcx/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> الطريقه دي بتمشي على حدود الشكل, بتختار نقطة بداية وبعدين تفضل تسجل الاتجاهات (يمين، شمال، فوق، تحت) لحد ما ترجع عند نقطة البداية. ا N (North) = فوق
+ا S (South) = تحت
+ا E (East) = يمين
+ا W (West) = شمال المثال: لو قرأنا السطر المكتوب في الـ File structure: هنبدا من النقطه (4,3)
+ا N,2 ⬅️ اطلع لفوق خطوتين.
+ا E,4 ⬅️ امشي يمين 4 خطوات.
+ا S,1 ⬅️ انزل لتحت خطوة.
+وهكذا... لحد ما نقفل الشكل ونرجع لنقطة البداية. <br><img border="0" alt="pasted image 20260604174230" src="https://i.ibb.co/RTDpVfZ8/pasted-image-20260604174230.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+الـ Quadtree بيقسم الـ grid (المربع الكبير او الشبكه) لـ اربع مربعات , وكل مربع منهم بيتقسم لاربع مربعات وهكذا (Recursive Decomposition)**.
+Quadtree properties 2^k pixels
+depth k+1
+internal nodes always have 4 children
+internal nodes represent non-homogeneous regions
+leaves represent homogeneous regions بنبص على الراستر كـ مربع واحد كبير. ونشوف: هل المربع ده كله نفس اللون او القيمه (متجانس - Homogeneous)؟ لو الإجابة أيوة: بيسجل المربع ده كله بلون واحد ويقف.
+لو الإجابة لأ (فيه ألوان مختلفة): نقسم المربع الكبير ده لـ 4 مربعات متساوية . نمسك كل مربع من الأربعة الجداد ونكرر نفس السؤال: زي بعض ولا مختلفين؟
+المربع المتجانس بيقف ويبقى اسمه "نقطة نهاية" أو ورقة (Leaf). أما المربع الملون فبيتقسم لـ 4 مربعات أصغر.. وهكذا نفضل نقسم لحد ما كل المربعات اللي باقية تبقى بلون موحد.
+<br><img border="0" alt="image" src="https://i.ibb.co/W41DKWSM/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+هيبدأ يقسم الشبكة لـ 4 أرباع كبيرة (أرقامهم: 0، 1، 2، 3): الربع 0 و 1 و 2: مربعات فاضية. عشان كده البرنامج هيوقف تقسيم فيهم.
+الربع 3 (اللي تحت على اليمين): المربع ده جواه الشكل الأسود، يعني المربعات مش زي بعض، فهناخده ونقسمه لـ 4 مربعات أصغر. التقسيم جوه المربع 3 (أرقامهم 30، 31، 32، 33): المربع 30: أسود بالكامل (مساحته 2×2 بيكسل). كده بقى متجانس، هنقف عنده ونحفظه.
+المربع 32 و 33: أبيض بالكامل، هنتجاهلهم.
+المربع 31: أغلبه أبيض بس جواه بيكسل واحد أسود. كده لسه غير متجانس، هنقسمه مرة تالتة التقسيم جوه المربع 31 (أرقامهم 310، 311، 312، 313): قسمه لبيكسلات فردية عشان يقدر يعزل البيكسل الأسود لوحده.
+لقى إن المربع 312 هو البيكسل الأسود، والباقي أبيض، فخلاص هيحفظ 312 ويوقف تقسيم. <br><img border="0" alt="image" src="https://i.ibb.co/GfD6d9Hj/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> هنا السؤال بيطلب مننا نمشي بحرف U , هنبدا بالمربع الي فوق علي الشمال ونشوف هل هو متشابه ؟ الاجابه لا يبقي هنقسمه لاربعه ونمسك كل واحد فيهم نشوف هل هو متشابه؟ اول مربع متشابه يبقي مش هنقسمه وهنعمله ك leaf دايره تاني مربع نفس الحاجة
+تالت مربع مختلف فهنقسمه اول اتنين ابيض والاتنين التانيين اصفر كده اول مربع فوق علي الشمال خلص هندخل علي الي بعده ونكمل بنفس الطريقة في الاخر خالص بنرقم البيكسلزالي في التري من 0-3 ونكتب ارقام البيكسلرز المتظلله, زي 002 ده معناه ان اول مربع فوق علي الشمال متقسم لاربعه اول مربع فيهم اخر اتنين فيه متظللين لو عايز تجيب عدد البيك لو اتلغبطت من الي انا كاتبه اقرا المثال هتفهمه مع نفسك ثواني من غير شرح. Caution الترتيب الي بنشتغل فيه علي المربعات بيفرق , المفروض الطبيعي اننا شغالين بحرف Z يعني بنبدا فوق علي الشمال وبعدين فوق يمين وبعدين تحت شمال وبعدين تحت يمين بس لو السؤال قالك تستخدم طريقه تانية زي الي فوق يبقي هنمشي معاه. May be use to get variable resolution for imagery in the National Map
+<br><img border="0" alt="image" src="https://i.ibb.co/6cQ6fQ6J/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+الـ overlay ده باختصار اننا نحط اتنين راستر علي بعض , مثلا عندنا راستر لاماكن المايه وراستر لاماكن فيها ممكن تلوث المايه, بنحطهم علي بعض والاماكن الي يحصل فيها تقاطع يبقي فيها مايه ملوثه.
+اللون الاسود ده المايه واللون الاخضر دي الماده الي بتلوث المايه واللون الاحمر هو التقاطع او المايه الملوثه
+حته زياده من الكتاب ا DOQs, DRGs, Graphic Files: بتتستخدم كـ خلفية (Background) لعرض البيانات.
+ا Bi-Level Scanned Files: مدخلات لـ ترقيم (Digitizing) خطوط أو مضلعات.
+ا DEMs: أهم مصدر لاستخراج معالم التضاريس زي: ا Contour — خطوط التضاريس.
+ا Slope — الانحدار.
+ا Aspect — الاتجاه.
+ا Drainage Network — شبكة الصرف.
+ا Watershed — الحوض المائي.
+المعالم دي ممكن تتخزن بصيغة Raster أو Vector. صور الأقمار الصناعية: مفيدة في الدمج — صور مرجعية مكانيًا زي DOQs.
+بيانات الـ Vector: بتتستخدم كـ معلومات مساعدة (Ancillary information) لمعالجة صور الأقمار الصناعية. مثال: Image Stratification — تقسيم المشهد لمناطق مختلفة Characteristics ومعالجة كل منطقة لوحدها. ملخص نماذج البيانات: Vector (Points/Lines/Polygons), Raster (Grid Cells), TIN (Triangles).
+الـ Raster Data Model بيستخدم شبكة منتظمة من الخلايا لتمثيل الظواهر المستمرة.
+الـ Tessellations هي الترتيبات الهندسية اللي بتغطي السطح — الـ Raster بيستخدم المربعات.
+كل خلية لازم يكون فيها قيمة بتبين الصفة أو الكمية في الموقع ده.
+تخزين الـ Raster: بيتعرض كـ 2D Matrix لكن بيتحفظ كـ Linear Array — الموقع بيتحدد بشكل implicitly من الصف والعمود، والإحداثيات بتتحسب وقت العرض والتحليل.
+عناصر الـ RDM:ا Cell Value (Integer/Floating-point), Cell Size (Resolution), Raster Bands (Single/Multi), Spatial Reference (Georeferenced).
+أنواع بيانات الـ Raster:ا Satellite Imagery, USGS DEMs, DOQs, DRGs, Graphic Files, Bi-Level Scanned Files — الصور هي شكل من أشكال الـ Raster.
+هياكل البيانات: Cell-by-Cell, Run-Length Encoding, Quadtree, Block Coding, Chain Coding, Wavelet (MrSID — lossy, يقلل لـ 2%). ]]></description><link>lectures/lecture-5-raster-data-model.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 5 - Raster Data Model.md</guid><pubDate>Fri, 05 Jun 2026 16:41:40 GMT</pubDate><enclosure url="https://i.ibb.co/xthpr1Fz/Screenshot-2026-06-04-154943.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/xthpr1Fz/Screenshot-2026-06-04-154943.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 4]]></title><description><![CDATA[مقدمة الجزء ده بيغطي Georelational Vector Data Model في الـ GIS.
 أهم المحاور: نموذج البيانات الجيوم relations, تمثيل العناصر البسيطة (نقط, خطوط, مضلعات), Topology, بيانات بدون Topology (Shapefiles), ونماذج البيانات للمزايا المركبة (TIN, TIGER). لما بتبص على خريطة ورقية، بتشوف: شكل المعالم الجغرافية (roads, rivers, cities).
 العلاقات المكانية بينهم (مثلا: Utah محاطة بـ Idaho, Montana, Wyoming, Nevada, Oregon, Washington, و Canada) (ولايات في امريكا). السؤال المهم: إزاي الكمبيوتر يشوف نفس المعالم والعلاقات دي؟
-نموذج البيانات الـ Vector بيحل المشكلة دي في خطوتين:
-definition
-الـ Georelational Data Model هو نموذج بيخزن البيانات المكانية (Geometry) والبيانات الوصفية (Attributes) في نظامين منفصلين — المكان في ملفات جرافيكية، والوصف في قاعدة بيانات علائقية. الخطوة الأولى: بيستخدم النقاط وإحداثياتها (X, Y) عشان يمثل المعالم الجغرافية كـ نقاط (Points), خطوط (Lines), و مضلعات (Areas).
+نموذج البيانات الـ Vector بيحل المشكلة دي في خطوتين: الخطوة الأولى: بيستخدم النقاط وإحداثياتها (X, Y) عشان يمثل المعالم الجغرافية كـ نقاط (Points), خطوط (Lines), و مضلعات (Areas).
 الخطوة التانية: بينظم البيانات الهندسية والعلاقات المكانية بتاعتها في ملفات بيانات رقمية يقدر الكمبيوتر يقرأها ويتعامل معاها. Geo-relational data model: uses a split system to store spatial data and attribute data.
 The object-based data model: Stores spatial data and attribute data in a single system نموذج الـ Vector Data Model اتغير أكتر من أي جانب تاني في الـ GIS.
-شركة ESRI قدمت صيغ جديدة : الـ Georelational بيخزن البيانات المكانية والوصفية في ملفين منفصلين (split system). اCoverage ا Shapefile الـ Object-oriented (زي Geodatabase): بيخزنهم في ملف واحد موحد (single system). الـ Vector Data Model بيستخدم أشكال هندسية بسيطة لتمثيل المعالم الجغرافية: ليه 0 أبعاد (No dimension / 0-cell).
-ليه خاصية الموقع فقط (Location).
+شركة ESRI قدمت صيغ جديدة : الـ Georelational بيخزن البيانات المكانية والوصفية في ملفين منفصلين (split system). زي الـCoverage والـ Shapefile الـ Object-oriented (زي Geodatabase): بيخزنهم في ملف واحد موحد (single system). الـ Vector Data Model بيستخدم أشكال هندسية بسيطة لتمثيل المعالم الجغرافية: 0 أبعاد (No dimension / 0-cell).
+بنعرف منه الموقع فقط (Location).
 ممكن نسميه Node أو Vertex.
-مثال: Wells (آبار), Lighting poles (عمود نور), Trees (أشجار). ليه بعد واحد (1D / 1-cell) — بيحدد بالطول (Length).
-ليه نقطتين نهاية (End points) ونقاط في المنتصف.
+مثال: Wells (آبار), Lighting poles (عمود نور), Trees (أشجار). بعد واحد (1D / 1-cell) — بيحدد بالطول (Length).
+عنده نقطتين نهاية (End points) ونقاط في المنتصف.
 شكل الخط ممكن يكون منحنى ناعم (Smooth curve) عن طريق معادلات رياضية زي Splines، أو مستقيم Straight-line segments زي القنوات والشوارع.
 ممكن نسميه Edge, Link, أو Chain.
-مثال: Roads (طرق), Streams (أنهار), ليه بعدين (2D / 2-cell) — بيحدد بالمساحة (Area) والمحيط (Perimeter).
+مثال: Roads (طرق), Streams (أنهار), عنده بعدين (2D / 2-cell) — بيحدد بالمساحة (Area) والمحيط (Perimeter).
 مكون من خطوط متصلة (Connected lines).
 ممكن يكون فيه ثقوب (Holes) — زي غابة فيها أراضي خاصة جواها — عشان كده ليه حدود خارجية (External boundaries) و حدود داخلية (Internal boundaries).
 ممكن نسميه Polygon, Face, أو Zone.
 مثال: Timber stands (مساحات شجر), Water bodies (مساحات مائية). الـ Coverage هو نموذج بيانات مبني على Topology.
 بيدمج العلاقات المكانية في هيكل البيانات نفسه.
 شركة ESRI قدّمته في التمانينات عشان يفصل الـ GIS عن الـ CAD (زي AutoCAD). ESRI — Environmental Systems Research Institute <img border="0" alt="image" src="https://i.ibb.co/hJY08fLG/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-### مسألة الـ Coverage Topology (إزاي الكمبيوتر بيقرأ الخريطة؟)
 مفاتيح الرسمة الأساسية: النقط (Nodes): الأرقام (11, 12, 13, 14, 15) بتمثل نقطة بداية أو نهاية أي خط.
 الخطوط (Arcs): الأرقام العادية (1, 2, 3, 4, 5, 6, 7) بتمثل الخطوط (اتجاه السهم مهم جدا).
 المضلعات (Polygons): الأرقام المايلة (101, 102, 103, 104) بتمثل المساحات المقفوله.
@@ -123,8 +180,7 @@ Routes definition
 الـ TIN هو نموذج بيانات رقمي بيستخدم في الـ GIS لتمثيل الأسطح غير المنتظمة زي التضاريس — بديل لخطوط التضاريس (Contour lines). مدخلات الـ TIN: نقاط (X, Y, Z) وخطوط ومضلعات.
 الـ TIN بتمثّل الأرض بـ مثلثات غير متراكبة — كل مثلث بيفترض ميل ثابت (Constant gradient).
 المناطق المنحدرة: مثلثات أكبر وأقل. المناطق عالية التباين: مثلثات أصغر وأكتر كثافة.
-definition
-ا Delaunay Triangulation هي عملية بتربط النقاط بأقرب جارين ليها عشان تكوّن مثلثات كلها زاوية متقاربة (Equiangular) قدر الإمكان. الأشكال الهندسية في الـ TIN: مثلثات (Faces), نقاط (Nodes), خطوط (Edges).
+الأشكال الهندسية في الـ TIN: مثلثات (Faces), نقاط (Nodes), خطوط (Edges).
 <br><img border="0" alt="image" src="https://i.ibb.co/jv46FSYZ/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
 الجدول ده بيعرفنا مكان كل نقطة على الخريطة (X, Y)، والأهم بقى: ارتفاعها عن سطح البحر (Z). ا Nodes: أرقام النقاط (11, 12, 13, 14, 15).
 ا (X, Y): الإحداثيات العادية من على الشبكة.
@@ -153,14 +209,14 @@ definition
 الـ Geodatabase هو نموذج Object-oriented بيخزن البيانات في ملف واحد.
 الـ Topology بتساعد في ضمان جودة البيانات وتحسين التحليل الجغرافي.
 الـ TIN بيستخدم لتمثيل الأسطح غير المنتظمة زي التضاريس.
-الـ Geocoding هو عملية تحويل وصف مكان لـ إحداثيات جغرافية. ]]></description><link>lectures/lecture-4-georelational-vector-data-model.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 4 - Georelational Vector Data Model.md</guid><pubDate>Fri, 05 Jun 2026 13:48:42 GMT</pubDate><enclosure url="https://i.ibb.co/hJY08fLG/image.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/hJY08fLG/image.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 3]]></title><description><![CDATA[مقدمة الجزء ده بيغطي Coordinate Systems في الـ GIS.
+الـ Geocoding هو عملية تحويل وصف مكان لـ إحداثيات جغرافية. ]]></description><link>lectures/lecture-4-georelational-vector-data-model.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 4 - Georelational Vector Data Model.md</guid><pubDate>Fri, 05 Jun 2026 16:19:12 GMT</pubDate><enclosure url="https://i.ibb.co/hJY08fLG/image.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/hJY08fLG/image.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 3]]></title><description><![CDATA[مقدمة الجزء ده بيغطي Coordinate Systems في الـ GIS.
 أهم المحاور: الفرق بين GCS و PCS, شكل الأرض, Datum, Map Projections, أنواع التشوهات, UTM, واستخدامات أنظمة الإحداثيات في ArcGIS. فيه 3 مفاهيم أساسية لازم تتفهم مع بعض: نظام الإحداثيات (Coordinate System): النظام اللي بيدي لكل نقطة على الخريطة عنوان بالأرقام (زي شبكة الـ X والـ Y) عشان نقدر نحدد مكان النقط والخطوط والمضلعات بالظبط.
 الـ Datum: بيحدد شكل الأرض الأقرب للواقع وبنحدد منه نقطة الصفر أو المركز اللي هنبدأ نقيس من عنده.
 الـ Projection (نظام الإسقاط): العملية أو المعادلة اللي بناخد بيها مجسم الأرض الـ 3D (الحقيقي) ونفرده على خريطة مسطحة 2D عشان نقدر نتعامل معاه. definition
-الـ Geodesy (علم الجيوديسيا) هو علم قياس شكل الأرض وحجمها وحقل الجاذبية بتاعها. الـ Geodesy هو الأساس العلمي لكلمة أنظمة الإحداثيات — من غيره ما كانش هيبقى فيه GCS و لا PCS.
-الـ Geodesists هما العلماء اللي بيشتغلوا في المجال ده — وشغلهم هو اللي خلّى الـ GPS يشتغل بدقة.
+CRS - Coordinate Reference System defines how the two-dimensional projected map in your GIS is related to a real place on the Earth.
 definition
-CRS - Coordinate Reference System defines how the two-dimensional projected map in your GIS is related to a real place on the Earth. الـ GCS والـ PCS هما النوعين الأساسيين لـ "أنظمة الإحداثيات" (Coordinate Systems): نظام الإحداثيات الجغرافي (GCS): ده نظام ثلاثي الأبعاد (3D) بيتعامل مع الأرض علي حقيقتها بشكلها الكروي. بيحدد مكان النقط على سطح الكوكب باستخدام الزوايا (خطوط الطول Longitude ودوائر العرض Latitude)، ووحدة قياسه هي "الدرجات".
+الـ Geodesy (علم الجيوديسيا) هو علم قياس شكل الأرض وحجمها وحقل الجاذبية بتاعها. الـ Geodesy هو الأساس العلمي لكلمة أنظمة الإحداثيات — من غيره ما كانش هيبقى فيه GCS و لا PCS.
+الـ Geodesists هما العلماء اللي بيشتغلوا في المجال ده — وشغلهم هو اللي خلّى الـ GPS يشتغل بدقة. الـ GCS والـ PCS هما النوعين الأساسيين لـ "أنظمة الإحداثيات" (Coordinate Systems): نظام الإحداثيات الجغرافي (GCS): ده نظام ثلاثي الأبعاد (3D) بيتعامل مع الأرض علي حقيقتها بشكلها الكروي. بيحدد مكان النقط على سطح الكوكب باستخدام الزوايا (خطوط الطول Longitude ودوائر العرض Latitude)، ووحدة قياسه هي "الدرجات".
 2. نظام الإحداثيات المسقط (PCS): ده نظام ثنائي الأبعاد (2D) مستوي، بيتعامل مع الأرض بعد ما فردناها علي نظام 2D بيحدد الأماكن باستخدام شبكة (X, Y) ووحدات قياس خطية زي "المتر"، وهو متقسم لمناطق (Zones). <img src="https://gisrsstudy.com/wp-content/uploads/2022/08/GCS-vs-PCS.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 600px; max-width: 100%;">
 definition
 GCS is a three-dimensional reference system that locates points on the Earth's surface. الـ GCS بيحدد أماكن الـ spatial features على سطح الأرض و كل point بيبقى ليها قيمتين: Latitude و Longitude.
@@ -175,23 +231,22 @@ definition
 Projection is the conversion of data sets from geographic coordinates to projected coordinates.
 definition
 Reprojection converts from one type of projected coordinates to another type. يعني: تحويل من GCS لـ PCS اسمه Projection.
-تحويل من نوع PCS لنوع PCS تاني = Reprojection. definition
+تحويل من نوع PCS لنوع PCS تاني = Reprojection. <br> <img src="https://www.esri.com/arcgis-blog/app/uploads/2022/02/grid2.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 600px; max-width: 100%;">
+حته زياده من الكتاب definition
 الـ Convergence والـ Projection مصطلحين مختلفين — الـ Convergence بيحول بين أنظمة إحداثيات، والـ Projection بيعمل خريطة 2D من بيانات 3D. يعني لما تحوّل بيانات من WGS84 لـ UTM Zone 36N — ده Convergence.
-ولما ترسم خريطة للقاهرة باستخدام Transverse Mercator — ده Projection.
-<br> <img src="https://www.esri.com/arcgis-blog/app/uploads/2022/02/grid2.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 600px; max-width: 100%;"> إحنا غالبًا بنتخيل الأرض Sphere (كروية).
+ولما ترسم خريطة للقاهرة باستخدام Transverse Mercator — ده Projection. إحنا غالبًا بنتخيل الأرض Sphere (كروية).
 رغم انها أقرب لـ Spheroid أو Ellipsoid (بيضاوي) — نصف قطر الأرض عند خط الاستواء أكبر شوية من نصف القطر عند القطبين.
-بس في الحقيقة الارض Geoid وده معناه انها شكل بيضاوي بس غير منتظم. Eratosthenes’ (276-194 BC) approach to determining the Earth’s circumference.
-Warning
-الأرض مش كورة ملساء — فيها جبال وسهول ومحيطات وقشور أرضية مختلفة. كل منطقة ليها خصائص فيزيائية مختلفة (الجاذبية، الارتفاع، الكثافة). عشان كده الـ Ellipsoid الواحد مش بيقدر يمثل الأرض كلها بدقة.
+بس في الحقيقة الارض Geoid وده معناه انها شكل بيضاوي بس غير منتظم. Eratosthenes’ (276-194 BC) approach to determining the Earth’s circumference. الأرض مش كورة ملساء — فيها جبال وسهول ومحيطات وقشور أرضية مختلفة. كل منطقة ليها خصائص فيزيائية مختلفة (الجاذبية، الارتفاع، الكثافة).
+عشان كده الـ Ellipsoid الواحد مش بيقدر يمثل الأرض كلها بدقة.
 الحل: نعمل Datums محلية — كل منطقة ليها Datum مناسب ليها.
 مثال: في أمريكا الشمالية NAD83 هو الأنسب، بس في أوروبا ETRS89 هو الأنسب.
 الـ Global Datums (زي WGS84) حل وسط — بيحاول يمثل الأرض كلها بس مش بأعلى دقة في كل مكان.
-definition
+<br><img border="0" alt="image" src="https://i.ibb.co/Y7GRZtvq/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">definition
 An ellipse is defined by a constant distance from F1 to P to F2 for all points on the ellipse. الـ Ellipse بيتحدد باستخدام: Focal length = ε
 Major axis = a
 Minor axis = b لو ε = 0، الـ ellipse يبقى circle.
-definition
-ا Bessel 1866 ا: Bessel هو اللي قاس نصف قطر الأرض أول مرة سنة 1866 — وقياساته كانت أساس الـ datums القديمة زي NAD27.
+note
+ا Bessel 1866 ا: Bessel هو اللي قاس نصف قطر الأرض أول مرة سنة 1866.
 ا Clarke 1866 (التعديل): Clarke عدّل قياسات Bessel, ا Clarke 1866 هو اللي بيستخدم في NAD27.
 ا GRS80 (التحديث): سنة 1980، اتقاس إن المحور الأكبر أقل من قياسات Clarke بحوالي 70-80 متر. ده خلّى GRS80 أدق.
 definition
@@ -208,7 +263,7 @@ A Datum is a mathematical model of the Earth, which serves as the reference or b
 الـ Global Datum نقطة الأصل بتاعته مش على السطح، دي بتكون جوه "مركز كتلة الأرض" (center of the earth ), ده الأساس اللي بيعتمد عليه الـ GPS وقياسات الأقمار الصناعية. لو غيرت الـ datum، نفس النقطة هياخد إحداثيات مختلفة.
 <br> <img src="https://courses.ems.psu.edu/geog862/sites/geog862/files/images/Lesson05/European%20Datum.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> في مصر فيه أمثلة datums زي: Helmert, Hayford, Suez 1974.
 الاختيار بيعتمد على المنطقة اللي بتشتغل عليها — كل بلد ليها datum مناسب ليها.
-حته زياده من الكتاب لما بتحول إحداثيات خريطة من المرجع القديم (NAD27) للمرجع الجديد (NAD83)، النقط بتترحل وتتحرك من مكانها، وده بنسميه (Horizontal Shift), الحركه دي بيتقاس بالمتر, وقيمة الترحيل بتختلف من مكان للتاني
+حته زياده من الكتاب لما بتحول إحداثيات خريطة من المرجع القديم (NAD27) للمرجع الجديد (NAD83)، النقط بتترحل وتتحرك من مكانها، وده بنسميه (Horizontal Shift), الحركه دي بتتقاس بالمتر, وقيمة الترحيل بتختلف من مكان للتاني
 عشان المهندسين مايتلخبطوش، بيعملوا خرايط مرسوم عليها خطوط اسمها (Isolines)، الخطوط دي بتوضحلك المنطقة اللي إنت فيها دي بالظبط حصلها شيفت كام متر. definition
 A map projection is a mathematical formula for representing the curved surface of the earth on a flat map. الـ Map Projection هو ناتج تحويل سطح الأرض الكروي أو المنحني لسطح مستوي.
 definition
@@ -218,18 +273,20 @@ definition الـ Equal Area (Homolographic): بيحافظ على نسب الم�
 الـ Orthomorphic (True-Shape): بيحافظ على الأشكال — حدود الدول بتبان زيها زي على الأرض.
 الـ Azimuthal (True-Bearing): بيحافظ على الاتجاهات من نقطة معينة.
 الـ Equidistant (True Scale): بيحافظ على المسافات — لكن مفيش projection بيحافظ على المقياس في كل مكان، فقط على خطوط معينة. فكرة الإسقاط ببساطة: كوكب الأرض كورة، والورقة مسطحة. إزاي ننقل الرسمة من الكورة للورقة؟ بنختار "شكل مجسم" نلف بيه الأرض: The principal scale: A common measure of projection distortion
-<br> <img src="https://grade8science.com/wp-content/uploads/2021/08/6.3.2-3-v2.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> ### Tangent and Secant
-لما نيجي نعمل projection للكوره علي الورقةفيه عندنا حالتين: الحالة البسيطة (Tangent - مماس): الورقة بتلمس الأرض من بره في "خط واحد" (One Standard Line). الخط ده التشوه عنده بيكون صفر، بس كل ما تبعد عنه التشوه بيزيد .
+<br> <img src="https://grade8science.com/wp-content/uploads/2021/08/6.3.2-3-v2.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> لما نيجي نعمل projection للكوره علي الورقة فيه عندنا حالتين: الحالة البسيطة (Tangent - مماس): الورقة بتلمس الأرض من بره في "خط واحد" (One Standard Line). الخط ده التشوه عنده بيكون صفر، بس كل ما تبعد عنه التشوه بيزيد .
 الوضع القاطع (Secant - قاطع): الورقة بتخترق وتقطع كوكب الأرض، فبتعمل "خطين تماس" (Two Standard Lines). ده بيوزع التشوه على مساحة أكبر، فبيقلل التشوه العام وبيخلينا نقدر نرسم مساحات أكبر بدقة أحسن. <br> <img src="https://o.quizlet.com/YSoEn7HhaHGqP1dBV8Xykw.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> الـ cone بيلمس الأرض على خط عرض.
 خطوط الطول بتتقاطع عند apex (رأس المخروط), ودوائر العرض بتبقى عبارة عن أقواس فوق بعض (concentric arcs).
-<br> <img src="https://gisgeography.com/wp-content/uploads/2017/04/Secant-Tangent-Cone.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> ا Equidistant Conic: المسافات بين دوائر العرض متساوية. مش بيحافظ على المساحة ولا الشكل، بس مناسب للمناطق الصغيرة. بيحافظ على المسافات.
+<br> <img src="https://gisgeography.com/wp-content/uploads/2017/04/Secant-Tangent-Cone.jpg" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> ا Equidistant Conic: المسافات بين دوائر العرض متساوية. مش بيحافظ على المساحة (Area) ولا الشكل (Shape)، بس مناسب للمناطق الصغيرة. بيحافظ على المسافات (distance/scale).
 ا Lambert Conformal Conic: دوائر العرض بتقرب من بعض في النص. بيحافظ على الأشكال (Shapes) وممتاز للخرائط التفصيلية.
 ا Albers Equal Area Conic: دوائر العرض بتقرب من بعض عند الأطراف. بيحافظ على المساحات (Areas). لما بنفرد الأسطوانة، خطوط الطول والعرض بتتقاطع بزوايا قايمة (90 درجة). المسافات بين خطوط الطول بتبقى متساوية، بس دوائر العرض بتبعد عن بعض كل ما تقرب للقطبين.
 <br> <img src="https://gisgeography.com/wp-content/uploads/2016/12/Secant-Tangent-Cylinder-768x372.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-<br> <img src="https://www.researchgate.net/profile/Nagi-Zomrawi/publication/338393188/figure/fig3/AS:843930698522624@1578220166024/Types-of-cylindrical-Projection.ppm" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> الـ Mercator: أشهر أنواع الـ cylindrical projections. بيتميز إنه conformal وبيحافظ على الـ directions المسافات بتكون دقيقة 100% عند الـ equator، لكن بتتمدد وتتشوه جداً كل ما نقرب للـ poles (مثال: Greenland بتبان على الخريطة أكبر من Africa، مع إن أفريقيا في الحقيقة أكبر منها 14 مرة).
-<br> <img src="https://www.researchgate.net/profile/Nagi-Zomrawi/publication/338393188/figure/fig3/AS:843930698522624@1578220166024/Types-of-cylindrical-Projection.ppm" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> الـ plane بتلمس الأرض عند point of contact.
-<br>الـ focus بيتحدد بـ central longitude و central latitude. <img src="https://randallboone.org/nr505/projects/project8/images/planar_projection.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> <br> <img src="https://mkudamatsu.github.io/gis_lecture1/planar.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
-UTM System الـ UTM مبني على إسقاط Transverse Mercator، وبيقسم الأرض لـ 60 منطقة (Zones)، عرض كل واحدة 6° من خطوط الطول، وكل منطقة بيتعملها إسقاط لوحدها عشان يقلل التشوه. النظام شغال من 80°S لحد 84°N، أما المناطق القطبية فبتستخدم نظام UPS.
+<br> <img src="https://www.researchgate.net/profile/Nagi-Zomrawi/publication/338393188/figure/fig3/AS:843930698522624@1578220166024/Types-of-cylindrical-Projection.ppm" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> الـ Mercator: أشهر أنواع الـ cylindrical projections. بيتميز إنه conformal وبيحافظ على الـ directions المسافات بتكون دقيقة 100% عند الـ equator، لكن بتتمدد وتتشوه جداً كل ما نقرب للـ poles (مثال: Greenland بتبان على الخريطة أكبر من Africa، مع إن أفريقيا في الحقيقة أكبر منها 14 مرة). الـ plane بتلمس الأرض عند point of contact.
+الـ focus بيتحدد بـ central longitude و central latitude.
+<br> <img src="https://randallboone.org/nr505/projects/project8/images/planar_projection.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+<br> <img src="https://mkudamatsu.github.io/gis_lecture1/planar.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved">
+بصمجيات الـ Universal Transverse Mercator (UTM) نوعه cylindrical و Conformal
+الـ Lambert نوعه Conic و Conformal
+الـ Albert نوعه Conic و Equal Area UTM System الـ UTM مبني على إسقاط Transverse Mercator، وبيقسم الأرض لـ 60 منطقة (Zones)، عرض كل واحدة 6° من خطوط الطول، وكل منطقة بيتعملها إسقاط لوحدها عشان يقلل التشوه. النظام شغال من 80°S لحد 84°N، أما المناطق القطبية فبتستخدم نظام UPS.
 لكل منطقة Central Meridian في النص، ومعامل المقياس عنده 0.9996، عشان كده التشوه داخل المنطقة بيكون صغير جدًا (أقل من 0.1%). الإسقاط بيحافظ على الأشكال والزوايا كويس، لكنه مش بيحافظ على المساحات.
 كل منطقة ليها رقم من 1 لـ 60، وكمان شريط عرضي بحرف من C لـ X، وبيتكتبوا مع بعض لتحديد المنطقة زي 11U. مصر مثلًا موجودة في Zone 35R و Zone 36R، ولازم تعرف الـ Zone الصحيحة لبياناتك لأن دمج بيانات من مناطق مختلفة من غير تحويل ممكن يسبب أخطاء في الموقع والمسافات.
 حته زياده من الكتاب ا Mercator ممتاز للملاحة لأنه بيخلي الاتجاهات ثابتة، لكنه بيشوّه المساحات جدًا كل ما نبعد عن خط الاستواء. ا Hammer إسقاط بيحافظ على نسب المساحات والنقطه الوحيده الي مفهاش تشوه هيا المركز
@@ -238,8 +295,7 @@ UTM System الـ UTM مبني على إسقاط Transverse Mercator، وبيق�
 ملف .prj بيتكون من 3 أجزاء: نظام الإحداثيات الجغرافي (Datum, Spheroid, Prime Meridian, Units)، ومعاملات الإسقاط (زي Central Meridian و Scale Factor)، والوحدة الخطية المستخدمة في القياس وغالبًا بتكون المتر.
 Define Projection vs Project: اDefine Projection — بييعرّف النظام بس من غير ما يغيّر البيانات. بس تستخدمه لو البيانات مفيهاش معلومات عن نظام الإحداثيات.
 اProject — بييحوّل البيانات فعليًا من نظام لإحداثيات لنظام تاني. بس تستخدمه لو عايز تحوّل بيانات من WGS84 مثلا لـ UTM Zone 36N. حته زياده من الكتاب الـ On-the-fly Projection بتخلي برنامج الـ GIS يعرض طبقات بيانات من أنظمة إحداثيات مختلفة مع بعض وكأنها على نفس النظام، من غير ما يغير البيانات الأصلية. البرنامج بيعمل التحويل تلقائيًا لنظام إحداثيات مشترك، وغالبًا بيكون نظام أول طبقة اتضافت للخريطة.
-لو طبقة البيانات مفيهاش معلومات عن نظام الإحداثيات، البرنامج ممكن يفترض نظام افتراضي، وده ممكن يسبب أخطاء في عرض البيانات لو الافتراض كان غلط.
-حدود الاستخدام: لو عايز تستخدم البيانات في تحليل مكاني (Spatial Analysis)، لازم تعملها Reproject فعلي — الإسقاط اللحظي مش بيحوّل البيانات فعلًا.
+لو طبقة البيانات مفيهاش معلومات عن نظام الإحداثيات، البرنامج ممكن يفترض نظام افتراضي، وده ممكن يسبب أخطاء في عرض البيانات لو الافتراض كان غلط. حدود الاستخدام: لو عايز تستخدم البيانات في تحليل مكاني (Spatial Analysis)، لازم تعملها Reproject فعلي — الإسقاط اللحظي مش بيحوّل البيانات فعلًا.
 لو هتستخدم البيانات كتير في نظام إحداثيات مختلف عن الأصلي، لازم تحولها عشان النتائج تطلع أدق. ملخص ا Coordinate Systems هدفها تخلي الـ layers تركب فوق بعض صح. لو الـ reference مختلف، الطريق أو الحدود ممكن يظهروا في مكان غلط والتحليل كله يطلع غلط.
 ا GCS بيحدد المكان على سطح الأرض بـ Latitude و Longitude. القيم دي angles، مش X,Y، عشان كده نفس الدرجة مش دايمًا بتساوي نفس المسافة.
 ا PCS بيحول الأرض لخريطة مسطحة بـ X,Y، وده أنسب للحسابات الدقيقة والـ large-scale mapping.
@@ -248,20 +304,22 @@ Define Projection vs Project: اDefine Projection — بييعرّف النظا�
 ا Projection = تحويل من GCS لـ PCS. ا Reprojection = تحويل من PCS لنوع PCS تاني.
 أي projection لازم يعمل distortion في Area, Shape, Distance/Scale, أو Direction. الاختيار بيكون حسب الخاصية الأهم في الخريطة.
 الأنواع الأساسية للـ projections: Planar, Conical, و Cylindrical. ومن أهم الأنظمة UTM، ومصر في zones 35, 36 و band R.
-في ArcGIS: ا Define Projection بيعرف النظام بس، أما Project بيحول البيانات فعليًا. وملف .prj بيخزن معلومات الـ projection. ]]></description><link>lectures/lecture-3-coordinate-systems.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 3 - Coordinate Systems.md</guid><pubDate>Fri, 05 Jun 2026 13:30:22 GMT</pubDate><enclosure url="https://gisrsstudy.com/wp-content/uploads/2022/08/GCS-vs-PCS.jpg" length="0" type="image/jpeg"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://gisrsstudy.com/wp-content/uploads/2022/08/GCS-vs-PCS.jpg&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 2]]></title><description><![CDATA[مقدمة الجزء ده بيغطي مفاهيم GIS الأساسية ونماذج البيانات.
+في ArcGIS: ا Define Projection بيعرف النظام بس، أما Project بيحول البيانات فعليًا. وملف .prj بيخزن معلومات الـ projection. ]]></description><link>lectures/lecture-3-coordinate-systems.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 3 - Coordinate Systems.md</guid><pubDate>Fri, 05 Jun 2026 15:39:37 GMT</pubDate><enclosure url="https://gisrsstudy.com/wp-content/uploads/2022/08/GCS-vs-PCS.jpg" length="0" type="image/jpeg"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://gisrsstudy.com/wp-content/uploads/2022/08/GCS-vs-PCS.jpg&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 2]]></title><description><![CDATA[مقدمة الجزء ده بيغطي مفاهيم GIS الأساسية ونماذج البيانات.
 أهم المحاور: المفاهيم الأساسية للـ GIS, طبقات Vector, نماذج البيانات Vector و Raster, العلاقة بين Geometry و Topology و Attributes, وفرق Database عن Spatial Database.
 في آخر الملخص فيه مراجعة بتجمع تعريفات مهمة زي GISy, GIScience, GPS, SDE, IMS. definition
 Features have attributes associated with them. دي أول فكرة أساسية في الـ GIS.
 الـ Feature هو عنصر على الخريطة.
 والـ Attributes هي البيانات المرتبطة بالعنصر ده. لو بنرسم أماكن الأشجار: مكان كل شجرة بيتسجل على الخريطة ( يعني الشجره نفسها Feature).
-وكل شجرة ليها attributes زي النوع، العمر، الحالة، الارتفاع. في مثال الأشجار، بنرسم موقع كل شجرة ونحدد أي attributes تخص أي شجرة. وده هو أساس الـ GIS. بصمجيات
+وكل شجرة ليها attributes زي النوع، العمر، الحالة، الارتفاع. <img border="0" alt="image" src="https://i.ibb.co/TBfFPD1D/image.png" referrerpolicy="no-referrer" target="_self" class="is-unresolved"> في مثال الأشجار، بنرسم موقع كل شجرة ونحدد أي attributes تخص أي شجرة.
+وده هو أساس الـ GIS.
+بصمجيات
 الـ Feature = الحاجة نفسها على الخريطة.
 الـ Spatial Data = مكان الحاجة دي علي الخريطه
 الـ Attribute = بيانات الحاجة دي.
 definition
 Information is separated into layers. الفكرة التانية إن المعلومات بتتقسم لطبقات.
 كل طبقة تمثل نوع معين من البيانات.
-مثال: ا طبقة انهار ا طبقة طرق ا طبقة مباني <img src="https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/styles/full_width/public/thumbnails/image/Figure3_STEMModeling.jpg?itok=g52rEgUB" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;"> كل طبقة ممكن تتحط فوق التانية عشان نطلع صورة وتحليل كامل.
+مثال: ا طبقة انهار ا طبقة طرق ا طبقة مباني <br> <img src="https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/styles/full_width/public/thumbnails/image/Figure3_STEMModeling.jpg?itok=g52rEgUB" referrerpolicy="no-referrer" target="_self" class="is-unresolved" style="width: 500px; max-width: 100%;"> كل طبقة ممكن تتحط فوق التانية عشان نطلع صورة وتحليل كامل.
 الطبقة الأساسية غالبا بتبقى تحت، وباقي الطبقات فوقها. معلومه من العملي كل Layer بيبقي ليها Geometry واحد بس
 مينفعش تحط Points و Lines و Polygons في نفس الـ Layer.
 يعني:
@@ -354,7 +412,7 @@ Spatial data describes the absolute and relative location (geometrical data) of 
 الـ Raster: بيعتمد على شبكة مربعات (Grid Cells)، كل مربع جواه "قيمة". ممتاز للحاجات "المتصلة" والممتدة زي: الحرارة، التلوث، أو الارتفاعات (DEM). بيحتاج مساحة تخزين أكبر. الفرق بين الـ Geometry و Topology و Attributes: ا Geometry: ده "الشكل" و"الإحداثيات" بتاعت العنصر.
 ا Attributes: دي "البيانات" والمعلومات الوصفية للعنصر.
 ا Topology: دي "العلاقات المكانية" (مين جنب مين؟ مين بيقطع مين؟). ودي اللي بتصلح أخطاء الرسم، بس بتخلي البيانات أبطأ شوية في العرض. بيانات خاصة: ا DEM (Digital Elevation Model): ده ملف Raster، كل Cell فيه بتمثل "الارتفاع عن سطح البحر"، وبيستخدم لدراسة التضاريس والمنحدرات.
-صور الأقمار الصناعية: بتعتبر Raster، وبتتكون من عدة طبقات (Bands) كل طبقة بتلقط طول موجي معين (زي الأحمر، والأخضر، والأشعة تحت الحمراء).&gt; ]]></description><link>lectures/lecture-2-gis-data-models.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 2 - GIS Data Models.md</guid><pubDate>Fri, 05 Jun 2026 13:11:44 GMT</pubDate><enclosure url="https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/styles/full_width/public/thumbnails/image/Figure3_STEMModeling.jpg?itok=g52rEgUB" length="0" type="false"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/styles/full_width/public/thumbnails/image/Figure3_STEMModeling.jpg?itok=g52rEgUB&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 1]]></title><description><![CDATA[مقدمة الجزء ده بيغطي أساسيات GIS - Geographic Information Systems.
+صور الأقمار الصناعية: بتعتبر Raster، وبتتكون من عدة طبقات (Bands) كل طبقة بتلقط طول موجي معين (زي الأحمر، والأخضر، والأشعة تحت الحمراء).&gt; ]]></description><link>lectures/lecture-2-gis-data-models.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 2 - GIS Data Models.md</guid><pubDate>Fri, 05 Jun 2026 14:47:29 GMT</pubDate><enclosure url="https://i.ibb.co/TBfFPD1D/image.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://i.ibb.co/TBfFPD1D/image.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[GIS Fundamentals 1]]></title><description><![CDATA[مقدمة الجزء ده بيغطي أساسيات GIS - Geographic Information Systems.
 هنتكلم عن إيه هو الـ GIS فعلا، مكوناته، و إزاي بيشتغل من Input لـ Output.
 هندخل على Location Apps و التاريخ (John Snow 1854)، و نشوف الفرق بين System و Science و Studies و Service و Survey.
 أهم المحاور: Location Apps, تاريخ الـ GIS, تعريفه, مكوناته, وظائفه, وتطبيقاته. الـ Location Apps و Live Location Services من أشهر التطبيقات اليومية لفكرة الـ GIS.
@@ -362,11 +420,10 @@ Spatial data describes the absolute and relative location (geometrical data) of 
 يعني لما تستخدم: خريطة عشان تعرف مكانك او Live Location عشان تبعت موقعك لحد.
 خدمة تعرض أماكن أو بيانات على الخريطة. كل ده مبني على نفس المبدأ: فيه مكان + فيه معلومة مرتبطة بالمكان. الـ GPS مش هو GIS الـ GPS بيحدد مكانك.
 الـ GIS هو النظام الأكبر اللي بياخد المكان ده ويحطه مع Maps, Databases, Layers, Analysis, و Output.
-يعني GPS يعتبر input داخل GIS، مش بديل عنه. definition
+يعني GPS يعتبر input داخل GIS، مش بديل عنه. note
 John Snow analyzed a cholera outbreak in Soho, London in 1854. At this time people believed that cholera was spread in the air. Dr. Snow was skeptical of this hypothesis. من أهم الأمثلة التاريخية في GIS قصة John Snow في لندن سنة 1854.
 كان فيه وباء Cholera في منطقة Soho, London.
-وقتها الناس كانوا فاكرين إن الكوليرا بتنتشر عن طريق الهواء.
-بس John Snow مكانش مقتنع بالفرضية دي. ا John Snow بدأ يجمع أماكن الحالات على خريطة.
+وقتها الناس كانوا فاكرين إن الكوليرا بتنتشر عن طريق الهواء, بس John Snow مكانش مقتنع بالفرضية دي. ا John Snow بدأ يجمع أماكن الحالات على خريطة.
 كل ما يعرف حالة، يحدد مكانها، وبعدين يقارن أماكن الحالات بمصادر المياه الموجودة في المنطقة.
 الفكرة هنا شبه استخدام layers يدوي: طبقة فيها أماكن المرضى أو حالات الكوليرا.
 طبقة فيها مصادر المياه أو الآبار.
@@ -378,14 +435,14 @@ Tip
 في أواخر الستينيات، US Bureau of the Census عمل برنامج DIME (Dual Independent Map Encoding) لكل الشوارع الأمريكية عشان يدعم الإحصاء التلقائي.
 في أواخر السبعينيات، جامعة Harvard عملت ODYSSEY GIS.
 الـ Automated Cartography بدأ في الستينيات، وبحلول أواخر السبعينيات معظم الجهات الحكومية كانت بتشتغل بالكمبيوتر جزئيًا.
-الـ GIS بدأ ينتشر في التمانينيات لما أسعار الهاردوير نزلت و بقت ارخص . definition
+الـ GIS بدأ ينتشر في التمانينيات لما أسعار الهاردوير بقت ارخص (اوعدنا يارب). definition
 GIS answers the queries of: What, Where and Why. What is attribute, Where is location, and Why is analytical why. الـ GIS بيجاوب على أسئلة أساسية: What?
 Where?
 Why? الـ What معناها إيه الحاجة أو الـ attribute اللي بنتكلم عنها؟
 يعني المعلومة نفسها المرتبطة بالمكان.
 مثال: اسم الدولة.
 عدد السكان. الـ Where معناها الحاجة دي موجودة فين؟
-ودي نقطة أساسية Space is essential to Geography.
+ودي نقطة أساسية (Space is essential to Geography).
 الجغرافيا أصلا معتمدة على المكان، فالسؤال المكاني هو قلب الـ GIS. ا Why معناها ليه النمط ده موجود؟ أو إيه التحليل اللي يفسر اللي شايفينه؟
 هنا الـ GIS يدخل في التحليل مش العرض بس.
 يعني مش بس نعرف إن الحوادث بتحصل في منطقة معينة، لكن نحاول نفهم: ليه بتحصل هناك؟
@@ -439,7 +496,6 @@ Geographic Information Service: functionality provided by a software entity thro
 زي تصميم وتطوير نظم GIS، أو تقديم خرائط وخدمات جغرافية للمستخدمين.
 مثال عملي: خدمة تحديد Location داخل تطبيقات زي WhatsApp أو أي تطبيق موبايل. لما حد يبعتلك Location، ده service مبنية على Geographic Information.
 تطور الخدمات المكانية مرتبط بـ distributed object technology والإنترنت.
-ده خطوة كبيرة عشان يسهل الوصول للمعلومات الجغرافية و Geo-processing technology.
 definition
 Geographic Information Survey: collecting spatial data from the field using measurement tools and field work. الـ Survey يعني جمع وقياس بيانات مكانية من الواقع.
 طرق التجميع الأساسية: عمل Field Survey يدوي في أماكن معينة.
@@ -548,12 +604,13 @@ What is where? means querying information to find location. يعني تبدأ ب
 ا قصة John Snow (1854): أول إثبات إن الـ GIS فكرة قبل ما يكون برنامج. استخدم خريطة وطبقات (Layers) لربط حالات الكوليرا بمصادر المياه (Geostatistics).
 ا الـ W-W-W: الـ GIS بيجاوب على: What (المعلومة/Attribute)، Where (المكان/Location)، والأهم Why (التحليل المكاني/Analysis).
 ا مكونات الـ GIS هما 6: Hardware, Software, Network, Data, People, Procedures. (الـ Data هي الأهم، والـ Network أساسي لربط البيانات بين الجهات المختلفة).
-ا الـ S فيGIS : اSystem: النظام والبرامج اللي بنشتغل عليها.
+ا الـ S فيGIS : ا System: النظام والبرامج اللي بنشتغل عليها.
 ا Science: العلم والنظريات والخوارزميات.
 ا Studies: القضايا الاجتماعية والقانونية (زي الخصوصية).
 ا Service: الخدمات والتطبيقات (زي شير اللوكيشن).
 ا Survey: تجميع وقياس البيانات من الواقع. ا إدخال البيانات: الـ Scanner بيحول الخريطة لصورة (Raster)، والـ Digitizer بيحولها لبيانات متجهة (Vector).
-ا مصطلحات قواعد البيانات: * SDE (Spatial Data Engine): بيسرع استرجاع البيانات المكانية من قواعد البيانات (زي SQL). ا IMS (Internet Map Server): بيعرض الخرايط للمستخدمين على الإنترنت (Online GIS). ا من تطبيقات الـ GIS: حساب الكثافة (Densities)، تحديد المسارات (Routing)، رصد التغيرات مع الزمن (Change Detection)، والـ Geocoding (تحويل العنوان العادي لإحداثيات). ]]></description><link>lectures/lecture-1-gis-fundamentals.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 1 - GIS Fundamentals.md</guid><pubDate>Fri, 05 Jun 2026 12:30:40 GMT</pubDate><enclosure url="https://blog.rtwilson.com/wp-content/uploads/2012/01/SnowMap_Points.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://blog.rtwilson.com/wp-content/uploads/2012/01/SnowMap_Points.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Index]]></title><description><![CDATA[ لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Index.md</guid><pubDate>Thu, 04 Jun 2026 22:09:52 GMT</pubDate></item><item><title><![CDATA[GIS Fundamentals 6 — Spatial Data Inputs]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن مصادر إدخال البيانات المكانية (Spatial Data Inputs) في الـ GIS.
+ا مصطلحات قواعد البيانات: ا SDE (Spatial Data Engine): بيسرع استرجاع البيانات المكانية من قواعد البيانات (زي SQL).
+ا IMS (Internet Map Server): بيعرض الخرايط للمستخدمين على الإنترنت (Online GIS). ا من تطبيقات الـ GIS: حساب الكثافة (Densities)، تحديد المسارات (Routing)، رصد التغيرات مع الزمن (Change Detection)، والـ Geocoding (تحويل العنوان العادي لإحداثيات). ]]></description><link>lectures/lecture-1-gis-fundamentals.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Lectures/Lecture 1 - GIS Fundamentals.md</guid><pubDate>Fri, 05 Jun 2026 14:37:44 GMT</pubDate><enclosure url="https://blog.rtwilson.com/wp-content/uploads/2012/01/SnowMap_Points.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;https://blog.rtwilson.com/wp-content/uploads/2012/01/SnowMap_Points.png&quot;&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[Index]]></title><description><![CDATA[ لو فيه اي اخطاء في الشرح قولي عشان اعدلها <a rel="noopener nofollow" class="external-link is-unresolved" href="https://t.me/DevNourEldeen" target="_self">https://t.me/DevNourEldeen</a> ومتنساش تدعيلي]]></description><link>index.html</link><guid isPermaLink="false">2 - Areas/College/GIS/Index.md</guid><pubDate>Thu, 04 Jun 2026 22:09:52 GMT</pubDate></item><item><title><![CDATA[GIS Fundamentals 6 — Spatial Data Inputs]]></title><description><![CDATA[مقدمة الجزء ده بيتكلم عن مصادر إدخال البيانات المكانية (Spatial Data Inputs) في الـ GIS.
 أهم المحاور: تصنيف البيانات الجغرافية, الطرق الرئيسية لجمع البيانات (Photogrammetry, Remote Sensing, GPS), وآليات كل طريقة بالتفصيل. خرائط الـ GIS رقمية (Digital) مش Analog — كل البيانات بتتخزن في الكمبيوتر وبتتحلل رقميًا.
 وظيفة الـ GIS هي جمع البيانات من مصادر مختلفة ودمجها في قاعدة بيانات موحدة (Integrated GIS Database).
 مصادر البيانات
